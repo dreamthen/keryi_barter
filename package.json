@@ -4,7 +4,7 @@
   "description": "barter with keryi platform",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dll": "webpack --config=./config/webpack.dll.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "antd": "^2.10.0",
     "jquery": "^3.2.1",
     "react": "^15.5.4",
+    "react-dom": "^15.5.4",
     "react-router": "^2.8.1"
   },
   "devDependencies": {
