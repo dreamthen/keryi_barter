@@ -55,4 +55,5 @@ const webpackDll = {
     ]
 };
 
+//导出webpack Dll继承管理外部依赖包工具
 module.exports = webpackDll;
