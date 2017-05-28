@@ -4,7 +4,8 @@
   "description": "barter with keryi platform",
   "main": "index.js",
   "scripts": {
-    "dll": "webpack --config=./config/webpack.dll.js"
+    "dll": "webpack --config=./config/webpack.dll.js",
+    "start": "webpack-dev-server --config=./config/webpack.dev.js --hot --line"
   },
   "repository": {
     "type": "git",

@@ -9,7 +9,7 @@ const path = require("path");
 //相当于cd __dirname之后,cd ../dll
 //先进入webpack配置文件目录,再进入此目录的上一级目录的dll目录,如果不存在dll目录,则创建一个dll目录
 const DLL_DIR = path.resolve(__dirname, "../dll");
-//根目录
+//根目录,先进入webpack配置文件目录,再进入此目录的上二级目录
 const ROOT_DIR = path.resolve(__dirname, "../..");
 
 //webpack配置
@@ -26,7 +26,7 @@ const keryi_dll_config = {
         path: DLL_DIR,
         //文件名
         filename: "[name].dll.js",
-        //集成的外部依赖包对象
+        //集成的外部依赖包对象,与DllPlugin里面的name属性相对应
         library: "[name]_[chunkhash]"
     },
     //插件(包括错误处理插件,集成外部依赖包manifest.dll.json插件,压缩处理插件,删除内容相同或相似文件插件和按需打包外部依赖包插件)
@@ -51,7 +51,7 @@ const keryi_dll_config = {
                 unused: true,
                 //伪代码或者注释,会被压缩
                 dead_code: true,
-                //错误或者异常,不会被压缩
+                //错误或者异常的代码,不会被压缩
                 warnings: false
             },
             comments: false
