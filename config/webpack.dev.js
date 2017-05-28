@@ -32,10 +32,13 @@ const keryi_dev_config = {
         login: APP_DIR + "/login.js",
         index: APP_DIR + "./index.js"
     },
-    //整个keryi_barter web开发环境配置出口(包括根路径、出口文件输出路径和文件名)
+    //整个keryi_barter web开发环境配置出口(包括根路径、出口文件输出路径和输出文件名)
     output: {
+        //根路径
         localePath: "/",
+        //出口文件输出路径
         path: BUILD_DIR,
+        //输出文件名
         filename: "[name].bundle.js"
     },
     //整个keryi_barter web开发环境配置的模块加载工具(包括js模块加载工具、css模块加载工具和图片模块加载工具)
@@ -91,16 +94,24 @@ const keryi_dev_config = {
         }),
         //对login.html以及其对应的按需加载文件login.js打包管理的插件
         new htmlWebpackPlugin({
+            //根路径
             localePath: "/",
+            //login.html文件名
             filename: "login.html",
+            //按需加载的文件login.js作用于的模板
             template: ROOT_DIR + "/login.html",
+            //按需加载的文件login.js
             chunks: ['login']
         }),
         //对index.html以及其对应的按需加载文件index.js打包管理的插件
         new htmlWebpackPlugin({
+            //根路径
             localePath: "/",
+            //index.html文件名
             filename: "index.html",
+            //按需加载的文件index.js作用于的模板
             template: ROOT_DIR + "/index.html",
+            //按需加载的文件index.js
             chunks: ['index']
         })
     ]
