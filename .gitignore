@@ -1,5 +1,4 @@
-build
-dll
-node_modules
 .idea
-vcs.xml
+node_modules
+dll
+build

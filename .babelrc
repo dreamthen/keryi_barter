@@ -4,14 +4,7 @@
     "stage-0",
     "react"
   ],
-  "plugins": [
-    "transform-decorators-legacy",
-    [
-      "import",
-      {
-        "libraryName": "antd",
-        "style": "css"
-      }
-    ]
+  "plugins":[
+    "transform-decorators-legacy"
   ]
 }
