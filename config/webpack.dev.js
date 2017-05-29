@@ -143,7 +143,7 @@ const keryi_dev_config = {
             //要进行打包管理的login.html文件所执行的模板位置目录
             template: ROOT_DIR + "/login.html",
             //与login.html相对应的按需加载的login.js模块
-            chunk: ["login"]
+            chunks: ["login"]
         }),
         //对index.html文件进行打包管理配置插件,与按需加载的index.js文件相对应
         new HtmlWebpackPlugin({
@@ -154,7 +154,7 @@ const keryi_dev_config = {
             //要进行打包管理的index.html文件所执行的模板位置目录
             template: ROOT_DIR + "/index.html",
             //与index.html相对应的按需加载的index.js模块
-            chunk: ["index"]
+            chunks: ["index"]
         })
     ],
     //webpack-dev-server代理服务器配置
