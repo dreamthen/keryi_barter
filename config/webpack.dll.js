@@ -21,7 +21,7 @@ const keryi_dll_config = {
     //webpack打包管理外部依赖包配置出口文件(包括根路径,文件输出路径,文件名和集成的外部依赖包对象--与DllPlugin里面的name属性相对应)
     output: {
         //根路径
-        localePath: "/",
+        publicPath: "/",
         //文件输出路径
         path: DLL_DIR,
         //文件名
@@ -51,7 +51,7 @@ const keryi_dll_config = {
                 unused: true,
                 //伪代码或者注释,会被压缩
                 dead_code: true,
-                //错误或者异常的代码,不会被压缩
+                //错误的或者异常的代码,不会被压缩
                 warnings: false
             },
             comments: false
