@@ -4,8 +4,8 @@
   "description": "barter with keryi platform",
   "main": "index.js",
   "scripts": {
-    "dll": "webpack --config=./config/webpack.dll.js",
-    "start": "webpack-dev-server --config=./config/webpack.dev.js --color --hot --inline"
+    "dll": "webpack --config=./configs/webpack.dll.js",
+    "start": "webpack-dev-server --config=./configs/webpack.dev.js --color --hot --inline"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,9 @@
   "dependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-redux": "^5.0.5",
     "react-router": "^2.8.1",
+    "redux": "^3.6.0",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {

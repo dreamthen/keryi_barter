@@ -25,6 +25,9 @@ const DLL_DIR = path.resolve(__dirname, "../dll");
 const APP_DIR = path.resolve(__dirname, "../scripts");
 //集成的外部依赖包vendor_manifest.dll.json文件位置目录,并导入集成的外部依赖包
 const MANIFEST = require(path.resolve(__dirname, DLL_DIR + "/vendor_manifest.dll.json"));
+//相当于cd __dirname之后,cd ../scripts/stylesheets
+//首先进入webpack配置文件所在的目录,然后再从此目录返回上一级目录,最后进入scripts目录下的stylesheets目录,如果不存在stylesheets目录则创建一级stylesheets目录
+const STYLE_DIR = path.resolve(__dirname, "../stylesheets/index.js");
 
 //webpack-dev-server代理服务器在本地运行端口设置
 const PORT = "9070";
@@ -74,7 +77,9 @@ const keryi_dev_config = {
                     //业务逻辑react,es2015 js文件所在的路径
                     APP_DIR,
                     //集成的外部依赖包Api js文件所在的路径
-                    DLL_DIR
+                    DLL_DIR,
+                    //每一个组件样式css文件所在的路径
+                    STYLE_DIR
                 ],
                 //热加载模块加载工具,以及babel解析react,stage-0和es2015的模块加载工具
                 loaders: ["react-hot", "babel"]
