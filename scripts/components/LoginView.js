@@ -3,7 +3,6 @@
  */
 import React from "react";
 import {connect} from "react-redux";
-import "../../stylesheets/common.css";
 import "../../stylesheets/login.css";
 
 class LoginView extends React.Component {
@@ -29,7 +28,12 @@ class LoginView extends React.Component {
     render() {
         return (
             <div className="keryi_barter_login_page_container">
+                <section className="keryi_barter_login">
 
+                </section>
+                <section className="keryi_barter_register">
+
+                </section>
             </div>
         )
     }

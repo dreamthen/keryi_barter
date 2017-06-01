@@ -27,7 +27,7 @@ const APP_DIR = path.resolve(__dirname, "../scripts");
 const MANIFEST = require(path.resolve(__dirname, DLL_DIR + "/vendor_manifest.dll.json"));
 //相当于cd __dirname之后,cd ../scripts/stylesheets
 //首先进入webpack配置文件所在的目录,然后再从此目录返回上一级目录,最后进入scripts目录下的stylesheets目录,如果不存在stylesheets目录则创建一级stylesheets目录
-const STYLE_DIR = path.resolve(__dirname, "../stylesheets/index.js");
+const STYLE_DIR = path.resolve(__dirname, "../stylesheets/");
 
 //webpack-dev-server代理服务器在本地运行端口设置
 const PORT = "9070";
