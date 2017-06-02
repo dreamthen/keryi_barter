@@ -31,6 +31,7 @@ class LoginView extends React.Component {
      * @returns {XML}
      */
     renderDescription() {
+        const {descriptiontoLogin} = this;
         return (
             <section className="keryi_barter_description">
                 <div className="keryi_barter_description_shadow">
@@ -46,11 +47,26 @@ class LoginView extends React.Component {
                         Tumblr 用起来真是简单到难以解释。
                     </div>
                     <div className="keryi_barter_description_content">
-                        我们让创建博客和随心所欲发布内容的过程变得真的非常非常简单。故事、图片、GIF 动图、电视剧、链接、俏皮话、冷笑话、不冷的笑话、Spotify 的曲目、MP3、视频、时尚、艺术，以及有深度的内容。Tumblr 是 349 百万个不同的博客，实实在在地涵盖了所有内容。
+                        我们让创建博客和随心所欲发布内容的过程变得真的非常非常简单。故事、图片、GIF
+                        动图、电视剧、链接、俏皮话、冷笑话、不冷的笑话、Spotify的曲目、MP3、视频、时尚、艺术，以及有深度的内容。Tumblr 是 349 百万个不同的博客，实实在在地涵盖了所有内容。
                     </div>
+                    <Button
+                        size="large"
+                        type="primary"
+                        onClick={descriptiontoLogin.bind(this)()}
+                    >
+                        开始吧
+                        <i className="iconfontKeryiBarter keryiBarter-keryiLogo">
+
+                        </i>
+                    </Button>
                 </div>
             </section>
         )
+    }
+
+    descriptiontoLogin() {
+
     }
 
     /**
@@ -68,8 +84,11 @@ class LoginView extends React.Component {
     render() {
         const {renderDescription, renderRegister} = this;
         return (
+            //login页面副级容器
             <div className="keryi_barter_login_page_container">
+                {/*login页面介绍模块*/}
                 {renderDescription.bind(this)()}
+                {/*login页面注册模块*/}
                 {renderRegister.bind(this)()}
             </div>
         )
@@ -77,9 +96,7 @@ class LoginView extends React.Component {
 }
 
 function select(state, ownProps) {
-    return {
-
-    }
+    return {}
 }
 
 export default connect(select)(LoginView);
