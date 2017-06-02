@@ -29,7 +29,9 @@ class LoginView extends React.Component {
         return (
             <div className="keryi_barter_login_page_container">
                 <section className="keryi_barter_login">
-
+                    <div className="keryi_barter_login_inner">
+                        <h1>登录</h1>
+                    </div>
                 </section>
                 <section className="keryi_barter_register">
 

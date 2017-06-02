@@ -15,9 +15,17 @@
     height: 100%;
     top: 0;
     left: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
     background: url(/images/login_bg.png) no-repeat center center / 100% border-box content-box;
 }
 
 .keryi_barter_login_page_container > .keryi_barter_register {
     background: url(/images/register_bg.png) no-repeat center center / 100% border-box content-box;
+}
+
+.keryi_barter_login > .keryi_barter_login_inner {
+    color: #89cff0;
 }
