@@ -5,6 +5,7 @@
     height: 100%;
     top: 0;
     left: 0;
+    z-index: 1000;
 }
 
 .keryi_barter_login_page_container > .keryi_barter_login,
@@ -20,12 +21,46 @@
     justify-content: center;
     align-items: center;
     background: url(/images/login_bg.png) no-repeat center center / 100% border-box content-box;
+    z-index: 1500;
 }
 
 .keryi_barter_login_page_container > .keryi_barter_register {
     background: url(/images/register_bg.png) no-repeat center center / 100% border-box content-box;
 }
 
-.keryi_barter_login > .keryi_barter_login_inner {
-    color: #89cff0;
+.keryi_barter_login > .keryi_barter_login_shadow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to top left, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.7));
+    z-index: 2000;
+    /*background-color: rgba(0, 0, 0, 0.7);*/
+}
+
+.keryi_barter_login > .keryi_barter_login_description_module {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    z-index: 2500;
+}
+
+.keryi_barter_login_description_module > .keryi_barter_login_description_head {
+    color: #fff;
+}
+
+.keryi_barter_login_description_head > .keryi_barter_login_description_head_title {
+    font-family: "Microsoft YaHei UI";
+    font-size: 62px;
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.keryi_barter_login_description_head > .keryiBarter-keryiLogo {
+    font-size: 70px;
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
 }
