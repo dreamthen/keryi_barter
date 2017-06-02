@@ -1,4 +1,5 @@
 @charset "utf-8";
+/*login页面副级容器*/
 #keryi_barter_login_page > .keryi_barter_login_page_container {
     position: relative;
     width: 100%;
@@ -8,6 +9,7 @@
     z-index: 1000;
 }
 
+/*login页面副级容器登录模块和注册模块*/
 .keryi_barter_login_page_container > .keryi_barter_login,
 .keryi_barter_login_page_container > .keryi_barter_register {
     position: relative;
@@ -24,10 +26,12 @@
     z-index: 1500;
 }
 
+/*login页面副级容器注册模块背景*/
 .keryi_barter_login_page_container > .keryi_barter_register {
     background: url(/images/register_bg.png) no-repeat center center / 100% border-box content-box;
 }
 
+/*login页面登录模块渐变阴影遮罩*/
 .keryi_barter_login > .keryi_barter_login_shadow {
     position: absolute;
     width: 100%;
@@ -39,6 +43,7 @@
     /*background-color: rgba(0, 0, 0, 0.7);*/
 }
 
+/*login页面登录模块主要介绍内容上下、左右居中*/
 .keryi_barter_login > .keryi_barter_login_description_module {
     position: relative;
     width: 100%;
@@ -50,17 +55,41 @@
     z-index: 2500;
 }
 
+/*login页面登录模块主要介绍内容头部设置字体颜色为白色*/
 .keryi_barter_login_description_module > .keryi_barter_login_description_head {
     color: #fff;
 }
 
+/*login页面登录模块主要介绍内容头部标题字体类型、字体大小和字体阴影配置*/
 .keryi_barter_login_description_head > .keryi_barter_login_description_head_title {
-    font-family: "Microsoft YaHei UI";
-    font-size: 62px;
+    font-family: "Microsoft JhengHei UI";
+    font-weight: bolder;
+    font-size: 70px;
     text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
 }
 
+/*login页面登录模块主要介绍内容头部logo字体大小和字体阴影配置*/
 .keryi_barter_login_description_head > .keryiBarter-keryiLogo {
-    font-size: 70px;
+    font-size: 84px;
     text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+/*login页面登录模块主要介绍内容标题和描述的字体大小、字体颜色、容器宽度、外边距和居中对齐设置*/
+.keryi_barter_login_description_module > .keryi_barter_login_description_title,
+.keryi_barter_login_description_module > .keryi_barter_login_description {
+    width: 600px;
+    font-size: 42px;
+    color: #fff;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/*login页面登录模块主要介绍内容标题外边距重置*/
+.keryi_barter_login_description_module > .keryi_barter_login_description_title {
+    margin-top: 32px;
+}
+
+/*login页面登录模块主要介绍内容描述字体大小重置*/
+.keryi_barter_login_description_module > .keryi_barter_login_description {
+    font-size: 16px;
 }
