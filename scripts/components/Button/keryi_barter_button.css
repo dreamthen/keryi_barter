@@ -24,13 +24,25 @@ button:hover {
     color: #67AFFA;
 }
 
+.keryi_barter_sm_button > button {
+    width: 50px;
+}
+
+.keryi_barter_md_button > button {
+    width: 100px;
+}
+
+.keryi_barter_lg_button > button {
+    width: 150px;
+}
+
 .keryi_barter_primary_button > button {
     background-color: #67AFFA;
     color: #fff;
     border: 1px solid #67AFFA;
 }
 
-.keryi_barter_primary_button > button > i {
+button > i {
     font-size: 18px;
     margin-left: 2px;
 }

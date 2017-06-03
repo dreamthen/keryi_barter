@@ -37,7 +37,7 @@ export class Button extends React.Component {
      */
     sizeToStyle() {
         const {size} = this.props;
-        //在传入size且size类型为string时,Button按钮用sizeConfig中的指定style样式宽度;在不传入按钮大小size、size为空或者size类型错误时,Button按钮style样式宽度用默认宽度100px
+        //在传入size且size类型为string时,Button按钮用sizeConfig中的指定className样式表宽度;在不传入按钮大小size、size为空或者size类型错误时,Button按钮className样式表用默认宽度100px
         return size ? sizeConfig[size] : sizeConfig[defaultSizeConfig];
     }
 
@@ -59,11 +59,10 @@ export class Button extends React.Component {
             onClick
         } = this.props;
         return (
-            <div className={typeToClass.bind(this)()}>
+            <div className={typeToClass.bind(this)() + " " + sizeToStyle.bind(this)()}>
                 <button
                     className={className}
                     onClick={onClick}
-                    style={sizeToStyle.bind(this)()}
                 >
                     {children}
                 </button>

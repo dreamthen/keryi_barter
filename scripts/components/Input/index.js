@@ -2,6 +2,8 @@
  * Created by yinwk on 2017/6/3.
  */
 import React, {PropTypes} from "react";
+import sizeConfig from "./config/sizeConfig";
+import typeConfig from "./config/typeConfig";
 import "./keryi_barter_input.css";
 
 export class Input extends React.Component {
@@ -17,6 +19,14 @@ export class Input extends React.Component {
     }
 
     render() {
-
+        const {className} = this.props;
+        return (
+            <div className="">
+                <input
+                    className={className}
+                    type=""
+                />
+            </div>
+        )
     }
 }

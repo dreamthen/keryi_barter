@@ -4,11 +4,11 @@
 //Button按钮尺寸设置
 const sizeConfig = {
     //小尺寸Button按钮
-    small: {width: 50},
+    small: "keryi_barter_sm_button",
     //默认尺寸Button按钮
-    default: {width: 100},
+    default: "keryi_barter_md_button",
     //大尺寸Button按钮
-    large: {width: 150}
+    large: "keryi_barter_lg_button"
 };
 
 //导出Button按钮尺寸设置
