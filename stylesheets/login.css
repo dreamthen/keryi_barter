@@ -9,9 +9,7 @@
 }
 
 /*login页面副级容器介绍模块、登录模块和注册模块*/
-.keryi_barter_login_page_container > .keryi_barter_login,
-.keryi_barter_login_page_container > .keryi_barter_description,
-.keryi_barter_login_page_container > .keryi_barter_register {
+.keryi_barter_login_page_container > .keryi_barter_login_page_module {
     position: relative;
     float: left;
     width: 100%;
@@ -22,8 +20,13 @@
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    background: url(/images/login_bg.png) no-repeat center center / 100% border-box content-box;
+    background: url(/images/description_bg.png) no-repeat center center / 100% border-box content-box;
     z-index: 1500;
+}
+
+/*login页面副级容器登录模块背景*/
+.keryi_barter_login_page_container > .keryi_barter_login {
+    background: url(/images/login_bg.png) no-repeat center center / 100% border-box content-box;
 }
 
 /*login页面副级容器注册模块背景*/
@@ -31,8 +34,8 @@
     background: url(/images/register_bg.png) no-repeat center center / 100% border-box content-box;
 }
 
-/*login页面介绍模块渐变阴影遮罩*/
-.keryi_barter_description > .keryi_barter_description_shadow {
+/*login页面渐变阴影遮罩*/
+.keryi_barter_login_page_module > .keryi_barter_shadow {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -43,8 +46,8 @@
     /*background-color: rgba(0, 0, 0, 0.7);*/
 }
 
-/*login页面介绍模块主要介绍内容上下、左右居中*/
-.keryi_barter_description > .keryi_barter_description_module {
+/*login页面介绍模块、登录模块和注册模块主要介绍内容上下、左右居中*/
+.keryi_barter_login_page_module > .keryi_barter_all_module {
     position: relative;
     width: 100%;
     height: 100%;
@@ -56,8 +59,10 @@
 }
 
 /*login页面介绍模块主要介绍内容头部设置字体颜色为白色*/
-.keryi_barter_description_module > .keryi_barter_description_head {
+.keryi_barter_description_module > .keryi_barter_description_head,
+.keryi_barter_login_module > .keryi_barter_login_head {
     color: #fff;
+    text-align: center;
 }
 
 /*login页面介绍模块主要介绍内容头部标题字体类型、字体大小和字体阴影配置*/
@@ -94,14 +99,30 @@
     font-size: 16px;
 }
 
+/*login页面介绍模块向下箭头动画过渡到login登录模块字体颜色和布局方式配置*/
 .keryi_barter_description_module > .keryi_barter_description_to_login {
     color: #fff;
     position: absolute;
     bottom: 2px;
 }
 
+/*login页面介绍模块向下箭头动画过渡到login登录模块字体大小和字体粗细配置*/
 .keryi_barter_description_to_login > .keryiBarter-downward {
     font-size: 40px;
     font-weight: lighter;
     cursor: pointer;
+}
+
+.keryi_barter_login_head > .keryi_barter_login_head_title {
+    font-family: "Microsoft YaHei UI";
+    font-size: 42px;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+
+.keryi_barter_login_head > .keryi_barter_login_head_title_en {
+    font-family: "Consolas";
+    font-size: 20px;
+    font-weight: normal;
+    letter-spacing: 1px;
 }

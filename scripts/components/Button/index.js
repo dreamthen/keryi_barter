@@ -6,17 +6,23 @@ import sizeConfig from "./config/sizeConfig";
 import typeConfig from "./config/typeConfig";
 import "./keryi_barter_button.css";
 
-//在不传入type、type为空或者type类型错误时,Button按钮className样式表用默认类型
+//在不传入按钮类型type、type为空或者type类型错误时,Button按钮className样式表用默认类型
 const defaultTypeConfig = "default";
+//在不传入按钮大小size、size为空或者size类型错误时,Button按钮style样式宽度用默认宽度100px
+const defaultSizeConfig = "default";
 
 /**
  * keryi_barter Button按钮组件
  */
 export class Button extends React.Component {
     static propTypes = {
+        //Button组件按钮类型:default,primary,warning和error,默认为default
         type: PropTypes.string,
+        //Button组件按钮大小:small,default和large,默认为default
         size: PropTypes.string,
+        //Button组件按钮className,外部传入样式表
         className: PropTypes.string,
+        //Button组件按钮onClick点击事件,外部传入点击函数
         onClick: PropTypes.func
     };
 
@@ -31,7 +37,8 @@ export class Button extends React.Component {
      */
     sizeToStyle() {
         const {size} = this.props;
-        return sizeConfig[size];
+        //在传入size且size类型为string时,Button按钮用sizeConfig中的指定style样式宽度;在不传入按钮大小size、size为空或者size类型错误时,Button按钮style样式宽度用默认宽度100px
+        return size ? sizeConfig[size] : sizeConfig[defaultSizeConfig];
     }
 
     /**
