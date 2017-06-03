@@ -9,7 +9,12 @@ import "../../stylesheets/login.css";
 class LoginView extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            //login页面副级容器距离页面最上方的长度
+            top: 0,
+            //login页面副级容器距离页面最左方的长度
+            left: 0
+        }
     }
 
     /**
@@ -27,11 +32,11 @@ class LoginView extends React.Component {
     }
 
     /**
-     * render渲染login登录模块
+     * render渲染description介绍模块
      * @returns {XML}
      */
     renderDescription() {
-        const {descriptiontoLogin} = this;
+        const {descriptionToLogin} = this;
         return (
             <section className="keryi_barter_description">
                 <div className="keryi_barter_description_shadow">
@@ -53,20 +58,46 @@ class LoginView extends React.Component {
                     <Button
                         size="large"
                         type="primary"
-                        onClick={descriptiontoLogin.bind(this)()}
+                        onClick={descriptionToLogin.bind(this)}
                     >
                         开始吧
                         <i className="iconfontKeryiBarter keryiBarter-keryiLogo">
 
                         </i>
                     </Button>
+                    <div className="keryi_barter_description_to_login">
+                        <i
+                            className="iconfontKeryiBarter keryiBarter-downward"
+                            onClick={descriptionToLogin.bind(this)}
+                        >
+
+                        </i>
+                    </div>
                 </div>
             </section>
         )
     }
 
-    descriptiontoLogin() {
+    /**
+     * 从description介绍模块动画过渡到login登录模块
+     */
+    descriptionToLogin() {
+        //将login页面副级容器距离页面最上方的长度设置为100%
+        this.setState({
+            top: "-100%"
+        });
+    }
 
+    /**
+     * render渲染login登录模块
+     * @returns {XML}
+     */
+    renderLogin() {
+        return (
+            <section className="keryi_barter_login">
+
+            </section>
+        )
     }
 
     /**
@@ -82,12 +113,18 @@ class LoginView extends React.Component {
     }
 
     render() {
-        const {renderDescription, renderRegister} = this;
+        const {top, left} = this.state;
+        const {renderDescription, renderLogin, renderRegister} = this;
         return (
             //login页面副级容器
-            <div className="keryi_barter_login_page_container">
+            <div
+                className="keryi_barter_login_page_container"
+                style={{top, left}}
+            >
                 {/*login页面介绍模块*/}
                 {renderDescription.bind(this)()}
+                {/*login页面登录模块*/}
+                {renderLogin.bind(this)()}
                 {/*login页面注册模块*/}
                 {renderRegister.bind(this)()}
             </div>
