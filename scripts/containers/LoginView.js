@@ -161,7 +161,10 @@ class LoginView extends React.Component {
      * @returns {XML}
      */
     renderLogin() {
-        const {renderComponent} = this;
+        const {
+            renderComponent,
+            loginToRegister
+        } = this;
         return (
             //login页面副级容器登录模块
             <section
@@ -184,6 +187,14 @@ class LoginView extends React.Component {
                     <div className="keryi_barter_login_main">
                         {/*render渲染根据需求配置完成的组件*/}
                         {renderComponent.bind(this)()}
+                        <Button
+                            type="primary"
+                            size="large"
+                            className="keryi_barter_login_button"
+                            onClick={loginToRegister.bind(this)}
+                        >
+                            登录
+                        </Button>
                     </div>
                 </div>
             </section>
@@ -202,6 +213,13 @@ class LoginView extends React.Component {
         });
         //取消冒泡
         e.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
+     * 从login登录模块动画过渡到register注册模块
+     */
+    loginToRegister() {
+
     }
 
     /**
