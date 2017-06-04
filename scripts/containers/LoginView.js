@@ -4,7 +4,12 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Button} from "../components/Button";
+import {Input} from "../components/Input";
+import loginComponentConfig from "../configs/loginComponentConfig";
 import "../../stylesheets/login.css";
+
+//组件类型
+const componentType = ["input"];
 
 class LoginView extends React.Component {
     constructor(props) {
@@ -21,7 +26,9 @@ class LoginView extends React.Component {
             //login页面副级容器注册模块距离页面最上方的长度
             registerTop: "-100%",
             //login页面副级容器注册模块距离页面最左方的长度
-            registerLeft: "-100%"
+            registerLeft: "-100%",
+            //Input输入框内容
+            inputValue: "",
         }
     }
 
@@ -105,10 +112,56 @@ class LoginView extends React.Component {
     }
 
     /**
+     * 根据不同的组件类型配置来设置组件
+     * @param key
+     * @param include
+     * @param type
+     * @param placeholder
+     * @param className
+     * @returns {XML}
+     */
+    renderComponentConfig(key, include, type, placeholder, className) {
+        const {inputChangeHandler} = this;
+        switch (include) {
+            case componentType[0]:
+                return (
+                    <Input
+                        key={key}
+                        value={this.state[key]}
+                        type={type ? type : "text"}
+                        placeholder={placeholder}
+                        className={className}
+                        onChange={inputChangeHandler.bind(this, key)}
+                    />
+                );
+            default:
+                break;
+        }
+    }
+
+    /**
+     * render渲染根据需求配置完成的组件
+     * @returns {Array}
+     */
+    renderComponent() {
+        const {renderComponentConfig} = this;
+        return loginComponentConfig.map(function componentConfig(configItem, index) {
+            return renderComponentConfig.bind(this)(
+                configItem["key"],
+                configItem["include"],
+                configItem["type"],
+                configItem["placeholder"],
+                configItem["className"]
+            );
+        }.bind(this));
+    }
+
+    /**
      * render渲染login登录模块
      * @returns {XML}
      */
     renderLogin() {
+        const {renderComponent} = this;
         return (
             //login页面副级容器登录模块
             <section
@@ -117,8 +170,9 @@ class LoginView extends React.Component {
                 {/*login页面渐变阴影遮罩*/}
                 <div className="keryi_barter_shadow">
                 </div>
-                {/*login页面介绍模块、登录模块和注册模块主要介绍内容*/}
+                {/*login页面登录模块主要介绍内容*/}
                 <div className="keryi_barter_all_module keryi_barter_login_module">
+                    {/*login页面登录模块主要介绍内容头部*/}
                     <div className="keryi_barter_login_head">
                         <h2 className="keryi_barter_login_head_title">
                             登录
@@ -127,12 +181,27 @@ class LoginView extends React.Component {
                             Login
                         </h3>
                     </div>
-                    <div>
-
+                    <div className="keryi_barter_login_main">
+                        {/*render渲染根据需求配置完成的组件*/}
+                        {renderComponent.bind(this)()}
                     </div>
                 </div>
             </section>
         )
+    }
+
+    /**
+     * Input输入框内容改变事件
+     * @param key
+     * @param e
+     */
+    inputChangeHandler(key, e) {
+        //利用setState将Input输入框内容改变
+        this.setState({
+            [key]: e.target.value
+        });
+        //取消冒泡
+        e.nativeEvent.stopImmediatePropagation();
     }
 
     /**

@@ -1,0 +1,27 @@
+@charset "utf-8";
+.keryi_barter_input {
+    box-sizing: border-box;
+}
+
+.keryi_barter_input > input {
+    padding: 11px 10px 11px 13px;
+    font: 16px/1.4 "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    box-shadow: none;
+    color: #222;
+}
+
+.keryi_barter_sm_input > input {
+    width: 50px;
+}
+
+.keryi_barter_md_input > input {
+    width: 100px;
+}
+
+.keryi_barter_lg_input > input {
+    width: 150px;
+}

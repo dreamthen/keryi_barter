@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-button {
+.keryi_barter_button > button {
     padding: 8px 12px;
     cursor: pointer;
     box-shadow: none;
@@ -19,7 +19,7 @@ button {
     transition: all .6s ease-in-out 0s;
 }
 
-button:hover {
+.keryi_barter_button > button:hover {
     border: 1px solid #67AFFA;
     color: #67AFFA;
 }
