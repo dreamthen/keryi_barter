@@ -69,12 +69,11 @@ class LoginView extends React.Component {
                     </div>
                     {/*login页面介绍模块主要介绍内容标题*/}
                     <div className="keryi_barter_description_title">
-                        Tumblr 用起来真是简单到难以解释。
+                        壳艺市场，越过cash，直达资源
                     </div>
                     {/*login页面介绍模块主要介绍内容描述*/}
                     <div className="keryi_barter_description_content">
-                        我们让创建博客和随心所欲发布内容的过程变得真的非常非常简单。故事、图片、GIF
-                        动图、电视剧、链接、俏皮话、冷笑话、不冷的笑话、Spotify的曲目、MP3、视频、时尚、艺术，以及有深度的内容。Tumblr 是 349 百万个不同的博客，实实在在地涵盖了所有内容。
+                        我们力图使生产力的生产过程摆脱资金链的压力，使现实市场跳出空间的局限；我们力图改变国内网站呆板的设计，尝试将艺术与商业结合，给用户带来便利的同时，尽享独特美感。
                     </div>
                     {/*login页面介绍模块"开始吧"按钮动画过渡到login登录模块*/}
                     <Button
@@ -172,6 +171,16 @@ class LoginView extends React.Component {
             >
                 {/*login页面渐变阴影遮罩*/}
                 <div className="keryi_barter_shadow">
+                </div>
+                {/*login页面登录模块头部*/}
+                <div className="keryi_barter_login_upside">
+                    <div className="keryi_barter_login_mainUpside">
+                        <div className="keryi_barter_login_logo">
+                            <i className="iconfontKeryiBarter keryiBarter-keryiLogo">
+
+                            </i>
+                        </div>
+                    </div>
                 </div>
                 {/*login页面登录模块主要介绍内容*/}
                 <div className="keryi_barter_all_module keryi_barter_login_module">
