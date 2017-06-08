@@ -1,21 +1,22 @@
 /**
- * Created by yinwk on 2017/6/4.
+ * Created by yinwk on 2017/6/8.
  */
-const loginComponentConfig = [
+const registerComponentConfig = [
     {
         key: "inputValue",
         include: "input",
-        value: "电子邮件",
-        placeholder: "电子邮件或者手机号",
+        value: "您当前使用的邮件地址",
+        placeholder: "您当前使用的邮件地址或者手机号",
         className: "keryi_barter_loginOrRegister_input"
     },
     {
         key: "inputPassword",
         include: "input",
         type: "password",
+        value: "注册密码",
         placeholder: "密码",
         className: "keryi_barter_loginOrRegister_input_password"
     }
 ];
 
-export default loginComponentConfig;
+export default registerComponentConfig;

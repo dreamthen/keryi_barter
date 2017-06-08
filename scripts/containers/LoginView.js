@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {Button} from "../components/Button";
 import {Input} from "../components/Input";
 import loginComponentConfig from "../configs/loginComponentConfig";
+import registerComponentConfig from "../configs/registerComponentConfig";
 import "../../stylesheets/login.css";
 
 //组件类型
@@ -26,9 +27,11 @@ class LoginView extends React.Component {
             //login页面副级容器注册模块距离页面最上方的长度
             registerTop: "-100%",
             //login页面副级容器注册模块距离页面最左方的长度
-            registerLeft: "-100%",
-            //Input输入框内容
+            registerLeft: "100%",
+            //Input输入框电子邮件内容
             inputValue: "",
+            //Input输入框密码内容
+            inputPassword: ""
         }
     }
 
@@ -47,6 +50,16 @@ class LoginView extends React.Component {
     }
 
     /**
+     * 初始化login页面登录模块和注册模块输入框数据
+     */
+    initLogin() {
+        this.setState({
+            inputValue: "",
+            inputPassword: ""
+        });
+    }
+
+    /**
      * render渲染description介绍模块
      * @returns {XML}
      */
@@ -62,10 +75,10 @@ class LoginView extends React.Component {
                 <div className="keryi_barter_all_module keryi_barter_description_module">
                     {/*login页面介绍模块主要介绍内容头部*/}
                     <div className="keryi_barter_description_head">
-                        <span className="keryi_barter_description_head_title">壳艺</span>
                         <i className="iconfontKeryiBarter keryiBarter-keryiLogo">
 
                         </i>
+                        <sub className="keryi_barter_description_head_title">壳艺</sub>
                     </div>
                     {/*login页面介绍模块主要介绍内容标题*/}
                     <div className="keryi_barter_description_title">
@@ -80,6 +93,7 @@ class LoginView extends React.Component {
                         size="large"
                         type="primary"
                         onClick={descriptionToLogin.bind(this)}
+                        className="keryi_barter_description_start"
                     >
                         开始吧
                         <i className="iconfontKeryiBarter keryiBarter-keryiLogo">
@@ -104,10 +118,13 @@ class LoginView extends React.Component {
      * 从description介绍模块动画过渡到login登录模块
      */
     descriptionToLogin() {
+        const {initLogin} = this;
         //将login页面副级容器距离页面最上方的长度设置为100%
         this.setState({
             top: "-100%"
         });
+        //初始化login页面登录模块和注册模块输入框数据
+        initLogin.bind(this)();
     }
 
     /**
@@ -142,9 +159,9 @@ class LoginView extends React.Component {
      * render渲染根据需求配置完成的组件
      * @returns {Array}
      */
-    renderComponent() {
+    renderComponent(ComponentConfig) {
         const {renderComponentConfig} = this;
-        return loginComponentConfig.map(function componentConfig(configItem, index) {
+        return ComponentConfig.map(function componentConfig(configItem, index) {
             return renderComponentConfig.bind(this)(
                 configItem["key"],
                 configItem["include"],
@@ -160,47 +177,61 @@ class LoginView extends React.Component {
      * @returns {XML}
      */
     renderLogin() {
+        const {loginLeft, loginTop} = this.state;
         const {
             renderComponent,
-            loginToRegister
+            loginChangeRegister
         } = this;
         return (
             //login页面副级容器登录模块
             <section
                 className="keryi_barter_login_page_module keryi_barter_login"
+                style={{top: loginTop, left: loginLeft}}
             >
                 {/*login页面渐变阴影遮罩*/}
-                <div className="keryi_barter_shadow">
+                <div className="keryi_barter_shadow keryi_barter_loginOrRegister_shadow">
                 </div>
                 {/*login页面登录模块头部*/}
-                <div className="keryi_barter_login_upside">
-                    <div className="keryi_barter_login_mainUpside">
-                        <div className="keryi_barter_login_logo">
+                <div className="keryi_barter_upside">
+                    <nav className="keryi_barter_mainUpside">
+                        <div className="keryi_barter_logo">
                             <i className="iconfontKeryiBarter keryiBarter-keryiLogo">
 
                             </i>
+                            <sub className="keryi_barter_login_title">
+                                壳艺
+                            </sub>
                         </div>
-                    </div>
+                        <div className="keryi_barter_button_transform">
+                            <Button
+                                type="primary"
+                                size="small"
+                                className="keryi_barter_button_toLogin"
+                                onClick={loginChangeRegister.bind(this, "-100%", 0)}
+                            >
+                                注 册
+                            </Button>
+                        </div>
+                    </nav>
                 </div>
                 {/*login页面登录模块主要介绍内容*/}
-                <div className="keryi_barter_all_module keryi_barter_login_module">
+                <div className="keryi_barter_all_module keryi_barter_loginOrRegister_module">
                     {/*login页面登录模块主要介绍内容头部*/}
-                    <div className="keryi_barter_login_head">
-                        <h2 className="keryi_barter_login_head_title">
+                    <div className="keryi_barter_loginOrRegister_head">
+                        <h2 className="keryi_barter_loginOrRegister_head_title">
                             登录
                         </h2>
-                        <h3 className="keryi_barter_login_head_title_en">
+                        <h3 className="keryi_barter_loginOrRegister_head_title_en">
                             Login
                         </h3>
                     </div>
-                    <div className="keryi_barter_login_main">
-                        {/*render渲染根据需求配置完成的组件*/}
-                        {renderComponent.bind(this)()}
+                    <div className="keryi_barter_loginOrRegister_main">
+                        {/*render渲染根据Login需求配置完成的组件*/}
+                        {renderComponent.bind(this)(loginComponentConfig)}
                         <Button
                             type="primary"
                             size="large"
-                            className="keryi_barter_login_button"
-                            onClick={loginToRegister.bind(this)}
+                            className="keryi_barter_loginOrRegister_button"
                         >
                             登录
                         </Button>
@@ -225,10 +256,19 @@ class LoginView extends React.Component {
     }
 
     /**
-     * 从login登录模块动画过渡到register注册模块
+     * 从login登录模块动画过渡到register注册模块或者从register注册模块动画过渡到login登录模块
+     * @param loginLeft
+     * @param registerLeft
      */
-    loginToRegister() {
-
+    loginChangeRegister(loginLeft, registerLeft) {
+        const {initLogin} = this;
+        //将login登录模块的内容距离屏幕最左边设置为-100%;login注册模块的内容距离屏幕最左边设置为0
+        this.setState({
+            loginLeft,
+            registerLeft
+        });
+        //初始化login页面登录模块和注册模块输入框数据
+        initLogin.bind(this)();
     }
 
     /**
@@ -236,12 +276,68 @@ class LoginView extends React.Component {
      * @returns {XML}
      */
     renderRegister() {
+        const {registerLeft, registerTop} = this.state;
+        const {
+            renderComponent,
+            loginChangeRegister
+        } = this;
         return (
-            <section className="keryi_barter_login_page_module keryi_barter_register">
+            <section
+                className="keryi_barter_login_page_module keryi_barter_register"
+                style={{
+                    top: registerTop,
+                    left: registerLeft
+                }}
+            >
                 {/*login页面渐变阴影遮罩*/}
-                <div className="keryi_barter_shadow">
+                <div className="keryi_barter_shadow keryi_barter_loginOrRegister_shadow">
                 </div>
+                {/*login页面登录模块头部*/}
+                <div className="keryi_barter_upside">
+                    <nav className="keryi_barter_mainUpside">
+                        <div className="keryi_barter_logo">
+                            <i className="iconfontKeryiBarter keryiBarter-keryiLogo">
 
+                            </i>
+                            <sub className="keryi_barter_logo_title">
+                                壳艺
+                            </sub>
+                        </div>
+                        <div className="keryi_barter_button_transform">
+                            <Button
+                                type="primary"
+                                size="small"
+                                className="keryi_barter_button_toLogin"
+                                onClick={loginChangeRegister.bind(this, 0, "100%")}
+                            >
+                                登 录
+                            </Button>
+                        </div>
+                    </nav>
+                </div>
+                {/*login页面注册模块主要介绍内容*/}
+                <div className="keryi_barter_all_module keryi_barter_loginOrRegister_module">
+                    {/*login页面注册模块主要介绍内容头部*/}
+                    <div className="keryi_barter_loginOrRegister_head">
+                        <h2 className="keryi_barter_loginOrRegister_head_title">
+                            注册
+                        </h2>
+                        <h3 className="keryi_barter_loginOrRegister_head_title_en">
+                            Register
+                        </h3>
+                    </div>
+                    <div className="keryi_barter_loginOrRegister_main">
+                        {/*render渲染根据Register需求配置完成的组件*/}
+                        {renderComponent.bind(this)(registerComponentConfig)}
+                        <Button
+                            type="primary"
+                            size="large"
+                            className="keryi_barter_loginOrRegister_button"
+                        >
+                            注册
+                        </Button>
+                    </div>
+                </div>
             </section>
         )
     }

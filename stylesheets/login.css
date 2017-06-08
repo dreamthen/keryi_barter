@@ -14,13 +14,12 @@
     float: left;
     width: 100%;
     height: 100%;
-    top: 0;
-    left: 0;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
     background: url(/images/description_bg.png) no-repeat center center / 100% border-box content-box;
+    transition: all .8s ease-in-out 0s;
     z-index: 1500;
 }
 
@@ -41,34 +40,69 @@
     height: 100%;
     top: 0;
     left: 0;
-    background: linear-gradient(to top left, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.7));
+    background: linear-gradient(to top left, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.5));
     z-index: 2000;
-    /*background-color: rgba(0, 0, 0, 0.7);*/
 }
 
-.keryi_barter_login_page_module > .keryi_barter_login_upside {
+/*login页面登录模块和注册模块渐变阴影遮罩*/
+.keryi_barter_shadow.keryi_barter_loginOrRegister_shadow {
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.4));
+}
+
+/*login页面登录模块和注册模块头部*/
+.keryi_barter_login_page_module > .keryi_barter_upside {
     position: absolute;
     width: 100%;
-    height: 70px;
-    line-height: 70px;
+    height: 66px;
+    line-height: 66px;
     top: 0;
     left: 0;
-    z-index: 2500;
+    z-index: 3000;
 }
 
-.keryi_barter_login_upside > .keryi_barter_login_mainUpside {
+/*login页面登录模块和注册模块头部设置最小宽度960px,设置宽度为头部总大小的80%并居中*/
+.keryi_barter_upside > .keryi_barter_mainUpside {
     position: relative;
     width: 80%;
     min-width: 960px;
+    height: inherit;
     margin: 0 auto;
 }
 
-.keryi_barter_login_mainUpside > .keryi_barter_login_logo {
+/*login页面登录模块和注册模块头部设置logo颜色为主色#67AFFA*/
+.keryi_barter_mainUpside > .keryi_barter_logo {
+    float: left;
+    height: inherit;
     color: #fff;
 }
 
-.keryi_barter_login_logo > i {
-    font-size: 26px;
+/*login页面登录模块和注册模块头部设置按钮布局*/
+.keryi_barter_mainUpside > .keryi_barter_button_transform {
+    float: right;
+}
+
+/*login页面登录模块和注册模块头部设置按钮宽度、字体尺寸和字体粗细*/
+.keryi_barter_button_transform .keryi_barter_button_toLogin {
+    width: 64px;
+    font-size: 13px;
+    font-weight: bolder;
+}
+
+/*login页面登录模块和注册模块头部设置logo字体尺寸和字体阴影*/
+.keryi_barter_logo > i {
+    font-size: 45px;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+/*login页面登录模块和注册模块头部设置logo标题字体尺寸、字体粗细、字体类型、布局位置和字体阴影*/
+.keryi_barter_logo > .keryi_barter_logo_title {
+    position: relative;
+    top: 1px;
+    right: 4px;
+    font-family: "Microsoft JhengHei UI";
+    font-weight: bolder;
+    font-size: 15px;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 /*login页面介绍模块、登录模块和注册模块主要介绍内容上下、左右居中*/
@@ -83,28 +117,31 @@
     z-index: 2500;
 }
 
-/*login页面介绍模块主要介绍内容头部设置字体颜色为白色*/
+/*login页面介绍模块、登录模块和注册模块主要介绍内容头部设置字体颜色为白色*/
 .keryi_barter_description_module > .keryi_barter_description_head,
-.keryi_barter_login_module > .keryi_barter_login_head {
+.keryi_barter_loginOrRegister_module > .keryi_barter_loginOrRegister_head {
     color: #fff;
     text-align: center;
 }
 
-/*login页面介绍模块主要介绍内容头部标题字体类型、字体大小和字体阴影配置*/
+/*login页面介绍模块主要介绍内容头部标题字体类型、字体尺寸和字体阴影配置*/
 .keryi_barter_description_head > .keryi_barter_description_head_title {
+    position: relative;
+    top: 5px;
+    right: 10px;
     font-family: "Microsoft JhengHei UI";
     font-weight: bolder;
-    font-size: 70px;
+    font-size: 32px;
     text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
 }
 
 /*login页面介绍模块主要介绍内容头部logo字体大小和字体阴影配置*/
 .keryi_barter_description_head > .keryiBarter-keryiLogo {
-    font-size: 84px;
+    font-size: 92px;
     text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
 }
 
-/*login页面介绍模块主要介绍内容标题和描述的字体大小、字体颜色、容器宽度、外边距和居中对齐设置*/
+/*login页面介绍模块主要介绍内容标题和描述的字体尺寸、字体颜色、容器宽度、外边距和居中对齐设置*/
 .keryi_barter_description_module > .keryi_barter_description_title,
 .keryi_barter_description_module > .keryi_barter_description_content {
     width: 600px;
@@ -119,7 +156,7 @@
     margin-top: 32px;
 }
 
-/*login页面介绍模块主要介绍内容描述字体大小重置*/
+/*login页面介绍模块主要介绍内容描述字体尺寸重置*/
 .keryi_barter_description_module > .keryi_barter_description_content {
     font-size: 16px;
 }
@@ -131,6 +168,11 @@
     bottom: 2px;
 }
 
+/*login页面介绍模块"开始吧"按钮宽度*/
+.keryi_barter_description_module .keryi_barter_description_start {
+    width: 150px;
+}
+
 /*login页面介绍模块向下箭头动画过渡到login登录模块字体大小和字体粗细配置*/
 .keryi_barter_description_to_login > .keryiBarter-downward {
     font-size: 40px;
@@ -138,7 +180,8 @@
     cursor: pointer;
 }
 
-.keryi_barter_login_head > .keryi_barter_login_head_title {
+/*login页面登录模块和注册模块主要介绍内容标题字体大小、字体粗细、字体类型、内外边距和字母之间的距离尺寸*/
+.keryi_barter_loginOrRegister_head > .keryi_barter_loginOrRegister_head_title {
     font-family: "Microsoft YaHei UI";
     font-size: 42px;
     font-weight: normal;
@@ -146,18 +189,19 @@
     letter-spacing: 1px;
 }
 
-.keryi_barter_login_head > .keryi_barter_login_head_title_en {
-    font-family: "Consolas";
+/*login页面登录模块和注册模块主要介绍内容标题(英文)字体大小、字体粗细、字体类型和字母之间的距离尺寸*/
+.keryi_barter_loginOrRegister_head > .keryi_barter_loginOrRegister_head_title_en {
+    font-family: Consolas, Menlo, Courier, monospace;
     font-size: 20px;
     font-weight: normal;
     letter-spacing: 1px;
 }
 
-.keryi_barter_login_main {
+.keryi_barter_loginOrRegister_main {
     margin-top: 10px;
 }
 
-.keryi_barter_login_main .keryi_barter_login_input {
+.keryi_barter_loginOrRegister_main .keryi_barter_loginOrRegister_input {
     width: 300px;
     border-bottom-right-radius: 0;
     border-top-left-radius: 4px;
@@ -166,7 +210,7 @@
     border-bottom: 1px solid #d9d9d9;
 }
 
-.keryi_barter_login_main .keryi_barter_login_input_password {
+.keryi_barter_loginOrRegister_main .keryi_barter_loginOrRegister_input_password {
     width: 300px;
     border-bottom-right-radius: 4px;
     border-top-left-radius: 0;
@@ -174,7 +218,7 @@
     border-bottom-left-radius: 4px;
 }
 
-.keryi_barter_login_main .keryi_barter_login_button {
+.keryi_barter_loginOrRegister_main .keryi_barter_loginOrRegister_button {
     width: 300px;
     padding: 11px 10px 11px 13px;
     margin-top: 10px;
