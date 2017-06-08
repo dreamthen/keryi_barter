@@ -1,0 +1,47 @@
+@charset "utf-8";
+.keryi_barter_prompt > div {
+    padding: 8px 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.keryi_barter_prompt > div > i {
+    position: relative;
+    font-weight: normal;
+    margin-right: 6px;
+}
+
+.keryi_barter_prompt.keryi_barter_all_prompt > div {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.33);
+    text-align: center;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.keryi_barter_prompt.keryi_barter_sm_prompt > div {
+    font-size: 12px;
+}
+
+.keryi_barter_prompt.keryi_barter_sm_prompt > div > i {
+    font-size: 16px;
+}
+
+.keryi_barter_prompt.keryi_barter_md_prompt > div {
+    font-size: 14px;
+}
+
+.keryi_barter_prompt.keryi_barter_md_prompt > div > i {
+    font-size: 18px;
+}
+
+.keryi_barter_prompt.keryi_barter_lg_prompt > div {
+    font-size: 16px;
+}
+
+.keryi_barter_prompt.keryi_barter_lg_prompt > div > i {
+    font-size: 20px;
+}

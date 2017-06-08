@@ -2,8 +2,8 @@
  * Created by yinwk on 2017/6/3.
  */
 import React, {PropTypes} from "react";
-import sizeConfig from "./config/sizeConfig";
-import typeConfig from "./config/typeConfig";
+import sizeConfig from "./configs/sizeConfig";
+import typeConfig from "./configs/typeConfig";
 import "./keryi_barter_input.css";
 
 //在不传入输入框类型type、type为空或者type类型错误时,Input组件输入框className样式表用文本类型作为默认类型

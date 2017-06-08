@@ -5,6 +5,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {Button} from "../components/Button";
 import {Input} from "../components/Input";
+import {Prompt} from "../components/Prompt";
 import loginComponentConfig from "../configs/loginComponentConfig";
 import registerComponentConfig from "../configs/registerComponentConfig";
 import "../../stylesheets/login.css";
@@ -31,7 +32,19 @@ class LoginView extends React.Component {
             //Input输入框电子邮件内容
             inputValue: "",
             //Input输入框密码内容
-            inputPassword: ""
+            inputPassword: "",
+            //错误提示状态
+            isError: false,
+            //错误提示语
+            errorPrompt: "",
+            //警告提示状态
+            isWarn: false,
+            //警告提示语
+            warnPrompt: "",
+            //成功提示状态
+            isSuccess: false,
+            //成功提示语
+            successPrompt: ""
         }
     }
 
@@ -172,6 +185,32 @@ class LoginView extends React.Component {
         }.bind(this));
     }
 
+    renderPrompt() {
+        const {isError, errorPrompt, isWarn, warnPrompt, isSuccess, successPrompt} = this.state;
+        return (
+            <div className="keryi_barter_prompt_container">
+                {isError && <Prompt size="default" type="error" message={errorPrompt} showIcon/>}
+                {isWarn && <Prompt size="default" type="warning" message={warnPrompt} showIcon/>}
+                {isSuccess && <Prompt size="default" type="success" message={successPrompt} showIcon/>}
+            </div>
+        )
+    }
+
+    /**
+     *
+     * @param ComponentConfig
+     * @returns {boolean}
+     */
+    onCheck(ComponentConfig) {
+
+        ComponentConfig.forEach(function componentConfig(configItem, index) {
+            if (this.state[configItem["key"]] === "") {
+                return false;
+            }
+        }.bind(this));
+        return true;
+    }
+
     /**
      * render渲染login登录模块
      * @returns {XML}
@@ -180,6 +219,7 @@ class LoginView extends React.Component {
         const {loginLeft, loginTop} = this.state;
         const {
             renderComponent,
+            renderPrompt,
             loginChangeRegister
         } = this;
         return (
@@ -226,6 +266,8 @@ class LoginView extends React.Component {
                         </h3>
                     </div>
                     <div className="keryi_barter_loginOrRegister_main">
+                        {/*login页面登录模块提示语模块*/}
+                        {renderPrompt.bind(this)()}
                         {/*render渲染根据Login需求配置完成的组件*/}
                         {renderComponent.bind(this)(loginComponentConfig)}
                         <Button
@@ -279,6 +321,7 @@ class LoginView extends React.Component {
         const {registerLeft, registerTop} = this.state;
         const {
             renderComponent,
+            renderPrompt,
             loginChangeRegister
         } = this;
         return (
@@ -327,6 +370,8 @@ class LoginView extends React.Component {
                         </h3>
                     </div>
                     <div className="keryi_barter_loginOrRegister_main">
+                        {/*login页面注册模块提示语模块*/}
+                        {renderPrompt.bind(this)()}
                         {/*render渲染根据Register需求配置完成的组件*/}
                         {renderComponent.bind(this)(registerComponentConfig)}
                         <Button

@@ -2,13 +2,13 @@
  * Created by yinwk on 2017/6/2.
  */
 import React, {PropTypes} from "react";
-import sizeConfig from "./config/sizeConfig";
-import typeConfig from "./config/typeConfig";
+import sizeConfig from "./configs/sizeConfig";
+import typeConfig from "./configs/typeConfig";
 import "./keryi_barter_button.css";
 
 //在不传入按钮类型type、type为空或者type类型错误时,Button组件按钮className样式表用默认类型
 const defaultTypeConfig = "default";
-//在不传入按钮尺寸size、size为空或者size类型错误时,Button组件按钮className样式表用默认宽度100px
+//在不传入按钮尺寸size、size为空或者size类型错误时,Button组件按钮className样式表用默认字体尺寸14px
 const defaultSizeConfig = "default";
 
 /**
@@ -37,7 +37,7 @@ export class Button extends React.Component {
      */
     sizeToClass() {
         const {size} = this.props;
-        //在传入按钮尺寸size且size类型为string时,Button组件按钮用sizeConfig中的指定className样式表宽度;在不传入按钮尺寸size、size为空或者size类型错误时,Button组件按钮className样式表用默认宽度100px
+        //在传入按钮尺寸size且size类型为string时,Button组件按钮用sizeConfig中的指定className样式表字体尺寸;在不传入按钮尺寸size、size为空或者size类型错误时,Button组件按钮className样式表用默认字体尺寸14px
         return size ? sizeConfig[size] : sizeConfig[defaultSizeConfig];
     }
 
