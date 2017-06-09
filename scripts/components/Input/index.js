@@ -24,7 +24,9 @@ export class Input extends React.Component {
         //Input组件输入框onChange内容改变事件,外部传入Input输入框内容改变函数
         onChange: PropTypes.func,
         //Input组件输入框默认提示语
-        placeholder: PropTypes.string
+        placeholder: PropTypes.string,
+        //Input组件输入框可输入最大字符数
+        maxLength: PropTypes.number
     };
 
     constructor(props) {
@@ -55,17 +57,25 @@ export class Input extends React.Component {
     render() {
         const {typeToClass, sizeToClass} = this;
         const {
+            //Input组件输入框类型:text和password,默认为text
             type,
+            //Input组件输入框className,外部传入样式表
             className,
+            //Input组件输入框内容
             value,
+            //Input组件输入框onChange内容改变事件,外部传入Input输入框内容改变函数
             onChange,
-            placeholder
+            //Input组件输入框默认提示语
+            placeholder,
+            //Input组件输入框可输入最大字符数
+            maxLength
         } = this.props;
         return (
             <div className={typeToClass.bind(this)() + " " + sizeToClass.bind(this)()}>
                 <input
                     value={value}
                     placeholder={placeholder}
+                    maxLength={maxLength}
                     className={className}
                     type={type}
                     onChange={onChange}
