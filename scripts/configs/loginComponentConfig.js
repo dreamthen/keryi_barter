@@ -3,14 +3,14 @@
  */
 const loginComponentConfig = [
     {
-        key: "inputValue",
+        key: "account",
         include: "input",
         value: "电子邮件",
         placeholder: "电子邮件或者手机号",
         className: "keryi_barter_loginOrRegister_input"
     },
     {
-        key: "inputPassword",
+        key: "password",
         include: "input",
         type: "password",
         placeholder: "密码",

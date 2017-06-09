@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {Button} from "../components/Button";
 import {Input} from "../components/Input";
 import {Prompt} from "../components/Prompt";
+import Error from "../prompt/errorPrompt";
 import loginComponentConfig from "../configs/loginComponentConfig";
 import registerComponentConfig from "../configs/registerComponentConfig";
 import "../../stylesheets/login.css";
@@ -30,9 +31,9 @@ class LoginView extends React.Component {
             //login页面副级容器注册模块距离页面最左方的长度
             registerLeft: "100%",
             //Input输入框电子邮件内容
-            inputValue: "",
+            account: "",
             //Input输入框密码内容
-            inputPassword: "",
+            password: "",
             //错误提示状态
             isError: false,
             //错误提示语
@@ -67,8 +68,8 @@ class LoginView extends React.Component {
      */
     initLogin() {
         this.setState({
-            inputValue: "",
-            inputPassword: ""
+            account: "",
+            password: ""
         });
     }
 
@@ -185,6 +186,10 @@ class LoginView extends React.Component {
         }.bind(this));
     }
 
+    /**
+     * render渲染错误、警告和成功Prompt提示语组件
+     * @returns {XML}
+     */
     renderPrompt() {
         const {isError, errorPrompt, isWarn, warnPrompt, isSuccess, successPrompt} = this.state;
         return (
@@ -197,16 +202,48 @@ class LoginView extends React.Component {
     }
 
     /**
-     *
+     * 设置Prompt提示语组件状态(错误状态、警告状态和成功状态)
+     * @param isError
+     * @param isWarn
+     * @param isSuccess
+     */
+    setPromptTrueOrFalse(isError, isWarn, isSuccess) {
+        this.setState({
+            isError,
+            isWarn,
+            isSuccess
+        });
+    }
+
+    /**
+     * 集成Prompt提示语组件错误提示语以及提示语状态
+     * @param errorPrompt
+     */
+    setErrorPrompt(errorPrompt) {
+        const {setPromptTrueOrFalse} = this;
+        //设置Prompt提示语组件错误状态
+        setPromptTrueOrFalse.bind(this)(true, false, false);
+        //设置Prompt提示语组件错误提示语
+        this.setState({
+            errorPrompt
+        });
+    }
+
+    /**
+     * 登录或者注册校验空值和长度超限
+     * @param ConfigType
      * @param ComponentConfig
      * @returns {boolean}
      */
-    onCheck(ComponentConfig) {
-
+    onCheck(ConfigType, ComponentConfig) {
+        const {setErrorPrompt} = this;
         ComponentConfig.forEach(function componentConfig(configItem, index) {
             if (this.state[configItem["key"]] === "") {
+                //集成Prompt提示语组件错误提示语以及提示语状态
+                setErrorPrompt.bind(this)(Error[ConfigType.toUpperCase() + "_" + configItem["key"].toUpperCase() + "_NULL_VALUE"]);
                 return false;
             }
+
         }.bind(this));
         return true;
     }
@@ -238,7 +275,7 @@ class LoginView extends React.Component {
                             <i className="iconfontKeryiBarter keryiBarter-keryiLogo">
 
                             </i>
-                            <sub className="keryi_barter_login_title">
+                            <sub className="keryi_barter_logo_title">
                                 壳艺
                             </sub>
                         </div>

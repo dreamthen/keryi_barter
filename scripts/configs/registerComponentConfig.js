@@ -3,14 +3,14 @@
  */
 const registerComponentConfig = [
     {
-        key: "inputValue",
+        key: "account",
         include: "input",
         value: "您当前使用的邮件地址",
         placeholder: "您当前使用的邮件地址或者手机号",
         className: "keryi_barter_loginOrRegister_input"
     },
     {
-        key: "inputPassword",
+        key: "password",
         include: "input",
         type: "password",
         value: "注册密码",
