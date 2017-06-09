@@ -67,10 +67,21 @@ class LoginView extends React.Component {
      * 初始化login页面登录模块和注册模块输入框数据
      */
     initLogin() {
+        const {setPromptTrueOrFalse} = this;
         this.setState({
+            //Input输入框电子邮件内容
             account: "",
-            password: ""
+            //Input输入框密码内容
+            password: "",
+            //错误提示语
+            errorPrompt: "",
+            //警告提示语
+            warnPrompt: "",
+            //成功提示语
+            successPrompt: ""
         });
+        //设置Prompt提示语组件状态(错误状态、警告状态和成功状态)
+        setPromptTrueOrFalse.bind(this)(false, false, false);
     }
 
     /**
@@ -146,11 +157,12 @@ class LoginView extends React.Component {
      * @param key
      * @param include
      * @param type
+     * @param maxLength
      * @param placeholder
      * @param className
      * @returns {XML}
      */
-    renderComponentConfig(key, include, type, placeholder, className) {
+    renderComponentConfig(key, include, type, maxLength, placeholder, className) {
         const {inputChangeHandler} = this;
         switch (include) {
             case componentType[0]:
@@ -159,6 +171,7 @@ class LoginView extends React.Component {
                         key={key}
                         value={this.state[key]}
                         type={type ? type : "text"}
+                        maxLength={maxLength}
                         placeholder={placeholder}
                         className={className}
                         onChange={inputChangeHandler.bind(this, key)}
@@ -180,6 +193,7 @@ class LoginView extends React.Component {
                 configItem["key"],
                 configItem["include"],
                 configItem["type"],
+                configItem["maxLength"],
                 configItem["placeholder"],
                 configItem["className"]
             );
@@ -237,15 +251,35 @@ class LoginView extends React.Component {
      */
     onCheck(ConfigType, ComponentConfig) {
         const {setErrorPrompt} = this;
-        ComponentConfig.forEach(function componentConfig(configItem, index) {
-            if (this.state[configItem["key"]] === "") {
+        for (let i = 0; i < ComponentConfig.length; i++) {
+            //登录或者注册校验空值
+            if (this.state[ComponentConfig[i]["key"]] === "") {
                 //集成Prompt提示语组件错误提示语以及提示语状态
-                setErrorPrompt.bind(this)(Error[ConfigType.toUpperCase() + "_" + configItem["key"].toUpperCase() + "_NULL_VALUE"]);
+                setErrorPrompt.bind(this)(Error[ConfigType.toUpperCase() + "_" + ComponentConfig[i]["key"].toUpperCase() + "_NULL_VALUE"]);
                 return false;
             }
-
-        }.bind(this));
+            //登录或者注册校验长度超限
+            if (this.state[ComponentConfig[i]["key"]].length > ComponentConfig[i]["maxLength"]) {
+                setErrorPrompt.bind(this)(Error[ConfigType.toUpperCase() + "_" + ComponentConfig[i]["key"].toUpperCase() + "_EXCESS_LENGTH"]);
+                return false;
+            }
+        }
         return true;
+    }
+
+    /**
+     * 点击登录,登录个人账户
+     * @param e
+     */
+    onLoginHandler(e) {
+        const {onCheck} = this;
+        //登录校验空值和长度超限
+        const check = onCheck.bind(this, "login", loginComponentConfig);
+        if (check()) {
+
+        }
+        //取消冒泡
+        e.nativeEvent.stopImmediatePropagation();
     }
 
     /**
@@ -255,9 +289,14 @@ class LoginView extends React.Component {
     renderLogin() {
         const {loginLeft, loginTop} = this.state;
         const {
+            //render渲染根据需求配置完成的组件
             renderComponent,
+            //render渲染错误、警告和成功Prompt提示语组件
             renderPrompt,
-            loginChangeRegister
+            //从login登录模块动画过渡到register注册模块或者从register注册模块动画过渡到login登录模块
+            loginChangeRegister,
+            //点击登录,登录个人账户
+            onLoginHandler
         } = this;
         return (
             //login页面副级容器登录模块
@@ -311,6 +350,9 @@ class LoginView extends React.Component {
                             type="primary"
                             size="large"
                             className="keryi_barter_loginOrRegister_button"
+                            onClick={
+                                onLoginHandler.bind(this)
+                            }
                         >
                             登录
                         </Button>
@@ -351,15 +393,35 @@ class LoginView extends React.Component {
     }
 
     /**
+     * 点击注册,注册个人账户
+     * @param e
+     */
+    onRegisterHandler(e) {
+        const {onCheck} = this;
+        //注册校验空值和长度超限
+        const check = onCheck.bind(this, "register", registerComponentConfig);
+        if (check()) {
+
+        }
+        //取消冒泡
+        e.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
      * render渲染register注册模块
      * @returns {XML}
      */
     renderRegister() {
         const {registerLeft, registerTop} = this.state;
         const {
+            //render渲染根据需求配置完成的组件
             renderComponent,
+            //render渲染错误、警告和成功Prompt提示语组件
             renderPrompt,
-            loginChangeRegister
+            //从login登录模块动画过渡到register注册模块或者从register注册模块动画过渡到login登录模块
+            loginChangeRegister,
+            //点击注册,注册个人账户
+            onRegisterHandler
         } = this;
         return (
             <section
@@ -415,6 +477,9 @@ class LoginView extends React.Component {
                             type="primary"
                             size="large"
                             className="keryi_barter_loginOrRegister_button"
+                            onClick={
+                                onRegisterHandler.bind(this)
+                            }
                         >
                             注册
                         </Button>
