@@ -9,6 +9,7 @@ import {Prompt} from "../components/Prompt";
 import Error from "../prompt/errorPrompt";
 import loginComponentConfig from "../configs/loginComponentConfig";
 import registerComponentConfig from "../configs/registerComponentConfig";
+import {login, register} from "../actions/loginActions";
 import "../../stylesheets/login.css";
 
 //组件类型
@@ -208,9 +209,9 @@ class LoginView extends React.Component {
         const {isError, errorPrompt, isWarn, warnPrompt, isSuccess, successPrompt} = this.state;
         return (
             <div className="keryi_barter_prompt_container">
-                {isError && <Prompt size="default" type="error" message={errorPrompt} showIcon/>}
-                {isWarn && <Prompt size="default" type="warning" message={warnPrompt} showIcon/>}
-                {isSuccess && <Prompt size="default" type="success" message={successPrompt} showIcon/>}
+                {isError && <Prompt size="default" type="error" message={errorPrompt} showIcon className="keryi_barter_fixedLength_prompt" />}
+                {isWarn && <Prompt size="default" type="warning" message={warnPrompt} showIcon className="keryi_barter_fixedLength_prompt"/>}
+                {isSuccess && <Prompt size="default" type="success" message={successPrompt} showIcon className="keryi_barter_fixedLength_prompt"/>}
             </div>
         )
     }
@@ -272,11 +273,14 @@ class LoginView extends React.Component {
      * @param e
      */
     onLoginHandler(e) {
+        const {account, password} = this.state;
         const {onCheck} = this;
         //登录校验空值和长度超限
         const check = onCheck.bind(this, "login", loginComponentConfig);
         if (check()) {
-
+            //点击登录,发起keryi_barter login fetch请求
+            const login_action = login.bind(this);
+            login_action(account, password);
         }
         //取消冒泡
         e.nativeEvent.stopImmediatePropagation();
@@ -397,11 +401,14 @@ class LoginView extends React.Component {
      * @param e
      */
     onRegisterHandler(e) {
+        const {account, password} = this.state;
         const {onCheck} = this;
         //注册校验空值和长度超限
         const check = onCheck.bind(this, "register", registerComponentConfig);
         if (check()) {
-
+            const register_action = register.bind(this);
+            //点击注册,发起keryi_barter register fetch请求
+            register_action(account, password);
         }
         //取消冒泡
         e.nativeEvent.stopImmediatePropagation();

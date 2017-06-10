@@ -205,6 +205,12 @@
     margin-bottom: 4px;
 }
 
+.keryi_barter_prompt_container .keryi_barter_fixedLength_prompt {
+    width: 300px;
+    word-break: break-all;
+    box-sizing: border-box;
+}
+
 .keryi_barter_loginOrRegister_main .keryi_barter_loginOrRegister_input {
     width: 300px;
     border-bottom-right-radius: 0;
