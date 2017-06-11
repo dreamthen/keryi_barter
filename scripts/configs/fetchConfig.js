@@ -52,7 +52,9 @@ const keryiFetchConfig = {
      * @returns {string}
      */
     urlSearchParamsConfig: function (url, data) {
+        //URLSearchParams可以整合传递过来的对象转化为get请求参数,
         let params = new URLSearchParams();
+        //利用for...in将对象的属性和属性值整合到URLSearchParams里面,转化为key=value&keyAnother=valueAnother
         for (let dataProps in data) {
             params.append(dataProps, data[dataProps]);
         }
