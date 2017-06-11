@@ -16,6 +16,8 @@ if (!isMock) {
         //注册
         KERYI_REGISTER: keryi_cover + "session/signup"
     }
+} else {
+
 }
 
 //导出接口API对象
