@@ -7,7 +7,7 @@ const registerComponentConfig = [
         include: "input",
         value: "您当前使用的邮件地址",
         maxLength: 25,
-        placeholder: "您当前使用的邮件地址或者手机号",
+        placeholder: "您当前使用的邮件地址或者手机号码",
         className: "keryi_barter_loginOrRegister_input"
     },
     {

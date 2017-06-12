@@ -12,9 +12,9 @@ let api = {};
 if (!isMock) {
     api = {
         //登录
-        KERYI_LOGIN: keryi_cover + "session/login",
+        KERYI_LOGIN: keryi_cover + "sessions/login",
         //注册
-        KERYI_REGISTER: keryi_cover + "session/signup"
+        KERYI_REGISTER: keryi_cover + "sessions/signup"
     }
 } else {
 

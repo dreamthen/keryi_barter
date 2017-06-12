@@ -7,7 +7,7 @@ const loginComponentConfig = [
         include: "input",
         value: "电子邮件",
         maxLength: 25,
-        placeholder: "电子邮件或者手机号",
+        placeholder: "电子邮件或者手机号码",
         className: "keryi_barter_loginOrRegister_input"
     },
     {
