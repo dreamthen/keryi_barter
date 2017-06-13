@@ -7,9 +7,11 @@ import "../../stylesheets/app.css";
 
 class AppView extends React.Component {
     render() {
+        const {children} = this.props;
         return (
             <div>
                 hello,world
+                {children}
             </div>
         )
     }

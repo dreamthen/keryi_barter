@@ -20,6 +20,7 @@ const routes = (
             routesMode.map((routeItem, routeIndex) => {
                 return (
                     <Route
+                        key={routeIndex}
                         path={routeItem["path"]}
                         component={routeItem["component"]}
                     />
