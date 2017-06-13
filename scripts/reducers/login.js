@@ -8,4 +8,5 @@ const reducers = combineReducers({
 
 });
 
+//导出集成的reducers
 export default reducers;

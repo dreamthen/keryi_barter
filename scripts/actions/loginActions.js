@@ -34,6 +34,10 @@ export function login(account, password) {
                 this.setState({
                     successPrompt: Success.LOGIN_SUCCESS_MESSAGE
                 });
+                //FIXME 这里设置一个时间控制器,登录成功后,看到成功提示语1.5s之后,跳转到keryi主页面
+                setTimeout(function timer() {
+                    window.location = "./index.html";
+                }.bind(this), 1500);
             } else {
                 //登录出现错误或者异常,设置警告提示语状态
                 setPromptTrueOrFalse.bind(this)(false, true, false);
@@ -78,9 +82,9 @@ export function register(account, password) {
                 this.setState({
                     successPrompt: Success.REGISTER_SUCCESS_MESSAGE
                 });
-                //FIXME
+                //FIXME 这里设置一个时间控制器,注册成功后,看到成功提示语1.5s之后,从register注册模块动画过渡到login登录模块
                 setTimeout(function timer() {
-                    //从login登录模块动画过渡到register注册模块或者从register注册模块动画过渡到login登录模块
+                    //从register注册模块动画过渡到login登录模块
                     loginChangeRegister.bind(this)(0, "100%");
                 }.bind(this), 1500);
             } else {

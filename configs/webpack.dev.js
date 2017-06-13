@@ -52,7 +52,7 @@ const keryi_dev_config = {
     //这里有两个入口,分别对应两个html文件--login.html和index.html
     entry: {
         login: APP_DIR + "/login.js",
-        index: APP_DIR + "/index.js"
+        index: APP_DIR + "/login.js"
     },
     //webpack web开发环境打包管理配置出口
     //包括根路径,文件输出路径和文件名

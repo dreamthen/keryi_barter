@@ -4,7 +4,7 @@
 import React from "react";
 import {render} from "react-dom";
 import {Provider} from "react-redux";
-import store from "./configs/storeConfig";
+import store from "./configs/storeLoginConfig";
 import LoginView from "./containers/LoginView";
 import "../stylesheets/common.css";
 
