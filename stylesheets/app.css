@@ -5,11 +5,14 @@ body {
     background-color: #67AFFA;
 }
 
+/*
+    keryi_barter页面副容器下的阴影遮罩
+*/
 .keryi_barter_index_page_container > .keryi_barter_shadow {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0), rgba(0, 0, 0, .4));
+    background: radial-gradient(circle at -7% -7%, rgba(255, 255, 255, 0), rgba(0, 0, 0, .6));
     z-index: 1000;
 }
 
@@ -17,12 +20,15 @@ body {
     keryi_barter页面副容器下的头部样式
 */
 .keryi_barter_index_page_container > .keryi_barter_head {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     min-width: 960px;
     height: 66px;
     line-height: 66px;
-    z-index: 1500;
+    border: 1px solid rgba(255, 255, 255, .3);
+    z-index: 2500;
 }
 
 /*
@@ -35,12 +41,31 @@ body {
 }
 
 /*
+    keryi_barter页面导航
+*/
+.keryi_barter_head > .keryi_barter_nav:after {
+    content: ".";
+    display: block;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+}
+
+/*
     keryi_barter页面logo容器样式
 */
 .keryi_barter_nav > .keryi_barter_logo {
     float: left;
     height: inherit;
     color: #fff;
+}
+
+/*
+    keryi_barter页面导航容器样式
+*/
+.keryi_barter_nav > .keryi_barter_nav_container {
+    float: right;
+    height: inherit;
 }
 
 /*
@@ -51,6 +76,9 @@ body {
     text-shadow: 1px 1px rgba(0, 0, 0, .5);
 }
 
+/*
+    keryi_barter页面logo标题样式
+*/
 .keryi_barter_logo > .keryi_barter_logo_title {
     position: relative;
     top: 1px;
@@ -60,3 +88,57 @@ body {
     font-size: 15px;
     text-shadow: 1px 1px rgba(0, 0, 0, .3);
 }
+
+/*
+    keryi_barter页面子导航样式
+*/
+.keryi_barter_nav_container > .keryi_barter_navItem {
+    float: left;
+    height: inherit;
+    margin-right: 16px;
+}
+
+/*
+    keryi_barter页面子导航icon样式
+*/
+.keryi_barter_navItem .iconfontKeryiBarter {
+    font-size: 24px;
+    color: #fff;
+    opacity: .5;
+}
+
+/*
+    keryi_barter页面添加barter列表按钮样式
+*/
+.keryi_barter_navItem .keryiBarter-addBarter {
+    position: relative;
+    top: 1px;
+    right: 1px;
+    opacity: 1;
+}
+
+.keryi_barter_navItem .keryi_barter_button_addBarter {
+    position: relative;
+    bottom: 1px;
+    padding: 4px 12px;
+}
+
+/*
+    keryi_barter页面选中的子导航路由icon样式
+*/
+.keryi_barter_navActiveItem .iconfontKeryiBarter {
+    opacity: 1;
+}
+
+/*
+    keryi_barter主页面主要内容barterList列表
+*/
+.keryi_barter_index_page_container > .keryi_barter_main {
+    position: relative;
+    top: 104px;
+    z-index: 1500;
+}
+
+
+
+

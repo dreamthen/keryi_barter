@@ -3,13 +3,22 @@
  */
 import React from "react";
 import {connect} from "react-redux";
+import {Card} from "../components/Card";
+import "../../stylesheets/barter.css";
 
 class BarterView extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+
+
+
     render() {
         return (
-            <h1>
-                Gary yin
-            </h1>
+            <div className="keryi_barter_main_container">
+                hello,world,my name is yinwk
+            </div>
         )
     }
 }

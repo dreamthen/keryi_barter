@@ -12,7 +12,8 @@ const routesMode = [
     //barter列表路由路径和路由组件BarterView
     {
         path: "/barter",
-        component: BarterView
+        component: BarterView,
+        icon: "iconfontKeryiBarter keryiBarter-barterHome"
     }
 ];
 

@@ -20,8 +20,8 @@
 }
 
 .keryi_barter_button > button:hover {
-    border: 1px solid #67AFFA;
-    color: #67AFFA;
+    border: 1px solid #63A8F0;
+    color: #63A8F0;
 }
 
 .keryi_barter_sm_button > button {
@@ -37,9 +37,9 @@
 }
 
 .keryi_barter_primary_button > button {
-    background-color: #67AFFA;
+    background-color: #63A8F0;
     color: #fff;
-    border: 1px solid #67AFFA;
+    border: 1px solid #63A8F0;
 }
 
 button > i {
@@ -48,7 +48,7 @@ button > i {
 }
 
 .keryi_barter_primary_button > button:hover {
-    border: 1px solid #67AFFA;
+    border: 1px solid #63A8F0;
     color: #fff;
 }
 

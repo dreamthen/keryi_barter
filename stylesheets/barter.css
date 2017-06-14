@@ -1,0 +1,6 @@
+@charset "utf-8";
+.keryi_barter_main > .keryi_barter_main_container {
+    width: 60%;
+    min-width: 625px;
+    margin: 0 auto;
+}
