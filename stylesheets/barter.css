@@ -1,6 +1,29 @@
 @charset "utf-8";
 .keryi_barter_main > .keryi_barter_main_container {
     width: 60%;
-    min-width: 625px;
+    min-width: 645px;
     margin: 0 auto;
 }
+
+.keryi_barter_main_container > .keryi_barter_main_module {
+    display: inline-block;
+}
+
+.keryi_barter_main_container > .keryi_barter_main_barterList {
+    width: 625px;
+}
+
+.keryi_barter_main_barterList > .keryi_barter_cardInfo {
+    width: 100%;
+}
+
+.keryi_barter_cardInfo > .keryi_barter_head_portrait {
+    width: 68px;
+    height: 68px;
+    display: inline-block;
+}
+
+.keryi_barter_main_container > .keryi_barter_main_aside {
+    width: calc(100% - 625px);
+}
+

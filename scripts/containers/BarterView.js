@@ -3,7 +3,8 @@
  */
 import React from "react";
 import {connect} from "react-redux";
-import {Card} from "../components/Card";
+import {KeryiCard} from "../components/KeryiCard";
+import {HeadPortrait} from "../components/HeadPortrait";
 import "../../stylesheets/barter.css";
 
 class BarterView extends React.Component {
@@ -13,11 +14,26 @@ class BarterView extends React.Component {
     }
 
 
-
     render() {
         return (
             <div className="keryi_barter_main_container">
-                hello,world,my name is yinwk
+                <div className="keryi_barter_main_module keryi_barter_main_barterList">
+                    <article className="keryi_barter_cardInfo">
+                        <figure
+                            className="keryi_barter_head_portrait"
+                        >
+                            <HeadPortrait
+                                headPortrait="/images/login_bg.png"
+                            />
+                        </figure>
+                        <KeryiCard
+                            headPortrait="/images/login_bg.png"
+                        />
+                    </article>
+                </div>
+                <aside className="keryi_barter_main_module keryi_barter_main_aside">
+
+                </aside>
             </div>
         )
     }
