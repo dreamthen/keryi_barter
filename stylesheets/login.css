@@ -1,4 +1,8 @@
 @charset "utf-8";
+body {
+    overflow: hidden;
+}
+
 /*login页面副级容器*/
 #keryi_barter_login_page > .keryi_barter_login_page_container {
     position: relative;

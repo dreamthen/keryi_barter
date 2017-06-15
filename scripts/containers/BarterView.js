@@ -33,9 +33,20 @@ class BarterView extends React.Component {
      * render渲染用户资源卡片
      * @returns {XML}
      */
-    renderKeryiCard(){
+    renderKeryiCard() {
         return (
             <KeryiCard
+                userName="1000yardStyle"
+                imageList={[{
+                    imageSrc: "/images/description_bg.png",
+                    imageName: "keryi介绍背景"
+                }, {
+                    imageSrc: "/images/login_bg.png",
+                    imageName: "keryi登录背景"
+                }, {
+                    imageSrc: "/images/register_bg.png",
+                    imageName: "keryi注册背景"
+                }]}
             />
         )
     }

@@ -8,6 +8,8 @@ export class KeryiCard extends React.Component {
     static Proptypes = {
         //KeryiCard组件卡片用户名
         userName: PropTypes.string,
+        //KeryiCard组件卡片标题
+        titile: PropTypes.string,
         //KeryiCard组件卡片上传图片数组
         imageList: PropTypes.array,
         //KeryiCard组件卡片资源介绍
@@ -23,16 +25,77 @@ export class KeryiCard extends React.Component {
         this.state = {}
     }
 
+    /**
+     * render渲染card主要内容头部
+     * @returns {XML}
+     */
+    renderCardHead() {
+        const {
+            //KeryiCard组件卡片用户名
+            userName
+        } = this.props;
+        return (
+            <header className="keryi_barter_card_header">
+                {userName}
+            </header>
+        )
+    }
+
+    /**
+     * render渲染card主要内容图片
+     * @returns {XML}
+     */
+    renderCardImage() {
+        const {renderCardImageList, renderCardImageNull} = this;
+        const {
+            //KeryiCard组件卡片上传图片数组
+            imageList
+        } = this.props;
+        //如果存在imageList图片组且imageList图片组的数量大于0,就渲染card图片组;如果不存在,就渲染返回null
+        return (imageList && imageList.length > 0) ? renderCardImageList.bind(this)(imageList) : renderCardImageNull.bind(this)();
+    }
+
+    /**
+     * render渲染card图片组
+     * @param imageList
+     */
+    renderCardImageList(imageList) {
+        return imageList.map(function imager(imageItem, imageIndex) {
+            return (
+                <figure
+                    key={imageIndex}
+                    className="keryi_barter_card_figure"
+                >
+                    <img
+                        src={imageItem["imageSrc"]}
+                        title={imageItem["imageName"]}
+                        alt={imageItem["imageName"]}
+                        className="keryi_barter_card_image"
+                    />
+                </figure>
+            )
+        }.bind(this));
+    }
+
+    /**
+     * card主要内容图片为空时,render渲染返回null
+     * @returns {null}
+     */
+    renderCardImageNull() {
+        return null;
+    }
 
     /**
      * render渲染card主要内容
      */
     renderCardInfo() {
         const {
-            //KeryiCard组件卡片用户名
-            userName,
-            //KeryiCard组件卡片上传图片数组
-            imageList,
+            //card主要内容头部
+            renderCardHead,
+            //card主要内容图片
+            renderCardImage
+        } = this;
+        const {
             //KeryiCard组件卡片资源介绍
             introduce,
             //KeryiCard组件卡片资源类型
@@ -42,9 +105,12 @@ export class KeryiCard extends React.Component {
         } = this.props;
         return (
             <section className="keryi_barter_card_main">
-                <header className="keryi_barter_card_header">
-                    {userName}
-                </header>
+                {/*card主要内容头部*/}
+                {renderCardHead.bind(this)()}
+                <main className="keryi_barter_card_mainContent">
+                    {/*card主要内容图片*/}
+                    {renderCardImage.bind(this)()}
+                </main>
             </section>
         )
     }

@@ -4,8 +4,8 @@
 */
 .keryi_barter_card {
     position: relative;
-    width: calc(100% - 78px);
-    left: 10px;
+    width: calc(100% - 83px);
+    left: 15px;
     padding-top: 15px;
     border-radius: 4px;
     box-sizing: border-box;
@@ -26,11 +26,30 @@
 */
 .keryi_barter_card > .keryi_barter_card_main {
     min-height: 200px;
-    padding: 0 20px;
 }
 
-
 .keryi_barter_card_main > .keryi_barter_card_header {
+    padding: 0 20px;
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    font-weight: bolder;
+    margin: -3px 0 13px;
     height: 20px;
     line-height: 20px;
 }
+
+.keryi_barter_card_main > .keryi_barter_card_mainContent {
+    width: 100%;
+}
+
+.keryi_barter_card_mainContent > .keryi_barter_card_figure {
+    width: 100%;
+    margin-top: 2px;
+}
+
+.keryi_barter_card_figure > .keryi_barter_card_image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
