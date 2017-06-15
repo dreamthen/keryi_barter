@@ -28,9 +28,23 @@ export class KeryiCard extends React.Component {
      * render渲染card主要内容
      */
     renderCardInfo() {
+        const {
+            //KeryiCard组件卡片用户名
+            userName,
+            //KeryiCard组件卡片上传图片数组
+            imageList,
+            //KeryiCard组件卡片资源介绍
+            introduce,
+            //KeryiCard组件卡片资源类型
+            tagList,
+            //KeryiCard组件卡片资源被需要数目
+            needParty
+        } = this.props;
         return (
             <section className="keryi_barter_card_main">
-
+                <header className="keryi_barter_card_header">
+                    {userName}
+                </header>
             </section>
         )
     }
