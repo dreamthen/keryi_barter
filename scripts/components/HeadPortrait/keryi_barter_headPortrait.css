@@ -1,0 +1,9 @@
+@charset "utf-8";
+.keryi_barter_portrait {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, .3);
+}

@@ -1,0 +1,19 @@
+@charset "utf-8";
+.keryi_barter_card {
+    position: relative;
+    width: calc(100% - 78px);
+    left: 10px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #fff;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    transition: all .3s ease-in-out 0s;
+}
+
+.keryi_barter_card:hover {
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, .14), 0 1px 12px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2);
+}
+
+.keryi_barter_card > .keryi_barter_card_main {
+    min-height: 200px;
+}

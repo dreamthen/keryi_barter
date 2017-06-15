@@ -1,28 +1,50 @@
 @charset "utf-8";
+/*
+    render渲染keryi_barter主页面主要内容副级容器样式
+*/
 .keryi_barter_main > .keryi_barter_main_container {
     width: 60%;
     min-width: 645px;
     margin: 0 auto;
 }
 
+/*
+    render渲染keryi_barter主页面左右主要内容模块样式
+*/
 .keryi_barter_main_container > .keryi_barter_main_module {
     display: inline-block;
 }
 
+/*
+    render渲染keryi_barter主页面主要内容barter列表容器样式
+*/
 .keryi_barter_main_container > .keryi_barter_main_barterList {
     width: 625px;
 }
 
+/*
+    render渲染keryi_barter主页面主要内容barter列表副级容器样式
+*/
 .keryi_barter_main_barterList > .keryi_barter_cardInfo {
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
+/*
+    render渲染keryi_barter主页面主要内容barter列表头像容器样式
+*/
 .keryi_barter_cardInfo > .keryi_barter_head_portrait {
     width: 68px;
     height: 68px;
-    display: inline-block;
 }
 
+/*
+    render渲染keryi_barter主页面主要内容边栏容器样式
+*/
 .keryi_barter_main_container > .keryi_barter_main_aside {
     width: calc(100% - 625px);
 }

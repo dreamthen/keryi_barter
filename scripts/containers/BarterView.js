@@ -36,7 +36,6 @@ class BarterView extends React.Component {
     renderKeryiCard(){
         return (
             <KeryiCard
-                headPortrait="/images/login_bg.png"
             />
         )
     }

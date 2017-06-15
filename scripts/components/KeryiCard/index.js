@@ -2,7 +2,7 @@
  * Created by yinwk on 2017/6/14.
  */
 import React, {PropTypes} from "react";
-import "./keryi_barter_card.css";
+import "./keryi_barter_keryiCard.css";
 
 export class KeryiCard extends React.Component {
     static Proptypes = {
@@ -24,13 +24,12 @@ export class KeryiCard extends React.Component {
     }
 
 
-
     /**
      * render渲染card主要内容
      */
     renderCardInfo() {
         return (
-            <section>
+            <section className="keryi_barter_card_main">
 
             </section>
         )
@@ -39,8 +38,8 @@ export class KeryiCard extends React.Component {
     render() {
         const {renderCardInfo} = this;
         return (
-            <div>
-
+            <div className="keryi_barter_card">
+                {renderCardInfo.bind(this)()}
             </div>
         )
     }
