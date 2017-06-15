@@ -4,6 +4,7 @@
 import keryiFetchConfig from "../configs/fetchConfig";
 import api from "../configs/api";
 import Success from "../prompt/successPrompt";
+import loginActionsType from "./loginActionsType";
 
 /**
  * keryi_barter登录
@@ -99,9 +100,27 @@ export function register(account, password) {
     );
 }
 
+/**
+ * 将login页面副级容器距离页面最上方的长度设置为100%
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
 export function descriptionToLoginAction(payload) {
     return {
-        type: "DESCRIPTION_TO_LOGIN",
+        type: loginActionsType["DESCRIPTION_TO_LOGIN"],
         payload
     }
 }
+
+/**
+ *
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function loginChangeRegisterAction(payload) {
+    return {
+        type: loginActionsType["LOGIN_CHANGE_REGISTER"],
+        payload
+    }
+}
+

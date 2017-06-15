@@ -9,7 +9,12 @@ import {Prompt} from "../components/Prompt";
 import Error from "../prompt/errorPrompt";
 import loginComponentConfig from "../configs/loginComponentConfig";
 import registerComponentConfig from "../configs/registerComponentConfig";
-import {login, register} from "../actions/loginActions";
+import {
+    login,
+    register,
+    descriptionToLoginAction,
+    loginChangeRegisterAction
+} from "../actions/loginActions";
 import "../../stylesheets/login.css";
 
 //组件类型
@@ -19,18 +24,6 @@ class LoginView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            //login页面副级容器距离页面最上方的长度
-            top: 0,
-            //login页面副级容器距离页面最左方的长度
-            left: 0,
-            //login页面副级容器登录模块距离页面最上方的长度
-            loginTop: 0,
-            //login页面副级容器登录模块距离页面最左方的长度
-            loginLeft: 0,
-            //login页面副级容器注册模块距离页面最上方的长度
-            registerTop: "-100%",
-            //login页面副级容器注册模块距离页面最左方的长度
-            registerLeft: "100%",
             //Input输入框电子邮件内容
             account: "",
             //Input输入框密码内容
@@ -144,11 +137,10 @@ class LoginView extends React.Component {
      * 从description介绍模块动画过渡到login登录模块
      */
     descriptionToLogin() {
+        const {dispatch} = this.props;
         const {initLogin} = this;
         //将login页面副级容器距离页面最上方的长度设置为100%
-        this.setState({
-            top: "-100%"
-        });
+        dispatch(descriptionToLoginAction({top: "-100%"}));
         //初始化login页面登录模块和注册模块输入框数据
         initLogin.bind(this)();
     }
@@ -209,9 +201,12 @@ class LoginView extends React.Component {
         const {isError, errorPrompt, isWarn, warnPrompt, isSuccess, successPrompt} = this.state;
         return (
             <div className="keryi_barter_prompt_container">
-                {isError && <Prompt size="default" type="error" message={errorPrompt} showIcon className="keryi_barter_fixedLength_prompt" />}
-                {isWarn && <Prompt size="default" type="warning" message={warnPrompt} showIcon className="keryi_barter_fixedLength_prompt"/>}
-                {isSuccess && <Prompt size="default" type="success" message={successPrompt} showIcon className="keryi_barter_fixedLength_prompt"/>}
+                {isError && <Prompt size="default" type="error" message={errorPrompt} showIcon
+                                    className="keryi_barter_fixedLength_prompt"/>}
+                {isWarn && <Prompt size="default" type="warning" message={warnPrompt} showIcon
+                                   className="keryi_barter_fixedLength_prompt"/>}
+                {isSuccess && <Prompt size="default" type="success" message={successPrompt} showIcon
+                                      className="keryi_barter_fixedLength_prompt"/>}
             </div>
         )
     }
@@ -291,7 +286,7 @@ class LoginView extends React.Component {
      * @returns {XML}
      */
     renderLogin() {
-        const {loginLeft, loginTop} = this.state;
+        const {loginLeft, loginTop} = this.props;
         const {
             //render渲染根据需求配置完成的组件
             renderComponent,
@@ -386,12 +381,10 @@ class LoginView extends React.Component {
      * @param registerLeft
      */
     loginChangeRegister(loginLeft, registerLeft) {
+        const {dispatch} = this.props;
         const {initLogin} = this;
         //将login登录模块的内容距离屏幕最左边设置为-100%;login注册模块的内容距离屏幕最左边设置为0
-        this.setState({
-            loginLeft,
-            registerLeft
-        });
+        dispatch(loginChangeRegisterAction({loginLeft, registerLeft}));
         //初始化login页面登录模块和注册模块输入框数据
         initLogin.bind(this)();
     }
@@ -419,7 +412,7 @@ class LoginView extends React.Component {
      * @returns {XML}
      */
     renderRegister() {
-        const {registerLeft, registerTop} = this.state;
+        const {registerLeft, registerTop} = this.props;
         const {
             //render渲染根据需求配置完成的组件
             renderComponent,
@@ -497,7 +490,7 @@ class LoginView extends React.Component {
     }
 
     render() {
-        const {top, left} = this.state;
+        const {top, left} = this.props;
         const {renderDescription, renderLogin, renderRegister} = this;
         return (
             //login页面副级容器
@@ -517,7 +510,9 @@ class LoginView extends React.Component {
 }
 
 function select(state, ownProps) {
-    return {}
+    return {
+        ...state.loginReducers
+    }
 }
 
 export default connect(select)(LoginView);

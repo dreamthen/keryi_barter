@@ -13,22 +13,49 @@ class BarterView extends React.Component {
         this.state = {}
     }
 
+    /**
+     * render渲染用户头像
+     * @returns {XML}
+     */
+    renderHeadPortrait(headPortraitSrc) {
+        return (
+            <figure
+                className="keryi_barter_head_portrait"
+            >
+                <HeadPortrait
+                    headPortrait={headPortraitSrc}
+                />
+            </figure>
+        )
+    }
+
+    /**
+     * render渲染用户资源卡片
+     * @returns {XML}
+     */
+    renderKeryiCard(){
+        return (
+            <KeryiCard
+                headPortrait="/images/login_bg.png"
+            />
+        )
+    }
 
     render() {
+        const {
+            //render渲染用户头像
+            renderHeadPortrait,
+            //render渲染用户资源卡片
+            renderKeryiCard
+        } = this;
         return (
             <div className="keryi_barter_main_container">
                 <div className="keryi_barter_main_module keryi_barter_main_barterList">
                     <article className="keryi_barter_cardInfo">
-                        <figure
-                            className="keryi_barter_head_portrait"
-                        >
-                            <HeadPortrait
-                                headPortrait="/images/login_bg.png"
-                            />
-                        </figure>
-                        <KeryiCard
-                            headPortrait="/images/login_bg.png"
-                        />
+                        {/*render渲染用户头像*/}
+                        {renderHeadPortrait.bind(this)("/images/login_bg.png")}
+                        {/*render渲染用户资源卡片*/}
+                        {renderKeryiCard.bind(this)()}
                     </article>
                 </div>
                 <aside className="keryi_barter_main_module keryi_barter_main_aside">
