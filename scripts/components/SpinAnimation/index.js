@@ -37,7 +37,9 @@ export class SpinAnimation extends React.Component {
         } = this;
         return (
             <section className={sizeToClass.bind(this)()}>
+                <div className="keryi_barter_spinAnimation_container">
 
+                </div>
             </section>
         )
     }

@@ -2,6 +2,7 @@
  * Created by yinwk on 2017/6/14.
  */
 import React, {PropTypes} from "react";
+import {SpinAnimation} from "../SpinAnimation";
 import "./keryi_barter_keryiCard.css";
 
 export class KeryiCard extends React.Component {
@@ -118,6 +119,9 @@ export class KeryiCard extends React.Component {
                 <main className="keryi_barter_card_mainContent">
                     {/*card主要内容图片*/}
                     {renderCardImage.bind(this)()}
+                    <SpinAnimation
+                        size="large"
+                    />
                 </main>
             </section>
         )

@@ -1,1 +1,20 @@
 @charset "utf-8";
+.keryi_barter_spinAnimation > .keryi_barter_spinAnimation_container {
+    width: 20px;
+    height: 20px;
+}
+
+.keryi_barter_sm_spinAnimation > .keryi_barter_spinAnimation_container {
+    width: 14px;
+    height: 14px;
+}
+
+.keryi_barter_md_spinAnimation > .keryi_barter_spinAnimation_container {
+    width: 20px;
+    height: 20px;
+}
+
+.keryi_barter_lg_spinAnimation > .keryi_barter_spinAnimation_container {
+    width: 32px;
+    height: 32px;
+}
