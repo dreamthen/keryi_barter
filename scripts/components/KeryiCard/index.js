@@ -56,11 +56,23 @@ export class KeryiCard extends React.Component {
             //将imageList图片组截取三张
             let imagePartList = imageList.length > 3 ? imageList.slice(0, 3) : imageList;
             //如果存在imageList图片组且imageList图片组的数量大于0,渲染card图片组(最多三张)
-            return renderCardImagePartList.bind(this)(imagePartList)
+            return renderCardImagePartList.bind(this)(imagePartList);
         } else {
             //card主要内容图片为空时,返回null
             return renderCardImageNull.bind(this)();
         }
+    }
+
+    /**
+     * render渲染card加载更多图片区域
+     * @returns {XML}
+     */
+    renderCardImageMore() {
+        return (
+            <section className="keryi_barter_card_image_more">
+
+            </section>
+        )
     }
 
     /**
@@ -101,9 +113,13 @@ export class KeryiCard extends React.Component {
             //card主要内容头部
             renderCardHead,
             //card主要内容图片
-            renderCardImage
+            renderCardImage,
+            //card加载更多图片区域
+            renderCardImageMore
         } = this;
         const {
+            //KeryiCard组件卡片上传图片数组
+            imageList,
             //KeryiCard组件卡片资源介绍
             introduce,
             //KeryiCard组件卡片资源类型
@@ -118,6 +134,8 @@ export class KeryiCard extends React.Component {
                 <main className="keryi_barter_card_mainContent">
                     {/*card主要内容图片*/}
                     {renderCardImage.bind(this)()}
+                    {/*card加载更多图片区域*/}
+                    {imageList.length > 3 && renderCardImageMore.bind(this)()}
                 </main>
             </section>
         )
