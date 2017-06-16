@@ -56,7 +56,7 @@ export class KeryiCard extends React.Component {
             //将imageList图片组截取三张
             let imagePartList = imageList.length > 3 ? imageList.slice(0, 3) : imageList;
             //如果存在imageList图片组且imageList图片组的数量大于0,渲染card图片组(最多三张)
-            return renderCardImagePartList.bind(this)(imagePartList)
+            return renderCardImagePartList.bind(this)(imagePartList);
         } else {
             //card主要内容图片为空时,返回null
             return renderCardImageNull.bind(this)();
@@ -125,6 +125,7 @@ export class KeryiCard extends React.Component {
 
     render() {
         const {renderCardInfo} = this;
+        const {inputValue} = this.state;
         return (
             <div className="keryi_barter_card">
                 {renderCardInfo.bind(this)()}
