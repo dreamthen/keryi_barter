@@ -1,0 +1,24 @@
+@charset "utf-8";
+/*
+    设置滚动条宽度和长度
+*/
+::-webkit-scrollbar {
+    width: 6px;
+    height: 8px;
+}
+
+/*
+    设置滚动条容器圆角
+*/
+::-webkit-scrollbar-track {
+    border-radius: 5px;
+}
+
+/*
+    设置滚动条滑块圆角、背景色和宽度
+*/
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .2);
+    border-radius: 5px;
+    width: 0;
+}

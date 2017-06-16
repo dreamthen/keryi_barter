@@ -46,20 +46,28 @@ export class KeryiCard extends React.Component {
      * @returns {XML}
      */
     renderCardImage() {
-        const {renderCardImageList, renderCardImageNull} = this;
+        const {renderCardImagePartList, renderCardImageNull} = this;
         const {
             //KeryiCard组件卡片上传图片数组
             imageList
         } = this.props;
-        //如果存在imageList图片组且imageList图片组的数量大于0,就渲染card图片组;如果不存在,就渲染返回null
-        return (imageList && imageList.length > 0) ? renderCardImageList.bind(this)(imageList) : renderCardImageNull.bind(this)();
+        //如果存在imageList图片组且imageList图片组的数量大于0,就渲染card图片组(最多三张);如果不存在,就渲染返回null
+        if (imageList && imageList.length > 0) {
+            //将imageList图片组截取三张
+            let imagePartList = imageList.length > 3 ? imageList.slice(0, 3) : imageList;
+            //如果存在imageList图片组且imageList图片组的数量大于0,渲染card图片组(最多三张)
+            return renderCardImagePartList.bind(this)(imagePartList)
+        } else {
+            //card主要内容图片为空时,返回null
+            return renderCardImageNull.bind(this)();
+        }
     }
 
     /**
-     * render渲染card图片组
+     * render渲染card图片组(最多三张)
      * @param imageList
      */
-    renderCardImageList(imageList) {
+    renderCardImagePartList(imageList) {
         return imageList.map(function imager(imageItem, imageIndex) {
             return (
                 <figure

@@ -8,6 +8,7 @@ import {render} from "react-dom";
 import store from "./configs/storeAppConfig";
 import routes from "./configs/routesConfig";
 import "../stylesheets/common.css";
+import "../stylesheets/webkitScrollBar.css";
 
 render(
     <Provider store={store}>

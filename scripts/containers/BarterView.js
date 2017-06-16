@@ -46,11 +46,18 @@ class BarterView extends React.Component {
                 }, {
                     imageSrc: "/images/register_bg.png",
                     imageName: "keryi注册背景"
+                }, {
+                    imageSrc: "/images/login_bg.png",
+                    imageName: "keryi登录背景"
                 }]}
             />
         )
     }
 
+    /**
+     * render渲染keryi_barter主页面主要内容
+     * @returns {XML}
+     */
     render() {
         const {
             //render渲染用户头像
