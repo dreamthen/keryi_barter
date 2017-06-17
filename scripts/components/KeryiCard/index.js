@@ -120,7 +120,7 @@ export class KeryiCard extends React.Component {
                     {/*card主要内容图片*/}
                     {renderCardImage.bind(this)()}
                     <SpinAnimation
-                        size="large"
+                        size="default"
                     />
                 </main>
             </section>

@@ -171,7 +171,7 @@ body {
     position: absolute;
     bottom: 28px;
     opacity: 0.3;
-    animation: keryi_downward 1.2s ease-in-out 0s infinite alternate;
+    animation: keryi_barter_downward 1.2s ease-in-out 0s infinite alternate;
 }
 
 /*login页面介绍模块"开始吧"按钮宽度*/
