@@ -169,7 +169,9 @@ body {
 .keryi_barter_description_module > .keryi_barter_description_to_login {
     color: #fff;
     position: absolute;
-    bottom: 2px;
+    bottom: 28px;
+    opacity: 0.3;
+    animation: keryi_downward 1.2s ease-in-out 0s infinite alternate;
 }
 
 /*login页面介绍模块"开始吧"按钮宽度*/
