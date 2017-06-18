@@ -11,9 +11,15 @@
 }
 
 .keryi_barter_spinAnimation > .keryi_barter_spinAnimation_area {
+    transition: all 1s ease-in-out 0s;
+    transform: translateX(0);
     margin-right: 8px;
     border-bottom: 1px solid rgb(99, 168, 240);
     border-bottom-left-radius: 50%;
+}
+
+.keryi_barter_spinAnimation > .keryi_barter_spinAnimation_area_action {
+    transform: translateX(25px);
 }
 
 .keryi_barter_spinAnimation_area > .keryi_barter_spinAnimation_container {
@@ -23,7 +29,6 @@
     padding: 4px;
     margin-right: 4px;
     transform: rotate(45deg);
-    transition: all .8s ease-in-out 0s;
     border: 1px solid #63A8F0;
     border-radius: 50%;
     z-index: 1500;
@@ -48,8 +53,16 @@
     height: 32px;
 }
 
-.keryi_barter_spinAnimation_area > .keryi_barter_spinAnimation_description {
+.keryi_barter_spinAnimation > .keryi_barter_spinAnimation_description {
     font-style: normal;
+    opacity: 1;
+    transform: translateX(0px);
+    transition: all 1s ease-in-out 0s;
+}
+
+.keryi_barter_spinAnimation > .keryi_barter_spinAnimation_description_action {
+    transform: translateX(-25px);
+    opacity: 0;
 }
 
 .keryi_barter_spinAnimation_container > i {

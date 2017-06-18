@@ -14,8 +14,12 @@ import innerIConfig from "./configs/innerIConfig";
 const defaultSize = "default";
 const spinAnimation = "spin_animation";
 const spinAnimationAction = "spin_animation_action";
+const spinAnimationArea = "spin_animation_area";
+const spinAnimationAreaAction = "spin_animation_area_action";
 const spinAnimationInnerI = "spin_animation_innerI";
 const spinAnimationInnerIAction = "spin_animation_innerI_action";
+const spinAnimationDescription = "spin_animation_description";
+const spinAnimationDescriptionAction = "spin_animation_description_action";
 
 export class SpinAnimation extends React.Component {
     static Proptypes = {
@@ -28,8 +32,10 @@ export class SpinAnimation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            //是否执行动画加载
-            actionAnimation: false
+            //是否执行icon旋转动画加载
+            actionAnimation: false,
+            //是否执行description左移动画加载
+            moveAnimation: false
         }
     }
 
@@ -67,8 +73,13 @@ export class SpinAnimation extends React.Component {
      */
     clickToAnimation(e) {
         this.setState({
-            actionAnimation: true
+            moveAnimation: true
         });
+        setTimeout(function timer() {
+            this.setState({
+                actionAnimation: true
+            });
+        }.bind(this), 1000);
         //取消冒泡
         e.nativeEvent.stopImmediatePropagation();
     }
@@ -81,19 +92,24 @@ export class SpinAnimation extends React.Component {
             clickToAnimation,
             renderInnerI
         } = this;
-        const {actionAnimation} = this.state;
+        const {
+            actionAnimation,
+            moveAnimation
+        } = this.state;
         return (
             <section
                 onClick={clickToAnimation.bind(this)}
                 className={sizeToClass.bind(this)()}
             >
-                <div className="keryi_barter_spinAnimation_area">
+                <div
+                    className={moveAnimation ? spinAnimationConfig[spinAnimationAreaAction] : spinAnimationConfig[spinAnimationArea]}>
                     <div
                         className={actionAnimation ? spinAnimationConfig[spinAnimationAction] : spinAnimationConfig[spinAnimation]}>
                         {renderInnerI.bind(this)()}
                     </div>
                 </div>
-                <dfn className="keryi_barter_spinAnimation_description">
+                <dfn
+                    className={moveAnimation ? spinAnimationConfig[spinAnimationDescriptionAction] : spinAnimationConfig[spinAnimationDescription]}>
                     更多图片
                 </dfn>
             </section>
