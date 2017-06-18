@@ -12,13 +12,21 @@ import spinAnimationConfig from "./configs/spinAnimationConfig";
 import innerIConfig from "./configs/innerIConfig";
 //在不传入动画加载尺寸size、size为空或者size类型错误时,SpinAnimation组件动态加载className样式表用默认长宽为20px
 const defaultSize = "default";
+//还没点击时,内部旋转圆容器样式表设置
 const spinAnimation = "spin_animation";
+//点击之后,胶片图标和"更多图片"描述左移右移动画加载之后,内部旋转圆容器旋转动画样式表设置
 const spinAnimationAction = "spin_animation_action";
+//还没点击时,胶片图标容器样式表设置
 const spinAnimationArea = "spin_animation_area";
+//点击之后,胶片图标容器右移动画样式表设置
 const spinAnimationAreaAction = "spin_animation_area_action";
+//还没点击时,内部旋转圆样式表设置
 const spinAnimationInnerI = "spin_animation_innerI";
+//点击之后,胶片图标和"更多图片"描述左移右移动画加载之后,内部旋转圆透明度和背景颜色动态替换样式表设置
 const spinAnimationInnerIAction = "spin_animation_innerI_action";
+//还没点击时,"更多图片"描述容器样式表设置
 const spinAnimationDescription = "spin_animation_description";
+//还没点击时,"更多图片"描述容器左移样式表设置
 const spinAnimationDescriptionAction = "spin_animation_description_action";
 
 export class SpinAnimation extends React.Component {
@@ -34,13 +42,15 @@ export class SpinAnimation extends React.Component {
         this.state = {
             //是否执行icon旋转动画加载
             actionAnimation: false,
-            //是否执行description左移动画加载
+            //是否执行胶片图标和"更多图片"描述左移右移动画加载
             moveAnimation: false
         }
     }
 
     /**
-     * render渲染SpinAnimation内部
+     * render渲染SpinAnimation内部旋转圆,
+     * 还没点击时,内部旋转圆样式表;
+     * 点击之后,胶片图标和"更多图片"描述左移右移动画加载之后,内部旋转圆透明度和背景颜色动态替换样式表
      * @returns {Array}
      */
     renderInnerI() {
@@ -90,6 +100,7 @@ export class SpinAnimation extends React.Component {
             sizeToClass,
             //点击按钮执行动画加载
             clickToAnimation,
+            //SpinAnimation内部旋转圆,还没点击时,内部旋转圆样式表;点击之后,胶片图标和"更多图片"描述左移右移动画加载之后,内部旋转圆透明度和背景颜色动态替换样式表
             renderInnerI
         } = this;
         const {
@@ -101,13 +112,16 @@ export class SpinAnimation extends React.Component {
                 onClick={clickToAnimation.bind(this)}
                 className={sizeToClass.bind(this)()}
             >
+                {/*还没点击时,胶片图标容器样式表;点击之后,胶片图标容器右移动画样式表*/}
                 <div
                     className={moveAnimation ? spinAnimationConfig[spinAnimationAreaAction] : spinAnimationConfig[spinAnimationArea]}>
+                    {/*还没点击时,内部旋转圆样式表;点击之后,胶片图标和"更多图片"描述左移右移动画加载之后,内部旋转圆透明度和背景颜色动态替换样式表*/}
                     <div
                         className={actionAnimation ? spinAnimationConfig[spinAnimationAction] : spinAnimationConfig[spinAnimation]}>
                         {renderInnerI.bind(this)()}
                     </div>
                 </div>
+                {/*还没点击时,"更多图片"描述容器样式表;点击之后,"更多图片"描述容器左移样式表*/}
                 <dfn
                     className={moveAnimation ? spinAnimationConfig[spinAnimationDescriptionAction] : spinAnimationConfig[spinAnimationDescription]}>
                     更多图片
