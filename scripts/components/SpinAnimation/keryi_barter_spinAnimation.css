@@ -19,7 +19,7 @@
 }
 
 .keryi_barter_spinAnimation > .keryi_barter_spinAnimation_area_action {
-    transform: translateX(25px);
+    transform: translateX(28px);
 }
 
 .keryi_barter_spinAnimation_area > .keryi_barter_spinAnimation_container {
@@ -61,7 +61,7 @@
 }
 
 .keryi_barter_spinAnimation > .keryi_barter_spinAnimation_description_action {
-    transform: translateX(-25px);
+    transform: translateX(-28px);
     opacity: 0;
 }
 

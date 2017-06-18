@@ -3,7 +3,11 @@
  */
 import React, {PropTypes} from "react";
 import {SpinAnimation} from "../SpinAnimation";
+import keryiCardConfig from "./configs/keryiCardConfig";
 import "./keryi_barter_keryiCard.css";
+
+const loadingAppear = "loading";
+const loadingDisappear = "loading_disAppear";
 
 export class KeryiCard extends React.Component {
     static Proptypes = {
@@ -23,7 +27,14 @@ export class KeryiCard extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            //是否显示SpinAnimation组件动画加载
+            loading: true,
+            //是否动画操作透明度消除SpinAnimation组件动画加载容器
+            disAppear: true,
+            //是否显示剩下的多于3张的图片
+            imageAppear: true
+        }
     }
 
     /**
@@ -52,10 +63,14 @@ export class KeryiCard extends React.Component {
             //KeryiCard组件卡片上传图片数组
             imageList
         } = this.props;
+        const {
+            //是否显示剩下的多于3张的图片
+            imageAppear
+        } = this.state;
         //如果存在imageList图片组且imageList图片组的数量大于0,就渲染card图片组(最多三张);如果不存在,就渲染返回null
         if (imageList && imageList.length > 0) {
             //将imageList图片组截取三张
-            let imagePartList = imageList.length > 3 ? imageList.slice(0, 3) : imageList;
+            let imagePartList = (imageList.length > 3 && imageAppear) ? imageList.slice(0, 3) : imageList;
             //如果存在imageList图片组且imageList图片组的数量大于0,渲染card图片组(最多三张)
             return renderCardImagePartList.bind(this)(imagePartList);
         } else {
@@ -95,6 +110,31 @@ export class KeryiCard extends React.Component {
     }
 
     /**
+     * 点击SpinAnimation组件动画加载,点击加载更多图片
+     */
+    loadingImage() {
+        //FIXME 这里设置一个时间控制器,3s后消除SpinAnimation组件动画加载
+        setTimeout(function timerContainer() {
+            this.setState({
+                //消除SpinAnimation组件动画加载
+                loading: false
+            }, function afterState() {
+                this.setState({
+                    //动画操作透明度消除SpinAnimation组件动画加载容器
+                    disAppear: false
+                });
+                //FIXME 这里设置一个时间控制器,0.5s后执行动画操作透明度消除SpinAnimation组件动画加载容器
+                setTimeout(function timer() {
+                    this.setState({
+                        //是否显示剩下的多于3张的图片
+                        imageAppear: false
+                    });
+                }.bind(this), 500);
+            }.bind(this));
+        }.bind(this), 3000);
+    }
+
+    /**
      * render渲染card主要内容
      */
     renderCardInfo() {
@@ -102,8 +142,16 @@ export class KeryiCard extends React.Component {
             //card主要内容头部
             renderCardHead,
             //card主要内容图片
-            renderCardImage
+            renderCardImage,
+            //点击SpinAnimation组件动画加载,点击加载更多图片
+            loadingImage
         } = this;
+        const {
+            //是否动画操作透明度消除SpinAnimation组件动画加载容器
+            disAppear,
+            //是否显示剩下的多于3张的图片
+            imageAppear
+        } = this.state;
         const {
             //KeryiCard组件卡片资源介绍
             introduce,
@@ -119,9 +167,15 @@ export class KeryiCard extends React.Component {
                 <main className="keryi_barter_card_mainContent">
                     {/*card主要内容图片*/}
                     {renderCardImage.bind(this)()}
-                    <SpinAnimation
-                        size="default"
-                    />
+                    {imageAppear &&
+                    <div className={disAppear ? keryiCardConfig[loadingAppear] : keryiCardConfig[loadingDisappear]}>
+                        <SpinAnimation
+                            size="default"
+                            onClick={
+                                loadingImage.bind(this)
+                            }
+                        />
+                    </div>}
                 </main>
             </section>
         )

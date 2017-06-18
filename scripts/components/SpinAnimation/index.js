@@ -34,7 +34,9 @@ export class SpinAnimation extends React.Component {
         //SpinAnimation组件动画加载尺寸:small,default和large,默认为default
         size: PropTypes.string,
         //SpinAnimation组件动画加载className,外部传入样式表
-        className: PropTypes.string
+        className: PropTypes.string,
+        //SSpinAnimation组件动画加载回调函数
+        onClick: PropTypes.func.isRequired
     };
 
     constructor(props) {
@@ -82,13 +84,16 @@ export class SpinAnimation extends React.Component {
      * @param e
      */
     clickToAnimation(e) {
+        const {onClick} = this.props;
         this.setState({
             moveAnimation: true
         });
+        //FIXME 这里设置一个时间控制器,在胶片图标和"更多图片"描述左移右移动画加载之后,内部旋转圆动态旋转并且透明度和背景颜色动态替换样式表
         setTimeout(function timer() {
             this.setState({
                 actionAnimation: true
             });
+            onClick();
         }.bind(this), 1000);
         //取消冒泡
         e.nativeEvent.stopImmediatePropagation();
@@ -115,7 +120,7 @@ export class SpinAnimation extends React.Component {
                 {/*还没点击时,胶片图标容器样式表;点击之后,胶片图标容器右移动画样式表*/}
                 <div
                     className={moveAnimation ? spinAnimationConfig[spinAnimationAreaAction] : spinAnimationConfig[spinAnimationArea]}>
-                    {/*还没点击时,内部旋转圆样式表;点击之后,胶片图标和"更多图片"描述左移右移动画加载之后,内部旋转圆透明度和背景颜色动态替换样式表*/}
+                    {/*还没点击时,内部旋转圆样式表;点击之后,胶片图标和"更多图片"描述左移右移动画加载之后,内部旋转圆动态旋转并且透明度和背景颜色动态替换样式表*/}
                     <div
                         className={actionAnimation ? spinAnimationConfig[spinAnimationAction] : spinAnimationConfig[spinAnimation]}>
                         {renderInnerI.bind(this)()}
