@@ -8,7 +8,7 @@ import "./keryi_barter_spinAnimation.css";
 import sizeConfig from "./configs/sizeConfig";
 //SpinAnimation动态加载样式表设置
 import spinAnimationConfig from "./configs/spinAnimationConfig";
-//SpinAnimation动态加载内部旋转圆设置
+//SpinAnimation内部旋转圆数量配置
 import innerIConfig from "./configs/innerIConfig";
 //在不传入动画加载尺寸size、size为空或者size类型错误时,SpinAnimation组件动态加载className样式表用默认长宽为20px
 const defaultSize = "default";
