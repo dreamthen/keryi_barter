@@ -15,6 +15,7 @@ import {
     descriptionToLoginAction,
     loginChangeRegisterAction
 } from "../actions/loginActions";
+import "../../stylesheets/animation.css";
 import "../../stylesheets/login.css";
 
 //组件类型

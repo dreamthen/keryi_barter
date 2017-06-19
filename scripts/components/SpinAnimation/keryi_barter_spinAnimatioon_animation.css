@@ -1,0 +1,18 @@
+@charset "utf-8";
+/*
+    SpinAnimation组件正在加载旋转动画
+*/
+@keyframes keryi_barter_spinAnimation {
+    to {
+        transform: rotate(405deg);
+    }
+}
+
+/*
+    SpinAnimation组件正在加载内部圆圈模糊度
+*/
+@keyframes keryi_barter_spinAnimation_innerI {
+    to {
+        opacity: 1;
+    }
+}

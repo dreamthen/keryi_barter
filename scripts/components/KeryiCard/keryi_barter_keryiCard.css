@@ -47,6 +47,15 @@
     margin-top: 2px;
 }
 
+.keryi_barter_card_mainContent > .keryi_barter_loading_spinAnimation {
+    opacity: 1;
+    transition: all .5s ease-in-out 0s;
+}
+
+.keryi_barter_card_mainContent > .keryi_barter_loading_spinAnimation_disAppear {
+    opacity: 0;
+}
+
 .keryi_barter_card_figure > .keryi_barter_card_image {
     display: block;
     width: 100%;
