@@ -1,7 +1,7 @@
 /**
  * Created by yinwk on 2017/6/17.
  */
-//SpinAnimation动态加载样式表设置
+//SpinAnimation组件动态加载样式表设置
 const spinAnimationConfig = {
     //还没点击时,内部旋转圆容器样式表设置
     spin_animation: "keryi_barter_spinAnimation_container",
@@ -21,5 +21,5 @@ const spinAnimationConfig = {
     spin_animation_description_action: "keryi_barter_spinAnimation_description keryi_barter_spinAnimation_description_action",
 };
 
-//导出SpinAnimation动态加载样式表设置
+//导出SpinAnimation组件动态加载样式表设置
 export default spinAnimationConfig;

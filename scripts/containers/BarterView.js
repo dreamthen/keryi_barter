@@ -38,17 +38,23 @@ class BarterView extends React.Component {
             <KeryiCard
                 userName="1000yardStyle"
                 imageList={[{
-                    imageSrc: "/images/description_bg.png",
-                    imageName: "keryi介绍背景"
+                    src: "/images/description_bg.png",
+                    name: "keryi介绍背景"
                 }, {
-                    imageSrc: "/images/login_bg.png",
-                    imageName: "keryi登录背景"
+                    src: "/images/login_bg.png",
+                    name: "keryi登录背景"
                 }, {
-                    imageSrc: "/images/register_bg.png",
-                    imageName: "keryi注册背景"
+                    src: "/images/register_bg.png",
+                    name: "keryi注册背景"
                 }, {
-                    imageSrc: "/images/login_bg.png",
-                    imageName: "keryi登录背景"
+                    src: "/images/login_bg.png",
+                    name: "keryi登录背景"
+                }]}
+                title="today"
+                introduce="react react-redux react-router-redux"
+                tagList={[{
+                    type: "primary",
+                    content: ""
                 }]}
             />
         )
