@@ -3,10 +3,13 @@
  */
 import React, {PropTypes} from "react";
 import {SpinAnimation} from "../SpinAnimation";
+import {Tag} from "../Tag";
 import keryiCardConfig from "./configs/keryiCardConfig";
 import "./keryi_barter_keryiCard.css";
 
+//Card组件卡片"更多图片"设置过渡动画以及透明度对象属性
 const loadingAppear = "loading";
+//Card组件卡片"更多图片"设置消失(透明度为0)对象属性
 const loadingDisappear = "loading_disAppear";
 
 export class KeryiCard extends React.Component {
@@ -14,7 +17,7 @@ export class KeryiCard extends React.Component {
         //KeryiCard组件卡片用户名
         userName: PropTypes.string,
         //KeryiCard组件卡片标题
-        titile: PropTypes.string,
+        title: PropTypes.string,
         //KeryiCard组件卡片上传图片数组
         imageList: PropTypes.array,
         //KeryiCard组件卡片资源介绍
@@ -91,9 +94,9 @@ export class KeryiCard extends React.Component {
                     className="keryi_barter_card_figure"
                 >
                     <img
-                        src={imageItem["imageSrc"]}
-                        title={imageItem["imageName"]}
-                        alt={imageItem["imageName"]}
+                        src={imageItem["src"]}
+                        title={imageItem["name"]}
+                        alt={imageItem["name"]}
                         className="keryi_barter_card_image"
                     />
                 </figure>
@@ -135,6 +138,47 @@ export class KeryiCard extends React.Component {
     }
 
     /**
+     * render渲染card主要内容标题和介绍
+     * @returns {XML}
+     */
+    renderDescription() {
+        const {title, introduce} = this.props;
+        return (
+            <section className="keryi_barter_card_description">
+                <header className="keryi_barter_card_title">
+                    <h1>
+                        {title}
+                    </h1>
+                </header>
+                <p className="keryi_barter_card_paragraph">
+                    {introduce}
+                </p>
+            </section>
+        )
+    }
+
+    /**
+     *
+     * @returns {XML}
+     */
+    renderTag() {
+        const {tagList} = this.props;
+        return (
+            <section className="keryi_barter_card_tag">
+                {
+                    tagList.map(function tager(tagItem, tagIndex) {
+                        return (
+                            <Tag>
+
+                            </Tag>
+                        )
+                    })
+                }
+            </section>
+        )
+    }
+
+    /**
      * render渲染card主要内容
      */
     renderCardInfo() {
@@ -144,7 +188,11 @@ export class KeryiCard extends React.Component {
             //card主要内容图片
             renderCardImage,
             //点击SpinAnimation组件动画加载,点击加载更多图片
-            loadingImage
+            loadingImage,
+            //render渲染card主要内容标题和介绍
+            renderDescription,
+            //render渲染card主要内容标签
+            renderTag
         } = this;
         const {
             //是否动画操作透明度消除SpinAnimation组件动画加载容器
@@ -176,6 +224,10 @@ export class KeryiCard extends React.Component {
                             }
                         />
                     </div>}
+                    {/*render渲染card主要内容标题和介绍*/}
+                    {renderDescription.bind(this)()}
+                    {/*render渲染card主要内容标签*/}
+                    {renderTag.bind(this)()}
                 </main>
             </section>
         )

@@ -4,9 +4,9 @@
 import React, {PropTypes} from "react";
 import "./keryi_barter_spinAnimatioon_animation.css";
 import "./keryi_barter_spinAnimation.css";
-//SpinAnimation动态加载尺寸设置
+//SpinAnimation组件动态加载尺寸设置
 import sizeConfig from "./configs/sizeConfig";
-//SpinAnimation动态加载样式表设置
+//SpinAnimation组件动态加载样式表设置
 import spinAnimationConfig from "./configs/spinAnimationConfig";
 //SpinAnimation内部旋转圆数量配置
 import innerIConfig from "./configs/innerIConfig";
