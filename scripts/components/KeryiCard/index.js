@@ -22,7 +22,7 @@ export class KeryiCard extends React.Component {
         imageList: PropTypes.array,
         //KeryiCard组件卡片资源介绍
         introduce: PropTypes.string,
-        //KeryiCard组件卡片资源类型
+        //KeryiCard组件卡片资源类型标签
         tagList: PropTypes.array,
         //KeryiCard组件卡片资源被需要数目
         needParty: PropTypes.number
@@ -154,7 +154,12 @@ export class KeryiCard extends React.Component {
      * @returns {XML}
      */
     renderDescription() {
-        const {title, introduce} = this.props;
+        const {
+            //KeryiCard组件卡片标题
+            title,
+            //KeryiCard组件卡片资源介绍
+            introduce
+        } = this.props;
         return (
             <section className="keryi_barter_card_description">
                 <header className="keryi_barter_card_title">
@@ -170,18 +175,24 @@ export class KeryiCard extends React.Component {
     }
 
     /**
-     *
+     * render渲染card主要内容标签
      * @returns {XML}
      */
     renderTag() {
-        const {tagList} = this.props;
+        const {
+            //KeryiCard组件卡片资源标签类型
+            tagList
+        } = this.props;
         return (
             <section className="keryi_barter_card_tag">
                 {
                     tagList.map(function tager(tagItem, tagIndex) {
                         return (
-                            <Tag>
-
+                            <Tag
+                                key={tagIndex}
+                                type={tagItem["type"]}
+                            >
+                                {'#' + tagItem["content"]}
                             </Tag>
                         )
                     })
@@ -191,7 +202,33 @@ export class KeryiCard extends React.Component {
     }
 
     /**
+     * render渲染card主要内容底部
+     * @returns {XML}
+     */
+    renderCardFoot() {
+        const {needParty} = this.props;
+        return (
+            <section
+                className="keryi_barter_card_foot"
+            >
+                <article className="keryi_barter_card_needParty">
+                    <dfn
+                        className="keryi_barter_card_needPartyDescription"
+                        title={needParty + " 需要方"}
+                    >
+                        {needParty} 需要方
+                    </dfn>
+                </article>
+                <aside className="keryi_barter_card_likeHurt">
+
+                </aside>
+            </section>
+        )
+    }
+
+    /**
      * render渲染card主要内容
+     * @returns {XML}
      */
     renderCardInfo() {
         const {
@@ -201,10 +238,12 @@ export class KeryiCard extends React.Component {
             renderCardImage,
             //点击SpinAnimation组件动画加载,点击加载更多图片
             loadingImage,
-            //render渲染card主要内容标题和介绍
+            //card主要内容标题和介绍
             renderDescription,
-            //render渲染card主要内容标签
-            renderTag
+            //card主要内容标签
+            renderTag,
+            //card主要内容底部
+            renderCardFoot
         } = this;
         const {
             //是否动画操作透明度消除SpinAnimation组件动画加载容器
@@ -212,14 +251,6 @@ export class KeryiCard extends React.Component {
             //是否显示剩下的多于3张的图片
             imageAppear
         } = this.state;
-        const {
-            //KeryiCard组件卡片资源介绍
-            introduce,
-            //KeryiCard组件卡片资源类型
-            tagList,
-            //KeryiCard组件卡片资源被需要数目
-            needParty
-        } = this.props;
         return (
             <section className="keryi_barter_card_main">
                 {/*card主要内容头部*/}
@@ -236,10 +267,12 @@ export class KeryiCard extends React.Component {
                             }
                         />
                     </div>}
-                    {/*render渲染card主要内容标题和介绍*/}
+                    {/*card主要内容标题和介绍*/}
                     {renderDescription.bind(this)()}
-                    {/*render渲染card主要内容标签*/}
+                    {/*card主要内容标签*/}
                     {renderTag.bind(this)()}
+                    {/*cord主要内容底部*/}
+                    {renderCardFoot.bind(this)()}
                 </main>
             </section>
         )
