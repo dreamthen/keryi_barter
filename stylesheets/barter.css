@@ -27,6 +27,7 @@
 */
 .keryi_barter_main_barterList > .keryi_barter_cardInfo {
     width: 100%;
+    margin: 0 0 20px 0;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;

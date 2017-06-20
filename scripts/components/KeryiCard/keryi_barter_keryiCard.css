@@ -30,7 +30,8 @@
 
 .keryi_barter_card_main > .keryi_barter_card_header,
 .keryi_barter_card_mainContent > .keryi_barter_card_description,
-.keryi_barter_card_mainContent > .keryi_barter_card_tag {
+.keryi_barter_card_mainContent > .keryi_barter_card_tag,
+.keryi_barter_card_mainContent > .keryi_barter_card_foot {
     padding: 0 20px;
 }
 
@@ -85,5 +86,28 @@
     font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
     line-height: 21px;
 }
+
+.keryi_barter_card_mainContent > .keryi_barter_card_tag {
+    margin-top: 15px;
+}
+
+.keryi_barter_card_mainContent > .keryi_barter_card_foot {
+    height: 45px;
+    line-height: 45px;
+}
+
+.keryi_barter_card_foot > .keryi_barter_card_needParty {
+    font-size: 13px;
+    font-weight: bolder;
+    color: #8f8f8f;
+    float: left;
+    cursor: pointer;
+}
+
+.keryi_barter_card_needParty > .keryi_barter_card_needPartyDescription {
+    font-style: normal;
+}
+
+
 
 

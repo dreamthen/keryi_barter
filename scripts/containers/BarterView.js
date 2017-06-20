@@ -54,8 +54,15 @@ class BarterView extends React.Component {
                 introduce="react react-redux react-router-redux"
                 tagList={[{
                     type: "primary",
-                    content: ""
+                    content: "react"
+                }, {
+                    type: "primary",
+                    content: "react-redux"
+                }, {
+                    type: "primary",
+                    content: "react-router-redux"
                 }]}
+                needParty={77}
             />
         )
     }
