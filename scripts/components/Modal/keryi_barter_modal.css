@@ -7,5 +7,16 @@
     height: 100%;
     overflow: hidden;
     z-index: 9999;
+    opacity: 1;
+    transition: all 1s ease-in-out 0s;
     background-color: rgba(55, 55, 55, .6);
+}
+
+.keryi_barter_modal.keryi_barter_modalDisAppear {
+    opacity: 0;
+    transition: all 1s ease-in-out 0s;
+}
+
+.keryi_barter_modal.keryi_barter_modalNone {
+    display: none;
 }
