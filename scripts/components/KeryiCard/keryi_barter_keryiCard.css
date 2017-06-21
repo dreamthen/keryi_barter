@@ -96,6 +96,14 @@
     line-height: 45px;
 }
 
+.keryi_barter_card_mainContent > .keryi_barter_card_foot:after {
+    content: ".";
+    clear: both;
+    display: block;
+    visibility: hidden;
+    height: 0;
+}
+
 .keryi_barter_card_foot > .keryi_barter_card_needParty {
     font-size: 13px;
     font-weight: bolder;
@@ -104,10 +112,32 @@
     cursor: pointer;
 }
 
+.keryi_barter_card_foot > .keryi_barter_card_function {
+    float: right;
+    height: inherit;
+    line-height: inherit;
+}
+
 .keryi_barter_card_needParty > .keryi_barter_card_needPartyDescription {
     font-style: normal;
 }
 
+.keryi_barter_card_function > i {
+    position: relative;
+    line-height: inherit;
+    font-size: 24px;
+    margin: 0 0 0 12px;
+    color: #8f8f8f;
+    cursor: pointer;
+}
 
+.keryi_barter_card_function > i.keryiBarter-exchange {
+    margin: 0;
+    top: 3px;
+}
+
+.keryi_barter_card_function > i.keryiBarter-like {
+    top: 2px;
+}
 
 

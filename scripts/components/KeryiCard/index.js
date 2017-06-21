@@ -207,8 +207,13 @@ export class KeryiCard extends React.Component {
                         {needParty} 需要方
                     </dfn>
                 </article>
-                <aside className="keryi_barter_card_likeHurt">
+                <aside className="keryi_barter_card_function">
+                    <i className="iconfontKeryiBarter keryiBarter-exchange">
 
+                    </i>
+                    <i className="iconfontKeryiBarter keryiBarter-like">
+
+                    </i>
                 </aside>
             </section>
         )
