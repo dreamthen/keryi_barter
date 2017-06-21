@@ -5,6 +5,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import {Button} from "../components/Button";
+import {Modal} from "../components/Modal";
 import routesMode from "../configs/routesConfigMode";
 import "../../stylesheets/app.css";
 
@@ -117,6 +118,11 @@ class AppView extends React.Component {
                 <footer>
 
                 </footer>
+                <Modal
+                    visible={false}
+                >
+
+                </Modal>
             </div>
         )
     }

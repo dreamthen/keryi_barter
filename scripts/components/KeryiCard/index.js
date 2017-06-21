@@ -220,10 +220,16 @@ export class KeryiCard extends React.Component {
                     </dfn>
                 </article>
                 <aside className="keryi_barter_card_function">
-                    <i className="iconfontKeryiBarter keryiBarter-exchange">
+                    <i
+                        title="需要"
+                        className="iconfontKeryiBarter keryiBarter-exchange"
+                    >
 
                     </i>
-                    <i className="iconfontKeryiBarter keryiBarter-like">
+                    <i
+                        title="喜欢"
+                        className="iconfontKeryiBarter keryiBarter-like"
+                    >
 
                     </i>
                 </aside>
