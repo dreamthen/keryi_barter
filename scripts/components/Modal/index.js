@@ -11,11 +11,19 @@ const modalVisible = "visible";
 const modalVisibleDisappear = "visibleDisappear";
 //Modal组件对话框消失样式表配置
 const modalVisibleNone = "visibleNone";
+//Modal组件对话框内部副级容器样式表配置
+const modalInnerMain = "modalInnerMain";
+//Modal组件对话框在外部不传入props width的情况下的默认宽度
+const defaultWidth = 520;
 
 export class Modal extends React.Component {
     static propTypes = {
         //Modal组件对话框是否弹出,必写属性
         visible: PropTypes.bool.isRequired,
+        //Modal组件对话框宽度
+        width: PropTypes.number,
+        //Modal组件对话框样式表配置
+        className: PropTypes.string,
         //Modal组件对话框关闭回调函数
         onClose: PropTypes.func
     };
@@ -48,6 +56,7 @@ export class Modal extends React.Component {
             //Modal组件对话框是否弹出,必写属性
             visible
         } = this.props;
+        //在传入对话框判断标志位visible且visible类型为bool时,Modal组件对话框用modalConfig中的指定className样式表显示;在不传入对话框判断标志位visible、visible为空或者visible类型错误时,Modal对话框className样式表消失
         return visible ? "" : " " + modalConfig[modalVisibleNone];
     }
 
@@ -64,23 +73,35 @@ export class Modal extends React.Component {
     }
 
     /**
+     * 根据props className来设置Modal组件对话框内部副级容器的className样式表
+     * @returns {string}
+     */
+    outsideClassToClass() {
+        const {
+            //Modal组件对话框样式表配置
+            className
+        } = this.props;
+        return className ? modalConfig[modalInnerMain] + " " + className : modalConfig[modalInnerMain];
+    }
+
+    /**
      * 根据外部传入的props onClose来设置Modal组件对话框关闭
      * @param e
      */
     onCloseHandler(e) {
         const {
             //Modal组件对话框关闭回调函数
-            onClose,
-            //Modal组件对话框是否弹出,必写属性
-            visible
+            onClose
         } = this.props;
         this.setState({
-            modalAppear: visible
-        });
-        //FIXME 在这里设置一个时间控制器
-        setTimeout(function timer() {
-            onClose();
-        }.bind(this), 1000);
+            modalAppear: false
+        }, function closer() {
+            //FIXME 在这里设置一个时间控制器,Modal组件对话框从显示到隐藏这个过程动画1s之后,将Modal组件对话框消失
+            setTimeout(function timer() {
+                //Modal组件对话框关闭回调函数
+                onClose();
+            }.bind(this), 1000);
+        }.bind(this));
         //取消冒泡
         e.nativeEvent.stopImmediatePropagation();
     }
@@ -92,16 +113,36 @@ export class Modal extends React.Component {
             //根据state modalAppear来设置Modal组件对话框className样式表
             appearToClass,
             //Modal组件对话框关闭
-            onCloseHandler
+            onCloseHandler,
+            //根据外部传入的props onClose来设置Modal组件对话框关闭
+            outsideClassToClass
         } = this;
+        const {
+            //Modal组件对话框宽度
+            width
+        } = this.props;
         return (
             <section
                 tabIndex="-1"
-                onClick={onCloseHandler.bind(this)}
                 className={appearToClass.bind(this)() + visibleToClass.bind(this)()}
             >
-                <main className="keryi_barter_modal_main">
+                <div
+                    className="keryi_barter_modal_shadow"
+                    onClick={onCloseHandler.bind(this)}
+                >
 
+                </div>
+                <main
+                    className={outsideClassToClass.bind(this)()}
+                    style={{width: width ? width : defaultWidth}}
+                >
+                    <article
+                        className="keryi_barter_modal_article"
+                    >
+                        <header className="keryi_barter_modal_header">
+                            hello,world
+                        </header>
+                    </article>
                 </main>
             </section>
         )

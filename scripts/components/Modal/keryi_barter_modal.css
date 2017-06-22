@@ -1,15 +1,28 @@
 @charset "utf-8";
-.keryi_barter_modal {
+.keryi_barter_modal,
+.keryi_barter_modal > .keryi_barter_modal_shadow {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    z-index: 9999;
+    z-index: 8000;
+}
+
+.keryi_barter_modal {
     opacity: 1;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
     transition: all 1s ease-in-out 0s;
     background-color: rgba(55, 55, 55, .6);
+}
+
+.keryi_barter_modal > .keryi_barter_modal_shadow {
+    z-index: 9000;
 }
 
 .keryi_barter_modal.keryi_barter_modalDisAppear {
@@ -19,4 +32,19 @@
 
 .keryi_barter_modal.keryi_barter_modalNone {
     display: none;
+}
+
+.keryi_barter_modal > .keryi_barter_modal_main {
+    position: relative;
+    height: auto;
+    min-height: 200px;
+    top: 100px;
+    border-radius: 4px;
+    background-color: #f4f4f4;
+    z-index: 9999;
+}
+
+.keryi_barter_modal_main > .keryi_barter_modal_article {
+    width: 730px;
+    margin: 0 auto;
 }
