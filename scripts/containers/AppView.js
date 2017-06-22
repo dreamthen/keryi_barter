@@ -12,7 +12,10 @@ import "../../stylesheets/app.css";
 class AppView extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            //控制Modal组件对话框显示、隐藏或者消失
+            addBarterVisible: false
+        };
     }
 
     /**
@@ -28,10 +31,23 @@ class AppView extends React.Component {
     }
 
     /**
+     * 控制Modal组件对话框显示
+     * @params e
+     */
+    addKeryiBarterHandler(e) {
+        this.setState({
+            addBarterVisible: true
+        });
+        //取消冒泡
+        e.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
      * render渲染keryi_barter主页面头部
      * @returns {XML}
      */
     renderHeader() {
+        const {addKeryiBarterHandler} = this;
         return (
             <header className="keryi_barter_head">
                 <nav className="keryi_barter_nav">
@@ -68,6 +84,7 @@ class AppView extends React.Component {
                                 size="large"
                                 type="primary"
                                 className="keryi_barter_button_addBarter"
+                                onClick={addKeryiBarterHandler.bind(this)}
                             >
                                 <i className="iconfontKeryiBarter keryiBarter-addBarter">
 
@@ -94,6 +111,42 @@ class AppView extends React.Component {
     }
 
     /**
+     * keryi_barter主页面添加"以物换物"需要对话框
+     * @returns {XML}
+     */
+    renderModal() {
+        const {
+            //控制Modal组件对话框隐藏并消失
+            addBarterCloseHandler
+        } = this;
+        const {
+            //控制Modal组件对话框显示、隐藏或者消失
+            addBarterVisible
+        } = this.state;
+        return (
+            <Modal
+                visible={addBarterVisible}
+                onClose={addBarterCloseHandler.bind(this)}
+            >
+
+            </Modal>
+        )
+    }
+
+    /**
+     * 控制Modal组件对话框隐藏并消失
+     * @param e
+     */
+    addBarterCloseHandler(e) {
+        this.setState({
+            addBarterVisible: false
+        });
+        //取消冒泡
+        e.nativeEvent.stopImmediatePropagation();
+    }
+
+
+    /**
      * render渲染keryi_barter主页面主要内容barterList列表
      * @returns {XML}
      */
@@ -104,9 +157,10 @@ class AppView extends React.Component {
             //keryi_barter主页面阴影遮罩
             renderShadow,
             //keryi_barter主页面主要内容barterList列表
-            renderMain
+            renderMain,
+            //keryi_barter主页面添加"以物换物"需要对话框
+            renderModal
         } = this;
-        const {children} = this.props;
         return (
             <div className="keryi_barter_index_page_container">
                 {/*keryi_barter主页面阴影遮罩*/}
@@ -118,11 +172,8 @@ class AppView extends React.Component {
                 <footer>
 
                 </footer>
-                <Modal
-                    visible={false}
-                >
-
-                </Modal>
+                {/*keryi_barter主页面添加"以物换物"需要对话框*/}
+                {renderModal.bind(this)()}
             </div>
         )
     }
