@@ -126,6 +126,7 @@ class AppView extends React.Component {
         return (
             <Modal
                 visible={addBarterVisible}
+                width={960}
                 onClose={addBarterCloseHandler.bind(this)}
             >
 
@@ -141,8 +142,6 @@ class AppView extends React.Component {
         this.setState({
             addBarterVisible: false
         });
-        //取消冒泡
-        e.nativeEvent.stopImmediatePropagation();
     }
 
 

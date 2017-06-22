@@ -40,7 +40,7 @@ export class Input extends React.Component {
      */
     sizeToClass() {
         const {size} = this.props;
-        //在传入输入框尺寸size且size类型为string时,Input组件输入框用sizeConfig中的指定className样式表宽度;在不传入输入框尺寸size、size为空或者size类型错误时,Button按钮className样式表用默认宽度100px
+        //在传入输入框尺寸size且size类型为string时,Input组件输入框用sizeConfig中的指定className样式表宽度;在不传入输入框尺寸size、size为空或者size类型错误时,Input输入框className样式表用默认宽度100px
         return sizeConfig[size] ? sizeConfig[size] : sizeConfig[defaultSizeConfig];
     }
 
