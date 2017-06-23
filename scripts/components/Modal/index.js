@@ -120,11 +120,16 @@ export class Modal extends React.Component {
     renderModalHeader() {
         const {headPortrait} = this.props;
         return (
-            <header className="keryi_barter_modal_header">
-                <div className="keryi_barter_modal_avatar">
-                    <HeadPortrait
-                        headPortrait={headPortrait ? headPortrait : modalConfig[modalDefaultHeadPortrait]}
-                    />
+            <header className="keryi_barter_modal_head">
+                <div className="keryi_barter_modal_avatarContainer">
+                    <div className="keryi_barter_modal_avatarShadow">
+
+                    </div>
+                    <section className="keryi_barter_modal_avatar">
+                        <HeadPortrait
+                            headPortrait={headPortrait ? headPortrait : modalConfig[modalDefaultHeadPortrait]}
+                        />
+                    </section>
                 </div>
             </header>
         )
