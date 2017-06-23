@@ -38,16 +38,16 @@ class BarterView extends React.Component {
             <KeryiCard
                 userName="1000yardStyle"
                 imageList={[{
-                    src: "/images/description_bg.png",
+                    src: "/images/keryiBarter_description_bg.png",
                     name: "keryi介绍背景"
                 }, {
-                    src: "/images/login_bg.png",
+                    src: "/images/keryiBarter_login_bg.png",
                     name: "keryi登录背景"
                 }, {
-                    src: "/images/register_bg.png",
+                    src: "/images/keryiBarter_register_bg.png",
                     name: "keryi注册背景"
                 }, {
-                    src: "/images/login_bg.png",
+                    src: "/images/keryiBarter_login_bg.png",
                     name: "keryi登录背景"
                 }]}
                 title="today"
@@ -83,7 +83,7 @@ class BarterView extends React.Component {
                 <div className="keryi_barter_main_module keryi_barter_main_barterList">
                     <article className="keryi_barter_cardInfo">
                         {/*render渲染用户头像*/}
-                        {renderHeadPortrait.bind(this)("/images/login_bg.png")}
+                        {renderHeadPortrait.bind(this)("/images/keryiBarter_login_bg.png")}
                         {/*render渲染用户资源卡片*/}
                         {renderKeryiCard.bind(this)()}
                     </article>
