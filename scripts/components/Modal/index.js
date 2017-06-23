@@ -2,6 +2,7 @@
  * Created by yinwk on 2017/6/21.
  */
 import React, {PropTypes} from "react";
+import {HeadPortrait} from "../HeadPortrait";
 import modalConfig from "./configs/modalConfig";
 import "./keryi_barter_modal.css";
 
@@ -13,6 +14,8 @@ const modalVisibleDisappear = "visibleDisappear";
 const modalVisibleNone = "visibleNone";
 //Modal组件对话框内部副级容器样式表配置
 const modalInnerMain = "modalInnerMain";
+//Modal组件对话框头像默认配置
+const modalDefaultHeadPortrait = "defaultHeadPortrait";
 //Modal组件对话框在外部不传入props width的情况下的默认宽度
 const defaultWidth = 520;
 
@@ -22,6 +25,8 @@ export class Modal extends React.Component {
         visible: PropTypes.bool.isRequired,
         //Modal组件对话框宽度
         width: PropTypes.number,
+        //Modal组件对话框HeadPortrait组件头像地址
+        headPortrait: PropTypes.string,
         //Modal组件对话框样式表配置
         className: PropTypes.string,
         //Modal组件对话框关闭回调函数
@@ -106,6 +111,25 @@ export class Modal extends React.Component {
         e.nativeEvent.stopImmediatePropagation();
     }
 
+
+
+    /**
+     * render渲染对话框头部(包括头像、标题、用户名和时间等信息)
+     * @returns {XML}
+     */
+    renderModalHeader() {
+        const {headPortrait} = this.props;
+        return (
+            <header className="keryi_barter_modal_header">
+                <div className="keryi_barter_modal_avatar">
+                    <HeadPortrait
+                        headPortrait={headPortrait ? headPortrait : modalConfig[modalDefaultHeadPortrait]}
+                    />
+                </div>
+            </header>
+        )
+    }
+
     render() {
         const {
             //根据外部传入的props visible来设置Modal组件对话框className样式表
@@ -115,7 +139,9 @@ export class Modal extends React.Component {
             //Modal组件对话框关闭
             onCloseHandler,
             //根据外部传入的props onClose来设置Modal组件对话框关闭
-            outsideClassToClass
+            outsideClassToClass,
+            //对话框头部(包括头像、标题、用户名和时间等信息)
+            renderModalHeader
         } = this;
         const {
             //Modal组件对话框宽度
@@ -139,9 +165,8 @@ export class Modal extends React.Component {
                     <article
                         className="keryi_barter_modal_article"
                     >
-                        <header className="keryi_barter_modal_header">
-                            hello,world
-                        </header>
+                        {/*对话框头部(包括头像、标题、用户名和时间等信息)*/}
+                        {renderModalHeader.bind(this)()}
                     </article>
                 </main>
             </section>

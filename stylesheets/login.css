@@ -22,19 +22,19 @@ body {
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    background: url(/images/description_bg.png) no-repeat center center / 100% border-box content-box;
+    background: url(/images/keryiBarter_description_bg.png) no-repeat center center / 100% border-box content-box;
     transition: all .8s ease-in-out 0s;
     z-index: 1500;
 }
 
 /*login页面副级容器登录模块背景*/
 .keryi_barter_login_page_container > .keryi_barter_login {
-    background: url(/images/login_bg.png) no-repeat center center / 100% border-box content-box;
+    background: url(/images/keryiBarter_login_bg.png) no-repeat center center / 100% border-box content-box;
 }
 
 /*login页面副级容器注册模块背景*/
 .keryi_barter_login_page_container > .keryi_barter_register {
-    background: url(/images/register_bg.png) no-repeat center center / 100% border-box content-box;
+    background: url(/images/keryiBarter_register_bg.png) no-repeat center center / 100% border-box content-box;
 }
 
 /*login页面渐变阴影遮罩*/
