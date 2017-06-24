@@ -167,7 +167,7 @@ class LoginView extends React.Component {
                         type={type ? type : "text"}
                         maxLength={maxLength}
                         placeholder={placeholder}
-                        className={className}
+                        className={className ? className : ""}
                         onChange={inputChangeHandler.bind(this, key)}
                     />
                 );

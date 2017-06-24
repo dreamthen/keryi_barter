@@ -126,7 +126,10 @@ class AppView extends React.Component {
         return (
             <Modal
                 visible={addBarterVisible}
-                width={960}
+                closable
+                width={540}
+                userName="1000yardStyle"
+                headPortrait="/images/keryiBarter_v.jpg"
                 onClose={addBarterCloseHandler.bind(this)}
             >
 
