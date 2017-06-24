@@ -7,3 +7,7 @@
     box-sizing: border-box;
     border: 1px solid rgba(0, 0, 0, .3);
 }
+
+.keryi_barter_portrait_add {
+    box-shadow: 0 0 0 2px rgb(255, 255, 255);
+}
