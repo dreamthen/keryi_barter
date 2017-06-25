@@ -141,6 +141,35 @@ body {
     z-index: 1500;
 }
 
+.keryi_barter_modal_innerMain > .keryi_barter_modal_mainContainer {
+    padding: 0 15px 0 20px;
+}
+
+.keryi_barter_modal_mainContainer .keryi_barter_modal_input_title,
+.keryi_barter_modal_mainContainer .keryi_barter_modal_input_description {
+    width: 100%;
+    font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    font-size: 36px;
+    min-height: 47px;
+    line-height: 47px;
+    word-wrap: break-word;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #444;
+}
+
+.keryi_barter_modal_mainContainer .keryi_barter_modal_input_description {
+    min-height: 80px;
+    line-height: 21px;
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+.keryi_barter_modal_input_title::placeholder,
+.keryi_barter_modal_input_description::placeholder {
+    color: #a2a2a2;
+}
+
 
 
 

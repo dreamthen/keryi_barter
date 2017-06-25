@@ -10,12 +10,14 @@ import "./keryi_barter_input.css";
 const defaultTypeConfig = "text";
 //在不传入输入框尺寸size、size为空或者size类型错误时,Input组件输入框className样式表用默认宽度100px
 const defaultSizeConfig = "default";
+//Input组件类型
+const inputType = ["text", "password", "textarea"];
 
 export class Input extends React.Component {
     static propTypes = {
         //Input组件输入框内容
         value: PropTypes.string,
-        //Input组件输入框类型:text和password,默认为text
+        //Input组件输入框类型:text、password和textarea,默认为text
         type: PropTypes.string,
         //Input组件输入框尺寸:small,default和large,默认为default
         size: PropTypes.string,
@@ -26,7 +28,9 @@ export class Input extends React.Component {
         //Input组件输入框默认提示语
         placeholder: PropTypes.string,
         //Input组件输入框可输入最大字符数
-        maxLength: PropTypes.number
+        maxLength: PropTypes.number,
+        //Input组件输入框textarea行数
+        rows: PropTypes.number
     };
 
     constructor(props) {
@@ -68,18 +72,31 @@ export class Input extends React.Component {
             //Input组件输入框默认提示语
             placeholder,
             //Input组件输入框可输入最大字符数
-            maxLength
+            maxLength,
+            //Input组件输入框textarea行数
+            rows
         } = this.props;
+        const typeAreaIndex = inputType.length;
         return (
             <div className={typeToClass.bind(this)() + " " + sizeToClass.bind(this)()}>
-                <input
-                    value={value}
-                    placeholder={placeholder}
-                    maxLength={maxLength}
-                    className={className}
-                    type={type}
-                    onChange={onChange}
-                />
+                {
+                    type === inputType[typeAreaIndex - 1] ? <textarea
+                        value={value}
+                        placeholder={placeholder}
+                        maxLength={maxLength}
+                        className={className}
+                        onChange={onChange}
+                        rows={rows}
+                    >
+                    </textarea> : <input
+                        value={value}
+                        placeholder={placeholder}
+                        maxLength={maxLength}
+                        className={className}
+                        type={type}
+                        onChange={onChange}
+                    />
+                }
             </div>
         )
     }
