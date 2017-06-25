@@ -3,7 +3,8 @@
     box-sizing: border-box;
 }
 
-.keryi_barter_input > input {
+.keryi_barter_input > input,
+.keryi_barter_input > textarea {
     padding: 11px 10px 11px 13px;
     font: 16px/1.4 "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
     box-sizing: border-box;
@@ -12,6 +13,11 @@
     border-radius: 4px;
     box-shadow: none;
     color: #222;
+}
+
+.keryi_barter_textarea_input > textarea {
+    width: 100%;
+    resize: none;
 }
 
 .keryi_barter_sm_input > input {

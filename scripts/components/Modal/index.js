@@ -3,9 +3,7 @@
  */
 import React, {PropTypes} from "react";
 import {HeadPortrait} from "../HeadPortrait";
-import {Input} from "../Input";
 import modalConfig from "./configs/modalConfig";
-import modalComponentConfig from "./configs/modalComponentConfig";
 import "./keryi_barter_modal.css";
 //Modal组件对话框显示样式表配置
 const modalVisible = "visible";
@@ -19,8 +17,6 @@ const modalInnerMain = "modalInnerMain";
 const modalDefaultHeadPortrait = "defaultHeadPortrait";
 //Modal组件对话框在外部不传入props width的情况下的默认宽度
 const defaultWidth = 520;
-//组件类型
-const componentType = ["input"];
 
 export class Modal extends React.Component {
     static propTypes = {
@@ -31,7 +27,7 @@ export class Modal extends React.Component {
         //Modal组件对话框HeadPortrait组件头像地址
         headPortrait: PropTypes.string,
         //Modal组件对话框用户名
-        userName: PropTypes.string,
+        title: PropTypes.string,
         //Modal组件对话框样式表配置
         className: PropTypes.string,
         //Modal组件对话框是否显示右上角关闭按钮
@@ -44,9 +40,7 @@ export class Modal extends React.Component {
         super(props);
         this.state = {
             //Modal组件对话框显示或者隐藏判断标志位
-            modalAppear: false,
-            //Modal组件对话框标题
-            title: ""
+            modalAppear: false
         }
     }
 
@@ -154,14 +148,14 @@ export class Modal extends React.Component {
         } = this;
         const {
             //对话框用户名
-            userName,
+            title,
             //对话框是否显示右上角关闭按钮
             closable
         } = this.props;
         return (
             <header className="keryi_barter_modal_head">
                 <div className="keryi_barter_modal_head_title">
-                    {userName}
+                    {title}
                 </div>
                 {
                     closable && <i
@@ -171,76 +165,6 @@ export class Modal extends React.Component {
                     </i>
                 }
             </header>
-        )
-    }
-
-    /**
-     * 根据不同的组件类型配置来设置组件
-     * @param key
-     * @param include
-     * @param size
-     * @param type
-     * @param placeholder
-     * @param maxLength
-     * @param className
-     */
-    renderModalComponent(key, include, size, type, placeholder, maxLength, className) {
-        const {onChangeInputHandler} = this;
-        switch (include) {
-            case componentType[0]:
-                return (
-                    <Input
-                        value={key}
-                        type={type ? type : "text"}
-                        size={size}
-                        placeholder={placeholder}
-                        maxLength={maxLength}
-                        className={className ? className : ""}
-                        onChange={onChangeInputHandler.bind(this, key)}
-                    />
-                )
-        }
-    }
-
-    /**
-     * 改变标题内容函数
-     * @param key
-     * @param value
-     */
-    onChangeInputHandler(key, value) {
-        this.setState({
-            [key]: value
-        });
-    }
-
-    /**
-     * render渲染对话框主要内容(包括标题、描述和标签等信息)
-     * @returns {XML}
-     */
-    renderModalMain() {
-        const {
-            //根据不同的组件类型配置来设置组件
-            renderModalComponent
-        } = this;
-        return (
-            <main
-                className="keryi_barter_modal_main"
-            >
-                {
-                    modalComponentConfig.map(function modal(modalItem, index) {
-                        //根据不同的组件类型配置来设置组件
-                        return renderModalComponent.bind(this)(
-                            modalItem["key"],
-                            modalItem["include"],
-                            modalItem["size"],
-                            modalItem["type"],
-                            modalItem["placeholder"],
-                            modalItem["maxLength"],
-                            modalItem["className"]
-                        );
-                    }.bind(this))
-                }
-            </main>
         )
     }
 
@@ -257,13 +181,13 @@ export class Modal extends React.Component {
             //对话框头部(包括标题、用户名和时间等信息)
             renderModalHeader,
             //对话框头像
-            renderModalHeadPortrait,
-            //对话框主要内容(包括标题、描述和标签等信息)
-            renderModalMain
+            renderModalHeadPortrait
         } = this;
         const {
             //Modal组件对话框宽度
-            width
+            width,
+            //Modal组件主要内容(外部传入)
+            children
         } = this.props;
         return (
             <section
@@ -289,8 +213,8 @@ export class Modal extends React.Component {
                         >
                             {/*对话框头部(包括用户名等信息)*/}
                             {renderModalHeader.bind(this)()}
-                            {/*对话框主要内容(包括标题、描述和标签等信息)*/}
-                            {renderModalMain.bind(this)()}
+                            {/*对话框主要内容(外部传入)*/}
+                            {children}
                         </article>
                     </main>
                 </section>

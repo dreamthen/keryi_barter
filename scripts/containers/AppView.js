@@ -4,10 +4,15 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
+import modalComponentConfig from "../configs/modalComponentConfig";
 import {Button} from "../components/Button";
 import {Modal} from "../components/Modal";
+import {Input} from "../components/Input";
 import routesMode from "../configs/routesConfigMode";
 import "../../stylesheets/app.css";
+
+//Input组件类型
+const componentType = ["input", "textarea"];
 
 class AppView extends React.Component {
     constructor(props) {
@@ -111,13 +116,94 @@ class AppView extends React.Component {
     }
 
     /**
+     * 改变标题内容函数
+     * @param key
+     * @param e
+     */
+    onChangeInputHandler(key, e) {
+        this.setState({
+            [key]: e.target.value
+        });
+    }
+
+    /**
+     * 根据不同的组件类型配置来设置组件
+     * @param key
+     * @param include
+     * @param size
+     * @param type
+     * @param rows
+     * @param placeholder
+     * @param maxLength
+     * @param className
+     * @param index
+     */
+    renderModalComponent(key, include, size, type, rows, placeholder, maxLength, className, index) {
+        const {onChangeInputHandler} = this;
+        switch (include) {
+            case componentType[0]:
+            case componentType[1]:
+                return (
+                    <Input
+                        key={index}
+                        value={this.state[key]}
+                        type={type ? type : "text"}
+                        size={size}
+                        rows={rows}
+                        placeholder={placeholder}
+                        maxLength={maxLength}
+                        className={className ? className : ""}
+                        onChange={onChangeInputHandler.bind(this, key)}
+                    />
+                );
+        }
+    }
+
+    /**
+     * render渲染对话框主要内容(包括标题、描述和标签等信息)
+     * @returns {XML}
+     */
+    renderModalMain() {
+        const {
+            //根据不同的组件类型配置来设置组件
+            renderModalComponent
+        } = this;
+        return (
+            <main
+                className="keryi_barter_modal_innerMain"
+            >
+                <section className="keryi_barter_modal_mainContainer">
+                    {
+                        modalComponentConfig.map(function modal(modalItem, index) {
+                            //根据不同的组件类型配置来设置组件
+                            return renderModalComponent.bind(this)(
+                                modalItem["key"],
+                                modalItem["include"],
+                                modalItem["size"],
+                                modalItem["type"],
+                                modalItem["rows"],
+                                modalItem["placeholder"],
+                                modalItem["maxLength"],
+                                modalItem["className"],
+                                index
+                            );
+                        }.bind(this))
+                    }
+                </section>
+            </main>
+        )
+    }
+
+    /**
      * keryi_barter主页面添加"以物换物"需要对话框
      * @returns {XML}
      */
     renderModal() {
         const {
             //控制Modal组件对话框隐藏并消失
-            addBarterCloseHandler
+            addBarterCloseHandler,
+            //对话框主要内容(包括标题、描述和标签等信息)
+            renderModalMain
         } = this;
         const {
             //控制Modal组件对话框显示、隐藏或者消失
@@ -128,11 +214,12 @@ class AppView extends React.Component {
                 visible={addBarterVisible}
                 closable
                 width={540}
-                userName="1000yardStyle"
+                title="1000yardStyle"
                 headPortrait="/images/keryiBarter_v.jpg"
                 onClose={addBarterCloseHandler.bind(this)}
             >
-
+                {/*对话框主要内容(包括标题、描述和标签等信息)*/}
+                {renderModalMain.bind(this)()}
             </Modal>
         )
     }
