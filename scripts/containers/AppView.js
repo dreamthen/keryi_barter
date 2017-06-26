@@ -198,7 +198,7 @@ class AppView extends React.Component {
                 return (
                     <Input
                         key={key}
-                        value={this.props[key]}
+                        value={this.state[key]}
                         type={type ? type : "text"}
                         size={size}
                         rows={rows}
