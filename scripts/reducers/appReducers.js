@@ -17,7 +17,6 @@ export function appReducers(state = defaultState, actions) {
     switch (type) {
         case appActionsType["ADD_BARTER_RESOURCE"]:
             return state;
-        default:
-            return state;
     }
+    return state;
 }
