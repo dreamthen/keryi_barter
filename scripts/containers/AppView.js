@@ -1,7 +1,7 @@
 /**
  * Created by yinwk on 2017/6/13.
  */
-import React from "react";
+import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import modalComponentConfig from "../configs/modalComponentConfig";
@@ -12,9 +12,16 @@ import routesMode from "../configs/routesConfigMode";
 import "../../stylesheets/app.css";
 
 //Input组件类型
-const componentType = ["input", "textarea"];
+const componentType = ["input", "textarea", "functionIcons"];
 
 class AppView extends React.Component {
+    static propTypes = {
+        //对话框标题
+        title: PropTypes.string,
+        //对话框资源描述
+        description: PropTypes.string
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -116,7 +123,7 @@ class AppView extends React.Component {
     }
 
     /**
-     * 改变标题内容函数
+     * 改变Input输入框内容函数
      * @param key
      * @param e
      */
@@ -124,6 +131,42 @@ class AppView extends React.Component {
         this.setState({
             [key]: e.target.value
         });
+    }
+
+    /**
+     * 资源描述聚焦事件
+     * @param e
+     */
+    onDescriptionFocus(e) {
+
+    }
+
+    /**
+     * 资源描述失焦事件
+     * @param e
+     */
+    onDescriptionBlur(e) {
+
+    }
+
+    /**
+     * 根据不同的功能图标Icon类型配置来设置功能图标Icon
+     * @param key
+     * @param include
+     * @param className
+     * @param iconName
+     */
+    renderFunctionIcons(key, include, className, iconName) {
+        return (
+            <li
+                key={key}
+                className={className}
+            >
+                <i className={iconName}>
+
+                </i>
+            </li>
+        )
     }
 
     /**
@@ -136,16 +179,25 @@ class AppView extends React.Component {
      * @param placeholder
      * @param maxLength
      * @param className
-     * @param index
+     * @param focus
+     * @param blur
+     * @param focusFunc
+     * @param blurFunc
+     * @param functionIcons
+     * @returns {XML}
      */
-    renderModalComponent(key, include, size, type, rows, placeholder, maxLength, className, index) {
-        const {onChangeInputHandler} = this;
+    renderModalComponent(key, include, size, type, rows, placeholder, maxLength, className, focus, blur, focusFunc, blurFunc, functionIcons) {
+        const {
+            //改变标题内容函数
+            onChangeInputHandler,
+            renderFunctionIcons
+        } = this;
         switch (include) {
             case componentType[0]:
             case componentType[1]:
                 return (
                     <Input
-                        key={index}
+                        key={key}
                         value={this.state[key]}
                         type={type ? type : "text"}
                         size={size}
@@ -153,8 +205,28 @@ class AppView extends React.Component {
                         placeholder={placeholder}
                         maxLength={maxLength}
                         className={className ? className : ""}
+                        onFocus={focus ? this[focusFunc] : new Function()}
+                        onBlur={blur ? this[blurFunc] : new Function()}
                         onChange={onChangeInputHandler.bind(this, key)}
                     />
+                );
+            case componentType[2]:
+                return (
+                    <ul
+                        key={key}
+                        className={className}
+                    >
+                        {
+                            functionIcons && functionIcons.length > 0 && functionIcons.map(function icons(iconItem, iconIndex) {
+                                return renderFunctionIcons.bind(this)(
+                                    iconItem["key"],
+                                    iconItem["include"],
+                                    iconItem["className"],
+                                    iconItem["iconName"]
+                                );
+                            }.bind(this))
+                        }
+                    </ul>
                 );
         }
     }
@@ -185,7 +257,11 @@ class AppView extends React.Component {
                                 modalItem["placeholder"],
                                 modalItem["maxLength"],
                                 modalItem["className"],
-                                index
+                                modalItem["focus"],
+                                modalItem["blur"],
+                                modalItem["focusFunc"],
+                                modalItem["blurFunc"],
+                                modalItem["functionIcons"]
                             );
                         }.bind(this))
                     }
@@ -269,7 +345,9 @@ class AppView extends React.Component {
 }
 
 function select(state, ownProps) {
-    return {}
+    return {
+        ...state.appReducers
+    }
 }
 
 export default connect(select)(AppView);

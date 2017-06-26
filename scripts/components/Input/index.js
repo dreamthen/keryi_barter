@@ -30,7 +30,11 @@ export class Input extends React.Component {
         //Input组件输入框可输入最大字符数
         maxLength: PropTypes.number,
         //Input组件输入框textarea行数
-        rows: PropTypes.number
+        rows: PropTypes.number,
+        //Input组件输入框onFocus聚焦事件,外部传入Input输入框聚焦函数
+        onFocus: PropTypes.func,
+        //Input组件输入框onFocus失焦事件,外部传入Input输入框失焦函数
+        onBlur: PropTypes.func
     };
 
     constructor(props) {
@@ -74,7 +78,11 @@ export class Input extends React.Component {
             //Input组件输入框可输入最大字符数
             maxLength,
             //Input组件输入框textarea行数
-            rows
+            rows,
+            //Input组件输入框onFocus聚焦事件,外部传入Input输入框聚焦函数
+            onFocus,
+            //Input组件输入框onFocus失焦事件,外部传入Input输入框失焦函数
+            onBlur
         } = this.props;
         const typeAreaIndex = inputType.length;
         return (
@@ -87,6 +95,8 @@ export class Input extends React.Component {
                         className={className}
                         onChange={onChange}
                         rows={rows}
+                        onFocus={onFocus}
+                        onBlur={onBlur}
                     >
                     </textarea> : <input
                         value={value}
