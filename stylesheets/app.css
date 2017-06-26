@@ -163,6 +163,7 @@ body {
     line-height: 21px;
     font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
     font-size: 14px;
+    margin: 0;
 }
 
 .keryi_barter_modal_input_title::placeholder,
@@ -170,6 +171,38 @@ body {
     color: #a2a2a2;
 }
 
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_functionIcons {
+    display: block;
+    color: #a2a2a2;
+    opacity: 0;
+    transition: all .5s ease-in-out 0s;
+}
+
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_functionIconsShow {
+    opacity: 1;
+}
+
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_functionIconsNone {
+    display: none;
+}
+
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_functionIcons:after {
+    content: ".";
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+}
+
+.keryi_barter_modal_functionIcons > li {
+    float: right;
+    height: 24px;
+}
+
+.keryi_barter_modal_functionIcons > li > i {
+    font-size: 24px;
+    cursor: pointer;
+}
 
 
 
