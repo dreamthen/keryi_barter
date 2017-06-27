@@ -7,12 +7,12 @@ import {Link} from "react-router";
 import modalComponentConfig from "../configs/modalComponentConfig";
 import {Button} from "../components/Button";
 import {Modal} from "../components/Modal";
-import {Input} from "../components/Input";
+import {Area} from "../components/Area";
 import routesMode from "../configs/routesConfigMode";
 import "../../stylesheets/app.css";
 
 //Input组件类型
-const componentType = ["input", "textarea", "functionIcons"];
+const componentType = ["area", "functionIcons"];
 
 class AppView extends React.Component {
     static propTypes = {
@@ -251,12 +251,11 @@ class AppView extends React.Component {
         blurFunc = this[blurFunc];
         switch (include) {
             case componentType[0]:
-            case componentType[1]:
                 return (
-                    <Input
+                    <Area
                         key={key}
                         value={this.state[key]}
-                        type={type ? type : "text"}
+                        type={type ? type : "imageText"}
                         size={size}
                         rows={rows}
                         placeholder={placeholder}
@@ -267,7 +266,7 @@ class AppView extends React.Component {
                         onChange={onChangeInputHandler.bind(this, key)}
                     />
                 );
-            case componentType[2]:
+            case componentType[1]:
                 return (
                     <ul
                         key={key}

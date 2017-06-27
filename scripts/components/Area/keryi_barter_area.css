@@ -1,1 +1,41 @@
 @charset "utf-8";
+.keryi_barter_area {
+    position: relative;
+    width: 100%;
+    display: block;
+}
+
+.keryi_barter_area > article {
+    position: relative;
+    width: 100%;
+    padding: 11px 10px 11px 13px;
+    font: 14px/1.4 "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background-color: transparent !important;
+    color: #222;
+    z-index: 9920;
+}
+
+.keryi_barter_area > .keryi_barter_placeholder_area {
+    position: absolute;
+    font: 14px/1.4 "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+    z-index: 9911;
+    top: 0;
+    left: 0;
+    color: #a2a2a2;
+}
+
+.keryi_barter_sm_area > article {
+    font-size: 12px;
+}
+
+.keryi_barter_md_area > article {
+    font-size: 14px;
+}
+
+.keryi_barter_lg_area > article {
+    font-size: 16px;
+}

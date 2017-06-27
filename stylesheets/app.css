@@ -145,9 +145,9 @@ body {
     padding: 0 15px 0 20px;
 }
 
-.keryi_barter_modal_mainContainer .keryi_barter_modal_input_title,
-.keryi_barter_modal_mainContainer .keryi_barter_modal_input_description,
-.keryi_barter_modal_mainContainer .keryi_barter_modal_input_sourceTag {
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_title,
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_description,
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_sourceTag {
     width: 100%;
     font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
     font-size: 36px;
@@ -159,7 +159,7 @@ body {
     color: #444;
 }
 
-.keryi_barter_modal_mainContainer .keryi_barter_modal_input_description {
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_description {
     min-height: 80px;
     line-height: 21px;
     font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
@@ -167,19 +167,13 @@ body {
     margin: 0;
 }
 
-.keryi_barter_modal_mainContainer .keryi_barter_modal_input_sourceTag {
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_sourceTag {
     min-height: 13px;
     line-height: 15px;
     font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
     font-size: 13px;
     padding: 5px 0 10px 0;
     margin-top: 5px;
-}
-
-.keryi_barter_modal_input_title::placeholder,
-.keryi_barter_modal_input_description::placeholder,
-.keryi_barter_modal_input_sourceTag::placeholder{
-    color: #a2a2a2;
 }
 
 .keryi_barter_modal_mainContainer > .keryi_barter_modal_functionIcons {
