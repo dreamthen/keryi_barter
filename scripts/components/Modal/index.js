@@ -3,6 +3,7 @@
  */
 import React, {PropTypes} from "react";
 import {HeadPortrait} from "../HeadPortrait";
+import {Button} from "../Button";
 import modalConfig from "./configs/modalConfig";
 import "./keryi_barter_modal.css";
 //Modal组件对话框显示样式表配置
@@ -33,7 +34,9 @@ export class Modal extends React.Component {
         //Modal组件对话框是否显示右上角关闭按钮
         closable: PropTypes.bool,
         //Modal组件对话框关闭回调函数
-        onClose: PropTypes.func
+        onClose: PropTypes.func,
+        //Modal组件对话框是否显示footer底部区域(包括关闭按钮和发布按钮)
+        footer: PropTypes.bool
     };
 
     constructor(props) {
@@ -138,7 +141,7 @@ export class Modal extends React.Component {
     }
 
     /**
-     * render渲染对话框头部(包括用户名等信息)
+     * render渲染对话框header头部(包括用户名等信息)
      * @returns {XML}
      */
     renderModalHeader() {
@@ -168,6 +171,35 @@ export class Modal extends React.Component {
         )
     }
 
+    /**
+     * render渲染对话框footer底部(包括关闭按钮和发布按钮)
+     * @returns {XML}
+     */
+    renderModalFooter() {
+        const {onCloseHandler} = this;
+        return (
+            <footer className="keryi_barter_modal_foot">
+                <section className="keryi_barter_modal_close">
+                    <Button
+                        type="default"
+                        className="keryi_barter_button_close"
+                        onClick={onCloseHandler.bind(this)}
+                    >
+                        关闭
+                    </Button>
+                </section>
+                <section className="keryi_barter_modal_publish">
+                    <Button
+                        type="primary"
+                        className="keryi_barter_button_publish"
+                    >
+                        发布
+                    </Button>
+                </section>
+            </footer>
+        )
+    }
+
     render() {
         const {
             //根据外部传入的props visible来设置Modal组件对话框className样式表
@@ -178,14 +210,18 @@ export class Modal extends React.Component {
             onCloseHandler,
             //根据外部传入的props onClose来设置Modal组件对话框关闭
             outsideClassToClass,
-            //对话框头部(包括标题、用户名和时间等信息)
+            //对话框header头部(包括用户名等信息)
             renderModalHeader,
             //对话框头像
-            renderModalHeadPortrait
+            renderModalHeadPortrait,
+            //对话框footer底部(包括关闭按钮和发布按钮)
+            renderModalFooter
         } = this;
         const {
             //Modal组件对话框宽度
             width,
+            //对话框是否显示footer底部区域(包括关闭按钮和发布按钮)
+            footer,
             //Modal组件主要内容(外部传入)
             children
         } = this.props;
@@ -211,10 +247,14 @@ export class Modal extends React.Component {
                         <article
                             className="keryi_barter_modal_article"
                         >
-                            {/*对话框头部(包括用户名等信息)*/}
+                            {/*对话框header头部(包括用户名等信息)*/}
                             {renderModalHeader.bind(this)()}
                             {/*对话框主要内容(外部传入)*/}
                             {children}
+                            {/*对话框footer底部(包括关闭按钮和发布按钮)*/}
+                            {
+                                footer && renderModalFooter.bind(this)()
+                            }
                         </article>
                     </main>
                 </section>
