@@ -13,6 +13,7 @@
     font-family: "Microsoft YaHei UI";
     font-weight: normal;
     box-sizing: border-box;
+    outline: none;
     transition: all .6s ease-in-out 0s;
 }
 

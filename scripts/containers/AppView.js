@@ -19,15 +19,40 @@ class AppView extends React.Component {
         //对话框标题
         title: PropTypes.string,
         //对话框资源描述
-        description: PropTypes.string
+        description: PropTypes.string,
+        //对话框选择资源类型
+        sourceTag: PropTypes.string
     };
 
     constructor(props) {
         super(props);
         this.state = {
             //控制Modal组件对话框显示、隐藏或者消失
-            addBarterVisible: false
+            addBarterVisible: false,
+            //控制功能图标位置显示或者消失
+            focusFunctionIconsVisibility: false,
+            //控制功能图标显示或者隐藏
+            focusShowFunctionIcons: false
         };
+    }
+
+    /**
+     * 组件开始装载
+     */
+    componentWillMount() {
+        //将redux props转化为state
+        const {mapPropsToState} = this;
+        mapPropsToState.bind(this)();
+    }
+
+    /**
+     * 将redux props转化为state
+     */
+    mapPropsToState() {
+        const {props} = this;
+        this.setState({
+            ...props
+        });
     }
 
     /**
@@ -138,7 +163,17 @@ class AppView extends React.Component {
      * @param e
      */
     onDescriptionFocus(e) {
-
+        //控制功能图标位置显示
+        this.setState({
+            focusFunctionIconsVisibility: true
+        }, function focus() {
+            //FIXME 这里设置一个时间控制器,在功能图标位置显示100ms后,将功能图标从隐藏转变为显示
+            setTimeout(function timer() {
+                this.setState({
+                    focusShowFunctionIcons: true
+                });
+            }.bind(this), 100);
+        }.bind(this));
     }
 
     /**
@@ -146,7 +181,17 @@ class AppView extends React.Component {
      * @param e
      */
     onDescriptionBlur(e) {
-
+        //将功能图标从显示转变为隐藏
+        this.setState({
+            focusShowFunctionIcons: false
+        }, function blur() {
+            //FIXME 这里设置一个时间控制器,在功能图标隐藏1s后,将功能图标位置消失
+            setTimeout(function timer() {
+                this.setState({
+                    focusFunctionIconsVisibility: false
+                });
+            }.bind(this), 500);
+        }.bind(this));
     }
 
     /**
@@ -179,6 +224,8 @@ class AppView extends React.Component {
      * @param placeholder
      * @param maxLength
      * @param className
+     * @param classNameNone
+     * @param classNameShow
      * @param focus
      * @param blur
      * @param focusFunc
@@ -186,12 +233,22 @@ class AppView extends React.Component {
      * @param functionIcons
      * @returns {XML}
      */
-    renderModalComponent(key, include, size, type, rows, placeholder, maxLength, className, focus, blur, focusFunc, blurFunc, functionIcons) {
+    renderModalComponent(key, include, size, type, rows, placeholder, maxLength, className, classNameNone, classNameShow, focus, blur, focusFunc, blurFunc, functionIcons) {
         const {
             //改变标题内容函数
             onChangeInputHandler,
             renderFunctionIcons
         } = this;
+        const {
+            //控制功能图标位置显示或者消失
+            focusFunctionIconsVisibility,
+            //控制功能图标显示或者隐藏
+            focusShowFunctionIcons
+        } = this.state;
+        //资源描述聚焦事件
+        focusFunc = this[focusFunc];
+        //资源描述失焦事件
+        blurFunc = this[blurFunc];
         switch (include) {
             case componentType[0]:
             case componentType[1]:
@@ -205,8 +262,8 @@ class AppView extends React.Component {
                         placeholder={placeholder}
                         maxLength={maxLength}
                         className={className ? className : ""}
-                        onFocus={focus ? this[focusFunc] : new Function()}
-                        onBlur={blur ? this[blurFunc] : new Function()}
+                        onFocus={focus ? focusFunc.bind(this) : new Function()}
+                        onBlur={blur ? blurFunc.bind(this) : new Function()}
                         onChange={onChangeInputHandler.bind(this, key)}
                     />
                 );
@@ -214,7 +271,7 @@ class AppView extends React.Component {
                 return (
                     <ul
                         key={key}
-                        className={className}
+                        className={focusShowFunctionIcons ? classNameShow : focusFunctionIconsVisibility ? className : classNameNone}
                     >
                         {
                             functionIcons && functionIcons.length > 0 && functionIcons.map(function icons(iconItem, iconIndex) {
@@ -257,6 +314,8 @@ class AppView extends React.Component {
                                 modalItem["placeholder"],
                                 modalItem["maxLength"],
                                 modalItem["className"],
+                                modalItem["classNameNone"],
+                                modalItem["classNameShow"],
                                 modalItem["focus"],
                                 modalItem["blur"],
                                 modalItem["focusFunc"],
@@ -289,6 +348,7 @@ class AppView extends React.Component {
             <Modal
                 visible={addBarterVisible}
                 closable
+                footer
                 width={540}
                 title="1000yardStyle"
                 headPortrait="/images/keryiBarter_v.jpg"

@@ -17,7 +17,7 @@ const modalComponentConfig = [
         value: "功能图标",
         classNameNone: "keryi_barter_modal_functionIcons keryi_barter_modal_functionIconsNone",
         className: "keryi_barter_modal_functionIcons",
-        classNameShow: "keryi_barter_modal_functionIcons keryi_barter_modal_functionIconsNone",
+        classNameShow: "keryi_barter_modal_functionIcons keryi_barter_modal_functionIconsShow",
         functionIcons: [{
             key: "image",
             include: "uploadPhoto",
@@ -40,6 +40,16 @@ const modalComponentConfig = [
         blur: true,
         focusFunc: "onDescriptionFocus",
         blurFunc: "onDescriptionBlur"
+    },
+    {
+        key: "sourceTag",
+        include: "textarea",
+        type: "textarea",
+        size: "large",
+        value: "选择资源类型",
+        rows: 1,
+        placeholder: "#选择您的资源类型",
+        className: "keryi_barter_modal_input_sourceTag"
     }
 ];
 

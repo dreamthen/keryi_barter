@@ -6,9 +6,11 @@ import insteadState from "../configs/insteadState";
 
 const defaultState = {
     //对话框标题
-    title: "hello,world",
+    title: "",
     //对话框描述
-    description: "word come true~"
+    description: "",
+    //对话框选择资源类型
+    sourceTag: ""
 };
 
 export function appReducers(state = defaultState, actions) {

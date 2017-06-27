@@ -72,7 +72,7 @@
     margin-left: 15px;
     min-height: 200px;
     border-radius: 4px;
-    background-color: #f4f4f4;
+    background-color: #fff;
     z-index: 9900;
 }
 
@@ -104,4 +104,41 @@
     float: right;
     font-size: 18px;
     cursor: pointer;
+}
+
+.keryi_barter_modal_article > .keryi_barter_modal_foot {
+    border-top: 1px solid rgba(68, 68, 68, .1);
+    padding: 15px 20px;
+}
+
+.keryi_barter_modal_article > .keryi_barter_modal_foot:after {
+    display: block;
+    clear: both;
+    content: '.';
+    visibility: hidden;
+    height: 0;
+}
+
+.keryi_barter_modal_foot > .keryi_barter_modal_close,
+.keryi_barter_modal_foot > .keryi_barter_modal_publish {
+    display: inline-block;
+    float: left;
+}
+
+.keryi_barter_modal_foot > .keryi_barter_modal_publish {
+    float: right;
+}
+
+.keryi_barter_modal_close .keryi_barter_button_close,
+.keryi_barter_modal_publish .keryi_barter_button_publish {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.keryi_barter_modal_close .keryi_barter_button_close,
+.keryi_barter_modal_close .keryi_barter_button_close:hover {
+    background-color: #9da6af;
+    color: #fff;
+    border: 1px solid #9da6af;
 }
