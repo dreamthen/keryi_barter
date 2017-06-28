@@ -2,7 +2,6 @@
  * Created by yinwk on 2017/6/27.
  */
 import React, {PropTypes} from "react";
-import {Button} from "../Button";
 import typeConfig from "./configs/typeConfig";
 import sizeConfig from "./configs/sizeConfig";
 import "./keryi_barter_area.css";
@@ -126,6 +125,24 @@ export class Area extends React.Component {
         return e;
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        const {
+            //Area组件编辑框内容
+            value
+        } = this.props;
+        return !this.refs[defaultRefs] || (nextProps.value !== this.refs[defaultRefs].innerHTML && value !== nextProps.value) || (value === "") || (nextProps.value === "");
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const {
+            //Area组件编辑框内容
+            value
+        } = this.props;
+        if (this.refs[defaultRefs] && this.refs[defaultRefs].innerHTML !== value){
+            this.refs[defaultRefs].innerHTML = value;
+        }
+    }
+
     /**
      * Area编辑框onChange内容改变事件
      */
@@ -146,11 +163,7 @@ export class Area extends React.Component {
      * @returns {*}
      */
     createValueToHtml() {
-        const {
-            //编辑框内容
-            value
-        } = this.props;
-        //将value转化为html片段
+        const {value} = this.props;
         return {__html: value}
     }
 
