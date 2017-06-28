@@ -148,11 +148,11 @@ class AppView extends React.Component {
     }
 
     /**
-     * 改变Input输入框内容函数
+     * 改变Area编辑框内容函数
      * @param key
      * @param e
      */
-    onChangeInputHandler(key, e) {
+    onChangeAreaHandler(key, e) {
         this.setState({
             [key]: e.target.value
         });
@@ -221,6 +221,7 @@ class AppView extends React.Component {
      * @param size
      * @param type
      * @param rows
+     * @param placeholderClassName
      * @param placeholder
      * @param maxLength
      * @param className
@@ -233,10 +234,11 @@ class AppView extends React.Component {
      * @param functionIcons
      * @returns {XML}
      */
-    renderModalComponent(key, include, size, type, rows, placeholder, maxLength, className, classNameNone, classNameShow, focus, blur, focusFunc, blurFunc, functionIcons) {
+    renderModalComponent(key, include, size, type, rows, placeholder, placeholderClassName, maxLength, className, classNameNone, classNameShow, focus, blur, focusFunc, blurFunc, functionIcons) {
         const {
             //改变标题内容函数
-            onChangeInputHandler,
+            onChangeAreaHandler,
+            //根据不同的功能图标Icon类型配置来设置功能图标Icon
             renderFunctionIcons
         } = this;
         const {
@@ -260,10 +262,11 @@ class AppView extends React.Component {
                         rows={rows}
                         placeholder={placeholder}
                         maxLength={maxLength}
+                        placeholderClassName={placeholderClassName}
                         className={className ? className : ""}
                         onFocus={focus ? focusFunc.bind(this) : new Function()}
                         onBlur={blur ? blurFunc.bind(this) : new Function()}
-                        onChange={onChangeInputHandler.bind(this, key)}
+                        onChange={onChangeAreaHandler.bind(this, key)}
                     />
                 );
             case componentType[1]:
@@ -311,6 +314,7 @@ class AppView extends React.Component {
                                 modalItem["type"],
                                 modalItem["rows"],
                                 modalItem["placeholder"],
+                                modalItem["placeholderClassName"],
                                 modalItem["maxLength"],
                                 modalItem["className"],
                                 modalItem["classNameNone"],

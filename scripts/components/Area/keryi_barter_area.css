@@ -5,7 +5,7 @@
     display: block;
 }
 
-.keryi_barter_area > article {
+.keryi_barter_area > .keryi_barter_article_area {
     position: relative;
     width: 100%;
     padding: 11px 10px 11px 13px;
@@ -28,14 +28,14 @@
     color: #a2a2a2;
 }
 
-.keryi_barter_sm_area > article {
+.keryi_barter_sm_area > .keryi_barter_article_area {
     font-size: 12px;
 }
 
-.keryi_barter_md_area > article {
+.keryi_barter_md_area > .keryi_barter_article_area {
     font-size: 14px;
 }
 
-.keryi_barter_lg_area > article {
+.keryi_barter_lg_area > .keryi_barter_article_area {
     font-size: 16px;
 }
