@@ -28,26 +28,48 @@ export class Area extends React.Component {
         //Area组件编辑框提示语className,外部传入样式表
         placeholderClassName: PropTypes.string,
         //Area组件编辑框onChange内容改变事件,外部传入Area编辑框内容改变函数
-        onChange: PropTypes.func
+        onChange: PropTypes.func,
+        //判断Area组件编辑框提示语区域是否存在
+        placeholderAble: PropTypes.bool
     };
 
     constructor(props) {
         super(props);
         this.state = {
-            //判断Area组件编辑框提示语区域是否存在
-            placeholderJudgement: false
+
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.value === null || nextProps.value === "") {
-            this.setState({
-                placeholderJudgement: true
-            });
-        } else {
-            this.setState({
-                placeholderJudgement: false
-            });
+
+    }
+
+    /**
+     * 组件重新渲染判断函数
+     * @param nextProps
+     * @param nextState
+     * @returns {boolean}
+     */
+    shouldComponentUpdate(nextProps, nextState) {
+        const {
+            //Area组件编辑框内容
+            value
+        } = this.props;
+        return !this.refs[defaultRefs] || (nextProps.value !== this.refs[defaultRefs].innerHTML && value !== nextProps.value)
+    }
+
+    /**
+     * 组件重新渲染完毕之后的操作函数
+     * @param prevProps
+     * @param prevState
+     */
+    componentDidUpdate(prevProps, prevState) {
+        const {
+            //Area组件编辑框内容
+            value
+        } = this.props;
+        if (this.refs[defaultRefs] && this.refs[defaultRefs].innerHTML !== value) {
+            this.refs[defaultRefs].innerHTML = value;
         }
     }
 
@@ -125,24 +147,6 @@ export class Area extends React.Component {
         return e;
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        const {
-            //Area组件编辑框内容
-            value
-        } = this.props;
-        return !this.refs[defaultRefs] || (nextProps.value !== this.refs[defaultRefs].innerHTML && value !== nextProps.value) || (value === "") || (nextProps.value === "");
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        const {
-            //Area组件编辑框内容
-            value
-        } = this.props;
-        if (this.refs[defaultRefs] && this.refs[defaultRefs].innerHTML !== value){
-            this.refs[defaultRefs].innerHTML = value;
-        }
-    }
-
     /**
      * Area编辑框onChange内容改变事件
      */
@@ -152,8 +156,10 @@ export class Area extends React.Component {
             onChange
         } = this.props;
         const {
+            //将html片段转化为value,实现Area编辑框内容改变事件
             createHtmlToValue
         } = this;
+        if (!this.refs[defaultRefs]) return;
         e = createHtmlToValue.bind(this, e)();
         onChange(e);
     }
@@ -170,8 +176,8 @@ export class Area extends React.Component {
     render() {
         const {
             //判断Area组件编辑框提示语区域是否存在
-            placeholderJudgement
-        } = this.state;
+            placeholderAble
+        } = this.props;
         const {
             //根据外部传入的props size来设置Area组件编辑框className样式表
             sizeToClass,
@@ -201,7 +207,7 @@ export class Area extends React.Component {
                 </div>
                 {/*placeholder区域*/}
                 {
-                    placeholderJudgement && renderPlaceHolder.bind(this)()
+                    placeholderAble && renderPlaceHolder.bind(this)()
                 }
             </section>
         )
