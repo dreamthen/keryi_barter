@@ -28,20 +28,27 @@ export class Area extends React.Component {
         //Area组件编辑框提示语className,外部传入样式表
         placeholderClassName: PropTypes.string,
         //Area组件编辑框onChange内容改变事件,外部传入Area编辑框内容改变函数
-        onChange: PropTypes.func,
-        //判断Area组件编辑框提示语区域是否存在
-        placeholderAble: PropTypes.bool
+        onChange: PropTypes.func
     };
 
     constructor(props) {
         super(props);
         this.state = {
-
+            //判断Area组件编辑框提示语区域是否存在
+            placeholderJudgement: true
         }
     }
 
     componentWillReceiveProps(nextProps) {
-
+        if (nextProps.value === null || nextProps.value === "") {
+            this.setState({
+                placeholderJudgement: true
+            });
+        } else {
+            this.setState({
+                placeholderJudgement: false
+            });
+        }
     }
 
     /**
@@ -55,7 +62,8 @@ export class Area extends React.Component {
             //Area组件编辑框内容
             value
         } = this.props;
-        return !this.refs[defaultRefs] || (nextProps.value !== this.refs[defaultRefs].innerHTML && value !== nextProps.value)
+        // return !this.refs[defaultRefs] || (nextProps.value !== this.refs[defaultRefs].innerHTML && value !== nextProps.value) || (this.state.placeholderJudgement !== nextState.placeholderJudgement);
+        return true;
     }
 
     /**
@@ -168,16 +176,16 @@ export class Area extends React.Component {
      * 将value转化为html片段插入Area组件编辑框中
      * @returns {*}
      */
-    createValueToHtml() {
-        const {value} = this.props;
-        return {__html: value}
-    }
+    // createValueToHtml() {
+    //     const {value} = this.props;
+    //     return {__html: value}
+    // }
 
     render() {
         const {
             //判断Area组件编辑框提示语区域是否存在
-            placeholderAble
-        } = this.props;
+            placeholderJudgement
+        } = this.state;
         const {
             //根据外部传入的props size来设置Area组件编辑框className样式表
             sizeToClass,
@@ -200,14 +208,14 @@ export class Area extends React.Component {
                     contentEditable={true}
                     onInput={onChangeAreaHandler.bind(this)}
                     className={outsideClassToClass.bind(this)()}
-                    dangerouslySetInnerHTML={
-                        createValueToHtml.bind(this)()
-                    }
+                    // dangerouslySetInnerHTML={
+                    //     createValueToHtml.bind(this)()
+                    // }
                 >
                 </div>
                 {/*placeholder区域*/}
                 {
-                    placeholderAble && renderPlaceHolder.bind(this)()
+                    placeholderJudgement && renderPlaceHolder.bind(this)()
                 }
             </section>
         )

@@ -4,7 +4,6 @@
 const modalComponentConfig = [
     {
         key: "title",
-        placeholderAble: "placeholderAbleTitle",
         include: "area",
         size: "large",
         value: "标题",
@@ -29,7 +28,6 @@ const modalComponentConfig = [
     },
     {
         key: "description",
-        placeholderAble: "placeholderAbleDescription",
         include: "area",
         size: "large",
         value: "描述",
@@ -43,7 +41,6 @@ const modalComponentConfig = [
     },
     {
         key: "sourceTag",
-        placeholderAble: "placeholderAbleSourceTag",
         include: "area",
         size: "large",
         value: "选择资源类型",
