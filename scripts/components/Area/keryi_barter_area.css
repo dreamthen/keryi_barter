@@ -17,6 +17,7 @@
     background-color: transparent !important;
     color: #222;
     z-index: 9920;
+    word-wrap: break-word;
 }
 
 .keryi_barter_area > .keryi_barter_placeholder_area {

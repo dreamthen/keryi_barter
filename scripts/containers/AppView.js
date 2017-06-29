@@ -21,7 +21,13 @@ class AppView extends React.Component {
         //对话框资源描述
         description: PropTypes.string,
         //对话框选择资源类型
-        sourceTag: PropTypes.string
+        sourceTag: PropTypes.string,
+        //编辑框标题是否可编辑
+        placeholderAbleTitle: PropTypes.bool,
+        //编辑框资源描述是否可编辑
+        placeholderAbleDescription: PropTypes.bool,
+        //编辑框选择资源类型是否可编辑
+        placeholderAbleSourceTag: PropTypes.bool
     };
 
     constructor(props) {
@@ -150,12 +156,22 @@ class AppView extends React.Component {
     /**
      * 改变Area编辑框内容函数
      * @param key
+     * @param placeholderAble
      * @param e
      */
-    onChangeAreaHandler(key, e) {
+    onChangeAreaHandler(key, placeholderAble, e) {
         this.setState({
             [key]: e.target.value
         });
+        if (e.target.value === "") {
+            this.setState({
+                [placeholderAble]: false
+            })
+        } else {
+            this.setState({
+                [placeholderAble]: true
+            })
+        }
     }
 
     /**
@@ -217,13 +233,12 @@ class AppView extends React.Component {
     /**
      * 根据不同的组件类型配置来设置组件
      * @param key
+     * @param placeholderAble
      * @param include
      * @param size
      * @param type
-     * @param rows
      * @param placeholderClassName
      * @param placeholder
-     * @param maxLength
      * @param className
      * @param classNameNone
      * @param classNameShow
@@ -234,7 +249,7 @@ class AppView extends React.Component {
      * @param functionIcons
      * @returns {XML}
      */
-    renderModalComponent(key, include, size, type, rows, placeholder, placeholderClassName, maxLength, className, classNameNone, classNameShow, focus, blur, focusFunc, blurFunc, functionIcons) {
+    renderModalComponent(key, placeholderAble, include, size, type, placeholder, placeholderClassName, className, classNameNone, classNameShow, focus, blur, focusFunc, blurFunc, functionIcons) {
         const {
             //改变标题内容函数
             onChangeAreaHandler,
@@ -259,14 +274,13 @@ class AppView extends React.Component {
                         value={this.state[key]}
                         type={type ? type : "imageText"}
                         size={size}
-                        rows={rows}
                         placeholder={placeholder}
-                        maxLength={maxLength}
                         placeholderClassName={placeholderClassName}
+                        placeholderAble={this.state[placeholderAble]}
                         className={className ? className : ""}
                         onFocus={focus ? focusFunc.bind(this) : new Function()}
                         onBlur={blur ? blurFunc.bind(this) : new Function()}
-                        onChange={onChangeAreaHandler.bind(this, key)}
+                        onChange={onChangeAreaHandler.bind(this, key, placeholderAble)}
                     />
                 );
             case componentType[1]:
@@ -309,13 +323,12 @@ class AppView extends React.Component {
                             //根据不同的组件类型配置来设置组件
                             return renderModalComponent.bind(this)(
                                 modalItem["key"],
+                                modalItem["placeholderAble"],
                                 modalItem["include"],
                                 modalItem["size"],
                                 modalItem["type"],
-                                modalItem["rows"],
                                 modalItem["placeholder"],
                                 modalItem["placeholderClassName"],
-                                modalItem["maxLength"],
                                 modalItem["className"],
                                 modalItem["classNameNone"],
                                 modalItem["classNameShow"],

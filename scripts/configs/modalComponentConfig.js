@@ -4,10 +4,10 @@
 const modalComponentConfig = [
     {
         key: "title",
+        placeholderAble: "placeholderAbleTitle",
         include: "area",
         size: "large",
         value: "标题",
-        maxLength: 50,
         placeholder: "标题",
         placeholderClassName: "keryi_barter_modal_area_title_placeholder",
         className: "keryi_barter_modal_area_title"
@@ -29,11 +29,10 @@ const modalComponentConfig = [
     },
     {
         key: "description",
+        placeholderAble: "placeholderAbleDescription",
         include: "area",
         size: "large",
         value: "描述",
-        rows: 3,
-        maxLength: 500,
         placeholder: "在这里填写资源描述",
         placeholderClassName: "keryi_barter_modal_area_description_placeholder",
         className: "keryi_barter_modal_area_description",
@@ -44,10 +43,10 @@ const modalComponentConfig = [
     },
     {
         key: "sourceTag",
+        placeholderAble: "placeholderAbleSourceTag",
         include: "area",
         size: "large",
         value: "选择资源类型",
-        rows: 1,
         placeholder: "#选择您的资源类型",
         placeholderClassName: "keryi_barter_modal_area_sourceTag_placeholder",
         className: "keryi_barter_modal_area_sourceTag"
