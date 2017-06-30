@@ -25,18 +25,13 @@ export class Area extends React.Component {
         className: PropTypes.string,
         //Area组件编辑框默认提示语
         placeholder: PropTypes.string,
-        //Area组件编辑框提示语className,外部传入样式表
-        placeholderClassName: PropTypes.string,
         //Area组件编辑框onChange内容改变事件,外部传入Area编辑框内容改变函数
         onChange: PropTypes.func
     };
 
     constructor(props) {
         super(props);
-        this.state = {
-            //判断Area组件编辑框提示语区域是否存在
-            placeholderJudgement: true
-        }
+        this.state = {}
     }
 
     componentWillReceiveProps(nextProps) {
@@ -59,11 +54,10 @@ export class Area extends React.Component {
      */
     shouldComponentUpdate(nextProps, nextState) {
         const {
-            //Area组件编辑框内容
+            //编辑框内容
             value
         } = this.props;
-        // return !this.refs[defaultRefs] || (nextProps.value !== this.refs[defaultRefs].innerHTML && value !== nextProps.value) || (this.state.placeholderJudgement !== nextState.placeholderJudgement);
-        return true;
+        return !this.refs[defaultRefs] || (this.refs[defaultRefs].innerHTML !== nextProps.value && nextProps.value !== value);
     }
 
     /**
@@ -73,10 +67,10 @@ export class Area extends React.Component {
      */
     componentDidUpdate(prevProps, prevState) {
         const {
-            //Area组件编辑框内容
+            //编辑框
             value
         } = this.props;
-        if (this.refs[defaultRefs] && this.refs[defaultRefs].innerHTML !== value) {
+        if (this.refs[defaultRefs].innerHTML !== value) {
             this.refs[defaultRefs].innerHTML = value;
         }
     }
@@ -114,34 +108,15 @@ export class Area extends React.Component {
     }
 
     /**
-     * 根据外部传入的props placeholderClassName来设置Area组件编辑框提示语className样式表
-     * @returns {*}
-     */
-    placeholderClassToClass() {
-        const {
-            placeholderClassName
-        } = this.props;
-        return placeholderClassName ? "keryi_barter_placeholder_area " + placeholderClassName : "keryi_barter_placeholder_area";
-    }
-
-    /**
      * render渲染placeholder区域
-     * @returns {XML}
+     * @returns string
      */
     renderPlaceHolder() {
         const {
             //Area组件编辑框默认提示语
             placeholder
         } = this.props;
-        const {
-            //根据外部传入的props placeholderClassName来设置Area组件编辑框提示语className样式表
-            placeholderClassToClass
-        } = this;
-        return (
-            <div className={placeholderClassToClass.bind(this)()}>
-                {placeholder !== null ? placeholder : ""}
-            </div>
-        )
+        return placeholder !== null ? placeholder : "";
     }
 
     /**
@@ -176,16 +151,12 @@ export class Area extends React.Component {
      * 将value转化为html片段插入Area组件编辑框中
      * @returns {*}
      */
-    // createValueToHtml() {
-    //     const {value} = this.props;
-    //     return {__html: value}
-    // }
+    createValueToHtml() {
+        const {value} = this.props;
+        return {__html: value}
+    }
 
     render() {
-        const {
-            //判断Area组件编辑框提示语区域是否存在
-            placeholderJudgement
-        } = this.state;
         const {
             //根据外部传入的props size来设置Area组件编辑框className样式表
             sizeToClass,
@@ -208,15 +179,12 @@ export class Area extends React.Component {
                     contentEditable={true}
                     onInput={onChangeAreaHandler.bind(this)}
                     className={outsideClassToClass.bind(this)()}
-                    // dangerouslySetInnerHTML={
-                    //     createValueToHtml.bind(this)()
-                    // }
+                    dangerouslySetInnerHTML={
+                        createValueToHtml.bind(this)()
+                    }
+                    data-placeholder={renderPlaceHolder.bind(this)()}
                 >
                 </div>
-                {/*placeholder区域*/}
-                {
-                    placeholderJudgement && renderPlaceHolder.bind(this)()
-                }
             </section>
         )
     }

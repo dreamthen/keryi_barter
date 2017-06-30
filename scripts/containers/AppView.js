@@ -220,7 +220,6 @@ class AppView extends React.Component {
      * @param include
      * @param size
      * @param type
-     * @param placeholderClassName
      * @param placeholder
      * @param className
      * @param classNameNone
@@ -232,7 +231,7 @@ class AppView extends React.Component {
      * @param functionIcons
      * @returns {XML}
      */
-    renderModalComponent(key, include, size, type, placeholder, placeholderClassName, className, classNameNone, classNameShow, focus, blur, focusFunc, blurFunc, functionIcons) {
+    renderModalComponent(key, include, size, type, placeholder, className, classNameNone, classNameShow, focus, blur, focusFunc, blurFunc, functionIcons) {
         const {
             //改变标题内容函数
             onChangeAreaHandler,
@@ -258,7 +257,6 @@ class AppView extends React.Component {
                         type={type ? type : "imageText"}
                         size={size}
                         placeholder={placeholder}
-                        placeholderClassName={placeholderClassName}
                         className={className ? className : ""}
                         onFocus={focus ? focusFunc.bind(this) : new Function()}
                         onBlur={blur ? blurFunc.bind(this) : new Function()}
@@ -309,7 +307,6 @@ class AppView extends React.Component {
                                 modalItem["size"],
                                 modalItem["type"],
                                 modalItem["placeholder"],
-                                modalItem["placeholderClassName"],
                                 modalItem["className"],
                                 modalItem["classNameNone"],
                                 modalItem["classNameShow"],
