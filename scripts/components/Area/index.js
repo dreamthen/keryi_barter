@@ -26,7 +26,11 @@ export class Area extends React.Component {
         //Area组件编辑框默认提示语
         placeholder: PropTypes.string,
         //Area组件编辑框onChange内容改变事件,外部传入Area编辑框内容改变函数
-        onChange: PropTypes.func
+        onChange: PropTypes.func,
+        //Area组件编辑框onFocus聚焦事件
+        onFocus: PropTypes.func,
+        //Area组件编辑框onBlur失焦事件
+        onBlur: PropTypes.func
     };
 
     constructor(props) {
@@ -143,6 +147,7 @@ export class Area extends React.Component {
             createHtmlToValue
         } = this;
         if (!this.refs[defaultRefs]) return;
+        //将html片段转化为value,实现Area编辑框内容改变事件
         e = createHtmlToValue.bind(this, e)();
         onChange(e);
     }
@@ -171,6 +176,12 @@ export class Area extends React.Component {
             //将value转化为html片段插入Area组件编辑框中
             createValueToHtml
         } = this;
+        const {
+            //编辑框onFocus聚焦事件
+            onFocus,
+            //编辑框onBlur失焦事件
+            onBlur
+        } = this.props;
         return (
             <section className={typeToClass.bind(this)() + " " + sizeToClass.bind(this)()}>
                 <div
@@ -178,6 +189,8 @@ export class Area extends React.Component {
                     suppressContentEditableWarning={true}
                     contentEditable={true}
                     onInput={onChangeAreaHandler.bind(this)}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                     className={outsideClassToClass.bind(this)()}
                     dangerouslySetInnerHTML={
                         createValueToHtml.bind(this)()
