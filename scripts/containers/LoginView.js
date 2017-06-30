@@ -3,9 +3,7 @@
  */
 import React from "react";
 import {connect} from "react-redux";
-import {Button} from "../components/Button";
-import {Input} from "../components/Input";
-import {Prompt} from "../components/Prompt";
+import {Button, Prompt, Input} from "../keryi";
 import Error from "../prompt/errorPrompt";
 import loginComponentConfig from "../configs/loginComponentConfig";
 import registerComponentConfig from "../configs/registerComponentConfig";

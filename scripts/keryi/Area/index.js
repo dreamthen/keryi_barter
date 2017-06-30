@@ -13,7 +13,7 @@ const defaultTypeConfig = "imageText";
 //Area组件编辑框的ref属性
 const defaultRefs = "contentEdit";
 
-export class Area extends React.Component {
+class Area extends React.Component {
     static propTypes = {
         //Area组件编辑框内容
         value: PropTypes.string,
@@ -202,3 +202,5 @@ export class Area extends React.Component {
         )
     }
 }
+
+export default Area;

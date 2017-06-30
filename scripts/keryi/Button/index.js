@@ -14,7 +14,7 @@ const defaultSizeConfig = "default";
 /**
  * keryi_barter Button按钮组件
  */
-export class Button extends React.Component {
+class Button extends React.Component {
     static propTypes = {
         //Button组件按钮类型:default,primary,warning和error,默认为default
         type: PropTypes.string,
@@ -70,3 +70,5 @@ export class Button extends React.Component {
         )
     }
 }
+
+export default Button;

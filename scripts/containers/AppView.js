@@ -5,9 +5,7 @@ import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import modalComponentConfig from "../configs/modalComponentConfig";
-import {Button} from "../components/Button";
-import {Modal} from "../components/Modal";
-import {Area} from "../components/Area";
+import {Area, Button, Modal, PullListDown} from "../keryi";
 import routesMode from "../configs/routesConfigMode";
 import "../../stylesheets/app.css";
 
@@ -324,6 +322,14 @@ class AppView extends React.Component {
     }
 
     /**
+     * render渲染对话框标签下拉框列表
+     * @returns {XML}
+     */
+    renderModalPullList(){
+
+    }
+
+    /**
      * keryi_barter主页面添加"以物换物"需要对话框
      * @returns {XML}
      */
@@ -332,7 +338,9 @@ class AppView extends React.Component {
             //控制Modal组件对话框隐藏并消失
             addBarterCloseHandler,
             //对话框主要内容(包括标题、描述和标签等信息)
-            renderModalMain
+            renderModalMain,
+            //对话框标签下拉框列表
+            renderModalPullList
         } = this;
         const {
             //控制Modal组件对话框显示、隐藏或者消失
@@ -350,6 +358,7 @@ class AppView extends React.Component {
             >
                 {/*对话框主要内容(包括标题、描述和标签等信息)*/}
                 {renderModalMain.bind(this)()}
+                {renderModalPullList.bind(this)()}
             </Modal>
         )
     }
