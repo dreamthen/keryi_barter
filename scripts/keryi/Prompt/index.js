@@ -11,7 +11,7 @@ const defaultTypeConfig = "default";
 //在不传入提示语尺寸size、size为空或者size类型错误时,Prompt组件提示语className样式表用默认字体尺寸14px
 const defaultSizeConfig = "default";
 
-export class Prompt extends React.Component {
+class Prompt extends React.Component {
     static propTypes = {
         //Prompt组件提示语是否显示Icon图标
         showIcon: PropTypes.bool,
@@ -76,3 +76,4 @@ export class Prompt extends React.Component {
     }
 }
 
+export default Prompt;

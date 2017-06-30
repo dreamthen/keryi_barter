@@ -4,7 +4,7 @@
 import React, {PropTypes} from "react";
 import "./keryi_barter_pullListDown.css";
 
-export class PullListDown extends React.Component {
+class PullListDown extends React.Component {
     static propTypes = {
         //PullListDown下拉框组件标题
         title: PropTypes.string,
@@ -48,6 +48,7 @@ export class PullListDown extends React.Component {
         return (
             <div className="">
                 <ul>
+                    {/*根据外部传入的列表数据,render渲染下拉框组件列表*/}
                     {
                         renderDataSourceToPullList.bind(this)()
                     }
@@ -56,3 +57,5 @@ export class PullListDown extends React.Component {
         )
     }
 }
+
+export default PullListDown;

@@ -2,8 +2,8 @@
  * Created by yinwk on 2017/6/21.
  */
 import React, {PropTypes} from "react";
-import {HeadPortrait} from "../HeadPortrait";
-import {Button} from "../Button";
+import HeadPortrait from "../HeadPortrait";
+import Button from "../Button";
 import modalConfig from "./configs/modalConfig";
 import "./keryi_barter_modal.css";
 //Modal组件对话框显示样式表配置
@@ -19,7 +19,7 @@ const modalDefaultHeadPortrait = "defaultHeadPortrait";
 //Modal组件对话框在外部不传入props width的情况下的默认宽度
 const defaultWidth = 520;
 
-export class Modal extends React.Component {
+class Modal extends React.Component {
     static propTypes = {
         //Modal组件对话框是否弹出,必写属性
         visible: PropTypes.bool.isRequired,
@@ -262,3 +262,5 @@ export class Modal extends React.Component {
         )
     }
 }
+
+export default Modal;

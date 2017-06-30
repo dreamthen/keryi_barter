@@ -29,7 +29,7 @@ const spinAnimationDescription = "spin_animation_description";
 //还没点击时,"更多图片"描述容器左移样式表设置
 const spinAnimationDescriptionAction = "spin_animation_description_action";
 
-export class SpinAnimation extends React.Component {
+class SpinAnimation extends React.Component {
     static Proptypes = {
         //SpinAnimation组件动画加载尺寸:small,default和large,默认为default
         size: PropTypes.string,
@@ -135,3 +135,5 @@ export class SpinAnimation extends React.Component {
         )
     }
 }
+
+export default SpinAnimation;

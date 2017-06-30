@@ -10,7 +10,7 @@ const defaultHeadPortrait = "headPortrait";
 //在传入头像外部判断是否有白色边框标志位且判断是否有白色边框标志位为true时,HeadPortrait组件头像borderJudgement样式表用添加资源或者个人信息头像容器样式表配置
 const addHeadPortrait = "headPortraitAdd";
 
-export class HeadPortrait extends React.Component {
+class HeadPortrait extends React.Component {
     static Proptypes = {
         //HeadPortrait组件头像地址
         headPortrait: PropTypes.string,
@@ -66,3 +66,5 @@ export class HeadPortrait extends React.Component {
         )
     }
 }
+
+export default HeadPortrait;

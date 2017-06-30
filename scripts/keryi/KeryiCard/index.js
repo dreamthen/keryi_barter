@@ -2,8 +2,8 @@
  * Created by yinwk on 2017/6/14.
  */
 import React, {PropTypes} from "react";
-import {SpinAnimation} from "../SpinAnimation";
-import {Tag} from "../Tag";
+import SpinAnimation from "../SpinAnimation";
+import Tag from "../Tag";
 import keryiCardConfig from "./configs/keryiCardConfig";
 import "./keryi_barter_keryiCard.css";
 
@@ -12,7 +12,7 @@ const loadingAppear = "loading";
 //Card组件卡片"更多图片"设置消失(透明度为0)对象属性
 const loadingDisappear = "loading_disAppear";
 
-export class KeryiCard extends React.Component {
+class KeryiCard extends React.Component {
     static Proptypes = {
         //KeryiCard组件卡片用户名
         userName: PropTypes.string,
@@ -287,3 +287,5 @@ export class KeryiCard extends React.Component {
         )
     }
 }
+
+export default KeryiCard;

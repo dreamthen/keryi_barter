@@ -3,8 +3,7 @@
  */
 import React from "react";
 import {connect} from "react-redux";
-import {KeryiCard} from "../components/KeryiCard";
-import {HeadPortrait} from "../components/HeadPortrait";
+import {KeryiCard, HeadPortrait} from "../keryi";
 import "../../stylesheets/barter.css";
 
 class BarterView extends React.Component {

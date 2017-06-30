@@ -13,7 +13,7 @@ const defaultSizeConfig = "default";
 //Input组件类型
 const inputType = ["text", "password", "textarea"];
 
-export class Input extends React.Component {
+class Input extends React.Component {
     static propTypes = {
         //Input组件输入框内容
         value: PropTypes.string,
@@ -111,3 +111,5 @@ export class Input extends React.Component {
         )
     }
 }
+
+export default Input;
