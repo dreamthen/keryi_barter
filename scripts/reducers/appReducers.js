@@ -11,12 +11,10 @@ const defaultState = {
     description: "",
     //对话框选择资源类型
     sourceTag: "",
-    //编辑框标题是否可编辑
-    placeholderAbleTitle: true,
-    //编辑框资源描述是否可编辑
-    placeholderAbleDescription: true,
-    //编辑框选择资源类型是否可编辑
-    placeholderAbleSourceTag: true
+    //下拉框距离添加对话框上方的位置
+    bottom: 0,
+    //下拉框距离添加对话框左方的位置
+    left: 20
 };
 
 export function appReducers(state = defaultState, actions) {

@@ -44,6 +44,7 @@ const modalComponentConfig = [
         include: "area",
         size: "large",
         value: "选择资源类型",
+        pullListDown: true,
         placeholder: "#选择您的资源类型",
         placeholderClassName: "keryi_barter_modal_area_sourceTag_placeholder",
         className: "keryi_barter_modal_area_sourceTag"
