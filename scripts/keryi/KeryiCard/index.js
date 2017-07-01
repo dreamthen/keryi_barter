@@ -7,11 +7,14 @@ import Tag from "../Tag";
 import keryiCardConfig from "./configs/keryiCardConfig";
 import "./keryi_barter_keryiCard.css";
 
-//Card组件卡片"更多图片"设置过渡动画以及透明度对象属性
+//KeryiCard组件卡片"更多图片"设置过渡动画以及透明度对象属性
 const loadingAppear = "loading";
-//Card组件卡片"更多图片"设置消失(透明度为0)对象属性
+//KeryiCard组件卡片"更多图片"设置消失(透明度为0)对象属性
 const loadingDisappear = "loading_disAppear";
 
+/**
+ * keryi_barter KeryiCard卡片组件
+ */
 class KeryiCard extends React.Component {
     static Proptypes = {
         //KeryiCard组件卡片用户名
@@ -300,4 +303,5 @@ class KeryiCard extends React.Component {
     }
 }
 
+//导出keryi_barter KeryiCard卡片组件
 export default KeryiCard;

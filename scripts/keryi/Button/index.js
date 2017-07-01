@@ -71,4 +71,5 @@ class Button extends React.Component {
     }
 }
 
+//导出keryi_barter Button按钮组件
 export default Button;

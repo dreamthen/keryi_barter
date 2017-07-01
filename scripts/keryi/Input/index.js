@@ -13,6 +13,9 @@ const defaultSizeConfig = "default";
 //Input组件类型
 const inputType = ["text", "password", "textarea"];
 
+/**
+ * keryi_barter Input输入框组件
+ */
 class Input extends React.Component {
     static propTypes = {
         //Input组件输入框内容
@@ -112,4 +115,5 @@ class Input extends React.Component {
     }
 }
 
+//导出keryi_barter Input输入框组件
 export default Input;

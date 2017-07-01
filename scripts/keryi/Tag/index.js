@@ -8,6 +8,9 @@ import "./keryi_barter_tag.css";
 //在不传入按钮类型type、type为空或者type类型错误时,Tag组件标签className样式表用默认类型
 const defaultTypeConfig = "default";
 
+/**
+ * keryi_barter Tag标签组件
+ */
 class Tag extends React.Component {
     static propTypes = {
         //Tag组件标签类型:primary,default,warning和error
@@ -56,4 +59,5 @@ class Tag extends React.Component {
     }
 }
 
+//导出keryi_barter Tag标签组件
 export default Tag;

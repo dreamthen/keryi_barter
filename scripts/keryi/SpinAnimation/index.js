@@ -29,6 +29,9 @@ const spinAnimationDescription = "spin_animation_description";
 //还没点击时,"更多图片"描述容器左移样式表设置
 const spinAnimationDescriptionAction = "spin_animation_description_action";
 
+/**
+ * keryi_barter SpainAnimation动画加载组件
+ */
 class SpinAnimation extends React.Component {
     static Proptypes = {
         //SpinAnimation组件动画加载尺寸:small,default和large,默认为default
@@ -136,4 +139,5 @@ class SpinAnimation extends React.Component {
     }
 }
 
+//导出keryi_barter SpainAnimation动画加载组件
 export default SpinAnimation;

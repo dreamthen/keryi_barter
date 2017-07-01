@@ -19,6 +19,9 @@ const modalDefaultHeadPortrait = "defaultHeadPortrait";
 //Modal组件对话框在外部不传入props width的情况下的默认宽度
 const defaultWidth = 520;
 
+/**
+ * keryi_barter Modal对话框组件
+ */
 class Modal extends React.Component {
     static propTypes = {
         //Modal组件对话框是否弹出,必写属性
@@ -263,4 +266,5 @@ class Modal extends React.Component {
     }
 }
 
+//导出keryi_barter Modal对话框组件
 export default Modal;

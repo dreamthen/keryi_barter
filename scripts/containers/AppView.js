@@ -19,7 +19,11 @@ class AppView extends React.Component {
         //对话框资源描述
         description: PropTypes.string,
         //对话框选择资源类型
-        sourceTag: PropTypes.string
+        sourceTag: PropTypes.string,
+        //下拉框距离添加对话框上方的位置
+        bottom: PropTypes.number,
+        //下拉框距离添加对话框左方的位置
+        left: PropTypes.number
     };
 
     constructor(props) {
@@ -218,6 +222,7 @@ class AppView extends React.Component {
      * @param include
      * @param size
      * @param type
+     * @param pullListDown
      * @param placeholder
      * @param className
      * @param classNameNone
@@ -229,7 +234,7 @@ class AppView extends React.Component {
      * @param functionIcons
      * @returns {XML}
      */
-    renderModalComponent(key, include, size, type, placeholder, className, classNameNone, classNameShow, focus, blur, focusFunc, blurFunc, functionIcons) {
+    renderModalComponent(key, include, size, type, pullListDown, placeholder, className, classNameNone, classNameShow, focus, blur, focusFunc, blurFunc, functionIcons) {
         const {
             //改变标题内容函数
             onChangeAreaHandler,
@@ -254,6 +259,7 @@ class AppView extends React.Component {
                         value={this.state[key]}
                         type={type ? type : "imageText"}
                         size={size}
+                        pullListDown={pullListDown}
                         placeholder={placeholder}
                         className={className ? className : ""}
                         onFocus={focus ? focusFunc.bind(this) : new Function()}
@@ -304,6 +310,7 @@ class AppView extends React.Component {
                                 modalItem["include"],
                                 modalItem["size"],
                                 modalItem["type"],
+                                modalItem["pullListDown"],
                                 modalItem["placeholder"],
                                 modalItem["className"],
                                 modalItem["classNameNone"],
@@ -325,8 +332,36 @@ class AppView extends React.Component {
      * render渲染对话框标签下拉框列表
      * @returns {XML}
      */
-    renderModalPullList(){
+    renderModalPullList() {
+        const {
+            //下拉框距离添加对话框上方的位置
+            bottom,
+            //下拉框距离添加对话框左方的位置
+            left
+        } = this.props;
+        return (
+            <PullListDown
+                title="热门"
+                dataSource={[
+                    "he",
+                    "hel"
+                ]}
+                style={{
+                    bottom,
+                    left
+                }}
+            />
+        )
+    }
 
+    /**
+     * 控制Modal组件对话框隐藏并消失
+     * @param e
+     */
+    addBarterCloseHandler(e) {
+        this.setState({
+            addBarterVisible: false
+        });
     }
 
     /**
@@ -358,19 +393,10 @@ class AppView extends React.Component {
             >
                 {/*对话框主要内容(包括标题、描述和标签等信息)*/}
                 {renderModalMain.bind(this)()}
+                {/*对话框标签下拉框列表*/}
                 {renderModalPullList.bind(this)()}
             </Modal>
         )
-    }
-
-    /**
-     * 控制Modal组件对话框隐藏并消失
-     * @param e
-     */
-    addBarterCloseHandler(e) {
-        this.setState({
-            addBarterVisible: false
-        });
     }
 
 

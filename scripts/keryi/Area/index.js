@@ -13,6 +13,9 @@ const defaultTypeConfig = "imageText";
 //Area组件编辑框的ref属性
 const defaultRefs = "contentEdit";
 
+/**
+ * keryi_barter Area编辑框组件
+ */
 class Area extends React.Component {
     static propTypes = {
         //Area组件编辑框内容
@@ -23,6 +26,8 @@ class Area extends React.Component {
         type: PropTypes.string,
         //Area组件编辑框className,外部传入样式表
         className: PropTypes.string,
+        //Area组件编辑框是否执行下拉选择框
+        pullListDown: PropTypes.bool,
         //Area组件编辑框默认提示语
         placeholder: PropTypes.string,
         //Area组件编辑框onChange内容改变事件,外部传入Area编辑框内容改变函数
@@ -39,14 +44,14 @@ class Area extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.value === null || nextProps.value === "") {
-            this.setState({
-                placeholderJudgement: true
-            });
-        } else {
-            this.setState({
-                placeholderJudgement: false
-            });
+        if (nextProps.value !== null || nextProps.value !== "") {
+            const {
+                pullListDown
+            } = this.props;
+            if (pullListDown) {
+                console.log(this.refs[defaultRefs].offsetLeft);
+                console.log(this.refs[defaultRefs].offsetTop);
+            }
         }
     }
 
@@ -77,6 +82,13 @@ class Area extends React.Component {
         if (this.refs[defaultRefs].innerHTML !== value) {
             this.refs[defaultRefs].innerHTML = value;
         }
+    }
+
+    /**
+     *
+     */
+    componentDidMount() {
+
     }
 
     /**
@@ -129,8 +141,12 @@ class Area extends React.Component {
      * @returns {*}
      */
     createHtmlToValue(e) {
-        const newArea = this.refs[defaultRefs].innerHTML;
-        e.target = {value: newArea};
+        const contentEdit = this.refs[defaultRefs];
+        const newArea = contentEdit.innerHTML;
+        e.target = {
+            contentEdit,
+            value: newArea
+        };
         return e;
     }
 
@@ -203,4 +219,5 @@ class Area extends React.Component {
     }
 }
 
+//导出Area编辑框组件
 export default Area;
