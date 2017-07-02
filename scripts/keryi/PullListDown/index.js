@@ -2,13 +2,23 @@
  * Created by yinwk on 2017/6/27.
  */
 import React, {PropTypes} from "react";
+import pullListDownConfig from "./configs/pullListDownConfig";
 import "./keryi_barter_pullListDown.css";
+
+//PullListDown组件下拉框隐藏样式表配置
+const pullListDown = "pullListDown";
+//PullListDown组件下拉框显示样式表配置
+const pullListDownShow = "pullListDownShow";
+//PullListDown组件下拉框消失样式表配置
+const pullListDownDisappear = "pullListDownDisappear";
 
 /**
  * keryi_barter PullListDown下拉框组件
  */
 class PullListDown extends React.Component {
     static propTypes = {
+        //PullListDown组件下拉框是否显示
+        visible: PropTypes.bool,
         //PullListDown组件下拉框标题
         title: PropTypes.string,
         //PullListDown组件下拉框列表
@@ -23,19 +33,53 @@ class PullListDown extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            //PullListDown组件编辑框显示或者隐藏判断标志位
+            pullListDownVisible: false
+        }
+    }
+
+    componentWillReceiveProps(nextProps, nextState) {
+        const {
+            //PullListDown组件下拉框是否显示
+            visible
+        } = this.props;
+        if (visible !== nextProps.visible) {
+            //FIXME 在这里设置一个时间控制器,PullList组件编辑框取消消失100ms之后,从隐藏到显示的过程
+            setTimeout(function timer() {
+                this.setState({
+                    pullListDownVisible: nextProps.visible
+                });
+            }.bind(this), 100);
+        }
+    }
+
+    /**
+     * 根据props visible和state pullListDownVisible来设置PullListDown组件下拉框容器的className样式表
+     * @returns {string}
+     */
+    visibleOrPullListDownToClass() {
+        const {
+            //下拉框是否显示
+            visible
+        } = this.props;
+        const {
+            //编辑框显示或者隐藏判断标志位
+            pullListDownVisible
+        } = this.state;
+        return pullListDownVisible ? pullListDownConfig[pullListDownShow] : visible ? pullListDownConfig[pullListDown] : pullListDownConfig[pullListDownDisappear];
     }
 
     /**
      * 根据props className来设置PullListDown组件下拉框容器的className样式表
      * @returns {string}
      */
-    outsideClassToClass() {
+    outSideClassToClass() {
         const {
-            //PullListDown组件下拉框className,外部传入样式表
+            //下拉框className,外部传入样式表
             className
         } = this.props;
-        return className ? "keryi_barter_pullListDown " + className : "keryi_barter_pullListDown";
+        return className ? " " + className : "";
     }
 
     /**
@@ -44,7 +88,7 @@ class PullListDown extends React.Component {
      */
     outsideStyleToStyle() {
         const {
-            //PullListDown组件下拉框style,外部传入内联样式
+            //下拉框style,外部传入内联样式
             style
         } = this.props;
         return style ? style : {};
@@ -56,7 +100,7 @@ class PullListDown extends React.Component {
      */
     renderPullListTitleIconClassName() {
         const {
-            //PullListDown组件下拉框标题Icon className,外部传入样式表
+            //下拉框标题Icon className,外部传入样式表
             iconClassName
         } = this.props;
         return (
@@ -72,11 +116,11 @@ class PullListDown extends React.Component {
      */
     renderPullListHeader() {
         const {
-            //PullListDown组件下拉框标题Icon
+            //下拉框标题Icon
             renderPullListTitleIconClassName
         } = this;
         const {
-            //PullListDown组件下拉框标题
+            //下拉框标题
             title
         } = this.props;
         return (
@@ -95,7 +139,7 @@ class PullListDown extends React.Component {
         let {
             dataSource
         } = this.props;
-        if(!dataSource || dataSource.length <= 0) {
+        if (!dataSource || dataSource.length <= 0) {
             return null;
         }
         return dataSource.map(function pullList(pullItem, pullIndex) {
@@ -119,14 +163,16 @@ class PullListDown extends React.Component {
             renderPullListHeader,
             //根据外部传入的列表数据,render渲染下拉框组件列表
             renderDataSourceToPullList,
+            //根据props className和visible来设置PullListDown组件下拉框容器的className样式表
+            visibleOrPullListDownToClass,
             //根据props className来设置PullListDown组件下拉框容器的className样式表
-            outsideClassToClass,
+            outSideClassToClass,
             //根据props style来设置PullListDown组件下拉框容器的style内联样式
             outsideStyleToStyle
         } = this;
         return (
             <section
-                className={outsideClassToClass.bind(this)()}
+                className={visibleOrPullListDownToClass.bind(this)() + outSideClassToClass.bind(this)()}
                 style={outsideStyleToStyle.bind(this)()}
             >
                 {/*下拉框组件头部*/}

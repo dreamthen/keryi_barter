@@ -4,13 +4,22 @@
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
+import {
+    changeDistance,
+    changeInitDistance
+} from "../actions/appActions";
+import {
+    getFocusPosition
+} from "../configs/getElementPosition";
 import modalComponentConfig from "../configs/modalComponentConfig";
 import {Area, Button, Modal, PullListDown} from "../keryi";
 import routesMode from "../configs/routesConfigMode";
 import "../../stylesheets/app.css";
 
-//Input组件类型
+//Area组件编辑框类型
 const componentType = ["area", "functionIcons"];
+//时间处理器,用来控制处理查询资源类型
+let timer;
 
 class AppView extends React.Component {
     static propTypes = {
@@ -20,9 +29,9 @@ class AppView extends React.Component {
         description: PropTypes.string,
         //对话框选择资源类型
         sourceTag: PropTypes.string,
-        //下拉框距离添加对话框上方的位置
-        bottom: PropTypes.number,
-        //下拉框距离添加对话框左方的位置
+        //选择资源类型初始距离添加对话框左边的位置
+        initLeft: PropTypes.number,
+        //选择资源类型下拉框距离添加对话框左边的位置
         left: PropTypes.number
     };
 
@@ -31,6 +40,8 @@ class AppView extends React.Component {
         this.state = {
             //控制Modal组件对话框显示、隐藏或者消失
             addBarterVisible: false,
+            //控制PullListDown组件编辑框显示、隐藏或者消失
+            pullListDownVisible: false,
             //控制功能图标位置显示或者消失
             focusFunctionIconsVisibility: false,
             //控制功能图标显示或者隐藏
@@ -155,34 +166,64 @@ class AppView extends React.Component {
      * @param e
      */
     onChangeAreaHandler(key, e) {
+        const {
+            dispatch,
+            //选择资源类型初始距离添加对话框左边的位置
+            initLeft
+        } = this.props;
+        if (timer) {
+            clearTimeout(timer);
+        }
         this.setState({
             [key]: e.target.value
         });
+        //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题
+        timer = setTimeout(function controlTimer() {
+            //获取光标位置
+            let rect = getFocusPosition();
+            //设置选择资源类型下拉框光标距离添加对话框左边的位置
+            dispatch(changeDistance({left: (rect.left - initLeft + 20)}));
+            //控制PullListDown组件编辑框取消消失
+            this.setState({
+                pullListDownVisible: true
+            });
+        }.bind(this), 1000);
     }
 
     /**
-     * 资源描述聚焦事件
+     * 聚焦事件
+     * @param key
+     * @param initLeft
      * @param e
      */
-    onDescriptionFocus(e) {
-        //控制功能图标位置显示
-        this.setState({
-            focusFunctionIconsVisibility: true
-        }, function focus() {
-            //FIXME 这里设置一个时间控制器,在功能图标位置显示100ms后,将功能图标从隐藏转变为显示
-            setTimeout(function timer() {
+    onFocus(key, initLeft, e) {
+        const {dispatch} = this.props;
+        switch (key) {
+            case modalComponentConfig[2]["key"]:
+                //控制功能图标位置显示
                 this.setState({
-                    focusShowFunctionIcons: true
-                });
-            }.bind(this), 100);
-        }.bind(this));
+                    focusFunctionIconsVisibility: true
+                }, function focus() {
+                    //FIXME 这里设置一个时间控制器,在功能图标位置显示100ms后,将功能图标从隐藏转变为显示
+                    setTimeout(function timer() {
+                        this.setState({
+                            focusShowFunctionIcons: true
+                        });
+                    }.bind(this), 100);
+                }.bind(this));
+                break;
+            case modalComponentConfig[3]["key"]:
+                //设置选择资源类型下拉框距离添加对话框左边的位置
+                dispatch(changeInitDistance({initLeft}));
+                break;
+        }
     }
 
     /**
-     * 资源描述失焦事件
+     * 失焦事件
      * @param e
      */
-    onDescriptionBlur(e) {
+    onBlur(e) {
         //将功能图标从显示转变为隐藏
         this.setState({
             focusShowFunctionIcons: false
@@ -247,9 +288,9 @@ class AppView extends React.Component {
             //控制功能图标显示或者隐藏
             focusShowFunctionIcons
         } = this.state;
-        //资源描述聚焦事件
+        //聚焦事件
         focusFunc = this[focusFunc];
-        //资源描述失焦事件
+        //失焦事件
         blurFunc = this[blurFunc];
         switch (include) {
             case componentType[0]:
@@ -262,7 +303,7 @@ class AppView extends React.Component {
                         pullListDown={pullListDown}
                         placeholder={placeholder}
                         className={className ? className : ""}
-                        onFocus={focus ? focusFunc.bind(this) : new Function()}
+                        onFocus={focus ? focusFunc.bind(this, key) : new Function()}
                         onBlur={blur ? blurFunc.bind(this) : new Function()}
                         onChange={onChangeAreaHandler.bind(this, key)}
                     />
@@ -334,20 +375,22 @@ class AppView extends React.Component {
      */
     renderModalPullList() {
         const {
-            //下拉框距离添加对话框上方的位置
-            bottom,
-            //下拉框距离添加对话框左方的位置
+            //选择资源类型下拉框距离添加对话框左方的位置
             left
         } = this.props;
+        const {
+            //控制PullListDown组件编辑框显示、隐藏或者消失
+            pullListDownVisible
+        } = this.state;
         return (
             <PullListDown
+                visible={pullListDownVisible}
                 title="热门"
                 dataSource={[
                     "he",
                     "hel"
                 ]}
                 style={{
-                    bottom,
                     left
                 }}
             />

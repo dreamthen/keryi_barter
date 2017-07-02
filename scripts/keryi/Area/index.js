@@ -2,6 +2,10 @@
  * Created by yinwk on 2017/6/27.
  */
 import React, {PropTypes} from "react";
+import {
+    getElementPosition,
+    getFocusPosition
+} from "../../configs/getElementPosition";
 import typeConfig from "./configs/typeConfig";
 import sizeConfig from "./configs/sizeConfig";
 import "./keryi_barter_area.css";
@@ -44,13 +48,19 @@ class Area extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.value !== null || nextProps.value !== "") {
-            const {
-                pullListDown
-            } = this.props;
+        const {
+            //编辑框是否执行下拉选择框
+            pullListDown,
+            //编辑框onFocus聚焦事件
+            onFocus
+        } = this.props;
+        if ((this.props.value === "" && nextProps.value !== null) || (this.props.value === "" && nextProps.value !== "")) {
             if (pullListDown) {
-                console.log(this.refs[defaultRefs].offsetLeft);
-                console.log(this.refs[defaultRefs].offsetTop);
+                //获取元素
+                let contentEdit = this.refs[defaultRefs];
+                //获取到元素初始距离窗口顶部、右边、底部和左边的位置
+                let position = getElementPosition(contentEdit);
+                onFocus(position.left);
             }
         }
     }
@@ -85,7 +95,7 @@ class Area extends React.Component {
     }
 
     /**
-     *
+     * 组件结束装载
      */
     componentDidMount() {
 
@@ -177,7 +187,33 @@ class Area extends React.Component {
         return {__html: value}
     }
 
+    /**
+     * 编辑框onFocusHandler控制聚焦事件
+     */
+    onFocusHandler() {
+        const {
+            //编辑框onFocus聚焦事件
+            onFocus
+        } = this.props;
+        onFocus();
+    }
+
+    /**
+     * 编辑框onBlurHandler控制失焦事件
+     */
+    onBlurHandler() {
+        const {
+            //编辑框onBlur失焦事件
+            onBlur
+        } = this.props;
+        onBlur();
+    }
+
     render() {
+        const {
+            //Area组件编辑框是否执行下拉选择框
+            pullListDown
+        } = this.props;
         const {
             //根据外部传入的props size来设置Area组件编辑框className样式表
             sizeToClass,
@@ -190,23 +226,21 @@ class Area extends React.Component {
             //onChange内容改变事件
             onChangeAreaHandler,
             //将value转化为html片段插入Area组件编辑框中
-            createValueToHtml
+            createValueToHtml,
+            //编辑框onFocusHandler控制聚焦事件
+            onFocusHandler,
+            //编辑框onBlurHandler控制失焦事件
+            onBlurHandler
         } = this;
-        const {
-            //编辑框onFocus聚焦事件
-            onFocus,
-            //编辑框onBlur失焦事件
-            onBlur
-        } = this.props;
         return (
             <section className={typeToClass.bind(this)() + " " + sizeToClass.bind(this)()}>
                 <div
                     ref={defaultRefs}
                     suppressContentEditableWarning={true}
-                    contentEditable={true}
+                    contentEditable={pullListDown ? "plaintext-only" : true}
                     onInput={onChangeAreaHandler.bind(this)}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
+                    onFocus={onFocusHandler.bind(this)}
+                    onBlur={onBlurHandler.bind(this)}
                     className={outsideClassToClass.bind(this)()}
                     dangerouslySetInnerHTML={
                         createValueToHtml.bind(this)()
