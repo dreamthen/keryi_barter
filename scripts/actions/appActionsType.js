@@ -3,6 +3,8 @@
  */
 //app页面action类型
 const appActionsType = {
+    CHANGE_INIT_DISTANCE: "CHANGE_INIT_DISTANCE",
+    CHANGE_DISTANCE: "CHANGE_DISTANCE",
     ADD_BARTER_RESOURCE: "ADD_BARTER_RESOURCE"
 };
 

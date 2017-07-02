@@ -20,11 +20,11 @@
     word-wrap: break-word;
 }
 
-.keryi_barter_article_area[contenteditable=true] {
+.keryi_barter_article_area[contenteditable] {
     font: 14px/1.4 "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
 }
 
-.keryi_barter_article_area[contenteditable=true]:empty:before {
+.keryi_barter_article_area[contenteditable]:empty:before {
     content: attr(data-placeholder);
     color: #a2a2a2;
     cursor: text;
