@@ -28,7 +28,9 @@ class PullListDown extends React.Component {
         //PullListDown组件下拉框className,外部传入样式表
         className: PropTypes.string,
         //PullListDown组件下拉框style,外部传入内联样式
-        style: PropTypes.object
+        style: PropTypes.object,
+        //PullListDown组件下拉框关闭回调函数
+        onClose: PropTypes.func
     };
 
     constructor(props) {
@@ -172,6 +174,7 @@ class PullListDown extends React.Component {
         } = this;
         return (
             <section
+                ref="pullListDown"
                 className={visibleOrPullListDownToClass.bind(this)() + outSideClassToClass.bind(this)()}
                 style={outsideStyleToStyle.bind(this)()}
             >

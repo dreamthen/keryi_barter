@@ -369,6 +369,10 @@ class AppView extends React.Component {
         )
     }
 
+    closePullListDown(){
+
+    }
+
     /**
      * render渲染对话框标签下拉框列表
      * @returns {XML}
@@ -382,10 +386,15 @@ class AppView extends React.Component {
             //控制PullListDown组件编辑框显示、隐藏或者消失
             pullListDownVisible
         } = this.state;
+        const {
+            //下拉框关闭回调函数
+            closePullListDown
+        } = this;
         return (
             <PullListDown
                 visible={pullListDownVisible}
                 title="热门"
+                onClose={closePullListDown.bind(this)}
                 dataSource={[
                     "he",
                     "hel"
