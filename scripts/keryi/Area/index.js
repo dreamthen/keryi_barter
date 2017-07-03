@@ -3,8 +3,7 @@
  */
 import React, {PropTypes} from "react";
 import {
-    getElementPosition,
-    getFocusPosition
+    getElementPosition
 } from "../../configs/getElementPosition";
 import typeConfig from "./configs/typeConfig";
 import sizeConfig from "./configs/sizeConfig";
@@ -154,7 +153,6 @@ class Area extends React.Component {
         const contentEdit = this.refs[defaultRefs];
         const newArea = contentEdit.innerHTML;
         e.target = {
-            contentEdit,
             value: newArea
         };
         return e;
