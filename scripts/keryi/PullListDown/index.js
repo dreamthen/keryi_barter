@@ -11,6 +11,8 @@ const pullListDown = "pullListDown";
 const pullListDownShow = "pullListDownShow";
 //PullListDown组件下拉框消失样式表配置
 const pullListDownDisappear = "pullListDownDisappear";
+//PullListDown组件下拉框虚拟dom名称
+const pullListDownRefs = "pullListDown";
 
 /**
  * keryi_barter PullListDown下拉框组件
@@ -46,14 +48,66 @@ class PullListDown extends React.Component {
             //PullListDown组件下拉框是否显示
             visible
         } = this.props;
+        const {
+            //点击除了PullListDown组件下拉框以外的区域,调用PullListDown组件下拉框关闭函数
+            clickDocument
+        } = this;
         if (visible !== nextProps.visible) {
             //FIXME 在这里设置一个时间控制器,PullList组件编辑框取消消失100ms之后,从隐藏到显示的过程
             setTimeout(function timer() {
                 this.setState({
                     pullListDownVisible: nextProps.visible
                 });
+                nextProps.visible ? document.addEventListener("click", clickDocument.bind(this)) : document.removeEventListener("click", clickDocument.bind(this));
             }.bind(this), 100);
         }
+    }
+
+    /**
+     * 获取PullListDown组件下拉框的区域范围
+     * @param clientX
+     * @param clientY
+     * @returns {boolean}
+     */
+    initRect({clientX, clientY}) {
+        //获取到PullListDown组件下拉框的区域范围
+        const pullListDownRect = this.refs[pullListDownRefs].getBoundingClientRect();
+        //如果点击事件处在PullListDown组件之内,返回true;如果点击事件处在PullListDown组件之外,返回false
+        return clientX >= pullListDownRect.left && clientX <= pullListDownRect.right && clientY >= pullListDownRect.top && clientY <= pullListDownRect.bottom;
+    }
+
+    /**
+     * PullListDown组件下拉框关闭函数
+     */
+    onPullListDownCloseHandler() {
+        const {
+            //下拉框关闭回调函数
+            onClose
+        } = this.props;
+        this.setState({
+            pullListDownVisible: false
+        }, function closer() {
+            setTimeout(function timer() {
+                onClose();
+            }.bind(this), 400);
+        }.bind(this));
+    }
+
+    /**
+     * 点击除了PullListDown组件下拉框以外的区域,调用PullListDown组件下拉框关闭函数
+     */
+    clickDocument(e) {
+        const {
+            //下拉框是否显示
+            visible
+        } = this.props;
+        const {
+            //获取PullListDown组件下拉框的区域范围
+            initRect,
+            //下拉框关闭函数
+            onPullListDownCloseHandler
+        } = this;
+        visible && !initRect.bind(this, e)() && onPullListDownCloseHandler && onPullListDownCloseHandler.bind(this)();
     }
 
     /**
@@ -174,7 +228,7 @@ class PullListDown extends React.Component {
         } = this;
         return (
             <section
-                ref="pullListDown"
+                ref={pullListDownRefs}
                 className={visibleOrPullListDownToClass.bind(this)() + outSideClassToClass.bind(this)()}
                 style={outsideStyleToStyle.bind(this)()}
             >

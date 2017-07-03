@@ -187,7 +187,7 @@ class AppView extends React.Component {
             this.setState({
                 pullListDownVisible: true
             });
-        }.bind(this), 1000);
+        }.bind(this), 600);
     }
 
     /**
@@ -369,8 +369,13 @@ class AppView extends React.Component {
         )
     }
 
-    closePullListDown(){
-
+    /**
+     * 下拉框关闭回调函数
+     */
+    closePullListDown() {
+        this.setState({
+            pullListDownVisible: false
+        });
     }
 
     /**
