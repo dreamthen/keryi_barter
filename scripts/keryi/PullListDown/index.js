@@ -73,7 +73,7 @@ class PullListDown extends React.Component {
         //获取到PullListDown组件下拉框的区域范围
         const pullListDownRect = this.refs[pullListDownRefs].getBoundingClientRect();
         //如果点击事件处在PullListDown组件之内,返回true;如果点击事件处在PullListDown组件之外,返回false
-        return clientX >= pullListDownRect.left && clientX <= pullListDownRect.right && clientY >= pullListDownRect.top && clientY <= pullListDownRect.bottom;
+        return pullListDownRect.top <= clientY && pullListDownRect.bottom >= clientY && pullListDownRect.left <= clientX && pullListDownRect.right >= clientX;
     }
 
     /**
@@ -107,7 +107,7 @@ class PullListDown extends React.Component {
             //下拉框关闭函数
             onPullListDownCloseHandler
         } = this;
-        visible && !initRect.bind(this, e)() && onPullListDownCloseHandler && onPullListDownCloseHandler.bind(this)();
+        visible && !initRect.bind(this)(e) && onPullListDownCloseHandler && onPullListDownCloseHandler.bind(this)();
     }
 
     /**
