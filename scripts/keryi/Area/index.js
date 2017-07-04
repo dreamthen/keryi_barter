@@ -31,6 +31,8 @@ class Area extends React.Component {
         className: PropTypes.string,
         //Area组件编辑框是否执行下拉选择框
         pullListDown: PropTypes.bool,
+        //初始化选择资源类型下拉框距离添加对话框的位置
+        initPullListDownPosition: PropTypes.func,
         //Area组件编辑框默认提示语
         placeholder: PropTypes.string,
         //Area组件编辑框onChange内容改变事件,外部传入Area编辑框内容改变函数
@@ -50,8 +52,8 @@ class Area extends React.Component {
         const {
             //编辑框是否执行下拉选择框
             pullListDown,
-            //编辑框onFocus聚焦事件
-            onFocus
+            //初始化选择资源类型下拉框距离添加对话框的位置
+            initPullListDownPosition
         } = this.props;
         if ((this.props.value === "" && nextProps.value !== null) || (this.props.value === "" && nextProps.value !== "")) {
             if (pullListDown) {
@@ -59,7 +61,8 @@ class Area extends React.Component {
                 let contentEdit = this.refs[defaultRefs];
                 //获取到元素初始距离窗口顶部、右边、底部和左边的位置
                 let position = getElementPosition(contentEdit);
-                onFocus(position.left);
+                //初始化选择资源类型下拉框距离添加对话框的位置
+                initPullListDownPosition(position.left);
             }
         }
     }

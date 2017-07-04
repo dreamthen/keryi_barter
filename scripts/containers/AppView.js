@@ -181,6 +181,8 @@ class AppView extends React.Component {
         timer = setTimeout(function controlTimer() {
             //获取光标位置
             let rect = getFocusPosition();
+            console.log(rect.left);
+            console.log(initLeft);
             //设置选择资源类型下拉框光标距离添加对话框左边的位置
             dispatch(changeDistance({left: (rect.left - initLeft + 20)}));
             //控制PullListDown组件编辑框取消消失
@@ -192,31 +194,20 @@ class AppView extends React.Component {
 
     /**
      * 聚焦事件
-     * @param key
-     * @param initLeft
      * @param e
      */
-    onFocus(key, initLeft, e) {
-        const {dispatch} = this.props;
-        switch (key) {
-            case modalComponentConfig[2]["key"]:
-                //控制功能图标位置显示
+    onFocus(e) {
+        //控制功能图标位置显示
+        this.setState({
+            focusFunctionIconsVisibility: true
+        }, function focus() {
+            //FIXME 这里设置一个时间控制器,在功能图标位置显示100ms后,将功能图标从隐藏转变为显示
+            setTimeout(function timer() {
                 this.setState({
-                    focusFunctionIconsVisibility: true
-                }, function focus() {
-                    //FIXME 这里设置一个时间控制器,在功能图标位置显示100ms后,将功能图标从隐藏转变为显示
-                    setTimeout(function timer() {
-                        this.setState({
-                            focusShowFunctionIcons: true
-                        });
-                    }.bind(this), 100);
-                }.bind(this));
-                break;
-            case modalComponentConfig[3]["key"]:
-                //设置选择资源类型下拉框距离添加对话框左边的位置
-                dispatch(changeInitDistance({initLeft}));
-                break;
-        }
+                    focusShowFunctionIcons: true
+                });
+            }.bind(this), 100);
+        }.bind(this));
     }
 
     /**
@@ -235,6 +226,17 @@ class AppView extends React.Component {
                 });
             }.bind(this), 500);
         }.bind(this));
+    }
+
+    /**
+     * 初始化选择资源类型下拉框距离添加对话框的位置
+     */
+    initPullListDownPosition(initLeft) {
+        const {
+            dispatch
+        } = this.props;
+        //初始化选择资源类型下拉框距离添加对话框的位置
+        dispatch(changeInitDistance({initLeft}));
     }
 
     /**
@@ -280,7 +282,9 @@ class AppView extends React.Component {
             //改变标题内容函数
             onChangeAreaHandler,
             //根据不同的功能图标Icon类型配置来设置功能图标Icon
-            renderFunctionIcons
+            renderFunctionIcons,
+            //初始化选择资源类型下拉框距离添加对话框的位置
+            initPullListDownPosition
         } = this;
         const {
             //控制功能图标位置显示或者消失
@@ -301,9 +305,10 @@ class AppView extends React.Component {
                         type={type ? type : "imageText"}
                         size={size}
                         pullListDown={pullListDown}
+                        initPullListDownPosition={initPullListDownPosition.bind(this)}
                         placeholder={placeholder}
                         className={className ? className : ""}
-                        onFocus={focus ? focusFunc.bind(this, key) : new Function()}
+                        onFocus={focus ? focusFunc.bind(this) : new Function()}
                         onBlur={blur ? blurFunc.bind(this) : new Function()}
                         onChange={onChangeAreaHandler.bind(this, key)}
                     />

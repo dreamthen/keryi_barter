@@ -47,11 +47,7 @@ const modalComponentConfig = [
         pullListDown: true,
         placeholder: "#选择您的资源类型",
         placeholderClassName: "keryi_barter_modal_area_sourceTag_placeholder",
-        className: "keryi_barter_modal_area_sourceTag",
-        focus: true,
-        blur: true,
-        focusFunc: "onFocus",
-        blurFunc: "onBlur"
+        className: "keryi_barter_modal_area_sourceTag"
     }
 ];
 
