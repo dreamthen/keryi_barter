@@ -174,21 +174,19 @@ class AppView extends React.Component {
         if (timer) {
             clearTimeout(timer);
         }
+        let value = e.target.value;
         this.setState({
-            [key]: e.target.value
+            [key]: value
         });
         //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题
         timer = setTimeout(function controlTimer() {
             //获取光标位置
             let rect = getFocusPosition();
-            console.log(rect.left);
-            console.log(initLeft);
             //设置选择资源类型下拉框光标距离添加对话框左边的位置
             dispatch(changeDistance({left: (rect.left - initLeft + 20)}));
             //控制PullListDown组件编辑框取消消失
-            this.setState({
-                pullListDownVisible: true
-            });
+            value === "" ?
+                this.setState({pullListDownVisible: false}) : this.setState({pullListDownVisible: true});
         }.bind(this), 600);
     }
 
