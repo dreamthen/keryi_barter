@@ -190,24 +190,37 @@ class Area extends React.Component {
 
     /**
      * 编辑框onFocusHandler控制聚焦事件
+     * @param e
      */
-    onFocusHandler() {
+    onFocusHandler(e) {
         const {
             //编辑框onFocus聚焦事件
             onFocus
         } = this.props;
         onFocus();
+        e.nativeEvent.stopImmediatePropagation();
     }
 
     /**
      * 编辑框onBlurHandler控制失焦事件
+     * @param e
      */
-    onBlurHandler() {
+    onBlurHandler(e) {
         const {
             //编辑框onBlur失焦事件
             onBlur
         } = this.props;
         onBlur();
+        e.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
+     * 编辑框onKeyPressHandler控制输入键事件(不可输入回车符)
+     */
+    onKeyPressHandler(e) {
+        if(e.which === 13){
+            e.preventDefault();
+        }
     }
 
     render() {
@@ -231,7 +244,9 @@ class Area extends React.Component {
             //编辑框onFocusHandler控制聚焦事件
             onFocusHandler,
             //编辑框onBlurHandler控制失焦事件
-            onBlurHandler
+            onBlurHandler,
+            //编辑框onKeyPressHandler控制输入键事件
+            onKeyPressHandler
         } = this;
         return (
             <section className={typeToClass.bind(this)() + " " + sizeToClass.bind(this)()}>
@@ -242,6 +257,7 @@ class Area extends React.Component {
                     onInput={onChangeAreaHandler.bind(this)}
                     onFocus={onFocusHandler.bind(this)}
                     onBlur={onBlurHandler.bind(this)}
+                    onKeyPress={onKeyPressHandler.bind(this)}
                     className={outsideClassToClass.bind(this)()}
                     dangerouslySetInnerHTML={
                         createValueToHtml.bind(this)()
