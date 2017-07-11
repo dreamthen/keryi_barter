@@ -17,6 +17,12 @@ const defaultState = {
     left: 0
 };
 
+/**
+ * 导出app页面的reducer结构
+ * @param state
+ * @param actions
+ * @returns {*}
+ */
 export function appReducers(state = defaultState, actions) {
     let type = actions.type,
         newState = actions.payload;

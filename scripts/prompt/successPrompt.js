@@ -10,7 +10,9 @@ const Success = {
     //登录成功提示语
     LOGIN_SUCCESS_MESSAGE: "登录成功",
     //注册成功提示语
-    REGISTER_SUCCESS_MESSAGE: "注册成功,即将跳往登录页面"
+    REGISTER_SUCCESS_MESSAGE: "注册成功,即将跳往登录页面",
+    //获取资源列表成功状态码
+    GET_RESOURCE_LIST_SUCCESS_CODE: "000000"
 };
 
 export default Success;
