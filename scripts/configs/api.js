@@ -14,7 +14,9 @@ if (!isMock) {
         //登录
         KERYI_LOGIN: keryi_cover + "sessions/login",
         //注册
-        KERYI_REGISTER: keryi_cover + "sessions/signup"
+        KERYI_REGISTER: keryi_cover + "sessions/signup",
+        //获取资源列表
+        GET_RESOURCE_LIST: keryi_cover + "resources"
     }
 } else {
 

@@ -3,10 +3,12 @@
  */
 import {combineReducers} from "redux";
 import {appReducers} from "./appReducers";
+import {barterReducers} from "./barterReducers";
 
 //集成reducers
 const reducers = combineReducers({
-    appReducers
+    appReducers,
+    barterReducers
 });
 
 //导出集成的reducers

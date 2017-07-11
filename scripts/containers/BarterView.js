@@ -1,15 +1,36 @@
 /**
  * Created by yinwk on 2017/6/13.
  */
-import React from "react";
+import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {KeryiCard, HeadPortrait} from "../keryi";
+import {getResourcesList} from "../actions/barterActions";
 import "../../stylesheets/barter.css";
 
 class BarterView extends React.Component {
+    static propTypes = {
+        list: PropTypes.array,
+        current: PropTypes.number
+    };
+
     constructor(props) {
         super(props);
         this.state = {}
+    }
+
+    /**
+     * 组件开始装载
+     */
+    componentWillMount() {
+
+    }
+
+    /**
+     * 组件结束装载
+     */
+    componentDidMount() {
+        const {dispatch, current} = this.props;
+        dispatch(getResourcesList(current));
     }
 
     /**
@@ -96,7 +117,9 @@ class BarterView extends React.Component {
 }
 
 function select(state, ownProps) {
-    return {}
+    return {
+        ...state.barterReducers
+    }
 }
 
 export default connect(select)(BarterView);
