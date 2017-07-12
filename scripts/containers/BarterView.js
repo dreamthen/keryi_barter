@@ -60,19 +60,7 @@ class BarterView extends React.Component {
         return (
             <KeryiCard
                 userName="1000yardStyle"
-                imageList={[{
-                    src: "/images/keryiBarter_description_bg.png",
-                    name: "keryi介绍背景"
-                }, {
-                    src: "/images/keryiBarter_login_bg.png",
-                    name: "keryi登录背景"
-                }, {
-                    src: "/images/keryiBarter_register_bg.png",
-                    name: "keryi注册背景"
-                }, {
-                    src: "/images/keryiBarter_login_bg.png",
-                    name: "keryi登录背景"
-                }]}
+                imageList={eval("(" + keryiCard["img_urls"] +")")}
                 title={keryiCard["title"]}
                 introduce={keryiCard["intro"]}
                 tagList={[{
