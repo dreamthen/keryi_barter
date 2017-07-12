@@ -5,11 +5,14 @@ import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {KeryiCard, HeadPortrait} from "../keryi";
 import {getResourcesList} from "../actions/barterActions";
+import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
 import "../../stylesheets/barter.css";
 
 class BarterView extends React.Component {
     static propTypes = {
+        //获取资源数据列表
         list: PropTypes.array,
+        //资源数据列表页码
         current: PropTypes.number
     };
 
@@ -53,7 +56,7 @@ class BarterView extends React.Component {
      * render渲染用户资源卡片
      * @returns {XML}
      */
-    renderKeryiCard() {
+    renderKeryiCard(keryiCard) {
         return (
             <KeryiCard
                 userName="1000yardStyle"
@@ -70,8 +73,8 @@ class BarterView extends React.Component {
                     src: "/images/keryiBarter_login_bg.png",
                     name: "keryi登录背景"
                 }]}
-                title="today"
-                introduce="react react-redux react-router-redux"
+                title={keryiCard["title"]}
+                introduce={keryiCard["intro"]}
                 tagList={[{
                     type: "primary",
                     content: "react"
@@ -82,7 +85,7 @@ class BarterView extends React.Component {
                     type: "primary",
                     content: "react-router-redux"
                 }]}
-                needParty={77}
+                needParty={keryiCard["price_worth"]}
             />
         )
     }
@@ -93,6 +96,10 @@ class BarterView extends React.Component {
      */
     render() {
         const {
+            //获取资源数据列表
+            list
+        } = this.props;
+        const {
             //render渲染用户头像
             renderHeadPortrait,
             //render渲染用户资源卡片
@@ -101,12 +108,27 @@ class BarterView extends React.Component {
         return (
             <div className="keryi_barter_main_container">
                 <div className="keryi_barter_main_module keryi_barter_main_barterList">
-                    <article className="keryi_barter_cardInfo">
-                        {/*render渲染用户头像*/}
-                        {renderHeadPortrait.bind(this)("/images/keryiBarter_login_bg.png")}
-                        {/*render渲染用户资源卡片*/}
-                        {renderKeryiCard.bind(this)()}
-                    </article>
+                    {
+                        (list && list.length > 0) ? list.map(function lister(listItem, listIndex) {
+                                return (
+                                    <article
+                                        key={listIndex}
+                                        className="keryi_barter_cardInfo"
+                                    >
+                                        {/*render渲染用户头像*/}
+                                        {renderHeadPortrait.bind(this)(listItem)}
+                                        {/*render渲染用户资源卡片*/}
+                                        {renderKeryiCard.bind(this)(listItem)}
+                                    </article>
+                                )
+                            }.bind(this)) : //获取资源数据列表出现异常时,前端呈现默认约定数据
+                            <article className="keryi_barter_cardInfo">
+                                {/*render渲染用户头像*/}
+                                {renderHeadPortrait.bind(this)("/images/keryiBarter_login_bg.png")}
+                                {/*render渲染用户资源卡片*/}
+                                {renderKeryiCard.bind(this)(keryiCardDefaultConfig)}
+                            </article>
+                    }
                 </div>
                 <aside className="keryi_barter_main_module keryi_barter_main_aside">
 
