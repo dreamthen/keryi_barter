@@ -98,8 +98,7 @@ class KeryiCard extends React.Component {
                 >
                     <img
                         src={imageItem["src"]}
-                        title={imageItem["name"]}
-                        alt={imageItem["name"]}
+                        alt={imageItem["src"]}
                         className="keryi_barter_card_image"
                     />
                 </figure>
