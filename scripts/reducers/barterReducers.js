@@ -6,7 +6,9 @@ import appActionsType from "../actions/appActionsType";
 import insteadState from "../configs/insteadState";
 
 const defaultState = {
+    //获取资源数据列表
     list: [],
+    //资源数据列表页码
     current: 1
 };
 

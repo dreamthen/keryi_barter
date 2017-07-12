@@ -13,11 +13,15 @@ import {
 } from "../configs/getElementPosition";
 import modalComponentConfig from "../configs/modalComponentConfig";
 import {Area, Button, Modal, PullListDown} from "../keryi";
+import Upload from "rc-upload";
+import uploadConfig from "../configs/uploadConfig";
 import routesMode from "../configs/routesConfigMode";
 import "../../stylesheets/app.css";
 
 //Area组件编辑框类型
 const componentType = ["area", "functionIcons"];
+//Area组件icon功能图标类型
+const functionIconType = ["uploadPhoto"];
 //时间处理器,用来控制处理查询资源类型
 let timer;
 
@@ -246,16 +250,22 @@ class AppView extends React.Component {
      * @param iconName
      */
     renderFunctionIcons(key, include, className, iconName) {
-        return (
-            <li
-                key={key}
-                className={className}
-            >
-                <i className={iconName}>
+        switch (include) {
+            case functionIconType[0]:
+                return (
+                    <Upload
+                        key={key}
+                    >
+                        <li
+                            className={className}
+                        >
+                            <i className={iconName}>
 
-                </i>
-            </li>
-        )
+                            </i>
+                        </li>
+                    </Upload>
+                );
+        }
     }
 
     /**
