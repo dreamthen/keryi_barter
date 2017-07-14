@@ -5,6 +5,8 @@
 import Area from "./Area";
 //导入keryi_barter Button按钮组件
 import Button from "./Button";
+//导入keryi_barter FigureCarousel图片轮播器组件
+import FigureCarousel from "./FigureCarousel";
 //导入keryi_barter HeadPortrait头像组件
 import HeadPortrait from "./HeadPortrait";
 //导入keryi_barter Input输入框组件
@@ -26,6 +28,7 @@ import Tag from "./Tag";
 const keryi = {
     Area,
     Button,
+    FigureCarousel,
     HeadPortrait,
     Input,
     KeryiCard,

@@ -197,7 +197,7 @@ class Area extends React.Component {
             //编辑框onFocus聚焦事件
             onFocus
         } = this.props;
-        onFocus();
+        onFocus && onFocus();
         e.nativeEvent.stopImmediatePropagation();
     }
 
@@ -210,7 +210,7 @@ class Area extends React.Component {
             //编辑框onBlur失焦事件
             onBlur
         } = this.props;
-        onBlur();
+        onBlur && onBlur();
         e.nativeEvent.stopImmediatePropagation();
     }
 
@@ -218,8 +218,14 @@ class Area extends React.Component {
      * 编辑框onKeyPressHandler控制输入键事件(不可输入回车符)
      */
     onKeyPressHandler(e) {
-        if(e.which === 13){
-            e.preventDefault();
+        let {pullListDown} = this.props;
+        if (pullListDown) {
+            if (e.keyCode && e.keyCode === 13) {
+                e.preventDefault();
+            }
+            if (e.charCode && e.charCode === 13) {
+                e.preventDefault();
+            }
         }
     }
 

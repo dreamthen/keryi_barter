@@ -178,7 +178,7 @@ body {
 }
 
 .keryi_barter_modal_mainContainer .keryi_barter_modal_area_sourceTag {
-    min-height: 13px;
+    min-height: 30px;
     line-height: 15px;
     font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
     font-size: 13px;
@@ -215,12 +215,12 @@ body {
     height: 0;
 }
 
-.keryi_barter_modal_functionIcons > li {
+.keryi_barter_modal_functionIcons .keryi_barter_modal_upload li {
     float: right;
     height: 24px;
 }
 
-.keryi_barter_modal_functionIcons > li > i {
+.keryi_barter_modal_functionIcons .keryi_barter_modal_upload li > i {
     font-size: 24px;
     cursor: pointer;
 }

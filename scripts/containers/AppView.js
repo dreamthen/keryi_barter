@@ -196,42 +196,6 @@ class AppView extends React.Component {
     }
 
     /**
-     * 聚焦事件
-     * @param e
-     */
-    onFocus(e) {
-        //控制功能图标位置显示
-        this.setState({
-            focusFunctionIconsVisibility: true
-        }, function focus() {
-            //FIXME 这里设置一个时间控制器,在功能图标位置显示100ms后,将功能图标从隐藏转变为显示
-            setTimeout(function timer() {
-                this.setState({
-                    focusShowFunctionIcons: true
-                });
-            }.bind(this), 100);
-        }.bind(this));
-    }
-
-    /**
-     * 失焦事件
-     * @param e
-     */
-    onBlur(e) {
-        //将功能图标从显示转变为隐藏
-        this.setState({
-            focusShowFunctionIcons: false
-        }, function blur() {
-            //FIXME 这里设置一个时间控制器,在功能图标隐藏1s后,将功能图标位置消失
-            setTimeout(function timer() {
-                this.setState({
-                    focusFunctionIconsVisibility: false
-                });
-            }.bind(this), 500);
-        }.bind(this));
-    }
-
-    /**
      * 初始化选择资源类型下拉框距离添加对话框的位置
      */
     initPullListDownPosition(initLeft) {
@@ -255,6 +219,7 @@ class AppView extends React.Component {
                 return (
                     <Upload
                         key={key}
+                        className="keryi_barter_modal_upload"
                     >
                         <li
                             className={className}
@@ -277,16 +242,11 @@ class AppView extends React.Component {
      * @param pullListDown
      * @param placeholder
      * @param className
-     * @param classNameNone
      * @param classNameShow
-     * @param focus
-     * @param blur
-     * @param focusFunc
-     * @param blurFunc
      * @param functionIcons
      * @returns {XML}
      */
-    renderModalComponent(key, include, size, type, pullListDown, placeholder, className, classNameNone, classNameShow, focus, blur, focusFunc, blurFunc, functionIcons) {
+    renderModalComponent(key, include, size, type, pullListDown, placeholder, className, classNameShow, functionIcons) {
         const {
             //改变标题内容函数
             onChangeAreaHandler,
@@ -295,16 +255,6 @@ class AppView extends React.Component {
             //初始化选择资源类型下拉框距离添加对话框的位置
             initPullListDownPosition
         } = this;
-        const {
-            //控制功能图标位置显示或者消失
-            focusFunctionIconsVisibility,
-            //控制功能图标显示或者隐藏
-            focusShowFunctionIcons
-        } = this.state;
-        //聚焦事件
-        focusFunc = this[focusFunc];
-        //失焦事件
-        blurFunc = this[blurFunc];
         switch (include) {
             case componentType[0]:
                 return (
@@ -317,8 +267,6 @@ class AppView extends React.Component {
                         initPullListDownPosition={initPullListDownPosition.bind(this)}
                         placeholder={placeholder}
                         className={className ? className : ""}
-                        onFocus={focus ? focusFunc.bind(this) : new Function()}
-                        onBlur={blur ? blurFunc.bind(this) : new Function()}
                         onChange={onChangeAreaHandler.bind(this, key)}
                     />
                 );
@@ -326,7 +274,7 @@ class AppView extends React.Component {
                 return (
                     <ul
                         key={key}
-                        className={focusShowFunctionIcons ? classNameShow : focusFunctionIconsVisibility ? className : classNameNone}
+                        className={classNameShow}
                     >
                         {
                             functionIcons && functionIcons.length > 0 && functionIcons.map(function icons(iconItem, iconIndex) {
@@ -368,12 +316,7 @@ class AppView extends React.Component {
                                 modalItem["pullListDown"],
                                 modalItem["placeholder"],
                                 modalItem["className"],
-                                modalItem["classNameNone"],
                                 modalItem["classNameShow"],
-                                modalItem["focus"],
-                                modalItem["blur"],
-                                modalItem["focusFunc"],
-                                modalItem["blurFunc"],
                                 modalItem["functionIcons"]
                             );
                         }.bind(this))

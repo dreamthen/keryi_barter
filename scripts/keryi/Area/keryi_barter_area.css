@@ -25,6 +25,8 @@
 }
 
 .keryi_barter_article_area[contenteditable]:empty:before {
+    display: block;
+    height: 0;
     content: attr(data-placeholder);
     color: #a2a2a2;
     cursor: text;
