@@ -33,11 +33,7 @@ const modalComponentConfig = [
         value: "描述",
         placeholder: "在这里填写资源描述",
         placeholderClassName: "keryi_barter_modal_area_description_placeholder",
-        className: "keryi_barter_modal_area_description",
-        focus: true,
-        blur: true,
-        focusFunc: "onFocus",
-        blurFunc: "onBlur"
+        className: "keryi_barter_modal_area_description"
     },
     {
         key: "sourceTag",
