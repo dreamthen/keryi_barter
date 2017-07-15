@@ -12,6 +12,10 @@ const modalComponentConfig = [
         className: "keryi_barter_modal_area_title"
     },
     {
+        key: "figureCarousel",
+        include: "carousel"
+    },
+    {
         key: "functions",
         include: "functionIcons",
         value: "功能图标",

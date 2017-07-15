@@ -15,18 +15,20 @@ export function login(account, password) {
     //fetch服务器请求响应集成对象
     keryiFetchConfig.fetchRequest(
         api.KERYI_LOGIN,
-        "post",
+        "get",
         {
             account,
             password
         },
         function done(response) {
             //服务器响应数据
-            const data = response.data,
+            const body = response.body,
+                //服务器响应head头部对象
+                head = response.head,
                 //服务器响应code状态码
-                code = response.code,
+                code = head.code,
                 //服务器对响应结果描述
-                msg = response.msg;
+                msg = head.message;
             const {setPromptTrueOrFalse} = this;
             if (code === Success.LOGIN_SUCCESS_CODE) {
                 //登录成功后,设置成功提示语状态
@@ -67,11 +69,13 @@ export function register(account, password) {
         },
         function done(response) {
             //服务器响应数据
-            const data = response.data,
+            const body = response.body,
+                //服务器响应head头部对象
+                head = response.head,
                 //服务器响应code状态码
-                code = response.code,
+                code = head.code,
                 //服务器响应状态描述
-                msg = response.msg;
+                msg = head.message;
             const {
                 setPromptTrueOrFalse,
                 loginChangeRegister

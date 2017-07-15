@@ -172,7 +172,7 @@ const keryi_dev_config = {
         proxy: {
             "/keryi_barter/": {
                 //跨域代理服务器连接IP地址和端口号
-                target: "http://121.42.244.147:8090/",
+                target: "http://123.56.26.138:8080/",
                 secure: false,
                 //利用模拟路径/keryi_barter/进行跨域连接,跨域连接完成之后,重写路径将模拟路径/keryi_barter/处理掉
                 pathRewrite: {"/keryi_barter/": ""}

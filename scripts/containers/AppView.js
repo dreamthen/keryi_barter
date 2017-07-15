@@ -12,14 +12,20 @@ import {
     getFocusPosition
 } from "../configs/getElementPosition";
 import modalComponentConfig from "../configs/modalComponentConfig";
-import {Area, Button, Modal, PullListDown} from "../keryi";
+import {
+    Area,
+    Button,
+    FigureCarousel,
+    Modal,
+    PullListDown
+} from "../keryi";
 import Upload from "rc-upload";
 import uploadConfig from "../configs/uploadConfig";
 import routesMode from "../configs/routesConfigMode";
 import "../../stylesheets/app.css";
 
 //Area组件编辑框类型
-const componentType = ["area", "functionIcons"];
+const componentType = ["area", "functionIcons", "carousel"];
 //Area组件icon功能图标类型
 const functionIconType = ["uploadPhoto"];
 //时间处理器,用来控制处理查询资源类型
@@ -288,6 +294,13 @@ class AppView extends React.Component {
                         }
                     </ul>
                 );
+            case componentType[2]:
+                return (
+                    <FigureCarousel
+                        key={key}
+                        imageList={[{src: "/images/keryiBarter_description_bg.png"}]}
+                    />
+                )
         }
     }
 
