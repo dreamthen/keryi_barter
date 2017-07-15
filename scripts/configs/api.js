@@ -4,6 +4,8 @@
 
 //使用添加假路径方式进行跨院
 const keryi_cover = "/keryi_barter/";
+//请求后台接口,统一root路径manager
+const keryi_root = "manager/";
 //是否使用mock方式,true为使用mock数据模式,false为使用调用服务器接口模式
 const isMock = false;
 //接口API对象
@@ -12,11 +14,11 @@ let api = {};
 if (!isMock) {
     api = {
         //登录
-        KERYI_LOGIN: keryi_cover + "sessions/login",
+        KERYI_LOGIN: keryi_cover + keryi_root + "sessions",
         //注册
-        KERYI_REGISTER: keryi_cover + "sessions/signup",
+        KERYI_REGISTER: keryi_cover + keryi_root + "sessions",
         //获取资源列表
-        GET_RESOURCE_LIST: keryi_cover + "resources"
+        GET_RESOURCE_LIST: keryi_cover + keryi_root + "resources"
     }
 } else {
 

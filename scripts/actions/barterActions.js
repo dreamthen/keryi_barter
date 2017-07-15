@@ -24,11 +24,16 @@ export function getResourcesList(pageNum) {
                 pageNum
             },
             function done(response) {
+                //服务器响应数据
                 let body = response.body,
-                    code = response.head.code,
-                    msg = response.head.message;
+                    //服务器响应head头部对象
+                    head = response.head,
+                    //服务器响应code状态码
+                    code = head.code,
+                    //服务器对响应结果描述
+                    msg = head.message;
                 if (code === Success.GET_RESOURCE_LIST_SUCCESS_CODE) {
-                    dispatch(getResourcesListAction(response));
+                    dispatch(getResourcesListAction(body));
                 }
             }
         );
