@@ -14,7 +14,9 @@ const defaultState = {
     //选择资源类型初始距离添加对话框左边的位置
     initLeft: 0,
     //选择资源类型下拉框距离添加对话框左边的位置
-    left: 0
+    left: 0,
+    //对话框上传图片组
+    imageList: [{src: "/images/keryiBarter_description_bg.png"}]
 };
 
 /**
@@ -30,6 +32,8 @@ export function appReducers(state = defaultState, actions) {
         //设置选择资源类型下拉框距离添加对话框顶部和左边的位置
         case appActionsType["CHANGE_INIT_DISTANCE"]:
         case appActionsType["CHANGE_DISTANCE"]:
+        //改变对话框上传图片组
+        case appActionsType["CHANGE_IMAGE_LIST"]:
             return insteadState.insteadObjState(state, newState);
         case appActionsType["ADD_BARTER_RESOURCE"]:
             return state;

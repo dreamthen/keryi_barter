@@ -6,7 +6,8 @@ import {connect} from "react-redux";
 import {Link} from "react-router";
 import {
     changeDistance,
-    changeInitDistance
+    changeInitDistance,
+    changeImageList
 } from "../actions/appActions";
 import {
     getFocusPosition
@@ -42,7 +43,9 @@ class AppView extends React.Component {
         //选择资源类型初始距离添加对话框左边的位置
         initLeft: PropTypes.number,
         //选择资源类型下拉框距离添加对话框左边的位置
-        left: PropTypes.number
+        left: PropTypes.number,
+        //对话框上传图片组
+        imageList: PropTypes.array
     };
 
     constructor(props) {
@@ -240,6 +243,17 @@ class AppView extends React.Component {
     }
 
     /**
+     * 改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器
+     * @param imageList
+     */
+    onFigureCarouselControlChangeImageList(imageList) {
+        const {
+            dispatch
+        } = this.props;
+        dispatch(changeImageList({imageList}));
+    }
+
+    /**
      * 根据不同的组件类型配置来设置组件
      * @param key
      * @param include
@@ -259,8 +273,14 @@ class AppView extends React.Component {
             //根据不同的功能图标Icon类型配置来设置功能图标Icon
             renderFunctionIcons,
             //初始化选择资源类型下拉框距离添加对话框的位置
-            initPullListDownPosition
+            initPullListDownPosition,
+            //改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器
+            onFigureCarouselControlChangeImageList
         } = this;
+        const {
+            //对话框上传图片组
+            imageList
+        } = this.props;
         switch (include) {
             case componentType[0]:
                 return (
@@ -298,7 +318,8 @@ class AppView extends React.Component {
                 return (
                     <FigureCarousel
                         key={key}
-                        imageList={[{src: "/images/keryiBarter_description_bg.png"}]}
+                        imageList={imageList}
+                        onImageListChange={onFigureCarouselControlChangeImageList.bind(this)}
                     />
                 )
         }

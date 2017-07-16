@@ -26,3 +26,15 @@ export function changeDistance(payload) {
         payload
     }
 }
+
+/**
+ * 改变对话框上传图片组
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function changeImageList(payload) {
+    return {
+        type: appActionsType["CHANGE_IMAGE_LIST"],
+        payload
+    }
+}
