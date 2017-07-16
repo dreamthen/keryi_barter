@@ -2,6 +2,7 @@
  * Created by yinwk on 2017/7/15.
  */
 import React, {PropTypes} from "react";
+import Figure from "./components/Figure";
 import figureCarouselConfig from "./configs/figureCarouselConfig";
 import "./keryi_barter_figureCarousel.css";
 //FigureCarousel组件图片轮播器显示样式表配置
@@ -16,7 +17,7 @@ const figureCarouselDisappear = "figureCarouselDisappear";
  */
 class FigureCarousel extends React.Component {
     static propTypes = {
-        //FigureCarousel组件图片组
+        //FigureCarousel组件图片轮播器图片组
         imageList: PropTypes.array,
         //FigureCarousel组件图片轮播器className,外部传入样式表
         className: PropTypes.string
@@ -82,15 +83,9 @@ class FigureCarousel extends React.Component {
         } = this.props;
         return imageList.map(function imageLister(imageItem, imageIndex) {
             return (
-                <figure
-                    key={imageIndex}
-                    className="keryi_barter_figureCarousel_figure"
-                    style={{background: "url(" + imageItem["src"] + ") no-repeat center center/cover border-box content-box"}}
-                >
-                    <i className="iconfontKeryiBarter keryiBarter-close">
-
-                    </i>
-                </figure>
+                <Figure
+                    src={imageItem["src"]}
+                />
             )
         });
     }
