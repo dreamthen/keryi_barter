@@ -133,7 +133,9 @@ class FigureCarousel extends React.Component {
         } = this.state;
         const {
             //图片轮播器控制Figure组件图片关闭,外部传入的关闭方法
-            onFigureCarouselControlClose
+            onFigureCarouselControlClose,
+            //左右移动标志Icon
+            renderMovePoint
         } = this;
         return (
             <section className="keryi_barter_figureCarousel_figure">
@@ -150,8 +152,30 @@ class FigureCarousel extends React.Component {
                         )
                     }.bind(this))
                 }
+                {/*左右移动标志Icon*/}
+                {renderMovePoint.bind(this)()}
             </section>
         );
+    }
+
+    /**
+     * render渲染左右移动标志Icon
+     * @returns {XML}
+     */
+    renderMovePoint() {
+        const {
+
+        } = this;
+        return (
+            <div className="keryi_barter_figureCarousel_movePoint">
+                <i className="iconfontKeryiBarter keryiBarter-left">
+
+                </i>
+                <i className="iconfontKeryiBarter keryiBarter-right">
+
+                </i>
+            </div>
+        )
     }
 
     render() {
@@ -166,6 +190,7 @@ class FigureCarousel extends React.Component {
         return (
             <section
                 className={figureCarouselVisibleOrImageListToClass.bind(this)() + outsideClassToClass.bind(this)()}>
+                {/*图片轮播器图片组*/}
                 {renderFigureCarousel.bind(this)()}
             </section>
         )

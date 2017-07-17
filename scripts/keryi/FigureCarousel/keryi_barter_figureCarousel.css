@@ -1,5 +1,6 @@
 @charset "utf-8";
 .keryi_barter_figureCarousel {
+    position: relative;
     width: 100%;
     height: 200px;
     display: block;
@@ -7,6 +8,7 @@
     overflow: hidden;
     opacity: 1;
     transition: all .5s ease-in-out 0s;
+    z-index: 9912;
 }
 
 .keryi_barter_figureCarousel.keryi_barter_figureCarousel_disappear {
@@ -21,4 +23,23 @@
     position: relative;
     width: 100%;
     height: 100%;
+    z-index: 9913;
+}
+
+.keryi_barter_figureCarousel_figure > .keryi_barter_figureCarousel_movePoint > i {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    margin-top: -8px;
+    color: #000;
+    z-index: 9914;
+}
+
+.keryi_barter_figureCarousel_figure > .keryi_barter_figureCarousel_movePoint > i.keryiBarter-left {
+    left: -16px;
+}
+
+.keryi_barter_figureCarousel_figure > .keryi_barter_figureCarousel_movePoint > i.keryiBarter-right {
+    right: -16px;
 }
