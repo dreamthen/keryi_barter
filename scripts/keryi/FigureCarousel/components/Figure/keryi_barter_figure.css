@@ -1,10 +1,13 @@
 @charset "utf-8";
 .keryi_barter_figure {
-    display: block;
+    position: absolute;
+    display: inline-block;
+    float: left;
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition:all .5s ease-in-out 0s;
+    top: 0;
+    transition: all .5s ease-in-out 0s;
 }
 
 .keryi_barter_figure_disappear {

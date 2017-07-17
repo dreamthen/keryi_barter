@@ -191,7 +191,7 @@ class AppView extends React.Component {
         this.setState({
             [key]: value
         });
-        if (key === modalComponentConfig[3]["key"]) {
+        if (key === modalComponentConfig[4]["key"]) {
             timer = setTimeout(function controlTimer() {
                 //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题光标位置
                 let rect = getFocusPosition();

@@ -42,12 +42,12 @@ class FigureCarousel extends React.Component {
 
     }
 
-    /**
-     * <= 0 && nextProps.imageList
-     * @param nextProps
-     */
     componentWillReceiveProps(nextProps) {
-        if (this.props.imageList.length > 0) {
+        const {
+            //图片轮播器图片组
+            imageList
+        } = this.props;
+        if (imageList.length > 0) {
             this.setState({
                 figureCarouselVisible: true,
                 figureVisible: true
@@ -131,16 +131,22 @@ class FigureCarousel extends React.Component {
             //FigureCarousel组件图片轮播器控制Figure组件图片关闭,外部传入的关闭方法
             onFigureCarouselControlClose
         } = this;
-        return imageList.map(function imageLister(imageItem, imageIndex) {
-            return (
-                <Figure
-                    key={imageIndex}
-                    visible={figureVisible}
-                    src={imageItem["src"]}
-                    onClose={onFigureCarouselControlClose.bind(this)}
-                />
-            )
-        }.bind(this));
+        return (
+            <section className="keryi_barter_figureCarousel_figure">
+                {
+                    imageList.map(function imageLister(imageItem, imageIndex) {
+                        return (
+                            <Figure
+                                key={imageIndex}
+                                visible={figureVisible}
+                                src={imageItem["src"]}
+                                onClose={onFigureCarouselControlClose.bind(this)}
+                            />
+                        )
+                    }.bind(this))
+                }
+            </section>
+        );
     }
 
     render() {

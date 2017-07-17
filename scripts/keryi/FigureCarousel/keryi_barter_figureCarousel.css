@@ -16,3 +16,9 @@
 .keryi_barter_figureCarousel.keryi_barter_figureCarousel_show {
     opacity: 1;
 }
+
+.keryi_barter_figureCarousel > .keryi_barter_figureCarousel_figure {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
