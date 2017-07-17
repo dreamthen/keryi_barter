@@ -11,5 +11,5 @@ const figureConfig = {
     figureDisappear: "keryi_barter_figure keryi_barter_figure_disappear"
 };
 
-//导出Figure组件图片className样式表配置
+//导出Figure组件图片className样式表设置
 export default figureConfig;

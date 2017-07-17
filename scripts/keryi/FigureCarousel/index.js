@@ -31,7 +31,9 @@ class FigureCarousel extends React.Component {
             //FigureCarousel组件图片轮播器className样式表控制所在的容器显示或者隐藏
             figureCarouselVisible: false,
             //FigureCarousel组件图片className样式表控制所在的容器消失或者隐藏
-            figureVisible: false
+            figureVisible: false,
+            //FigureCarousel组件图片移动距离
+            move: 0
         }
     }
 
@@ -124,11 +126,13 @@ class FigureCarousel extends React.Component {
             imageList
         } = this.props;
         const {
-            //FigureCarousel组件图片className样式表控制所在的容器消失或者隐藏
-            figureVisible
+            //图片className样式表控制所在的容器消失或者隐藏
+            figureVisible,
+            //图片移动距离
+            move
         } = this.state;
         const {
-            //FigureCarousel组件图片轮播器控制Figure组件图片关闭,外部传入的关闭方法
+            //图片轮播器控制Figure组件图片关闭,外部传入的关闭方法
             onFigureCarouselControlClose
         } = this;
         return (
@@ -140,6 +144,7 @@ class FigureCarousel extends React.Component {
                                 key={imageIndex}
                                 visible={figureVisible}
                                 src={imageItem["src"]}
+                                style={{left: imageIndex * 100 + move + "%"}}
                                 onClose={onFigureCarouselControlClose.bind(this)}
                             />
                         )
@@ -155,7 +160,7 @@ class FigureCarousel extends React.Component {
             outsideClassToClass,
             //根据props ImageList数组和state figureCarouselVisible来设置FigureCarousel组件图片轮播器的className样式表
             figureCarouselVisibleOrImageListToClass,
-            //FigureCarousel组件图片轮播器图片组
+            //图片轮播器图片组
             renderFigureCarousel
         } = this;
         return (

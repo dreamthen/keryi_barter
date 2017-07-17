@@ -3,6 +3,7 @@
  */
 import React, {PropTypes} from "react";
 import figureConfig from "./configs/figureConfig";
+import {styleConfig} from "./configs/styleConfig";
 import "./keryi_barter_figure.css";
 
 //Figure组件图片className样式表显示设置
@@ -22,7 +23,9 @@ class Figure extends React.Component {
         //Figure组件图片className,外部传入样式表
         className: PropTypes.string,
         //Figure组件图片关闭方法,外部传入函数
-        onClose: PropTypes.func
+        onClose: PropTypes.func,
+        //Figure组件内联样式,外部传入内联样式
+        style: PropTypes.object
     };
 
     constructor(props) {
@@ -101,7 +104,9 @@ class Figure extends React.Component {
     render() {
         const {
             //图片是否显示
-            src
+            src,
+            //内联样式,外部传入内联样式
+            style
         } = this.props;
         const {
             //根据外部传入的props className来设置Figure组件图片的className样式表
@@ -114,7 +119,7 @@ class Figure extends React.Component {
         return (
             <figure
                 className={visibleOrFigureVisibleToClass.bind(this)() + outsideClassToClass.bind(this)()}
-                style={{background: "url(" + src + ") no-repeat center center/cover border-box content-box"}}
+                style={Object.assign({}, styleConfig(src), style)}
             >
                 <i
                     className="iconfontKeryiBarter keryiBarter-close"
