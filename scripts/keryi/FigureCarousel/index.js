@@ -146,7 +146,7 @@ class FigureCarousel extends React.Component {
                                 key={imageIndex}
                                 visible={figureVisible}
                                 src={imageItem["src"]}
-                                style={{left: imageIndex * 100 + move + "%"}}
+                                style={{left: (move + imageIndex) * 100 + "%"}}
                                 onClose={onFigureCarouselControlClose.bind(this)}
                             />
                         )
@@ -159,19 +159,74 @@ class FigureCarousel extends React.Component {
     }
 
     /**
+     * 点击左移动标志Icon,向左移动figureCarousel组件图片轮播器
+     */
+    moveLeft() {
+        const {
+            //图片组
+            imageList
+        } = this.props;
+        const {
+            //图片移动距离
+            move
+        } = this.state;
+        if (move <= 0 && move > -(imageList.length - 1)) {
+            this.setState({
+                move: move - 1
+            });
+        } else {
+            this.setState({
+                move: 0
+            });
+        }
+    }
+
+    /**
+     * 点击右移动标志Icon,向右移动figureCarousel组件图片轮播器
+     */
+    moveRight() {
+        const {
+            //图片组
+            imageList
+        } = this.props;
+        const {
+            //图片移动距离
+            move
+        } = this.state;
+        if (move < 0) {
+            this.setState({
+                move: move + 1
+            });
+        } else {
+            this.setState({
+                move: -(imageList.length - 1)
+            })
+        }
+    }
+
+    /**
      * render渲染左右移动标志Icon
      * @returns {XML}
      */
     renderMovePoint() {
         const {
-
+            //点击左移动标志Icon,向左移动figureCarousel组件图片轮播器
+            moveLeft,
+            //点击右移动标志Icon,向右移动figureCarousel组件图片轮播器
+            moveRight
         } = this;
         return (
             <div className="keryi_barter_figureCarousel_movePoint">
-                <i className="iconfontKeryiBarter keryiBarter-left">
+                <i
+                    className="iconfontKeryiBarter keryiBarter-left"
+                    onClick={moveLeft.bind(this)}
+                >
 
                 </i>
-                <i className="iconfontKeryiBarter keryiBarter-right">
+                <i
+                    className="iconfontKeryiBarter keryiBarter-right"
+                    onClick={moveRight.bind(this)}
+                >
 
                 </i>
             </div>

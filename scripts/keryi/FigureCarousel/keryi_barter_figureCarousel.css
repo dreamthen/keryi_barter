@@ -30,16 +30,38 @@
     position: absolute;
     width: 16px;
     height: 16px;
+    font-size: 16px;
     top: 50%;
-    margin-top: -8px;
-    color: #000;
+    margin-top: -12px;
+    cursor: pointer;
     z-index: 9914;
+    background-color: #8f8f8f;
+    color: #fff;
+    padding: 4px;
+    border-radius: 50%;
 }
 
 .keryi_barter_figureCarousel_figure > .keryi_barter_figureCarousel_movePoint > i.keryiBarter-left {
-    left: -16px;
+    left: 5px;
+    font-size: 17px;
 }
 
 .keryi_barter_figureCarousel_figure > .keryi_barter_figureCarousel_movePoint > i.keryiBarter-right {
-    right: -16px;
+    right: 5px;
+}
+
+.keryi_barter_figureCarousel_figure > .keryi_barter_figureCarousel_movePoint > i::before {
+    display: block;
+}
+
+.keryi_barter_figureCarousel_figure > .keryi_barter_figureCarousel_movePoint > i.keryiBarter-left::before {
+    position: relative;
+    top: -2px;
+    left: -1px;
+}
+
+.keryi_barter_figureCarousel_figure > .keryi_barter_figureCarousel_movePoint > i.keryiBarter-right::before {
+    position: relative;
+    top: 1px;
+    left: 1px;
 }

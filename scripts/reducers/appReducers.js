@@ -16,7 +16,7 @@ const defaultState = {
     //选择资源类型下拉框距离添加对话框左边的位置
     left: 0,
     //对话框上传图片组
-    imageList: [{src: "/images/keryiBarter_description_bg.png"}, {src: "/images/keryiBarter_login_bg.png"}]
+    imageList: [{src: "/images/keryiBarter_description_bg.png"}, {src: "/images/keryiBarter_login_bg.png"}, {src: "/images/keryiBarter_register_bg.png"}]
 };
 
 /**
