@@ -19,6 +19,10 @@ const defaultState = {
     imageList: [{src: "/images/keryiBarter_description_bg.png"}, {src: "/images/keryiBarter_login_bg.png"}, {src: "/images/keryiBarter_register_bg.png"}]
 };
 
+const updateState = {
+    imageList: [{src: "/images/keryiBarter_description_bg.png"}, {src: "/images/keryiBarter_login_bg.png"}, {src: "/images/keryiBarter_register_bg.png"}]
+};
+
 /**
  * 导出app页面的reducer结构
  * @param state
@@ -30,10 +34,14 @@ export function appReducers(state = defaultState, actions) {
         newState = actions.payload;
     switch (type) {
         //设置选择资源类型下拉框距离添加对话框顶部和左边的位置
-        case appActionsType["CHANGE_INIT_DISTANCE"]:
-        case appActionsType["CHANGE_DISTANCE"]:
         //改变对话框上传图片组
+        case appActionsType["CHANGE_INIT_DISTANCE"]:
+            return insteadState.insteadObjState(state, newState);
+        case appActionsType["CHANGE_DISTANCE"]:
+            newState["left"] = newState["rectLeft"] - newState["initLeft"] + 20;
+            return insteadState.insteadObjState(state, newState);
         case appActionsType["CHANGE_IMAGE_LIST"]:
+            newState["imageList"] = updateState["imageList"].splice(newState["imageIndex"], 1);
             return insteadState.insteadObjState(state, newState);
         case appActionsType["ADD_BARTER_RESOURCE"]:
             return state;

@@ -33,6 +33,7 @@ export function changeDistance(payload) {
  * @returns {{type: *, payload: *}}
  */
 export function changeImageList(payload) {
+    console.log(payload);
     return {
         type: appActionsType["CHANGE_IMAGE_LIST"],
         payload

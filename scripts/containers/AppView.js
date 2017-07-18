@@ -174,48 +174,6 @@ class AppView extends React.Component {
     }
 
     /**
-     * 改变Area编辑框内容函数
-     * @param key
-     * @param e
-     */
-    onChangeAreaHandler(key, e) {
-        const {
-            dispatch,
-            //选择资源类型初始距离添加对话框左边的位置
-            initLeft
-        } = this.props;
-        if (timer) {
-            clearTimeout(timer);
-        }
-        let value = e.target.value;
-        this.setState({
-            [key]: value
-        });
-        if (key === modalComponentConfig[4]["key"]) {
-            timer = setTimeout(function controlTimer() {
-                //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题光标位置
-                let rect = getFocusPosition();
-                //设置选择资源类型下拉框光标距离添加对话框左边的位置
-                dispatch(changeDistance({left: (rect.left - initLeft + 20)}));
-                //控制PullListDown组件编辑框取消消失
-                value === "" ?
-                    this.setState({pullListDownVisible: false}) : this.setState({pullListDownVisible: true});
-            }.bind(this), 600);
-        }
-    }
-
-    /**
-     * 初始化选择资源类型下拉框距离添加对话框的位置
-     */
-    initPullListDownPosition(initLeft) {
-        const {
-            dispatch
-        } = this.props;
-        //初始化选择资源类型下拉框距离添加对话框的位置
-        dispatch(changeInitDistance({initLeft}));
-    }
-
-    /**
      * 根据不同的功能图标Icon类型配置来设置功能图标Icon
      * @param key
      * @param include
@@ -243,18 +201,6 @@ class AppView extends React.Component {
     }
 
     /**
-     * 改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器
-     * @param imageList
-     */
-    onFigureCarouselControlChangeImageList(imageList) {
-        const {
-            dispatch
-        } = this.props;
-        console.log(imageList);
-        dispatch(changeImageList({imageList: imageList}));
-    }
-
-    /**
      * 根据不同的组件类型配置来设置组件
      * @param key
      * @param include
@@ -269,20 +215,19 @@ class AppView extends React.Component {
      */
     renderModalComponent(key, include, size, type, pullListDown, placeholder, className, classNameShow, functionIcons) {
         const {
-            //改变标题内容函数
-            onChangeAreaHandler,
             //根据不同的功能图标Icon类型配置来设置功能图标Icon
-            renderFunctionIcons,
-            //初始化选择资源类型下拉框距离添加对话框的位置
-            initPullListDownPosition,
-            //改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器
-            onFigureCarouselControlChangeImageList
+            renderFunctionIcons
         } = this;
         const {
             //对话框上传图片组
-            imageList
+            imageList,
+            //改变标题内容函数
+            onChangeAreaHandler,
+            //改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器
+            onFigureCarouselControlChangeImageList,
+            //初始化选择资源类型下拉框距离添加对话框的位置
+            initPullListDownPosition
         } = this.props;
-        console.log(imageList);
         switch (include) {
             case componentType[0]:
                 return (
@@ -321,7 +266,7 @@ class AppView extends React.Component {
                     <FigureCarousel
                         key={key}
                         imageList={imageList}
-                        onChange={onFigureCarouselControlChangeImageList.bind(this, imageList)}
+                        onChange={onFigureCarouselControlChangeImageList.bind(this)}
                     />
                 )
         }
@@ -484,10 +429,58 @@ class AppView extends React.Component {
     }
 }
 
-function select(state, ownProps) {
+function mapPropsToState(state, ownProps) {
     return {
         ...state.appReducers
     }
 }
 
-export default connect(select)(AppView);
+function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        /**
+         * 改变Area编辑框内容函数
+         * @param key
+         * @param e
+         */
+        onChangeAreaHandler(key, e) {
+            const {
+                //选择资源类型初始距离添加对话框左边的位置
+                initLeft
+            } = this.props;
+            if (timer) {
+                clearTimeout(timer);
+            }
+            let value = e.target.value;
+            this.setState({
+                [key]: value
+            });
+            if (key === modalComponentConfig[4]["key"]) {
+                timer = setTimeout(function controlTimer() {
+                    //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题光标位置
+                    let rect = getFocusPosition();
+                    //设置选择资源类型下拉框光标距离添加对话框左边的位置
+                    dispatch(changeDistance({rectLeft: rect.left, initLeft}));
+                    //控制PullListDown组件编辑框取消消失
+                    value === "" ?
+                        this.setState({pullListDownVisible: false}) : this.setState({pullListDownVisible: true});
+                }.bind(this), 600);
+            }
+        },
+        /**
+         * 改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器
+         * @param index
+         */
+        onFigureCarouselControlChangeImageList(index) {
+            dispatch(changeImageList({imageIndex: index}));
+        },
+        /**
+         * 初始化选择资源类型下拉框距离添加对话框的位置
+         */
+        initPullListDownPosition(initLeft) {
+            //初始化选择资源类型下拉框距离添加对话框的位置
+            dispatch(changeInitDistance({initLeft}));
+        }
+    }
+}
+
+export default connect(mapPropsToState, mapDispatchToProps)(AppView);
