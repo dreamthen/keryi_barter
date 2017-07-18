@@ -22,7 +22,7 @@ class FigureCarousel extends React.Component {
         //FigureCarousel组件图片轮播器className,外部传入样式表
         className: PropTypes.string,
         //改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器方法,外部传入函数
-        onImageListChange: PropTypes.func
+        onChange: PropTypes.func
     };
 
     constructor(props) {
@@ -49,7 +49,9 @@ class FigureCarousel extends React.Component {
             //图片轮播器图片组
             imageList
         } = this.props;
-        if (imageList.length > 0) {
+        console.log(imageList.length, nextProps.imageList.length);
+        if (imageList.length > 0 || imageList.length !== nextProps.imageList.length) {
+            console.log("helloworld");
             this.setState({
                 figureCarouselVisible: true,
                 figureVisible: true
@@ -92,7 +94,7 @@ class FigureCarousel extends React.Component {
             //图片组
             imageList,
             //改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器方法,外部传入函数
-            onImageListChange
+            onChange
         } = this.props;
         let index = 0;
         this.setState({
@@ -111,9 +113,11 @@ class FigureCarousel extends React.Component {
             }, function figureCarouseler() {
                 //FIXME 这里设置一个时间控制器,在FigureCarousel组件图片容器关闭时,先控制其所在的容器隐藏,在500ms之后设置其所在的容器改变其中的图片组或者关闭图片轮播器
                 setTimeout(function timer() {
-                    onImageListChange(imageList);
+                    onChange(imageList);
                 }, 500);
             }.bind(this));
+        } else {
+            onChange(imageList);
         }
     }
 
@@ -125,6 +129,7 @@ class FigureCarousel extends React.Component {
             //图片组
             imageList
         } = this.props;
+        console.log(imageList);
         const {
             //图片className样式表控制所在的容器消失或者隐藏
             figureVisible,

@@ -31,8 +31,10 @@ class Figure extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            //Figure组件图片className样式表控制所在的容器消失或者隐藏
+            figureVisible: false,
             //Figure组件图片className样式表控制所在的容器显示或者隐藏
-            figureVisible: false
+            figureAnimation: false
         }
     }
 
@@ -48,11 +50,16 @@ class Figure extends React.Component {
             //图片是否显示
             visible
         } = this.props;
-        if (visible !== nextProps.visible) {
-            this.setState({
-                figureVisible: nextProps.visible
-            });
-        }
+        visible !== nextProps.visible && nextProps.visible && this.setState({
+            figureVisible: nextProps.visible
+        }, function animationer() {
+            //FIXME 这里设置一个时间控制器,在Figure组件图片容器开启时,先控制其所在的容器隐藏,在100ms之后设置其所在的容器显示
+            setTimeout(function timer() {
+                this.setState({
+                    figureAnimation: nextProps.visible
+                });
+            }.bind(this), 100);
+        }.bind(this));
     }
 
     /**
@@ -73,14 +80,12 @@ class Figure extends React.Component {
      */
     visibleOrFigureVisibleToClass() {
         const {
-            //图片是否显示
-            visible
-        } = this.props;
-        const {
+            //图片className样式表控制所在的容器消失或者隐藏
+            figureVisible,
             //图片className样式表控制所在的容器显示或者隐藏
-            figureVisible
+            figureAnimation
         } = this.state;
-        return !visible ? figureConfig[figureDisappear] : figureVisible ? figureConfig[figureShow] : figureConfig[figure];
+        return !figureVisible ? figureConfig[figureDisappear] : figureAnimation ? figureConfig[figureShow] : figureConfig[figure];
     }
 
     /**
@@ -92,10 +97,13 @@ class Figure extends React.Component {
             onClose
         } = this.props;
         this.setState({
-            figureVisible: false
+            figureAnimation: false
         }, function figurer() {
             //FIXME 这里设置一个时间控制器,在Figure组件图片容器关闭时,先控制其所在的容器隐藏,在500ms之后设置其所在的容器消失
             setTimeout(function timer() {
+                this.setState({
+                    figureVisible: false
+                });
                 onClose(src);
             }.bind(this), 500);
         }.bind(this));

@@ -250,7 +250,8 @@ class AppView extends React.Component {
         const {
             dispatch
         } = this.props;
-        dispatch(changeImageList({imageList}));
+        console.log(imageList);
+        dispatch(changeImageList({imageList: imageList}));
     }
 
     /**
@@ -281,6 +282,7 @@ class AppView extends React.Component {
             //对话框上传图片组
             imageList
         } = this.props;
+        console.log(imageList);
         switch (include) {
             case componentType[0]:
                 return (
@@ -319,7 +321,7 @@ class AppView extends React.Component {
                     <FigureCarousel
                         key={key}
                         imageList={imageList}
-                        onImageListChange={onFigureCarouselControlChangeImageList.bind(this)}
+                        onChange={onFigureCarouselControlChangeImageList.bind(this, imageList)}
                     />
                 )
         }
@@ -463,6 +465,7 @@ class AppView extends React.Component {
             //keryi_barter主页面添加"以物换物"需要对话框
             renderModal
         } = this;
+        console.log(this.props.imageList);
         return (
             <div className="keryi_barter_index_page_container">
                 {/*keryi_barter主页面阴影遮罩*/}
