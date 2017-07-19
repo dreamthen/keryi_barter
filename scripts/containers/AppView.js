@@ -428,7 +428,7 @@ class AppView extends React.Component {
     }
 }
 
-function mapPropsToState(state, ownProps) {
+function mapStateToProps(state, ownProps) {
     return {
         ...state.appReducers
     }
@@ -482,4 +482,4 @@ function mapDispatchToProps(dispatch, ownProps) {
     }
 }
 
-export default connect(mapPropsToState, mapDispatchToProps)(AppView);
+export default connect(mapStateToProps, mapDispatchToProps)(AppView);
