@@ -19,10 +19,6 @@ const defaultState = {
     imageList: [{src: "/images/keryiBarter_description_bg.png"}, {src: "/images/keryiBarter_login_bg.png"}, {src: "/images/keryiBarter_register_bg.png"}]
 };
 
-const updateState = {
-    imageList: [{src: "/images/keryiBarter_description_bg.png"}, {src: "/images/keryiBarter_login_bg.png"}, {src: "/images/keryiBarter_register_bg.png"}]
-};
-
 /**
  * 导出app页面的reducer结构
  * @param state
@@ -41,8 +37,9 @@ export function appReducers(state = defaultState, actions) {
             newState["left"] = newState["rectLeft"] - newState["initLeft"] + 20;
             return insteadState.insteadObjState(state, newState);
         case appActionsType["CHANGE_IMAGE_LIST"]:
-            newState["imageList"] = updateState["imageList"].splice(newState["imageIndex"], 1);
-            return insteadState.insteadObjState(state, newState);
+            return insteadState.insteadArrayRemoveState(state, newState, "imageList", function filter(item, index) {
+                return item["src"] !== newState["src"];
+            });
         case appActionsType["ADD_BARTER_RESOURCE"]:
             return state;
     }

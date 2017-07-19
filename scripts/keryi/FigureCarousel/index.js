@@ -52,7 +52,8 @@ class FigureCarousel extends React.Component {
         if (imageList.length > 0 || imageList.length !== nextProps.imageList.length) {
             this.setState({
                 figureCarouselVisible: true,
-                figureVisible: true
+                figureVisible: true,
+                move: 0
             });
         }
     }
@@ -98,23 +99,17 @@ class FigureCarousel extends React.Component {
         this.setState({
             figureVisible: false
         });
-        imageList.forEach(function imageLister(imageItem, imageIndex) {
-            if (src === imageItem["src"]) {
-                index = imageIndex;
-                return false;
-            }
-        });
         if (imageList.length <= 0) {
             this.setState({
                 figureCarouselVisible: false
             }, function figureCarouseler() {
                 //FIXME 这里设置一个时间控制器,在FigureCarousel组件图片容器关闭时,先控制其所在的容器隐藏,在500ms之后设置其所在的容器改变其中的图片组或者关闭图片轮播器
                 setTimeout(function timer() {
-                    onChange(index);
+                    onChange(src);
                 }.bind(this), 500);
             }.bind(this));
         } else {
-            onChange(index);
+            onChange(src);
         }
     }
 

@@ -410,7 +410,6 @@ class AppView extends React.Component {
             //keryi_barter主页面添加"以物换物"需要对话框
             renderModal
         } = this;
-        console.log(this.props.imageList);
         return (
             <div className="keryi_barter_index_page_container">
                 {/*keryi_barter主页面阴影遮罩*/}
@@ -468,10 +467,10 @@ function mapDispatchToProps(dispatch, ownProps) {
         },
         /**
          * 改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器
-         * @param index
+         * @param src
          */
-        onFigureCarouselControlChangeImageList(index) {
-            dispatch(changeImageList({imageIndex: index}));
+        onFigureCarouselControlChangeImageList(src) {
+            dispatch(changeImageList({src}));
         },
         /**
          * 初始化选择资源类型下拉框距离添加对话框的位置

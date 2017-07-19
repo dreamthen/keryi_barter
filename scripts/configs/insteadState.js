@@ -4,8 +4,13 @@
 //redux reducer更换state状态对象
 const insteadState = {
     //redux reducer更换对象state状态属性(方法)
-    insteadObjState(state, newState){
+    insteadObjState(state, newState) {
         return Object.assign({}, state, newState);
+    },
+    //redux reducer删除数组元素并更换对象state状态属性
+    insteadArrayRemoveState(state, newState, type, filter) {
+        newState[type] = state[type].filter(filter);
+        return this.insteadObjState(state, newState);
     }
 };
 
