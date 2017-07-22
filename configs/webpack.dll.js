@@ -5,12 +5,25 @@
 const webpack = require("webpack");
 //导入path--路径处理工具
 const path = require("path");
+//导入autoprefixer--添加css扩展头以兼容浏览器的工具
+const autoprefixer = require("autoprefixer");
 //路径巡航
 //相当于cd __dirname之后,cd ../dll
 //先进入webpack配置文件目录,再进入此目录的上一级目录的dll目录,如果不存在dll目录,则创建一个dll目录
 const DLL_DIR = path.resolve(__dirname, "../dll");
 //根目录,先进入webpack配置文件目录,再进入此目录的上二级目录
 const ROOT_DIR = path.resolve(__dirname, "../..");
+
+//autoprefixer添加css扩展头以兼容浏览器的浏览器版本
+const AUTO_PREFIXER_BROWSERS = [
+    "Android >= 4",
+    "IOS >= 7",
+    "Chrome >= 35",
+    "Firefox >= 31",
+    "Explorer >= 9",
+    "Opera >= 12",
+    "Safari >= 7.1"
+];
 
 //webpack配置
 const keryi_dll_config = {
@@ -32,7 +45,7 @@ const keryi_dll_config = {
     //插件(包括错误处理插件,集成外部依赖包manifest.dll.json插件,压缩处理插件,删除内容相同或相似文件插件和按需打包外部依赖包插件)
     plugins: [
         //错误处理插件,在打包出现错误时,会继续完成打包,防止在打包过程中,出现错误而阻断打包损毁源文件
-        new webpack.NoErrorsPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         //集成外部依赖包manifest.dll.json文件插件
         new webpack.DllPlugin({
             //集成外部依赖包manifest.dll.json文件输出路径
@@ -42,10 +55,9 @@ const keryi_dll_config = {
             //上下文对象,与DllReferencePlugin里面的context属性相对应
             context: ROOT_DIR
         }),
-        //按需打包外部依赖包插件,会给每一个外部依赖包分配一个id,根据id长度来打包,id越长说明经常被打包,则先被打包,id越短说明不经常被打包,则后被打包
-        new webpack.optimize.OccurrenceOrderPlugin(),
         //压缩处理插件
         new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
             compress: {
                 //无用的代码,会被压缩
                 unused: true,
@@ -56,8 +68,12 @@ const keryi_dll_config = {
             },
             comments: false
         }),
-        //删除内容相同或者相似的文件
-        new webpack.optimize.DedupePlugin()
+        //添加选项插件,利用autoprefixer打包,再利用postcss-loader模块加载工具添加css扩展头以兼容浏览器
+        new webpack.LoaderOptionsPlugin({
+            options:{
+                postcss:[autoprefixer({browsers: AUTO_PREFIXER_BROWSERS})]
+            }
+        })
     ]
 };
 

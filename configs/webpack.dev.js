@@ -9,6 +9,8 @@ const path = require("path");
 const autoprefixer = require("autoprefixer");
 //导入HtmlWebpackPlugin--对html文件以及其相对应的按需加载文件进行打包
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+//导入ExtractTextWebpackPlugin--对css等文件进行提取
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 //路径巡航
 //相当于cd __dirname之后,cd ..
@@ -47,7 +49,7 @@ const AUTO_PREFIXER_BROWSERS = [
 const keryi_dev_config = {
     //webpack七种打包管理方式之一:eval
     //每一个module下的模块都会被eval包裹,并在eval包裹后添加注释
-    devtool: "eval",
+    devtool: "source-map",
     //webpack web开发环境打包管理配置入口
     //这里有两个入口,分别对应两个html文件--login.html和index.html
     entry: {
@@ -67,7 +69,7 @@ const keryi_dev_config = {
     //webpack web开发环境打包管理配置--模块配置
     module: {
         //模块加载工具
-        loaders: [
+        rules: [
             //利用react-hot-loader和babel-loader,将集成的外部依赖包Api js文件,业务逻辑react,es2015 js文件,css文件进行热加载打包管理
             {
                 //利用正则表达式来匹配所有后缀名为.js或者.jsx的文件
@@ -82,17 +84,29 @@ const keryi_dev_config = {
                     STYLE_DIR
                 ],
                 //热加载模块加载工具,以及babel解析react,stage-0和es2015的模块加载工具
-                loaders: ["react-hot", "babel"]
+                use: ["react-hot-loader", "babel-loader"]
             },
             {
                 //利用正则表达式匹配所有后缀名为.css的文件
                 test: /\.css$/,
+                //利用ExtractTextWebpackPlugin插件处理css等文件插件进行提取
                 //打包顺序为:"style-loader" -> "css-loader" -> "postcss-loader"
                 //首先利用style-loader模块加载工具将所有的css集成在<style>...</style>标签中
                 //随后利用css-loader模块加载工具将所有在<style>...</style>标签中的css打包管理到.js文件中
                 //最后利用postcss-loader模块加载工具将兼容浏览器的css扩展头部添加上
                 //解析顺序为:"postcss-loaer" -> "css-loader" -> "style-loader",与打包顺序相反
-                loaders: ["style", "css", "postcss"]
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: [
+                        {loader: "css-loader", options: {importLoaders: 1}},
+                        //添加选项插件,利用autoprefixer打包,再利用postcss-loader模块加载工具添加css扩展头以兼容浏览器
+                        {
+                            loader: "postcss-loader",
+                            options: {postcss: [autoprefixer({browsers: AUTO_PREFIXER_BROWSERS})]}
+                        }
+                    ],
+                    publicPath: STYLE_DIR
+                })
             },
             {
                 //利用正则表达式匹配所有后缀名为.jpg,.jpeg,.png,.gif和.bmp的文件
@@ -100,17 +114,16 @@ const keryi_dev_config = {
                 //利用url-loader模块加载工具对图片进行打包管理,限制大小为10000byte
                 //如果图片大小小于10000byte,就不会独立打包形成.js文件,而是以data:base64的形式存在
                 //如果图片大小超过10000byte,就会独立打包形成.js文件
-                loader: "url-loader?limit=10000"
+                use: "url-loader?limit=10000"
             }
         ]
     },
-    //利用autoprefixer打包,再利用postcss-loader模块加载工具添加css扩展头以兼容浏览器
-    postcss: [autoprefixer({
-        browsers: AUTO_PREFIXER_BROWSERS
-    })],
-    //文件后缀添加的目录为:根目录
+    //文件后缀添加的目录为:JS主目录和node_modules外部依赖包
     resolve: {
-        root: ROOT_DIR
+        modules: [
+            APP_DIR,
+            "node_modules"
+        ]
     },
     //标明不需要webpack进行打包管理的外部依赖包--jQuery
     externals: {
@@ -119,7 +132,7 @@ const keryi_dev_config = {
     //webpack web开发环境打包管理配置--插件配置
     plugins: [
         //错误处理配置,打包过程中出现错误时,会跳过它,完成打包,避免打包时出现错误,阻断打包流程,损毁源文件
-        new webpack.NoErrorsPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         //读取集成的外部依赖包vendor_manifest.dll.json文件并现成web开发环境外部依赖包Api插件
         new webpack.DllReferencePlugin({
             //读取集成的外部依赖包vendor_manifest.dll.json文件位置目录,并导入形成web开发环境外部依赖包Api
@@ -129,6 +142,7 @@ const keryi_dev_config = {
         }),
         //压缩处理插件
         new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
             compress: {
                 //无用的代码,会被压缩
                 unused: true,
@@ -139,6 +153,8 @@ const keryi_dev_config = {
             },
             comments: false
         }),
+        //利用ExtractTextWebpackPlugin插件处理css等文件插件进行提取
+        new ExtractTextPlugin("[name].bundle.css"),
         //对login.html文件进行打包管理配置插件,与按需加载的login.js文件相对应
         new HtmlWebpackPlugin({
             //根路径
