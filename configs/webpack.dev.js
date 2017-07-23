@@ -155,6 +155,14 @@ const keryi_dev_config = {
         }),
         //利用ExtractTextWebpackPlugin插件处理css等文件插件进行提取
         new ExtractTextPlugin("[name].bundle.css"),
+        //添加"开发环境"或者"生产环境"魔法变量
+        new webpack.EnvironmentPlugin({
+            NODE_ENV: "develop"
+        }),
+        //添加一个功能标识,来区分"开发环境"或者"生产环境"该添加或者删除的代码
+        new webpack.DefinePlugin({
+            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
+        }),
         //对login.html文件进行打包管理配置插件,与按需加载的login.js文件相对应
         new HtmlWebpackPlugin({
             //根路径
