@@ -7,6 +7,11 @@ const insteadState = {
     insteadObjState(state, newState) {
         return Object.assign({}, state, newState);
     },
+    //redux reducer添加数组元素并更换对象state状态属性
+    insteadArrayAddState(state, newState, type, src) {
+        newState[type] = [...state[type], {src}];
+        return this.insteadObjState(state, newState);
+    },
     //redux reducer删除数组元素并更换对象state状态属性
     insteadArrayRemoveState(state, newState, type, filter) {
         newState[type] = state[type].filter(filter);

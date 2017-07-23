@@ -49,7 +49,7 @@ class FigureCarousel extends React.Component {
             //图片轮播器图片组
             imageList
         } = this.props;
-        if (imageList.length > 0 || imageList.length !== nextProps.imageList.length) {
+        if ((imageList.length === 0 && nextProps.imageList.length > 0) || imageList.length !== nextProps.imageList.length) {
             this.setState({
                 figureCarouselVisible: true,
                 figureVisible: true,

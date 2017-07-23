@@ -63,6 +63,26 @@ class Figure extends React.Component {
     }
 
     /**
+     * 组件结束装载
+     */
+    componentDidMount(){
+        const {
+            //图片是否显示
+            visible
+        } = this.props;
+        visible && this.setState({
+            figureVisible: visible
+        }, function animationer() {
+            //FIXME 这里设置一个时间控制器,在Figure组件图片容器开启时,先控制其所在的容器隐藏,在100ms之后设置其所在的容器显示
+            setTimeout(function timer() {
+                this.setState({
+                    figureAnimation: visible
+                });
+            }.bind(this), 100);
+        }.bind(this));
+    }
+
+    /**
      * 根据外部传入的props className来设置Figure组件图片的className样式表
      * @returns {string}
      */
@@ -124,6 +144,7 @@ class Figure extends React.Component {
             //Figure图片组件关闭方法
             onFigureClose
         } = this;
+        console.log(this.props.visible);
         return (
             <figure
                 className={visibleOrFigureVisibleToClass.bind(this)() + outsideClassToClass.bind(this)()}

@@ -4,6 +4,7 @@
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
+import api from "../configs/api";
 import {
     changeDistance,
     changeInitDistance,
@@ -181,11 +182,16 @@ class AppView extends React.Component {
      * @param iconName
      */
     renderFunctionIcons(key, include, className, iconName) {
+        const {
+            //上传图片成功后的回调函数
+            uploadImageSuccess
+        } = this.props;
         switch (include) {
             case functionIconType[0]:
                 return (
                     <Upload
                         key={key}
+                        {...uploadConfig.bind(this)("file", api.UPLOAD_RESOURCE_IMAGE, {}, uploadImageSuccess.bind(this))}
                         className="keryi_barter_modal_upload"
                     >
                         <li
@@ -466,11 +472,11 @@ function mapDispatchToProps(dispatch, ownProps) {
             }
         },
         /**
-         * 改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器
+         * 删除FigureCarousel组件图片轮播器中的图片组图片或者关闭FigureCarousel组件图片轮播器
          * @param src
          */
         onFigureCarouselControlChangeImageList(src) {
-            dispatch(changeImageList({src}));
+            dispatch(changeImageList({src, type: "delete"}));
         },
         /**
          * 初始化选择资源类型下拉框距离添加对话框的位置
@@ -478,6 +484,13 @@ function mapDispatchToProps(dispatch, ownProps) {
         initPullListDownPosition(initLeft) {
             //初始化选择资源类型下拉框距离添加对话框的位置
             dispatch(changeInitDistance({initLeft}));
+        },
+        /**
+         * 上传图片成功后的回调函数,获取资源图片,添加FigureCarousel组件图片轮播器中的图片组图片或者关闭FigureCarousel组件图片轮播器
+         * @param data
+         */
+        uploadImageSuccess(data) {
+            dispatch(changeImageList({src: api.GET_RESOURCE_IMAGE + "/" + data, type: "add"}));
         }
     }
 }

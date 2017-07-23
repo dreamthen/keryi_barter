@@ -16,7 +16,7 @@ const defaultState = {
     //选择资源类型下拉框距离添加对话框左边的位置
     left: 0,
     //对话框上传图片组
-    imageList: [{src: "/images/keryiBarter_description_bg.png"}, {src: "/images/keryiBarter_login_bg.png"}, {src: "/images/keryiBarter_register_bg.png"}]
+    imageList: []
 };
 
 /**
@@ -37,9 +37,18 @@ export function appReducers(state = defaultState, actions) {
             newState["left"] = newState["rectLeft"] - newState["initLeft"] + 20;
             return insteadState.insteadObjState(state, newState);
         case appActionsType["CHANGE_IMAGE_LIST"]:
-            return insteadState.insteadArrayRemoveState(state, newState, "imageList", function filter(item, index) {
-                return item["src"] !== newState["src"];
-            });
+            let imageType = newState.type;
+            switch (imageType) {
+                case "add":
+                    let src = newState["src"];
+                    return insteadState.insteadArrayAddState(state, newState, "imageList", src);
+                case "delete":
+                    return insteadState.insteadArrayRemoveState(state, newState, "imageList", function filter(item, index) {
+                        return item["src"] !== newState["src"];
+                    });
+                default:
+                    return state;
+            }
         case appActionsType["ADD_BARTER_RESOURCE"]:
             return state;
     }

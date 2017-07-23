@@ -2,6 +2,8 @@
  * Created by yinwk on 2017/6/26.
  */
 import appActionsType from "./appActionsType";
+import api from "../configs/api";
+import keryiFetchConfig from "../configs/fetchConfig";
 
 /**
  * 设置选择资源类型下拉框距离添加对话框左边的位置

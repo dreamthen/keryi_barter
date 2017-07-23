@@ -1,6 +1,7 @@
 /**
  * Created by yinwk on 2017/7/12.
  */
+import Success from "../prompt/successPrompt";
 /**
  * Upload组件上传文件配置
  * @param name
@@ -19,7 +20,13 @@ function uploadConfig(name, action, data, success) {
         data,
         multiple: true,
         onSuccess: function (response, file) {
-
+            let head = response.head,
+                code = head.code,
+                msg = head.message,
+                body = response.body;
+            if(code === Success.UPLOAD_RESOURCE_IMAGE_SUCCESS_CODE) {
+                success(body);
+            }
         }.bind(this),
         onError: function (err, response, file) {
 

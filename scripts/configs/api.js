@@ -18,7 +18,11 @@ if (!isMock) {
         //注册
         KERYI_REGISTER: keryi_cover + keryi_root + "sessions",
         //获取资源列表
-        GET_RESOURCE_LIST: keryi_cover + keryi_root + "resources"
+        GET_RESOURCE_LIST: keryi_cover + keryi_root + "resources",
+        //上传资源图片
+        UPLOAD_RESOURCE_IMAGE: keryi_cover + keryi_root + "resources/images",
+        //获取资源图片
+        GET_RESOURCE_IMAGE: keryi_cover + keryi_root + "resources/images"
     }
 } else {
 
