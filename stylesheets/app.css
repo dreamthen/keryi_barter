@@ -142,12 +142,8 @@ body {
 }
 
 .keryi_barter_modal_innerMain {
-    max-height: 400px;
+    max-height: 440px;
     overflow: auto;
-}
-
-.keryi_barter_modal_innerMain > .keryi_barter_modal_mainContainer {
-    padding: 0 15px 0 20px;
 }
 
 .keryi_barter_modal_mainContainer .keryi_barter_modal_area_title,
@@ -203,6 +199,7 @@ body {
 }
 
 .keryi_barter_modal_mainContainer > .keryi_barter_modal_functionIconsShow {
+    padding: 0 15px 0 20px;
     opacity: 1;
 }
 

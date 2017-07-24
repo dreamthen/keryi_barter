@@ -11,6 +11,8 @@ const figureCarouselShow = "figureCarouselShow";
 const figureCarousel = "figureCarousel";
 //FigureCarousel组件图片轮播器消失样式表配置
 const figureCarouselDisappear = "figureCarouselDisappear";
+//时间处理器变量
+let timer;
 
 /**
  * keryi_barter FigureCarousel图片轮播器组件
@@ -52,9 +54,19 @@ class FigureCarousel extends React.Component {
         if ((imageList.length === 0 && nextProps.imageList.length > 0) || imageList.length !== nextProps.imageList.length) {
             this.setState({
                 figureCarouselVisible: true,
-                figureVisible: true,
-                move: 0
+                figureVisible: true
             });
+            if (timer) {
+                clearTimeout(timer);
+            }
+            //FIXME 这里设置一个时间控制器,FigureCarousel组件图片className样式表由隐藏变为显示动画500ms过渡之后,改变图片组移动距离
+            timer = setTimeout(function timer() {
+                (imageList.length > nextProps.imageList.length) ? this.setState({
+                    move: 0
+                }) : this.setState({
+                    move: -(nextProps.imageList.length - 1)
+                })
+            }.bind(this), 500);
         }
     }
 

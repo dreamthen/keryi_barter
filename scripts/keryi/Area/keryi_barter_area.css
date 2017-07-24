@@ -1,8 +1,8 @@
 @charset "utf-8";
 .keryi_barter_area {
     position: relative;
-    width: 100%;
     display: block;
+    padding: 0 15px 0 20px;
 }
 
 .keryi_barter_area > .keryi_barter_article_area {

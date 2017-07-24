@@ -144,7 +144,6 @@ class Figure extends React.Component {
             //Figure图片组件关闭方法
             onFigureClose
         } = this;
-        console.log(this.props.visible);
         return (
             <figure
                 className={visibleOrFigureVisibleToClass.bind(this)() + outsideClassToClass.bind(this)()}
