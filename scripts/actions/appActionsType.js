@@ -11,6 +11,8 @@ const appActionsType = {
     CHANGE_DISTANCE: "CHANGE_DISTANCE",
     //改变对话框上传图片组Action名称
     CHANGE_IMAGE_LIST: "CHANGE_IMAGE_LIST",
+    //改变对话框模糊搜索标签组Action名称
+    CHANGE_TAG_LIST: "CHANGE_TAG_LIST",
     ADD_BARTER_RESOURCE: "ADD_BARTER_RESOURCE"
 };
 

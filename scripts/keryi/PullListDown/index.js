@@ -201,9 +201,9 @@ class PullListDown extends React.Component {
         return dataSource.map(function pullList(pullItem, pullIndex) {
             return (
                 <li
-                    key={pullIndex}
+                    key={pullItem["id"]}
                 >
-                    {pullItem}
+                    {pullItem["tag"]}
                 </li>
             )
         });

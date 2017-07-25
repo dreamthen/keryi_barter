@@ -6,13 +6,10 @@ import {connect} from "react-redux";
 import {Link} from "react-router";
 import api from "../configs/api";
 import {
-    changeDistance,
     changeInitDistance,
-    changeImageList
+    changeImageList,
+    changeTagFunction
 } from "../actions/appActions";
-import {
-    getFocusPosition
-} from "../configs/getElementPosition";
 import modalComponentConfig from "../configs/modalComponentConfig";
 import {
     Area,
@@ -46,7 +43,9 @@ class AppView extends React.Component {
         //选择资源类型下拉框距离添加对话框左边的位置
         left: PropTypes.number,
         //对话框上传图片组
-        imageList: PropTypes.array
+        imageList: PropTypes.array,
+        //对话框模糊查询标签组
+        pullList: PropTypes.array
     };
 
     constructor(props) {
@@ -329,7 +328,9 @@ class AppView extends React.Component {
     renderModalPullList() {
         const {
             //选择资源类型下拉框距离添加对话框左方的位置
-            left
+            left,
+            //对话框模糊查询标签组
+            pullList
         } = this.props;
         const {
             //控制PullListDown组件编辑框显示、隐藏或者消失
@@ -344,10 +345,7 @@ class AppView extends React.Component {
                 visible={pullListDownVisible}
                 title="热门"
                 onClose={closePullListDown.bind(this)}
-                dataSource={[
-                    "he",
-                    "hel"
-                ]}
+                dataSource={pullList}
                 style={{
                     left
                 }}
@@ -460,11 +458,13 @@ function mapDispatchToProps(dispatch, ownProps) {
                 [key]: value
             });
             if (key === modalComponentConfig[4]["key"]) {
+                //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题光标位置
                 timer = setTimeout(function controlTimer() {
-                    //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题光标位置
-                    let rect = getFocusPosition();
-                    //设置选择资源类型下拉框光标距离添加对话框左边的位置
-                    dispatch(changeDistance({rectLeft: rect.left, initLeft}));
+                    if (value.slice(1) !== "" && (value.indexOf("#") === 0)) {
+                        dispatch(changeTagFunction(initLeft, value.slice(1)));
+                    } else if (value !== "" && (value.indexOf("#") !== 0)) {
+                        dispatch(changeTagFunction(initLeft, value));
+                    }
                     //控制PullListDown组件编辑框取消消失
                     value === "" ?
                         this.setState({pullListDownVisible: false}) : this.setState({pullListDownVisible: true});

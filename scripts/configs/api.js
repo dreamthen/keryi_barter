@@ -22,7 +22,9 @@ if (!isMock) {
         //上传资源图片
         UPLOAD_RESOURCE_IMAGE: keryi_cover + keryi_root + "resources/images",
         //获取资源图片
-        GET_RESOURCE_IMAGE: keryi_cover + keryi_root + "resources/images"
+        GET_RESOURCE_IMAGE: keryi_cover + keryi_root + "resources/images",
+        //搜索资源tag
+        GET_RESOURCE_TAG_LIST: keryi_cover + keryi_root + "tags"
     }
 } else {
 

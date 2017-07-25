@@ -16,7 +16,9 @@ const defaultState = {
     //选择资源类型下拉框距离添加对话框左边的位置
     left: 0,
     //对话框上传图片组
-    imageList: []
+    imageList: [],
+    //对话框模糊查询标签组
+    pullList: []
 };
 
 /**
@@ -30,12 +32,12 @@ export function appReducers(state = defaultState, actions) {
         newState = actions.payload;
     switch (type) {
         //设置选择资源类型下拉框距离添加对话框顶部和左边的位置
-        //改变对话框上传图片组
         case appActionsType["CHANGE_INIT_DISTANCE"]:
             return insteadState.insteadObjState(state, newState);
         case appActionsType["CHANGE_DISTANCE"]:
             newState["left"] = newState["rectLeft"] - newState["initLeft"] + 20;
             return insteadState.insteadObjState(state, newState);
+        //改变对话框上传图片组
         case appActionsType["CHANGE_IMAGE_LIST"]:
             let imageType = newState.type;
             switch (imageType) {
@@ -49,6 +51,9 @@ export function appReducers(state = defaultState, actions) {
                 default:
                     return state;
             }
+        //改变对话框模糊搜索标签组
+        case appActionsType["CHANGE_TAG_LIST"]:
+            return insteadState.insteadObjState(state, newState);
         case appActionsType["ADD_BARTER_RESOURCE"]:
             return state;
     }

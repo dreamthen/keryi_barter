@@ -14,7 +14,9 @@ const Success = {
     //获取资源列表成功状态码
     GET_RESOURCE_LIST_SUCCESS_CODE: "000000",
     //上传图片成功状态码
-    UPLOAD_RESOURCE_IMAGE_SUCCESS_CODE: "000000"
+    UPLOAD_RESOURCE_IMAGE_SUCCESS_CODE: "000000",
+    //获取对话框模糊搜索标签组成功状态码
+    GET_RESOURCE_TAG_SUCCESS_CODE: "000000"
 };
 
 export default Success;
