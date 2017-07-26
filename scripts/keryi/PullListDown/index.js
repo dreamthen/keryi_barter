@@ -31,7 +31,9 @@ class PullListDown extends React.Component {
         className: PropTypes.string,
         //PullListDown组件下拉框style,外部传入内联样式
         style: PropTypes.object,
-        //PullListDown组件下拉框关闭回调函数
+        //PullListDown组件下拉框选择函数,外部传入方法
+        onSelect: PropTypes.func,
+        //PullListDown组件下拉框关闭函数,外部传入方法
         onClose: PropTypes.func
     };
 
@@ -188,10 +190,27 @@ class PullListDown extends React.Component {
     }
 
     /**
+     * 下拉框选择函数
+     */
+    selectPullListDown(tag, e) {
+        const {
+            //下拉框选择函数,外部传入方法
+            onSelect
+        } = this.props;
+        onSelect(tag);
+        //消除冒泡
+        e.stopPropagation();
+    }
+
+    /**
      * 根据外部传入的列表数据,render渲染下拉框组件列表
      * @returns {XML}
      */
     renderDataSourceToPullList() {
+        const {
+            //下拉框选择函数
+            selectPullListDown
+        } = this;
         let {
             dataSource
         } = this.props;
@@ -202,11 +221,12 @@ class PullListDown extends React.Component {
             return (
                 <li
                     key={pullItem["id"]}
+                    onClick={selectPullListDown.bind(this, pullItem["tag"])}
                 >
                     {pullItem["tag"]}
                 </li>
             )
-        });
+        }.bind(this));
     }
 
     /**

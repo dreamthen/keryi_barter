@@ -13,6 +13,8 @@ const appActionsType = {
     CHANGE_IMAGE_LIST: "CHANGE_IMAGE_LIST",
     //改变对话框模糊搜索标签组Action名称
     CHANGE_TAG_LIST: "CHANGE_TAG_LIST",
+    //改变对话框中的标签组Action名称
+    SET_TAG_CONFIG: "SET_TAG_CONFIG",
     ADD_BARTER_RESOURCE: "ADD_BARTER_RESOURCE"
 };
 

@@ -58,6 +58,18 @@ export function changeTagList(payload) {
 }
 
 /**
+ * 改变对话框中的标签组
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function setTagConfig(payload) {
+    return {
+        type: appActionsType["SET_TAG_CONFIG"],
+        payload
+    }
+}
+
+/**
  * 搜寻资源tag
  * @param initLeft
  * @param tag

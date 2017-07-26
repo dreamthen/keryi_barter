@@ -8,7 +8,8 @@ import api from "../configs/api";
 import {
     changeInitDistance,
     changeImageList,
-    changeTagFunction
+    changeTagFunction,
+    setTagConfig
 } from "../actions/appActions";
 import modalComponentConfig from "../configs/modalComponentConfig";
 import {
@@ -69,6 +70,15 @@ class AppView extends React.Component {
         //将redux props转化为state
         const {mapPropsToState} = this;
         mapPropsToState.bind(this)();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const {sourceTag} = this.props;
+        if (sourceTag !== nextProps.sourceTag) {
+            this.setState({
+                sourceTag: nextProps.sourceTag
+            });
+        }
     }
 
     /**
@@ -313,7 +323,7 @@ class AppView extends React.Component {
     }
 
     /**
-     * 下拉框关闭回调函数
+     * 下拉框关闭函数
      */
     closePullListDown() {
         this.setState({
@@ -330,20 +340,23 @@ class AppView extends React.Component {
             //选择资源类型下拉框距离添加对话框左方的位置
             left,
             //对话框模糊查询标签组
-            pullList
+            pullList,
+            //下拉框选择函数
+            selectPullListDown
         } = this.props;
         const {
             //控制PullListDown组件编辑框显示、隐藏或者消失
             pullListDownVisible
         } = this.state;
         const {
-            //下拉框关闭回调函数
+            //下拉框关闭函数
             closePullListDown
         } = this;
         return (
             <PullListDown
                 visible={pullListDownVisible}
                 title="热门"
+                onSelect={selectPullListDown.bind(this)}
                 onClose={closePullListDown.bind(this)}
                 dataSource={pullList}
                 style={{
@@ -466,7 +479,7 @@ function mapDispatchToProps(dispatch, ownProps) {
                         dispatch(changeTagFunction(initLeft, value));
                     }
                     //控制PullListDown组件编辑框取消消失
-                    value === "" ?
+                    (value === "" || value.slice(1) === "") ?
                         this.setState({pullListDownVisible: false}) : this.setState({pullListDownVisible: true});
                 }.bind(this), 600);
             }
@@ -491,6 +504,12 @@ function mapDispatchToProps(dispatch, ownProps) {
          */
         uploadImageSuccess(data) {
             dispatch(changeImageList({src: api.GET_RESOURCE_IMAGE + "/" + data, type: "add"}));
+        },
+        /**
+         * 下拉框选择函数
+         */
+        selectPullListDown(tag) {
+            dispatch(setTagConfig({sourceTag: tag}));
         }
     }
 }

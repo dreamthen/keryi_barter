@@ -16,6 +16,10 @@ const insteadState = {
     insteadArrayRemoveState(state, newState, type, filter) {
         newState[type] = state[type].filter(filter);
         return this.insteadObjState(state, newState);
+    },
+    insteadTagState(state, newState, type, tag) {
+        newState[type] = state[type] + "<div>" + tag + "</div>";
+        return this.insteadObjState(state, newState);
     }
 };
 
