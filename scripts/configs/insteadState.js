@@ -18,7 +18,6 @@ const insteadState = {
         return this.insteadObjState(state, newState);
     },
     insteadTagState(state, newState, type, tag) {
-        newState[type] = state[type] + "<div>" + tag + "</div>";
         return this.insteadObjState(state, newState);
     }
 };
