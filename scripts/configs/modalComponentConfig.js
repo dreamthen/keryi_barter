@@ -40,6 +40,14 @@ const modalComponentConfig = [
         className: "keryi_barter_modal_area_description"
     },
     {
+        key: "tagList",
+        include: "tagArea",
+        classNameNone: "keryi_barter_modal_tagArea keryi_barter_modal_tagAreaNone",
+        className: "keryi_barter_modal_tagArea",
+        classNameShow: "keryi_barter_modal_tagArea keryi_barter_modal_tagAreaShow",
+        iconName: "iconfontKeryiBarter keryiBarter-close"
+    },
+    {
         key: "sourceTag",
         include: "area",
         size: "large",

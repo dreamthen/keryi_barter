@@ -18,7 +18,9 @@ const defaultState = {
     //对话框上传图片组
     imageList: [],
     //对话框模糊查询标签组
-    pullList: []
+    pullList: [],
+    //对话框上方标签组
+    tagList: []
 };
 
 /**
@@ -42,8 +44,7 @@ export function appReducers(state = defaultState, actions) {
             let imageType = newState.type;
             switch (imageType) {
                 case "add":
-                    let src = newState["src"];
-                    return insteadState.insteadArrayAddState(state, newState, "imageList", src);
+                    return insteadState.insteadArrayAddState(state, newState, "imageList", {src: newState["src"]});
                 case "delete":
                     return insteadState.insteadArrayRemoveState(state, newState, "imageList", function filter(item, index) {
                         return item["src"] !== newState["src"];
@@ -53,11 +54,14 @@ export function appReducers(state = defaultState, actions) {
             }
         //改变对话框模糊搜索标签组
         case appActionsType["CHANGE_TAG_LIST"]:
-            return insteadState.insteadObjState(state, newState);
+            return insteadState.insteadArrayAddState(state, newState, "tagList", {
+                id: newState["id"],
+                tag: newState["tag"]
+            });
         //改变对话框中的标签组
         case appActionsType["SET_TAG_CONFIG"]:
             let sourceTag = newState["sourceTag"];
-            return insteadState.insteadTagState(state, newState, "sourceTag", sourceTag);
+            return insteadState.insteadObjState(state, newState);
         case appActionsType["ADD_BARTER_RESOURCE"]:
             return state;
     }

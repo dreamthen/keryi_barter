@@ -17,7 +17,8 @@ import {
     Button,
     FigureCarousel,
     Modal,
-    PullListDown
+    PullListDown,
+    Tag
 } from "../keryi";
 import Upload from "rc-upload";
 import uploadConfig from "../configs/uploadConfig";
@@ -25,7 +26,7 @@ import routesMode from "../configs/routesConfigMode";
 import "../../stylesheets/app.css";
 
 //Area组件编辑框类型
-const componentType = ["area", "functionIcons", "carousel"];
+const componentType = ["area", "functionIcons", "carousel", "tagArea"];
 //Area组件icon功能图标类型
 const functionIconType = ["uploadPhoto"];
 //时间处理器,用来控制处理查询资源类型
@@ -46,7 +47,9 @@ class AppView extends React.Component {
         //对话框上传图片组
         imageList: PropTypes.array,
         //对话框模糊查询标签组
-        pullList: PropTypes.array
+        pullList: PropTypes.array,
+        //对话框上方标签组
+        tagList: PropTypes.array
     };
 
     constructor(props) {
@@ -73,12 +76,7 @@ class AppView extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {sourceTag} = this.props;
-        if (sourceTag !== nextProps.sourceTag) {
-            this.setState({
-                sourceTag: nextProps.sourceTag
-            });
-        }
+
     }
 
     /**
@@ -216,6 +214,30 @@ class AppView extends React.Component {
     }
 
     /**
+     * 设置对话框上方标签组
+     * @param key
+     * @param value
+     * @param iconName
+     * @returns {XML}
+     */
+    renderTagList(key, value, iconName) {
+        return (
+            <li
+                key={key}
+            >
+                <Tag
+                    type="primary"
+                >
+                    {"#" + value}
+                </Tag>
+                <i className={iconName}>
+
+                </i>
+            </li>
+        )
+    }
+
+    /**
      * 根据不同的组件类型配置来设置组件
      * @param key
      * @param include
@@ -228,14 +250,18 @@ class AppView extends React.Component {
      * @param functionIcons
      * @returns {XML}
      */
-    renderModalComponent(key, include, size, type, pullListDown, placeholder, className, classNameShow, functionIcons) {
+    renderModalComponent(key, include, size, type, pullListDown, placeholder, className, classNameShow, functionIcons, iconName) {
         const {
             //根据不同的功能图标Icon类型配置来设置功能图标Icon
-            renderFunctionIcons
+            renderFunctionIcons,
+            //设置对话框上方标签组
+            renderTagList
         } = this;
         const {
             //对话框上传图片组
             imageList,
+            //对话框上方标签组
+            tagList,
             //改变标题内容函数
             onChangeAreaHandler,
             //改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器
@@ -283,6 +309,19 @@ class AppView extends React.Component {
                         imageList={imageList}
                         onChange={onFigureCarouselControlChangeImageList.bind(this)}
                     />
+                );
+            case componentType[3]:
+                return (
+                    <ul
+                        key={key}
+                        className={classNameShow}
+                    >
+                        {
+                            tagList && tagList.length > 0 && tagList.map(function tagger(tagItem, tagIndex) {
+                                return renderTagList.bind(this)(tagItem["id"], tagItem["tag"], iconName);
+                            }.bind(this))
+                        }
+                    </ul>
                 )
         }
     }
@@ -313,7 +352,8 @@ class AppView extends React.Component {
                                 modalItem["placeholder"],
                                 modalItem["className"],
                                 modalItem["classNameShow"],
-                                modalItem["functionIcons"]
+                                modalItem["functionIcons"],
+                                modalItem["iconName"]
                             );
                         }.bind(this))
                     }
@@ -508,8 +548,8 @@ function mapDispatchToProps(dispatch, ownProps) {
         /**
          * 下拉框选择函数
          */
-        selectPullListDown(tag) {
-            dispatch(setTagConfig({sourceTag: tag}));
+        selectPullListDown(id, tag) {
+            dispatch(setTagConfig({id, tag}));
         }
     }
 }

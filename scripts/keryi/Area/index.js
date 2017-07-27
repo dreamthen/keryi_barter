@@ -92,7 +92,6 @@ class Area extends React.Component {
             value
         } = this.props;
         if (this.refs[defaultRefs].innerHTML !== value) {
-            this.refs[defaultRefs].innerHTML = "";
             this.refs[defaultRefs].innerHTML = value;
         }
     }
