@@ -221,18 +221,22 @@ class AppView extends React.Component {
      * @returns {XML}
      */
     renderTagList(key, value, iconName) {
+        //删除Tag标签数组元素方法函数
+        const {deleteTagList} = this.props;
         return (
             <li
                 key={key}
+                className="keryi_barter_modal_tagAreaLi"
             >
                 <Tag
+                    animation
+                    className="keryi_barter_modal_tagArea_tag"
+                    iconName={iconName}
                     type="primary"
+                    onClose={deleteTagList.bind(this, key)}
                 >
                     {"#" + value}
                 </Tag>
-                <i className={iconName}>
-
-                </i>
             </li>
         )
     }
@@ -246,11 +250,13 @@ class AppView extends React.Component {
      * @param pullListDown
      * @param placeholder
      * @param className
+     * @param classNameNone
      * @param classNameShow
      * @param functionIcons
+     * @param iconName
      * @returns {XML}
      */
-    renderModalComponent(key, include, size, type, pullListDown, placeholder, className, classNameShow, functionIcons, iconName) {
+    renderModalComponent(key, include, size, type, pullListDown, placeholder, className, classNameNone, classNameShow, functionIcons, iconName) {
         const {
             //根据不同的功能图标Icon类型配置来设置功能图标Icon
             renderFunctionIcons,
@@ -314,7 +320,7 @@ class AppView extends React.Component {
                 return (
                     <ul
                         key={key}
-                        className={classNameShow}
+                        className={(tagList && tagList.length > 0) ? classNameShow : classNameNone}
                     >
                         {
                             tagList && tagList.length > 0 && tagList.map(function tagger(tagItem, tagIndex) {
@@ -351,6 +357,7 @@ class AppView extends React.Component {
                                 modalItem["pullListDown"],
                                 modalItem["placeholder"],
                                 modalItem["className"],
+                                modalItem["classNameNone"],
                                 modalItem["classNameShow"],
                                 modalItem["functionIcons"],
                                 modalItem["iconName"]
@@ -510,7 +517,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 [key]: value
             });
-            if (key === modalComponentConfig[4]["key"]) {
+            if (key === modalComponentConfig[5]["key"]) {
                 //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题光标位置
                 timer = setTimeout(function controlTimer() {
                     if (value.slice(1) !== "" && (value.indexOf("#") === 0)) {
@@ -546,10 +553,20 @@ function mapDispatchToProps(dispatch, ownProps) {
             dispatch(changeImageList({src: api.GET_RESOURCE_IMAGE + "/" + data, type: "add"}));
         },
         /**
-         * 下拉框选择函数
+         * 下拉框选择,添加Tag标签数组元素方法函数
          */
-        selectPullListDown(id, tag) {
-            dispatch(setTagConfig({id, tag}));
+        selectPullListDown(key, id, tag) {
+            this.setState({
+                [key]: "",
+                pullListDownVisible: false
+            });
+            dispatch(setTagConfig({id, tag, type: "add", left: 0}));
+        },
+        /**
+         * 删除Tag标签数组元素方法函数
+         */
+        deleteTagList(id) {
+            dispatch(setTagConfig({id, type: "delete"}));
         }
     }
 }

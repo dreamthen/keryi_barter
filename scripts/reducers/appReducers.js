@@ -41,7 +41,7 @@ export function appReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, newState);
         //改变对话框上传图片组
         case appActionsType["CHANGE_IMAGE_LIST"]:
-            let imageType = newState.type;
+            let imageType = newState["type"];
             switch (imageType) {
                 case "add":
                     return insteadState.insteadArrayAddState(state, newState, "imageList", {src: newState["src"]});
@@ -54,14 +54,23 @@ export function appReducers(state = defaultState, actions) {
             }
         //改变对话框模糊搜索标签组
         case appActionsType["CHANGE_TAG_LIST"]:
-            return insteadState.insteadArrayAddState(state, newState, "tagList", {
-                id: newState["id"],
-                tag: newState["tag"]
-            });
-        //改变对话框中的标签组
-        case appActionsType["SET_TAG_CONFIG"]:
-            let sourceTag = newState["sourceTag"];
             return insteadState.insteadObjState(state, newState);
+        //改变对话框上方的标签组,添加或者删除Tag标签数组元素
+        case appActionsType["SET_TAG_CONFIG"]:
+            let tagType = newState["type"];
+            switch (tagType) {
+                case "add":
+                    return insteadState.insteadArrayAddState(state, newState, "tagList", {
+                        id: newState["id"],
+                        tag: newState["tag"]
+                    });
+                case "delete":
+                    return insteadState.insteadArrayRemoveState(state, newState, "tagList", function filter(item, index) {
+                        return item["id"] !== newState["id"];
+                    });
+                default:
+                    return state;
+            }
         case appActionsType["ADD_BARTER_RESOURCE"]:
             return state;
     }

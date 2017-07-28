@@ -58,7 +58,7 @@ export function changeTagList(payload) {
 }
 
 /**
- * 改变对话框中的标签组
+ * 改变对话框上方的标签组,添加或者删除Tag标签数组元素
  * @param payload
  * @returns {{type: *, payload: *}}
  */

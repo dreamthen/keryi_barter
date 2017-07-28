@@ -18,9 +18,28 @@
     color: #fff;
 }
 
+.keryi_barter_tag > i {
+    position: absolute;
+    font-size: 12px;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+    padding: 1px;
+    color: #fff;
+}
+
 .keryi_barter_tag.keryi_barter_primary_tag {
     background-color: #63A8F0;
-    border:1px solid transparent;
+    border: 1px solid transparent;
+}
+
+.keryi_barter_tag.keryi_barter_animation_tag {
+    opacity: 0;
+    transition: all .5s ease-in-out 0s;
+}
+
+.keryi_barter_tag.keryi_barter_animationShow_tag {
+    opacity: 1;
 }
 
 .keryi_barter_default_tag {

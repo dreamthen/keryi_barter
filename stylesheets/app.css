@@ -198,14 +198,6 @@ body {
     color: #a2a2a2;
 }
 
-.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagArea {
-    display: block;
-}
-
-.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagAreaShow {
-    opacity: 1;
-}
-
 .keryi_barter_modal_mainContainer > .keryi_barter_modal_functionIconsShow {
     padding: 0 15px 0 20px;
     opacity: 1;
@@ -227,6 +219,43 @@ body {
 .keryi_barter_modal_functionIcons .keryi_barter_modal_upload li > i {
     font-size: 24px;
     cursor: pointer;
+}
+
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagArea {
+    display: block;
+    padding: 0 15px 0 20px;
+}
+
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagAreaNone {
+    display: none;
+}
+
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagAreaShow {
+    opacity: 1;
+}
+
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagArea:after {
+    content: ".";
+    clear: both;
+    visibility: hidden;
+    display: block;
+    height: 0;
+}
+
+.keryi_barter_modal_tagArea > .keryi_barter_modal_tagAreaLi {
+    position: relative;
+    display: inline-block;
+    float: left;
+}
+
+.keryi_barter_modal_tagArea .keryi_barter_modal_tagArea_tag > a {
+    padding: 4px 12px;
+}
+
+.keryi_barter_modal_tagArea > .keryi_barter_modal_tagAreaLi i {
+    font-size: 10px;
+    top: 0;
+    right: 11px;
 }
 
 

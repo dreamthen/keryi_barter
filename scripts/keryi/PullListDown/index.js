@@ -192,12 +192,12 @@ class PullListDown extends React.Component {
     /**
      * 下拉框选择函数
      */
-    selectPullListDown(id, tag, e) {
+    selectPullListDown(key, id, tag, e) {
         const {
             //下拉框选择函数,外部传入方法
             onSelect
         } = this.props;
-        onSelect(id, tag);
+        onSelect(key, id, tag);
         //消除冒泡
         e.stopPropagation();
     }
@@ -221,7 +221,7 @@ class PullListDown extends React.Component {
             return (
                 <li
                     key={pullItem["id"]}
-                    onClick={selectPullListDown.bind(this, pullItem["id"], pullItem["tag"])}
+                    onClick={selectPullListDown.bind(this, "sourceTag", pullItem["id"], pullItem["tag"])}
                 >
                     {pullItem["tag"]}
                 </li>
