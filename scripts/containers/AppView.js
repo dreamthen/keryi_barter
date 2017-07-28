@@ -526,7 +526,7 @@ function mapDispatchToProps(dispatch, ownProps) {
                         dispatch(changeTagFunction(initLeft, value));
                     }
                     //控制PullListDown组件编辑框取消消失
-                    (value === "" || value.slice(1) === "") ?
+                    (value === "" || (value.indexOf("#") === 0 && value.slice(1) === "")) ?
                         this.setState({pullListDownVisible: false}) : this.setState({pullListDownVisible: true});
                 }.bind(this), 600);
             }
