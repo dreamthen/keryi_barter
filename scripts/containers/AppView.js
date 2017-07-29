@@ -99,7 +99,7 @@ class AppView extends React.Component {
         const {props} = this;
         let userLoginInformation;
         if (localStorage) {
-            userLoginInformation = localStorage.getItem("userLoginInformation");
+            userLoginInformation = JSON.parse(localStorage.getItem("userLoginInformation"));
         } else {
             return false;
         }

@@ -37,7 +37,7 @@ export function login(account, password) {
                 this.setState({
                     successPrompt: Success.LOGIN_SUCCESS_MESSAGE
                 });
-                localStorage.setItem("userLoginInformation", body);
+                localStorage.setItem("userLoginInformation", JSON.stringify(body));
                 //FIXME 这里设置一个时间控制器,登录成功后,看到成功提示语1.5s之后,跳转到keryi主页面
                 setTimeout(function timer() {
                     window.location = "./index.html";
