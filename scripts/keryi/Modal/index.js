@@ -36,6 +36,8 @@ class Modal extends React.Component {
         className: PropTypes.string,
         //Modal组件对话框是否显示右上角关闭按钮
         closable: PropTypes.bool,
+        //Modal组件对话框提交发布回调函数
+        onOk: PropTypes.func,
         //Modal组件对话框关闭回调函数
         onClose: PropTypes.func,
         //Modal组件对话框是否显示footer底部区域(包括关闭按钮和发布按钮)
@@ -99,6 +101,41 @@ class Modal extends React.Component {
     }
 
     /**
+     * 关闭Modal对话框,并执行参数方法函数
+     * @param callback
+     */
+    closeModal(callback) {
+        this.setState({
+            modalAppear: false
+        }, function closer() {
+            //FIXME 在这里设置一个时间控制器,Modal组件对话框从显示到隐藏这个过程动画1s之后,将Modal组件对话框消失
+            setTimeout(function timer() {
+                //Modal组件对话框关闭回调函数
+                callback();
+            }.bind(this), 1000);
+        }.bind(this));
+    }
+
+    /**
+     * 根据外部传入的props onOk来设置Modal组件对话框提交发布
+     * @param e
+     */
+    onOkHandler(e) {
+        const {
+            //Modal组件对话框提交发布回调函数
+            onOk
+        } = this.props;
+        const {
+            //关闭Modal对话框,并执行参数方法函数
+            closeModal
+        } = this;
+        //关闭Modal对话框,并执行提交发布回调函数
+        closeModal.bind(this)(onOk);
+        //取消冒泡
+        e.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
      * 根据外部传入的props onClose来设置Modal组件对话框关闭
      * @param e
      */
@@ -107,15 +144,12 @@ class Modal extends React.Component {
             //Modal组件对话框关闭回调函数
             onClose
         } = this.props;
-        this.setState({
-            modalAppear: false
-        }, function closer() {
-            //FIXME 在这里设置一个时间控制器,Modal组件对话框从显示到隐藏这个过程动画1s之后,将Modal组件对话框消失
-            setTimeout(function timer() {
-                //Modal组件对话框关闭回调函数
-                onClose();
-            }.bind(this), 1000);
-        }.bind(this));
+        const {
+            //关闭Modal对话框,并执行参数方法函数
+            closeModal
+        } = this;
+        //关闭Modal对话框,并执行关闭回调函数
+        closeModal.bind(this)(onClose);
         //取消冒泡
         e.nativeEvent.stopImmediatePropagation();
     }
@@ -179,7 +213,12 @@ class Modal extends React.Component {
      * @returns {XML}
      */
     renderModalFooter() {
-        const {onCloseHandler} = this;
+        const {
+            //对话框提交发布
+            onOkHandler,
+            //对话框关闭
+            onCloseHandler
+        } = this;
         return (
             <footer className="keryi_barter_modal_foot">
                 <section className="keryi_barter_modal_close">
@@ -195,6 +234,7 @@ class Modal extends React.Component {
                     <Button
                         type="primary"
                         className="keryi_barter_button_publish"
+                        onClick={onOkHandler.bind(this)}
                     >
                         发布
                     </Button>

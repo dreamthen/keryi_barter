@@ -24,7 +24,9 @@ if (!isMock) {
         //获取资源图片
         GET_RESOURCE_IMAGE: keryi_cover + keryi_root + "resources/images",
         //搜索资源tag
-        GET_RESOURCE_TAG_LIST: keryi_cover + keryi_root + "tags"
+        GET_RESOURCE_TAG_LIST: keryi_cover + keryi_root + "tags",
+        //提交发布资源
+        PUBLISH_RESOURCE: keryi_cover + keryi_root + "resources"
     }
 } else {
 

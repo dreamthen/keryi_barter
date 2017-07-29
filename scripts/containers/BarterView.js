@@ -60,7 +60,7 @@ class BarterView extends React.Component {
         return (
             <KeryiCard
                 userName="1000yardStyle"
-                imageList={eval("(" + keryiCard["img_urls"] +")")}
+                imageList={eval("(" + keryiCard["imgUrls"] + ")")}
                 title={keryiCard["title"]}
                 introduce={keryiCard["intro"]}
                 tagList={[{

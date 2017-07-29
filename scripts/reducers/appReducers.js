@@ -11,15 +11,15 @@ const defaultState = {
     description: "",
     //对话框选择资源类型
     sourceTag: "",
-    //选择资源类型初始距离添加对话框左边的位置
+    //选择资源类型初始距离添加选择资源类型输入框左边的位置
     initLeft: 0,
-    //选择资源类型下拉框距离添加对话框左边的位置
+    //选择资源类型下拉框距离添加选择资源类型输入框左边的位置
     left: 0,
-    //对话框上传图片组
+    //资源描述输入框上传图片组
     imageList: [],
-    //对话框模糊查询标签组
+    //选择资源类型输入框模糊查询标签组
     pullList: [],
-    //对话框上方标签组
+    //选择资源类型输入框上方标签组
     tagList: []
 };
 
@@ -33,13 +33,20 @@ export function appReducers(state = defaultState, actions) {
     let type = actions.type,
         newState = actions.payload;
     switch (type) {
-        //设置选择资源类型下拉框距离添加对话框顶部和左边的位置
+        //重置对话框状态
+        case appActionsType["RESET_MODAL_STATUS"]:
+            return defaultState;
+        //设置选择资源类型下拉框距离添加选择资源类型输入框顶部和左边的位置
         case appActionsType["CHANGE_INIT_DISTANCE"]:
             return insteadState.insteadObjState(state, newState);
         case appActionsType["CHANGE_DISTANCE"]:
             newState["left"] = newState["rectLeft"] - newState["initLeft"] + 20;
             return insteadState.insteadObjState(state, newState);
-        //改变对话框上传图片组
+        //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
+        case appActionsType["RESET_DISTANCE"]:
+            let resetNewState = {left: 0};
+            return insteadState.insteadObjState(state, resetNewState);
+        //改变资源描述输入框上传图片组
         case appActionsType["CHANGE_IMAGE_LIST"]:
             let imageType = newState["type"];
             switch (imageType) {
@@ -52,10 +59,10 @@ export function appReducers(state = defaultState, actions) {
                 default:
                     return state;
             }
-        //改变对话框模糊搜索标签组
+        //改变选择资源类型输入框模糊搜索标签组
         case appActionsType["CHANGE_TAG_LIST"]:
             return insteadState.insteadObjState(state, newState);
-        //改变对话框上方的标签组,添加或者删除Tag标签数组元素
+        //改变选择资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
         case appActionsType["SET_TAG_CONFIG"]:
             let tagType = newState["type"];
             switch (tagType) {

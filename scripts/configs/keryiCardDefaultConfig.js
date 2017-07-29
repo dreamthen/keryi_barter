@@ -5,7 +5,7 @@
 const keryiCardDefaultConfig = {
     title: "today",
     intro: "react react-redux react-router-redux",
-    img_urls: '[' +
+    imgUrls: '[' +
     '{src: "/images/keryiBarter_description_bg.png"}, ' +
     '{src: "/images/keryiBarter_login_bg.png"}, ' +
     '{src: "/images/keryiBarter_register_bg.png"}, ' +

@@ -6,11 +6,22 @@ import {connect} from "react-redux";
 import {Link} from "react-router";
 import api from "../configs/api";
 import {
+    //设置选择资源类型下拉框距离添加选择资源类型输入框左边的位置
     changeInitDistance,
+    //改变资源描述输入框上传图片组
     changeImageList,
+    //搜寻资源tag
     changeTagFunction,
-    setTagConfig
+    //改变选择资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
+    setTagConfig,
+    //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
+    resetDistance,
+    //重置对话框状态
+    resetModalStatus,
+    //提交发布资源
+    publishResource
 } from "../actions/appActions";
+import {mapArrayToString} from "../configs/mapArrayToString";
 import modalComponentConfig from "../configs/modalComponentConfig";
 import {
     Area,
@@ -40,21 +51,23 @@ class AppView extends React.Component {
         description: PropTypes.string,
         //对话框选择资源类型
         sourceTag: PropTypes.string,
-        //选择资源类型初始距离添加对话框左边的位置
+        //选择资源类型初始距离添加选择资源输入框左边的位置
         initLeft: PropTypes.number,
-        //选择资源类型下拉框距离添加对话框左边的位置
+        //选择资源类型下拉框距离添加选择资源输入框左边的位置
         left: PropTypes.number,
-        //对话框上传图片组
+        //资源描述输入框上传图片组
         imageList: PropTypes.array,
-        //对话框模糊查询标签组
+        //选择资源输入框模糊查询标签组
         pullList: PropTypes.array,
-        //对话框上方标签组
+        //选择资源输入框上方标签组
         tagList: PropTypes.array
     };
 
     constructor(props) {
         super(props);
         this.state = {
+            //用户登录的id
+            userId: 0,
             //控制Modal组件对话框显示、隐藏或者消失
             addBarterVisible: false,
             //控制PullListDown组件编辑框显示、隐藏或者消失
@@ -84,8 +97,15 @@ class AppView extends React.Component {
      */
     mapPropsToState() {
         const {props} = this;
+        let userLoginInformation;
+        if (localStorage) {
+            userLoginInformation = localStorage.getItem("userLoginInformation");
+        } else {
+            return false;
+        }
         this.setState({
-            ...props
+            ...props,
+            userId: userLoginInformation["id"]
         });
     }
 
@@ -414,23 +434,11 @@ class AppView extends React.Component {
     }
 
     /**
-     * 控制Modal组件对话框隐藏并消失
-     * @param e
-     */
-    addBarterCloseHandler(e) {
-        this.setState({
-            addBarterVisible: false
-        });
-    }
-
-    /**
      * keryi_barter主页面添加"以物换物"需要对话框
      * @returns {XML}
      */
     renderModal() {
         const {
-            //控制Modal组件对话框隐藏并消失
-            addBarterCloseHandler,
             //对话框主要内容(包括标题、描述和标签等信息)
             renderModalMain,
             //对话框标签下拉框列表
@@ -440,6 +448,12 @@ class AppView extends React.Component {
             //控制Modal组件对话框显示、隐藏或者消失
             addBarterVisible
         } = this.state;
+        const {
+            //控制Modal组件对话框隐藏并消失
+            addBarterCloseHandler,
+            //提交发布并控制Modal组件对话框隐藏并消失
+            addBarterOkHandler
+        } = this.props;
         return (
             <Modal
                 visible={addBarterVisible}
@@ -448,6 +462,7 @@ class AppView extends React.Component {
                 width={540}
                 title="1000yardStyle"
                 headPortrait="/images/keryiBarter_v.jpg"
+                onOk={addBarterOkHandler.bind(this)}
                 onClose={addBarterCloseHandler.bind(this)}
             >
                 {/*对话框主要内容(包括标题、描述和标签等信息)*/}
@@ -500,6 +515,40 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch, ownProps) {
     return {
+        //提交发布并控制Modal组件对话框隐藏并消失
+        addBarterOkHandler(e) {
+            const {
+                //用户登录的id
+                userId,
+                //对话框标题
+                title,
+                //对话框资源描述
+                description
+            } = this.state;
+            const {
+                //资源描述输入框上传图片组
+                imageList
+            } = this.props;
+            const imageArrayString = mapArrayToString(imageList);
+            //提交发布资源
+            dispatch(publishResource(userId, title, description, imageArrayString));
+        },
+        /**
+         * 控制Modal组件对话框隐藏并消失
+         * @param e
+         */
+        addBarterCloseHandler(e) {
+            this.setState({
+                //控制对话框隐藏并消失
+                addBarterVisible: false,
+                //设置对话框标题为空
+                title: "",
+                //设置对话框资源描述为空
+                description: ""
+            });
+            //重置对话框状态
+            dispatch(resetModalStatus());
+        },
         /**
          * 改变Area编辑框内容函数
          * @param key
@@ -520,14 +569,20 @@ function mapDispatchToProps(dispatch, ownProps) {
             if (key === modalComponentConfig[5]["key"]) {
                 //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题光标位置
                 timer = setTimeout(function controlTimer() {
+                    //搜寻资源tag
                     if (value.slice(1) !== "" && (value.indexOf("#") === 0)) {
                         dispatch(changeTagFunction(initLeft, value.slice(1)));
                     } else if (value !== "" && (value.indexOf("#") !== 0)) {
                         dispatch(changeTagFunction(initLeft, value));
                     }
                     //控制PullListDown组件编辑框取消消失
-                    (value === "" || (value.indexOf("#") === 0 && value.slice(1) === "")) ?
-                        this.setState({pullListDownVisible: false}) : this.setState({pullListDownVisible: true});
+                    if (value === "" || (value.indexOf("#") === 0 && value.slice(1) === "")) {
+                        this.setState({pullListDownVisible: false});
+                        //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
+                        dispatch(resetDistance());
+                    } else {
+                        this.setState({pullListDownVisible: true});
+                    }
                 }.bind(this), 600);
             }
         },
@@ -536,6 +591,7 @@ function mapDispatchToProps(dispatch, ownProps) {
          * @param src
          */
         onFigureCarouselControlChangeImageList(src) {
+            //改变资源描述输入框上传图片组
             dispatch(changeImageList({src, type: "delete"}));
         },
         /**
@@ -550,6 +606,7 @@ function mapDispatchToProps(dispatch, ownProps) {
          * @param data
          */
         uploadImageSuccess(data) {
+            //改变资源描述输入框上传图片组
             dispatch(changeImageList({src: api.GET_RESOURCE_IMAGE + "/" + data, type: "add"}));
         },
         /**
@@ -560,12 +617,16 @@ function mapDispatchToProps(dispatch, ownProps) {
                 [key]: "",
                 pullListDownVisible: false
             });
-            dispatch(setTagConfig({id, tag, type: "add", left: 0}));
+            //改变选择资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
+            dispatch(setTagConfig({id, tag, type: "add"}));
+            //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
+            dispatch(resetDistance());
         },
         /**
          * 删除Tag标签数组元素方法函数
          */
         deleteTagList(id) {
+            //改变选择资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
             dispatch(setTagConfig({id, type: "delete"}));
         }
     }
