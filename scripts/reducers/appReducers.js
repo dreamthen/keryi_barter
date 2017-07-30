@@ -20,7 +20,9 @@ const defaultState = {
     //选择资源类型输入框模糊查询标签组
     pullList: [],
     //选择资源类型输入框上方标签组
-    tagList: []
+    tagList: [],
+    //选择资源类型id标签组
+    tagIdList: []
 };
 
 /**
@@ -73,6 +75,21 @@ export function appReducers(state = defaultState, actions) {
                     });
                 case "delete":
                     return insteadState.insteadArrayRemoveState(state, newState, "tagList", function filter(item, index) {
+                        return item["id"] !== newState["id"];
+                    });
+                default:
+                    return state;
+            }
+        //改变选择资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
+        case appActionsType["SET_TAG_ID_CONFIG"]:
+            let tagIDType = newState["type"];
+            switch (tagIDType) {
+                case "add":
+                    return insteadState.insteadArrayAddState(state, newState, "tagIdList", {
+                        id: newState["id"]
+                    });
+                case "delete":
+                    return insteadState.insteadArrayRemoveState(state, newState, "tagIdList", function filter(item, index) {
                         return item["id"] !== newState["id"];
                     });
                 default:

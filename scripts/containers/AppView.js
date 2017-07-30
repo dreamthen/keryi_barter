@@ -14,6 +14,8 @@ import {
     changeTagFunction,
     //改变选择资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
     setTagConfig,
+    //改变选择资源类型id标签组,添加或者删除Tag id标签数组元素
+    setTagIdConfig,
     //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
     resetDistance,
     //重置对话框状态
@@ -60,7 +62,9 @@ class AppView extends React.Component {
         //选择资源输入框模糊查询标签组
         pullList: PropTypes.array,
         //选择资源输入框上方标签组
-        tagList: PropTypes.array
+        tagList: PropTypes.array,
+        //选择资源类型id标签组
+        tagIdList: PropTypes.array
     };
 
     constructor(props) {
@@ -527,11 +531,13 @@ function mapDispatchToProps(dispatch, ownProps) {
             } = this.state;
             const {
                 //资源描述输入框上传图片组
-                imageList
+                imageList,
+                //选择资源类型id标签组
+                tagIdList
             } = this.props;
             const imageArrayString = mapArrayToString(imageList);
             //提交发布资源
-            dispatch(publishResource(userId, title, description, imageArrayString));
+            dispatch(publishResource(userId, title, description, imageArrayString, tagIdList));
         },
         /**
          * 控制Modal组件对话框隐藏并消失
@@ -557,7 +563,9 @@ function mapDispatchToProps(dispatch, ownProps) {
         onChangeAreaHandler(key, e) {
             const {
                 //选择资源类型初始距离添加对话框左边的位置
-                initLeft
+                initLeft,
+                //选择资源输入框上方标签组
+                tagList
             } = this.props;
             if (timer) {
                 clearTimeout(timer);
@@ -571,9 +579,9 @@ function mapDispatchToProps(dispatch, ownProps) {
                 timer = setTimeout(function controlTimer() {
                     //搜寻资源tag
                     if (value.slice(1) !== "" && (value.indexOf("#") === 0)) {
-                        dispatch(changeTagFunction(initLeft, value.slice(1)));
+                        dispatch(changeTagFunction(initLeft, value.slice(1), tagList));
                     } else if (value !== "" && (value.indexOf("#") !== 0)) {
-                        dispatch(changeTagFunction(initLeft, value));
+                        dispatch(changeTagFunction(initLeft, value, tagList));
                     }
                     //控制PullListDown组件编辑框取消消失
                     if (value === "" || (value.indexOf("#") === 0 && value.slice(1) === "")) {
@@ -617,8 +625,10 @@ function mapDispatchToProps(dispatch, ownProps) {
                 [key]: "",
                 pullListDownVisible: false
             });
-            //改变选择资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
+            //改变选择资源类型输入框上方的标签组,添加Tag标签数组元素
             dispatch(setTagConfig({id, tag, type: "add"}));
+            //改变选择资源类型id标签组,添加Tag id标签数组元素
+            dispatch(setTagIdConfig({id, type: "add"}));
             //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
             dispatch(resetDistance());
         },
@@ -626,8 +636,10 @@ function mapDispatchToProps(dispatch, ownProps) {
          * 删除Tag标签数组元素方法函数
          */
         deleteTagList(id) {
-            //改变选择资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
+            //改变选择资源类型输入框上方的标签组,删除Tag标签数组元素
             dispatch(setTagConfig({id, type: "delete"}));
+            //改变选择资源类型id标签组,删除Tag id标签数组元素
+            dispatch(setTagIdConfig({id, type: "delete"}));
         }
     }
 }

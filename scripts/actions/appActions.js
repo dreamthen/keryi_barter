@@ -89,12 +89,25 @@ export function setTagConfig(payload) {
 }
 
 /**
+ * 改变选择资源类型id标签组,添加或者删除Tag id标签数组元素
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function setTagIdConfig(payload) {
+    return {
+        type: appActionsType["SET_TAG_ID_CONFIG"],
+        payload
+    }
+}
+
+/**
  * 搜寻资源tag
  * @param initLeft
  * @param tag
+ * @param tagList
  * @returns {dispatcher}
  */
-export function changeTagFunction(initLeft, tag) {
+export function changeTagFunction(initLeft, tag, tagList) {
     return function dispatcher(dispatch) {
         keryiFetchConfig.fetchRequest(
             api.GET_RESOURCE_TAG_LIST + "/" + tag,
@@ -107,13 +120,26 @@ export function changeTagFunction(initLeft, tag) {
                     body = response.body;
                 if (code === Success.GET_RESOURCE_TAG_SUCCESS_CODE) {
                     let rect = getFocusPosition();
+                    let tagListNow = [];
                     //设置选择资源类型下拉框光标距离添加对话框左边的位置
                     dispatch(changeDistance({rectLeft: rect.left, initLeft}));
+                    body.forEach(function tagger(tagItem, tagIndex) {
+                        let flag = false;
+                        tagList.forEach(function tagBody(item, index) {
+                            if (tagItem["id"] === item["id"]) {
+                                flag = true;
+                                return false;
+                            }
+                        });
+                        if (!flag) {
+                            tagListNow.push(tagItem);
+                        }
+                    });
                     //设置对话框模糊搜索标签组
-                    dispatch(changeTagList({pullList: body}));
+                    dispatch(changeTagList({pullList: tagListNow}));
                 }
             }.bind(this)
-        )
+        );
     }
 }
 
@@ -123,9 +149,10 @@ export function changeTagFunction(initLeft, tag) {
  * @param userId
  * @param intro
  * @param imgUrls
+ * @param tags
  * @returns {dispatcher}
  */
-export function publishResource(userId, title, intro, imgUrls) {
+export function publishResource(userId, title, intro, imgUrls, tags) {
     return function dispatcher(dispatch) {
         keryiFetchConfig.fetchRequest(
             api.PUBLISH_RESOURCE,
@@ -134,7 +161,8 @@ export function publishResource(userId, title, intro, imgUrls) {
                 userId,
                 title,
                 intro,
-                imgUrls
+                imgUrls,
+                tags
             },
             function done(response) {
                 let body = response.body,

@@ -19,6 +19,8 @@ const appActionsType = {
     CHANGE_TAG_LIST: "CHANGE_TAG_LIST",
     //改变选择资源类型输入框中的标签组Action名称
     SET_TAG_CONFIG: "SET_TAG_CONFIG",
+    //改变选择资源类型id标签组Action名称
+    SET_TAG_ID_CONFIG: "SET_TAG_ID_CONFIG",
     ADD_BARTER_RESOURCE: "ADD_BARTER_RESOURCE"
 };
 
