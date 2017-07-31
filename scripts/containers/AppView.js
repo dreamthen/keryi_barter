@@ -14,10 +14,16 @@ import {
     changeTagFunction,
     //改变选择资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
     setTagConfig,
+    //改变选择目标资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
+    setTargetTagConfig,
+    //改变选择目标资源类型id标签组,添加或者删除Tag id标签数组元素
+    setTargetTagIdConfig,
     //改变选择资源类型id标签组,添加或者删除Tag id标签数组元素
     setTagIdConfig,
     //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
     resetDistance,
+    //设置选择目标资源类型下拉框重置距离添加选择目标资源类型输入框左边的位置
+    resetTargetDistance,
     //重置对话框状态
     resetModalStatus,
     //提交发布资源
@@ -39,7 +45,7 @@ import routesMode from "../configs/routesConfigMode";
 import "../../stylesheets/app.css";
 
 //Area组件编辑框类型
-const componentType = ["area", "functionIcons", "carousel", "tagArea"];
+const componentType = ["area", "functionIcons", "carousel", "tagArea", "targetTagArea"];
 //Area组件icon功能图标类型
 const functionIconType = ["uploadPhoto"];
 //时间处理器,用来控制处理查询资源类型
@@ -53,18 +59,28 @@ class AppView extends React.Component {
         description: PropTypes.string,
         //对话框选择资源类型
         sourceTag: PropTypes.string,
+        //对话框选择目标资源类型
+        targetSourceTag: PropTypes.string,
         //选择资源类型初始距离添加选择资源输入框左边的位置
         initLeft: PropTypes.number,
         //选择资源类型下拉框距离添加选择资源输入框左边的位置
         left: PropTypes.number,
+        //选择目标资源类型下拉框距离添加选择资源类型输入框左边的位置
+        targetLeft: PropTypes.number,
         //资源描述输入框上传图片组
         imageList: PropTypes.array,
-        //选择资源输入框模糊查询标签组
+        //选择资源类型输入框模糊查询标签组
         pullList: PropTypes.array,
+        //选择目标资源类型输入框模糊查询标签组
+        pullListTarget: PropTypes.array,
         //选择资源输入框上方标签组
         tagList: PropTypes.array,
+        //选择目标资源输入框上方标签组
+        tagTargetList: PropTypes.array,
         //选择资源类型id标签组
-        tagIdList: PropTypes.array
+        tagIdList: PropTypes.array,
+        //选择目标资源类型id标签组
+        tagTargetIdList: PropTypes.array
     };
 
     constructor(props) {
@@ -74,8 +90,10 @@ class AppView extends React.Component {
             userId: 0,
             //控制Modal组件对话框显示、隐藏或者消失
             addBarterVisible: false,
-            //控制PullListDown组件编辑框显示、隐藏或者消失
+            //控制选择资源类型框显示、隐藏或者消失
             pullListDownVisible: false,
+            //控制选择目标资源类型框显示、隐藏或者消失
+            pullListTargetDownVisible: false,
             //控制功能图标位置显示或者消失
             focusFunctionIconsVisibility: false,
             //控制功能图标显示或者隐藏
@@ -238,14 +256,14 @@ class AppView extends React.Component {
     }
 
     /**
-     * 设置对话框上方标签组
+     * 设置选择资源输入框上方标签组
      * @param key
      * @param value
      * @param iconName
      * @returns {XML}
      */
     renderTagList(key, value, iconName) {
-        //删除Tag标签数组元素方法函数
+        //删除选择资源Tag标签数组元素方法函数
         const {deleteTagList} = this.props;
         return (
             <li
@@ -266,12 +284,41 @@ class AppView extends React.Component {
     }
 
     /**
+     * 设置选择目标资源输入框上方标签组
+     * @param key
+     * @param value
+     * @param iconName
+     * @returns {XML}
+     */
+    renderTargetTagList(key, value, iconName) {
+        //删除选择目标资源Tag标签数组元素方法函数
+        const {deleteTargetTagList} = this.props;
+        return (
+            <li
+                key={key}
+                className="keryi_barter_modal_targetTagAreaLi"
+            >
+                <Tag
+                    animation
+                    className="keryi_barter_modal_targetTagArea_tag"
+                    iconName={iconName}
+                    type="primary"
+                    onClose={deleteTargetTagList.bind(this, key)}
+                >
+                    {"#" + value}
+                </Tag>
+            </li>
+        )
+    }
+
+    /**
      * 根据不同的组件类型配置来设置组件
      * @param key
      * @param include
      * @param size
      * @param type
      * @param pullListDown
+     * @param pullListDownKey
      * @param placeholder
      * @param className
      * @param classNameNone
@@ -280,18 +327,22 @@ class AppView extends React.Component {
      * @param iconName
      * @returns {XML}
      */
-    renderModalComponent(key, include, size, type, pullListDown, placeholder, className, classNameNone, classNameShow, functionIcons, iconName) {
+    renderModalComponent(key, include, size, type, pullListDown, pullListDownKey, placeholder, className, classNameNone, classNameShow, functionIcons, iconName) {
         const {
             //根据不同的功能图标Icon类型配置来设置功能图标Icon
             renderFunctionIcons,
-            //设置对话框上方标签组
-            renderTagList
+            //设置选择资源输入框上方标签组
+            renderTagList,
+            //设置选择目标资源输入框上方标签组
+            renderTargetTagList
         } = this;
         const {
             //对话框上传图片组
             imageList,
-            //对话框上方标签组
+            //选择资源输入框上方标签组
             tagList,
+            //选择目标资源输入框上方标签组
+            tagTargetList,
             //改变标题内容函数
             onChangeAreaHandler,
             //改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器
@@ -311,7 +362,7 @@ class AppView extends React.Component {
                         initPullListDownPosition={initPullListDownPosition.bind(this)}
                         placeholder={placeholder}
                         className={className ? className : ""}
-                        onChange={onChangeAreaHandler.bind(this, key)}
+                        onChange={onChangeAreaHandler.bind(this, key, pullListDownKey)}
                     />
                 );
             case componentType[1]:
@@ -352,7 +403,20 @@ class AppView extends React.Component {
                             }.bind(this))
                         }
                     </ul>
-                )
+                );
+            case componentType[4]:
+                return (
+                    <ul
+                        key={key}
+                        className={(tagTargetList && tagTargetList.length > 0) ? classNameShow : classNameNone}
+                    >
+                        {
+                            tagTargetList && tagTargetList.length > 0 && tagTargetList.map(function tagger(tagItem, tagIndex) {
+                                return renderTargetTagList.bind(this)(tagItem["id"], tagItem["tag"], iconName);
+                            }.bind(this))
+                        }
+                    </ul>
+                );
         }
     }
 
@@ -379,6 +443,7 @@ class AppView extends React.Component {
                                 modalItem["size"],
                                 modalItem["type"],
                                 modalItem["pullListDown"],
+                                modalItem["pullListDownKey"],
                                 modalItem["placeholder"],
                                 modalItem["className"],
                                 modalItem["classNameNone"],
@@ -396,27 +461,27 @@ class AppView extends React.Component {
     /**
      * 下拉框关闭函数
      */
-    closePullListDown() {
+    closePullListDown(key) {
         this.setState({
-            pullListDownVisible: false
+            [key]: false
         });
     }
 
     /**
-     * render渲染对话框标签下拉框列表
+     * render渲染对话框选择资源类型下拉框列表
      * @returns {XML}
      */
-    renderModalPullList() {
+    renderModalTagResourcePullList() {
         const {
             //选择资源类型下拉框距离添加对话框左方的位置
             left,
             //对话框模糊查询标签组
             pullList,
-            //下拉框选择函数
+            //下拉框选择,添加选择资源类型Tag标签数组元素方法函数
             selectPullListDown
         } = this.props;
         const {
-            //控制PullListDown组件编辑框显示、隐藏或者消失
+            //控制选择资源类型框显示、隐藏或者消失
             pullListDownVisible
         } = this.state;
         const {
@@ -427,11 +492,47 @@ class AppView extends React.Component {
             <PullListDown
                 visible={pullListDownVisible}
                 title="热门"
-                onSelect={selectPullListDown.bind(this)}
-                onClose={closePullListDown.bind(this)}
+                onSelect={selectPullListDown.bind(this, "sourceTag")}
+                onClose={closePullListDown.bind(this, "pullListDownVisible")}
                 dataSource={pullList}
                 style={{
-                    left
+                    left,
+                    bottom: 0
+                }}
+            />
+        )
+    }
+
+    /**
+     * render渲染对话框选择目标资源类型下拉框列表
+     * @returns {XML}
+     */
+    renderModalTargetTagResourcePullList() {
+        const {
+            //选择目标资源类型下拉框距离添加对话框左方的位置
+            targetLeft,
+            //对话框模糊查询选择目标资源类型标签组
+            pullListTarget,
+            //选择目标资源类型下拉框选择函数
+            selectPullListTargetDown
+        } = this.props;
+        const {
+            //控制选择目标资源类型框显示、隐藏或者消失
+            pullListTargetDownVisible
+        } = this.state;
+        const {
+            //下拉框关闭函数
+            closePullListDown
+        } = this;
+        return (
+            <PullListDown
+                visible={pullListTargetDownVisible}
+                title="热门"
+                onSelect={selectPullListTargetDown.bind(this, "targetSourceTag")}
+                onClose={closePullListDown.bind(this, "pullListTargetDownVisible")}
+                dataSource={pullListTarget}
+                style={{
+                    left: targetLeft
                 }}
             />
         )
@@ -445,8 +546,10 @@ class AppView extends React.Component {
         const {
             //对话框主要内容(包括标题、描述和标签等信息)
             renderModalMain,
-            //对话框标签下拉框列表
-            renderModalPullList
+            //对话框选择资源类型下拉框列表
+            renderModalTagResourcePullList,
+            //对话框选择目标资源类型下拉框列表
+            renderModalTargetTagResourcePullList
         } = this;
         const {
             //控制Modal组件对话框显示、隐藏或者消失
@@ -471,8 +574,10 @@ class AppView extends React.Component {
             >
                 {/*对话框主要内容(包括标题、描述和标签等信息)*/}
                 {renderModalMain.bind(this)()}
-                {/*对话框标签下拉框列表*/}
-                {renderModalPullList.bind(this)()}
+                {/*对话框选择资源类型下拉框列表*/}
+                {renderModalTagResourcePullList.bind(this)()}
+                {/*对话框选择目标资源类型下拉框列表*/}
+                {renderModalTargetTagResourcePullList.bind(this)()}
             </Modal>
         )
     }
@@ -558,14 +663,17 @@ function mapDispatchToProps(dispatch, ownProps) {
         /**
          * 改变Area编辑框内容函数
          * @param key
+         * @param pullListDownKey
          * @param e
          */
-        onChangeAreaHandler(key, e) {
+        onChangeAreaHandler(key, pullListDownKey, e) {
             const {
                 //选择资源类型初始距离添加对话框左边的位置
                 initLeft,
                 //选择资源输入框上方标签组
-                tagList
+                tagList,
+                //选择目标资源输入框上方标签组
+                tagTargetList
             } = this.props;
             if (timer) {
                 clearTimeout(timer);
@@ -574,22 +682,26 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 [key]: value
             });
-            if (key === modalComponentConfig[5]["key"]) {
+            if (key === modalComponentConfig[5]["key"] || key === modalComponentConfig[6]["key"]) {
                 //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题光标位置
                 timer = setTimeout(function controlTimer() {
                     //搜寻资源tag
                     if (value.slice(1) !== "" && (value.indexOf("#") === 0)) {
-                        dispatch(changeTagFunction(initLeft, value.slice(1), tagList));
+                        (key === modalComponentConfig[5]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagList));
+                        (key === modalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagTargetList));
                     } else if (value !== "" && (value.indexOf("#") !== 0)) {
-                        dispatch(changeTagFunction(initLeft, value, tagList));
+                        (key === modalComponentConfig[5]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagList));
+                        (key === modalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagTargetList));
                     }
                     //控制PullListDown组件编辑框取消消失
                     if (value === "" || (value.indexOf("#") === 0 && value.slice(1) === "")) {
-                        this.setState({pullListDownVisible: false});
+                        this.setState({[pullListDownKey]: false});
                         //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
-                        dispatch(resetDistance());
+                        (key === modalComponentConfig[5]["key"]) && dispatch(resetDistance());
+                        //设置选择目标资源类型下拉框重置距离添加选择目标资源类型输入框左边的位置
+                        (key === modalComponentConfig[6]["key"]) && dispatch(resetTargetDistance());
                     } else {
-                        this.setState({pullListDownVisible: true});
+                        this.setState({[pullListDownKey]: true});
                     }
                 }.bind(this), 600);
             }
@@ -618,7 +730,10 @@ function mapDispatchToProps(dispatch, ownProps) {
             dispatch(changeImageList({src: api.GET_RESOURCE_IMAGE + "/" + data, type: "add"}));
         },
         /**
-         * 下拉框选择,添加Tag标签数组元素方法函数
+         * 下拉框选择,添加选择资源类型Tag标签数组元素方法函数
+         * @param key
+         * @param id
+         * @param tag
          */
         selectPullListDown(key, id, tag) {
             this.setState({
@@ -633,13 +748,42 @@ function mapDispatchToProps(dispatch, ownProps) {
             dispatch(resetDistance());
         },
         /**
-         * 删除Tag标签数组元素方法函数
+         * 下拉框选择,添加选择目标资源类型Tag标签数组元素方法函数
+         * @param key
+         * @param id
+         * @param tag
+         */
+        selectPullListTargetDown(key, id, tag) {
+            this.setState({
+                [key]: "",
+                pullListTargetDownVisible: false
+            });
+            //改变选择目标资源类型输入框上方的标签组,添加Tag标签数组元素
+            dispatch(setTargetTagConfig({id, tag, type: "add"}));
+            //改变选择目标资源类型id标签组,添加Tag id标签数组元素
+            dispatch(setTargetTagIdConfig({id, type: "add"}));
+            //设置选择目标资源类型下拉框重置距离添加选择目标资源类型输入框左边的位置
+            dispatch(resetTargetDistance());
+        },
+        /**
+         * 删除选择资源Tag标签数组元素方法函数
+         * @param id
          */
         deleteTagList(id) {
             //改变选择资源类型输入框上方的标签组,删除Tag标签数组元素
             dispatch(setTagConfig({id, type: "delete"}));
             //改变选择资源类型id标签组,删除Tag id标签数组元素
             dispatch(setTagIdConfig({id, type: "delete"}));
+        },
+        /**
+         * 删除选择目标资源Tag标签数组元素方法函数
+         * @param id
+         */
+        deleteTargetTagList(id) {
+            //改变选择目标资源类型输入框上方的标签组,删除Tag标签数组元素
+            dispatch(setTargetTagConfig({id, type: "delete"}));
+            //改变选择目标资源类型id标签组,删除Tag id标签数组元素
+            dispatch(setTargetTagIdConfig({id, type: "delete"}));
         }
     }
 }

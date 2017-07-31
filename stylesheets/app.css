@@ -148,7 +148,8 @@ body {
 
 .keryi_barter_modal_mainContainer .keryi_barter_modal_area_title,
 .keryi_barter_modal_mainContainer .keryi_barter_modal_area_description,
-.keryi_barter_modal_mainContainer .keryi_barter_modal_area_sourceTag {
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_sourceTag,
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_targetSourceTag {
     width: 100%;
     font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
     font-size: 36px;
@@ -178,7 +179,8 @@ body {
     line-height: 21px;
 }
 
-.keryi_barter_modal_mainContainer .keryi_barter_modal_area_sourceTag {
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_sourceTag,
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_targetSourceTag {
     min-height: 30px;
     line-height: 15px;
     font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
@@ -187,7 +189,8 @@ body {
     margin-top: 5px;
 }
 
-.keryi_barter_modal_mainContainer .keryi_barter_modal_area_sourceTag_placeholder {
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_sourceTag_placeholder,
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_targetSourceTag_placeholder {
     font-size: 13px;
     line-height: 15px;
     padding-top: 5px;
@@ -221,20 +224,24 @@ body {
     cursor: pointer;
 }
 
-.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagArea {
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagArea,
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_targetTagArea {
     display: block;
     padding: 0 15px 0 20px;
 }
 
-.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagAreaNone {
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagAreaNone,
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_targetTagAreaNone {
     display: none;
 }
 
-.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagAreaShow {
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagAreaShow,
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_targetTagAreaShow {
     opacity: 1;
 }
 
-.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagArea:after {
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_tagArea:after,
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_targetTagArea:after {
     content: ".";
     clear: both;
     visibility: hidden;
@@ -242,17 +249,20 @@ body {
     height: 0;
 }
 
-.keryi_barter_modal_tagArea > .keryi_barter_modal_tagAreaLi {
+.keryi_barter_modal_tagArea > .keryi_barter_modal_tagAreaLi,
+.keryi_barter_modal_targetTagArea > .keryi_barter_modal_targetTagAreaLi {
     position: relative;
     display: inline-block;
     float: left;
 }
 
-.keryi_barter_modal_tagArea .keryi_barter_modal_tagArea_tag > a {
+.keryi_barter_modal_tagArea .keryi_barter_modal_tagArea_tag > a,
+.keryi_barter_modal_targetTagArea .keryi_barter_modal_targetTagArea_tag > a {
     padding: 4px 12px;
 }
 
-.keryi_barter_modal_tagArea > .keryi_barter_modal_tagAreaLi i {
+.keryi_barter_modal_tagArea > .keryi_barter_modal_tagAreaLi i,
+.keryi_barter_modal_targetTagArea > .keryi_barter_modal_targetTagAreaLi i {
     font-size: 10px;
     top: 0;
     right: 11px;

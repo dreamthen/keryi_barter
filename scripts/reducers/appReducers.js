@@ -11,18 +11,28 @@ const defaultState = {
     description: "",
     //对话框选择资源类型
     sourceTag: "",
+    //对话框选择目标资源类型
+    targetSourceTag: "",
     //选择资源类型初始距离添加选择资源类型输入框左边的位置
     initLeft: 0,
     //选择资源类型下拉框距离添加选择资源类型输入框左边的位置
     left: 0,
+    //选择目标资源类型下拉框距离添加选择资源类型输入框左边的位置
+    targetLeft: 0,
     //资源描述输入框上传图片组
     imageList: [],
     //选择资源类型输入框模糊查询标签组
     pullList: [],
+    //选择目标资源类型输入框模糊查询标签组
+    pullListTarget: [],
     //选择资源类型输入框上方标签组
     tagList: [],
+    //选择目标资源类型输入框上方标签组
+    tagTargetList: [],
     //选择资源类型id标签组
-    tagIdList: []
+    tagIdList: [],
+    //选择目标资源类型id标签组
+    tagTargetIdList: []
 };
 
 /**
@@ -38,16 +48,24 @@ export function appReducers(state = defaultState, actions) {
         //重置对话框状态
         case appActionsType["RESET_MODAL_STATUS"]:
             return defaultState;
-        //设置选择资源类型下拉框距离添加选择资源类型输入框顶部和左边的位置
+        //设置选择资源类型下拉框距离添加选择资源类型输入框左边的位置
         case appActionsType["CHANGE_INIT_DISTANCE"]:
             return insteadState.insteadObjState(state, newState);
         case appActionsType["CHANGE_DISTANCE"]:
             newState["left"] = newState["rectLeft"] - newState["initLeft"] + 20;
             return insteadState.insteadObjState(state, newState);
+        //设置选择目标资源类型下拉框距离添加选择目标资源类型输入框左边的位置
+        case appActionsType["CHANGE_TARGET_DISTANCE"]:
+            newState["targetLeft"] = newState["rectLeft"] - newState["initLeft"] + 20;
+            return insteadState.insteadObjState(state, newState);
         //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
         case appActionsType["RESET_DISTANCE"]:
             let resetNewState = {left: 0};
             return insteadState.insteadObjState(state, resetNewState);
+        //设置选择目标资源类型下拉框重置距离添加选择目标资源类型输入框左边的位置
+        case appActionsType["RESET_TARGET_DISTANCE"]:
+            let resetNewTargetState = {targetLeft: 0};
+            return insteadState.insteadObjState(state, resetNewTargetState);
         //改变资源描述输入框上传图片组
         case appActionsType["CHANGE_IMAGE_LIST"]:
             let imageType = newState["type"];
@@ -80,6 +98,22 @@ export function appReducers(state = defaultState, actions) {
                 default:
                     return state;
             }
+        //改变选择目标资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
+        case appActionsType["SET_TARGET_TAG_CONFIG"]:
+            let targetTagType = newState["type"];
+            switch (targetTagType) {
+                case "add":
+                    return insteadState.insteadArrayAddState(state, newState, "tagTargetList", {
+                        id: newState["id"],
+                        tag: newState["tag"]
+                    });
+                case "delete":
+                    return insteadState.insteadArrayRemoveState(state, newState, "tagTargetList", function filter(item, index) {
+                        return item["id"] !== newState["id"];
+                    });
+                default:
+                    return state;
+            }
         //改变选择资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
         case appActionsType["SET_TAG_ID_CONFIG"]:
             let tagIDType = newState["type"];
@@ -90,6 +124,21 @@ export function appReducers(state = defaultState, actions) {
                     });
                 case "delete":
                     return insteadState.insteadArrayRemoveState(state, newState, "tagIdList", function filter(item, index) {
+                        return item["id"] !== newState["id"];
+                    });
+                default:
+                    return state;
+            }
+        //改变选择目标资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
+        case appActionsType["SET_TARGET_TAG_ID_CONFIG"]:
+            let targetTagIDType = newState["type"];
+            switch (targetTagIDType) {
+                case "add":
+                    return insteadState.insteadArrayAddState(state, newState, "tagTargetIdList", {
+                        id: newState["id"]
+                    });
+                case "delete":
+                    return insteadState.insteadArrayRemoveState(state, newState, "tagTargetIdList", function filter(item, index) {
                         return item["id"] !== newState["id"];
                     });
                 default:

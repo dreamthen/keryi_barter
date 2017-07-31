@@ -4,6 +4,7 @@
 import appActionsType from "./appActionsType";
 import api from "../configs/api";
 import keryiFetchConfig from "../configs/fetchConfig";
+import modalComponentConfig from "../configs/modalComponentConfig";
 import Success from "../prompt/successPrompt";
 import {
     getFocusPosition
@@ -34,12 +35,34 @@ export function changeDistance(payload) {
 }
 
 /**
+ * 设置选择目标资源类型下拉框光标距离添加选择资源类型输入框左边的位置
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function changeTargetDistance(payload) {
+    return {
+        type: appActionsType["CHANGE_TARGET_DISTANCE"],
+        payload
+    }
+}
+
+/**
  * 设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
  * @returns {{type: *}}
  */
 export function resetDistance() {
     return {
         type: appActionsType["RESET_DISTANCE"]
+    }
+}
+
+/**
+ * 设置选择目标资源类型下拉框重置距离添加选择目标资源类型输入框左边的位置
+ * @returns {{type: *}}
+ */
+export function resetTargetDistance() {
+    return {
+        type: appActionsType["RESET_TARGET_DISTANCE"]
     }
 }
 
@@ -65,7 +88,7 @@ export function changeImageList(payload) {
 }
 
 /**
- * 改变选择资源类型输入框模糊搜索标签组
+ * 改变选择资源类型或者目标资源类型输入框模糊搜索标签组
  * @param payload
  * @returns {{type: *, payload: *}}
  */
@@ -89,6 +112,18 @@ export function setTagConfig(payload) {
 }
 
 /**
+ * 改变选择目标资源类型输入框上方的标签组,添加或者删除Tag标签数组元素
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function setTargetTagConfig(payload){
+    return {
+        type: appActionsType["SET_TARGET_TAG_CONFIG"],
+        payload
+    }
+}
+
+/**
  * 改变选择资源类型id标签组,添加或者删除Tag id标签数组元素
  * @param payload
  * @returns {{type: *, payload: *}}
@@ -101,13 +136,26 @@ export function setTagIdConfig(payload) {
 }
 
 /**
+ * 改变选择目标资源类型id标签组,添加或者删除Tag id标签数组元素
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function setTargetTagIdConfig(payload) {
+    return {
+        type: appActionsType["SET_TARGET_TAG_ID_CONFIG"],
+        payload
+    }
+}
+
+/**
  * 搜寻资源tag
+ * @param key
  * @param initLeft
  * @param tag
  * @param tagList
  * @returns {dispatcher}
  */
-export function changeTagFunction(initLeft, tag, tagList) {
+export function changeTagFunction(key, initLeft, tag, tagList) {
     return function dispatcher(dispatch) {
         keryiFetchConfig.fetchRequest(
             api.GET_RESOURCE_TAG_LIST + "/" + tag,
@@ -122,7 +170,15 @@ export function changeTagFunction(initLeft, tag, tagList) {
                     let rect = getFocusPosition();
                     let tagListNow = [];
                     //设置选择资源类型下拉框光标距离添加对话框左边的位置
-                    dispatch(changeDistance({rectLeft: rect.left, initLeft}));
+                    (key === modalComponentConfig[5]["key"]) && dispatch(changeDistance({
+                        rectLeft: rect.left,
+                        initLeft
+                    }));
+                    //设置选择目标资源类型下拉框光标距离添加对话框左边的位置
+                    (key === modalComponentConfig[6]["key"]) && dispatch(changeTargetDistance({
+                        rectLeft: rect.left,
+                        initLeft
+                    }));
                     body.forEach(function tagger(tagItem, tagIndex) {
                         let flag = false;
                         tagList.forEach(function tagBody(item, index) {
@@ -135,8 +191,10 @@ export function changeTagFunction(initLeft, tag, tagList) {
                             tagListNow.push(tagItem);
                         }
                     });
-                    //设置对话框模糊搜索标签组
-                    dispatch(changeTagList({pullList: tagListNow}));
+                    //设置对话框模糊搜索资源类型标签组
+                    (key === modalComponentConfig[5]["key"]) && dispatch(changeTagList({pullList: tagListNow}));
+                    //设置对话框模糊搜索选择目标资源类型标签组
+                    (key === modalComponentConfig[6]["key"]) && dispatch(changeTagList({pullListTarget: tagListNow}));
                 }
             }.bind(this)
         );

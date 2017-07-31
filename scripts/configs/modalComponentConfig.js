@@ -53,9 +53,29 @@ const modalComponentConfig = [
         size: "large",
         value: "选择资源类型",
         pullListDown: true,
+        pullListDownKey:"pullListDownVisible",
         placeholder: "#选择您的资源类型",
         placeholderClassName: "keryi_barter_modal_area_sourceTag_placeholder",
         className: "keryi_barter_modal_area_sourceTag"
+    },
+    {
+        key: "targetTagList",
+        include: "targetTagArea",
+        classNameNone: "keryi_barter_modal_targetTagArea keryi_barter_modal_targetTagAreaNone",
+        className: "keryi_barter_modal_targetTagArea",
+        classNameShow: "keryi_barter_modal_targetTagArea keryi_barter_modal_targetTagAreaShow",
+        iconName: "iconfontKeryiBarter keryiBarter-close"
+    },
+    {
+        key: "targetSourceTag",
+        include: "area",
+        size: "large",
+        value: "选择目标资源类型",
+        pullListDown: true,
+        pullListDownKey:"pullListTargetDownVisible",
+        placeholder: "#选择您的目标资源类型",
+        placeholderClassName: "keryi_barter_modal_area_targetSourceTag_placeholder",
+        className: "keryi_barter_modal_area_targetSourceTag"
     }
 ];
 
