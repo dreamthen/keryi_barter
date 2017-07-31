@@ -496,8 +496,7 @@ class AppView extends React.Component {
                 onClose={closePullListDown.bind(this, "pullListDownVisible")}
                 dataSource={pullList}
                 style={{
-                    left,
-                    bottom: 0
+                    left
                 }}
             />
         )
@@ -638,11 +637,13 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //资源描述输入框上传图片组
                 imageList,
                 //选择资源类型id标签组
-                tagIdList
+                tagIdList,
+                //选择目标资源类型id标签组
+                tagTargetIdList
             } = this.props;
             const imageArrayString = mapArrayToString(imageList);
             //提交发布资源
-            dispatch(publishResource(userId, title, description, imageArrayString, tagIdList));
+            dispatch(publishResource(userId, title, description, imageArrayString, tagIdList, tagTargetIdList));
         },
         /**
          * 控制Modal组件对话框隐藏并消失
@@ -655,7 +656,15 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //设置对话框标题为空
                 title: "",
                 //设置对话框资源描述为空
-                description: ""
+                description: "",
+                //设置对话框选择资源类型为空
+                sourceTag: "",
+                //设置对话框选择目标资源类型为空
+                targetSourceTag: "",
+                //控制选择资源类型框消失
+                pullListDownVisible: false,
+                //控制选择目标资源类型框消失
+                pullListTargetDownVisible: false
             });
             //重置对话框状态
             dispatch(resetModalStatus());
@@ -682,16 +691,16 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 [key]: value
             });
-            if (key === modalComponentConfig[5]["key"] || key === modalComponentConfig[6]["key"]) {
+            if (key === modalComponentConfig[5]["key"] || key === modalComponentConfig[7]["key"]) {
                 //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题光标位置
                 timer = setTimeout(function controlTimer() {
                     //搜寻资源tag
                     if (value.slice(1) !== "" && (value.indexOf("#") === 0)) {
                         (key === modalComponentConfig[5]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagList));
-                        (key === modalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagTargetList));
+                        (key === modalComponentConfig[7]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagTargetList));
                     } else if (value !== "" && (value.indexOf("#") !== 0)) {
                         (key === modalComponentConfig[5]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagList));
-                        (key === modalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagTargetList));
+                        (key === modalComponentConfig[7]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagTargetList));
                     }
                     //控制PullListDown组件编辑框取消消失
                     if (value === "" || (value.indexOf("#") === 0 && value.slice(1) === "")) {
@@ -699,7 +708,7 @@ function mapDispatchToProps(dispatch, ownProps) {
                         //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
                         (key === modalComponentConfig[5]["key"]) && dispatch(resetDistance());
                         //设置选择目标资源类型下拉框重置距离添加选择目标资源类型输入框左边的位置
-                        (key === modalComponentConfig[6]["key"]) && dispatch(resetTargetDistance());
+                        (key === modalComponentConfig[7]["key"]) && dispatch(resetTargetDistance());
                     } else {
                         this.setState({[pullListDownKey]: true});
                     }

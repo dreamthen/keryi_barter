@@ -116,7 +116,7 @@ export function setTagConfig(payload) {
  * @param payload
  * @returns {{type: *, payload: *}}
  */
-export function setTargetTagConfig(payload){
+export function setTargetTagConfig(payload) {
     return {
         type: appActionsType["SET_TARGET_TAG_CONFIG"],
         payload
@@ -175,7 +175,7 @@ export function changeTagFunction(key, initLeft, tag, tagList) {
                         initLeft
                     }));
                     //设置选择目标资源类型下拉框光标距离添加对话框左边的位置
-                    (key === modalComponentConfig[6]["key"]) && dispatch(changeTargetDistance({
+                    (key === modalComponentConfig[7]["key"]) && dispatch(changeTargetDistance({
                         rectLeft: rect.left,
                         initLeft
                     }));
@@ -194,7 +194,7 @@ export function changeTagFunction(key, initLeft, tag, tagList) {
                     //设置对话框模糊搜索资源类型标签组
                     (key === modalComponentConfig[5]["key"]) && dispatch(changeTagList({pullList: tagListNow}));
                     //设置对话框模糊搜索选择目标资源类型标签组
-                    (key === modalComponentConfig[6]["key"]) && dispatch(changeTagList({pullListTarget: tagListNow}));
+                    (key === modalComponentConfig[7]["key"]) && dispatch(changeTagList({pullListTarget: tagListNow}));
                 }
             }.bind(this)
         );
@@ -208,9 +208,10 @@ export function changeTagFunction(key, initLeft, tag, tagList) {
  * @param intro
  * @param imgUrls
  * @param tags
+ * @param targetTags
  * @returns {dispatcher}
  */
-export function publishResource(userId, title, intro, imgUrls, tags) {
+export function publishResource(userId, title, intro, imgUrls, tags, targetTags) {
     return function dispatcher(dispatch) {
         keryiFetchConfig.fetchRequest(
             api.PUBLISH_RESOURCE,
@@ -220,7 +221,8 @@ export function publishResource(userId, title, intro, imgUrls, tags) {
                 title,
                 intro,
                 imgUrls,
-                tags
+                tags,
+                targetTags
             },
             function done(response) {
                 let body = response.body,
