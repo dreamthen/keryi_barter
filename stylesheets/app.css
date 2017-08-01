@@ -142,8 +142,12 @@ body {
 }
 
 .keryi_barter_modal_innerMain {
-    max-height: 440px;
+    max-height: 620px;
     overflow: auto;
+}
+
+.keryi_barter_modal_mainContainer > .keryi_barter_modal_areaMain {
+    position: relative;
 }
 
 .keryi_barter_modal_mainContainer .keryi_barter_modal_area_title,

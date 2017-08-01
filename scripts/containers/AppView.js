@@ -359,6 +359,7 @@ class AppView extends React.Component {
                 return (
                     <main
                         key={key}
+                        className="keryi_barter_modal_areaMain"
                     >
                         <Area
                             value={this.state[key]}
@@ -370,16 +371,19 @@ class AppView extends React.Component {
                             className={className ? className : ""}
                             onChange={onChangeAreaHandler.bind(this, key, pullListDownKey)}
                         />
-                        <PullListDown
-                            visible={this.state[pullListDownKey]}
-                            title="热门"
-                            onSelect={this.props[selectPullListDown].bind(this, this.state[key])}
-                            onClose={this.props[closePullListDown].bind(this, this.state[pullListDownKey])}
-                            dataSource={this.props[pullList]}
-                            style={{
-                                left
-                            }}
-                        />
+                        {
+                            //对话框选择资源类型或者选择目标资源类型下拉框列表
+                            pullListDown && <PullListDown
+                                visible={this.state[pullListDownKey]}
+                                title="热门"
+                                onSelect={this.props[selectPullListDown].bind(this, key)}
+                                onClose={this[closePullListDown].bind(this, pullListDownKey)}
+                                dataSource={this.props[pullList]}
+                                style={{
+                                    left: this.props[left]
+                                }}
+                            />
+                        }
                     </main>
                 );
             case componentType[1]:
@@ -495,11 +499,7 @@ class AppView extends React.Component {
     renderModal() {
         const {
             //对话框主要内容(包括标题、描述和标签等信息)
-            renderModalMain,
-            //对话框选择资源类型下拉框列表
-            renderModalTagResourcePullList,
-            //对话框选择目标资源类型下拉框列表
-            renderModalTargetTagResourcePullList
+            renderModalMain
         } = this;
         const {
             //控制Modal组件对话框显示、隐藏或者消失
@@ -524,10 +524,6 @@ class AppView extends React.Component {
             >
                 {/*对话框主要内容(包括标题、描述和标签等信息)*/}
                 {renderModalMain.bind(this)()}
-                {/*对话框选择资源类型下拉框列表*/}
-                {renderModalTagResourcePullList.bind(this)()}
-                {/*对话框选择目标资源类型下拉框列表*/}
-                {renderModalTargetTagResourcePullList.bind(this)()}
             </Modal>
         )
     }
