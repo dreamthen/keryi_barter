@@ -319,6 +319,10 @@ class AppView extends React.Component {
      * @param type
      * @param pullListDown
      * @param pullListDownKey
+     * @param pullList
+     * @param selectPullListDown
+     * @param closePullListDown
+     * @param left
      * @param placeholder
      * @param className
      * @param classNameNone
@@ -327,7 +331,7 @@ class AppView extends React.Component {
      * @param iconName
      * @returns {XML}
      */
-    renderModalComponent(key, include, size, type, pullListDown, pullListDownKey, placeholder, className, classNameNone, classNameShow, functionIcons, iconName) {
+    renderModalComponent(key, include, size, type, pullListDown, pullListDownKey, pullList, selectPullListDown, closePullListDown, left, placeholder, className, classNameNone, classNameShow, functionIcons, iconName) {
         const {
             //根据不同的功能图标Icon类型配置来设置功能图标Icon
             renderFunctionIcons,
@@ -353,17 +357,30 @@ class AppView extends React.Component {
         switch (include) {
             case componentType[0]:
                 return (
-                    <Area
+                    <main
                         key={key}
-                        value={this.state[key]}
-                        type={type ? type : "imageText"}
-                        size={size}
-                        pullListDown={pullListDown}
-                        initPullListDownPosition={initPullListDownPosition.bind(this)}
-                        placeholder={placeholder}
-                        className={className ? className : ""}
-                        onChange={onChangeAreaHandler.bind(this, key, pullListDownKey)}
-                    />
+                    >
+                        <Area
+                            value={this.state[key]}
+                            type={type ? type : "imageText"}
+                            size={size}
+                            pullListDown={pullListDown}
+                            initPullListDownPosition={initPullListDownPosition.bind(this)}
+                            placeholder={placeholder}
+                            className={className ? className : ""}
+                            onChange={onChangeAreaHandler.bind(this, key, pullListDownKey)}
+                        />
+                        <PullListDown
+                            visible={this.state[pullListDownKey]}
+                            title="热门"
+                            onSelect={this.props[selectPullListDown].bind(this, this.state[key])}
+                            onClose={this.props[closePullListDown].bind(this, this.state[pullListDownKey])}
+                            dataSource={this.props[pullList]}
+                            style={{
+                                left
+                            }}
+                        />
+                    </main>
                 );
             case componentType[1]:
                 return (
@@ -444,6 +461,10 @@ class AppView extends React.Component {
                                 modalItem["type"],
                                 modalItem["pullListDown"],
                                 modalItem["pullListDownKey"],
+                                modalItem["pullList"],
+                                modalItem["selectPullListDown"],
+                                modalItem["closePullListDown"],
+                                modalItem["left"],
                                 modalItem["placeholder"],
                                 modalItem["className"],
                                 modalItem["classNameNone"],
@@ -465,76 +486,6 @@ class AppView extends React.Component {
         this.setState({
             [key]: false
         });
-    }
-
-    /**
-     * render渲染对话框选择资源类型下拉框列表
-     * @returns {XML}
-     */
-    renderModalTagResourcePullList() {
-        const {
-            //选择资源类型下拉框距离添加对话框左方的位置
-            left,
-            //对话框模糊查询标签组
-            pullList,
-            //下拉框选择,添加选择资源类型Tag标签数组元素方法函数
-            selectPullListDown
-        } = this.props;
-        const {
-            //控制选择资源类型框显示、隐藏或者消失
-            pullListDownVisible
-        } = this.state;
-        const {
-            //下拉框关闭函数
-            closePullListDown
-        } = this;
-        return (
-            <PullListDown
-                visible={pullListDownVisible}
-                title="热门"
-                onSelect={selectPullListDown.bind(this, "sourceTag")}
-                onClose={closePullListDown.bind(this, "pullListDownVisible")}
-                dataSource={pullList}
-                style={{
-                    left
-                }}
-            />
-        )
-    }
-
-    /**
-     * render渲染对话框选择目标资源类型下拉框列表
-     * @returns {XML}
-     */
-    renderModalTargetTagResourcePullList() {
-        const {
-            //选择目标资源类型下拉框距离添加对话框左方的位置
-            targetLeft,
-            //对话框模糊查询选择目标资源类型标签组
-            pullListTarget,
-            //选择目标资源类型下拉框选择函数
-            selectPullListTargetDown
-        } = this.props;
-        const {
-            //控制选择目标资源类型框显示、隐藏或者消失
-            pullListTargetDownVisible
-        } = this.state;
-        const {
-            //下拉框关闭函数
-            closePullListDown
-        } = this;
-        return (
-            <PullListDown
-                visible={pullListTargetDownVisible}
-                title="热门"
-                onSelect={selectPullListTargetDown.bind(this, "targetSourceTag")}
-                onClose={closePullListDown.bind(this, "pullListTargetDownVisible")}
-                dataSource={pullListTarget}
-                style={{
-                    left: targetLeft
-                }}
-            />
-        )
     }
 
     /**
