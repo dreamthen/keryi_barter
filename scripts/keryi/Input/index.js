@@ -11,7 +11,7 @@ const defaultTypeConfig = "text";
 //在不传入输入框尺寸size、size为空或者size类型错误时,Input组件输入框className样式表用默认宽度100px
 const defaultSizeConfig = "default";
 //Input组件类型
-const inputType = ["text", "password", "textarea"];
+const inputType = ["text", "password", "number", "textarea"];
 
 /**
  * keryi_barter Input输入框组件
@@ -37,7 +37,11 @@ class Input extends React.Component {
         //Input组件输入框onFocus聚焦事件,外部传入Input输入框聚焦函数
         onFocus: PropTypes.func,
         //Input组件输入框onFocus失焦事件,外部传入Input输入框失焦函数
-        onBlur: PropTypes.func
+        onBlur: PropTypes.func,
+        //Input组件输入框能输入数字的最小值
+        min: PropTypes.number,
+        //Input组件输入框能输入数字的最大值
+        max: PropTypes.number
     };
 
     constructor(props) {
@@ -85,7 +89,11 @@ class Input extends React.Component {
             //Input组件输入框onFocus聚焦事件,外部传入Input输入框聚焦函数
             onFocus,
             //Input组件输入框onFocus失焦事件,外部传入Input输入框失焦函数
-            onBlur
+            onBlur,
+            //Input组件输入框能输入数字的最小值
+            min,
+            //Input组件输入框能输入数字的最大值
+            max
         } = this.props;
         const typeAreaIndex = inputType.length;
         return (
@@ -108,6 +116,8 @@ class Input extends React.Component {
                         className={className}
                         type={type}
                         onChange={onChange}
+                        min={min}
+                        max={max}
                     />
                 }
             </div>

@@ -170,12 +170,12 @@ export function changeTagFunction(key, initLeft, tag, tagList) {
                     let rect = getFocusPosition();
                     let tagListNow = [];
                     //设置选择资源类型下拉框光标距离添加对话框左边的位置
-                    (key === modalComponentConfig[5]["key"]) && dispatch(changeDistance({
+                    (key === modalComponentConfig[6]["key"]) && dispatch(changeDistance({
                         rectLeft: rect.left,
                         initLeft
                     }));
                     //设置选择目标资源类型下拉框光标距离添加对话框左边的位置
-                    (key === modalComponentConfig[7]["key"]) && dispatch(changeTargetDistance({
+                    (key === modalComponentConfig[8]["key"]) && dispatch(changeTargetDistance({
                         rectLeft: rect.left,
                         initLeft
                     }));
@@ -192,9 +192,9 @@ export function changeTagFunction(key, initLeft, tag, tagList) {
                         }
                     });
                     //设置对话框模糊搜索资源类型标签组
-                    (key === modalComponentConfig[5]["key"]) && dispatch(changeTagList({pullList: tagListNow}));
+                    (key === modalComponentConfig[6]["key"]) && dispatch(changeTagList({pullList: tagListNow}));
                     //设置对话框模糊搜索选择目标资源类型标签组
-                    (key === modalComponentConfig[7]["key"]) && dispatch(changeTagList({pullListTarget: tagListNow}));
+                    (key === modalComponentConfig[8]["key"]) && dispatch(changeTagList({pullListTarget: tagListNow}));
                 }
             }.bind(this)
         );
@@ -206,12 +206,13 @@ export function changeTagFunction(key, initLeft, tag, tagList) {
  * @param title
  * @param userId
  * @param intro
+ * @param price_worth
  * @param imgUrls
  * @param tags
  * @param targetTags
  * @returns {dispatcher}
  */
-export function publishResource(userId, title, intro, imgUrls, tags, targetTags) {
+export function publishResource(userId, title, intro, price_worth, imgUrls, tags, targetTags) {
     return function dispatcher(dispatch) {
         keryiFetchConfig.fetchRequest(
             api.PUBLISH_RESOURCE,
@@ -220,6 +221,7 @@ export function publishResource(userId, title, intro, imgUrls, tags, targetTags)
                 userId,
                 title,
                 intro,
+                priceWorth: parseInt(price_worth),
                 imgUrls,
                 tags,
                 targetTags
@@ -236,7 +238,15 @@ export function publishResource(userId, title, intro, imgUrls, tags, targetTags)
                         //设置对话框标题为空
                         title: "",
                         //设置对话框资源描述为空
-                        description: ""
+                        description: "",
+                        //设置对话框选择资源类型为空
+                        sourceTag: "",
+                        //设置对话框选择目标资源类型为空
+                        targetSourceTag: "",
+                        //控制选择资源类型框消失
+                        pullListDownVisible: false,
+                        //控制选择目标资源类型框消失
+                        pullListTargetDownVisible: false
                     });
                     //重置对话框状态
                     dispatch(resetModalStatus());

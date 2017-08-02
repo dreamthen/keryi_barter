@@ -40,6 +40,13 @@ const modalComponentConfig = [
         className: "keryi_barter_modal_area_description"
     },
     {
+        key: "priceWorth",
+        include: "input",
+        size: "large",
+        placeholder:"请对您的资源估值",
+        className: "keryi_barter_modal_area_priceWorth"
+    },
+    {
         key: "tagList",
         include: "tagArea",
         classNameNone: "keryi_barter_modal_tagArea keryi_barter_modal_tagAreaNone",

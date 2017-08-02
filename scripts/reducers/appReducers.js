@@ -13,6 +13,8 @@ const defaultState = {
     sourceTag: "",
     //对话框选择目标资源类型
     targetSourceTag: "",
+    //对话框资源估值
+    priceWorth: "",
     //选择资源类型初始距离添加选择资源类型输入框左边的位置
     initLeft: 0,
     //选择资源类型下拉框距离添加选择资源类型输入框左边的位置

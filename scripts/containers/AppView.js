@@ -35,6 +35,7 @@ import {
     Area,
     Button,
     FigureCarousel,
+    Input,
     Modal,
     PullListDown,
     Tag
@@ -45,7 +46,7 @@ import routesMode from "../configs/routesConfigMode";
 import "../../stylesheets/app.css";
 
 //Area组件编辑框类型
-const componentType = ["area", "functionIcons", "carousel", "tagArea", "targetTagArea"];
+const componentType = ["area", "functionIcons", "carousel", "tagArea", "targetTagArea", "input"];
 //Area组件icon功能图标类型
 const functionIconType = ["uploadPhoto"];
 //时间处理器,用来控制处理查询资源类型
@@ -312,6 +313,17 @@ class AppView extends React.Component {
     }
 
     /**
+     * 改变Input输入框中的内容方法函数
+     * @param key
+     * @param e
+     */
+    onChangeInputHandler(key, e) {
+        this.setState({
+            [key]: e.target.value
+        });
+    }
+
+    /**
      * 根据不同的组件类型配置来设置组件
      * @param key
      * @param include
@@ -338,7 +350,9 @@ class AppView extends React.Component {
             //设置选择资源输入框上方标签组
             renderTagList,
             //设置选择目标资源输入框上方标签组
-            renderTargetTagList
+            renderTargetTagList,
+            //改变Input输入框中的内容方法函数
+            onChangeInputHandler
         } = this;
         const {
             //对话框上传图片组
@@ -438,6 +452,19 @@ class AppView extends React.Component {
                         }
                     </ul>
                 );
+            case componentType[5]:
+                return (
+                    <Input
+                        key={key}
+                        type="number"
+                        size="large"
+                        min={0}
+                        value={this.state[key]}
+                        className={className}
+                        placeholder={placeholder}
+                        onChange={onChangeInputHandler.bind(this, key)}
+                    />
+                )
         }
     }
 
@@ -578,7 +605,9 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //对话框标题
                 title,
                 //对话框资源描述
-                description
+                description,
+                //对话框选择目标资源类型
+                priceWorth
             } = this.state;
             const {
                 //资源描述输入框上传图片组
@@ -590,7 +619,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             } = this.props;
             const imageArrayString = mapArrayToString(imageList);
             //提交发布资源
-            dispatch(publishResource(userId, title, description, imageArrayString, tagIdList, tagTargetIdList));
+            dispatch(publishResource(userId, title, description, priceWorth, imageArrayString, tagIdList, tagTargetIdList));
         },
         /**
          * 控制Modal组件对话框隐藏并消失
@@ -638,24 +667,24 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 [key]: value
             });
-            if (key === modalComponentConfig[5]["key"] || key === modalComponentConfig[7]["key"]) {
+            if (key === modalComponentConfig[6]["key"] || key === modalComponentConfig[8]["key"]) {
                 //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题光标位置
                 timer = setTimeout(function controlTimer() {
                     //搜寻资源tag
                     if (value.slice(1) !== "" && (value.indexOf("#") === 0)) {
-                        (key === modalComponentConfig[5]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagList));
-                        (key === modalComponentConfig[7]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagTargetList));
+                        (key === modalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagList));
+                        (key === modalComponentConfig[8]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagTargetList));
                     } else if (value !== "" && (value.indexOf("#") !== 0)) {
-                        (key === modalComponentConfig[5]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagList));
-                        (key === modalComponentConfig[7]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagTargetList));
+                        (key === modalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagList));
+                        (key === modalComponentConfig[8]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagTargetList));
                     }
                     //控制PullListDown组件编辑框取消消失
                     if (value === "" || (value.indexOf("#") === 0 && value.slice(1) === "")) {
                         this.setState({[pullListDownKey]: false});
                         //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
-                        (key === modalComponentConfig[5]["key"]) && dispatch(resetDistance());
+                        (key === modalComponentConfig[6]["key"]) && dispatch(resetDistance());
                         //设置选择目标资源类型下拉框重置距离添加选择目标资源类型输入框左边的位置
-                        (key === modalComponentConfig[7]["key"]) && dispatch(resetTargetDistance());
+                        (key === modalComponentConfig[8]["key"]) && dispatch(resetTargetDistance());
                     } else {
                         this.setState({[pullListDownKey]: true});
                     }

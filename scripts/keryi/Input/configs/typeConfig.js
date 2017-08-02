@@ -7,6 +7,8 @@ const typeConfig = {
     text: "keryi_barter_input keryi_barter_text_input",
     //Input组件密码输入框
     password: "keryi_barter_input keryi_barter_password_input",
+    //Input组件数字输入框
+    number: "keryi_barter_input keryi_barter_number_input",
     //Input组件textarea段落文本框
     textarea: "keryi_barter_input keryi_barter_textarea_input"
 };

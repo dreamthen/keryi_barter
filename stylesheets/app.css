@@ -142,7 +142,7 @@ body {
 }
 
 .keryi_barter_modal_innerMain {
-    max-height: 620px;
+    max-height: 650px;
     overflow: auto;
 }
 
@@ -153,7 +153,8 @@ body {
 .keryi_barter_modal_mainContainer .keryi_barter_modal_area_title,
 .keryi_barter_modal_mainContainer .keryi_barter_modal_area_description,
 .keryi_barter_modal_mainContainer .keryi_barter_modal_area_sourceTag,
-.keryi_barter_modal_mainContainer .keryi_barter_modal_area_targetSourceTag {
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_targetSourceTag,
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_priceWorth {
     width: 100%;
     font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
     font-size: 36px;
@@ -184,13 +185,19 @@ body {
 }
 
 .keryi_barter_modal_mainContainer .keryi_barter_modal_area_sourceTag,
-.keryi_barter_modal_mainContainer .keryi_barter_modal_area_targetSourceTag {
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_targetSourceTag,
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_priceWorth {
     min-height: 30px;
     line-height: 15px;
     font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
     font-size: 13px;
     padding: 5px 0 10px 0;
     margin-top: 5px;
+}
+
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_priceWorth {
+    min-height: 35px;
+    padding: 0 15px 0 20px;
 }
 
 .keryi_barter_modal_mainContainer .keryi_barter_modal_area_sourceTag_placeholder,
@@ -270,6 +277,10 @@ body {
     font-size: 10px;
     top: 0;
     right: 11px;
+}
+
+.keryi_barter_modal_mainContainer .keryi_barter_modal_area_priceWorth::placeholder {
+    color: #a2a2a2;
 }
 
 
