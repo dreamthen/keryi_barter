@@ -25,7 +25,7 @@ class BarterView extends React.Component {
      * 组件开始装载
      */
     componentWillMount() {
-
+        console.log(document.cookie);
     }
 
     /**

@@ -32,7 +32,7 @@ const MANIFEST = require(path.resolve(__dirname, DLL_DIR + "/vendor_manifest.dll
 const STYLE_DIR = path.resolve(__dirname, "../stylesheets/");
 
 //webpack-dev-server代理服务器在本地运行端口设置
-const PORT = "9070";
+const PORT = "9077";
 
 //autoprefixer添加css扩展头以兼容浏览器的浏览器版本
 const AUTO_PREFIXER_BROWSERS = [
@@ -194,12 +194,12 @@ const keryi_dev_config = {
         port: PORT,
         //跨域代理服务器配置
         proxy: {
-            "/keryi_barter/": {
+            "/keryi_barter": {
                 //跨域代理服务器连接IP地址和端口号
                 target: "http://123.56.26.138:8080/",
                 secure: false,
                 //利用模拟路径/keryi_barter/进行跨域连接,跨域连接完成之后,重写路径将模拟路径/keryi_barter/处理掉
-                pathRewrite: {"/keryi_barter/": ""}
+                pathRewrite: {"/keryi_barter": ""}
             }
         }
     }

@@ -1,7 +1,7 @@
 /**
  * Created by yinwk on 2017/6/3.
  */
-import keryiFetchConfig from "../configs/fetchConfig";
+import keryiAxiosConfig from "../configs/axiosConfig";
 import api from "../configs/api";
 import Success from "../prompt/successPrompt";
 import loginActionsType from "./loginActionsType";
@@ -12,19 +12,21 @@ import loginActionsType from "./loginActionsType";
  * @param password
  */
 export function login(account, password) {
-    //fetch服务器请求响应集成对象
-    keryiFetchConfig.fetchRequest(
+    //axios服务器请求响应集成对象
+    keryiAxiosConfig.axiosRequest(
         api.KERYI_LOGIN,
-        "get",
+        "post",
         {
             account,
             password
         },
-        function done(response) {
+        function done(response, status) {
             //服务器响应数据
-            const body = response.body,
+            let data = response.data,
+                //服务器响应body主题对象
+                body = data.body,
                 //服务器响应head头部对象
-                head = response.head,
+                head = data.head,
                 //服务器响应code状态码
                 code = head.code,
                 //服务器对响应结果描述
@@ -40,7 +42,7 @@ export function login(account, password) {
                 localStorage.setItem("userLoginInformation", JSON.stringify(body));
                 //FIXME 这里设置一个时间控制器,登录成功后,看到成功提示语1.5s之后,跳转到keryi主页面
                 setTimeout(function timer() {
-                    window.location.href = "./index.html";
+                    window.location.href = "index.html";
                 }.bind(this), 1500);
             } else {
                 //登录出现错误或者异常,设置警告提示语状态
@@ -60,8 +62,8 @@ export function login(account, password) {
  * @param password
  */
 export function register(account, password) {
-    //fetch服务器请求响应集成对象
-    keryiFetchConfig.fetchRequest(
+    //axios服务器请求响应集成对象
+    keryiAxiosConfig.axiosRequest(
         api.KERYI_REGISTER,
         "post",
         {
@@ -70,12 +72,14 @@ export function register(account, password) {
         },
         function done(response) {
             //服务器响应数据
-            const body = response.body,
+            let data = response.data,
+                //服务器响应body主题对象
+                body = data.body,
                 //服务器响应head头部对象
-                head = response.head,
+                head = data.head,
                 //服务器响应code状态码
                 code = head.code,
-                //服务器响应状态描述
+                //服务器对响应结果描述
                 msg = head.message;
             const {
                 setPromptTrueOrFalse,

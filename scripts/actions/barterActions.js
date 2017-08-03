@@ -3,7 +3,7 @@
  */
 import appActionsType from "./appActionsType";
 import api from "../configs/api";
-import keryiFetchConfig from "../configs/fetchConfig";
+import keryiAxiosConfig from "../configs/axiosConfig";
 import Success from "../prompt/successPrompt";
 
 //获取资源列表的每页页码数量
@@ -16,7 +16,8 @@ const PAGE_SIZE = 10;
  */
 export function getResourcesList(pageNum) {
     return function dispatchMe(dispatch) {
-        keryiFetchConfig.fetchRequest(
+        //axios服务器请求响应集成对象
+        keryiAxiosConfig.axiosRequest(
             api.GET_RESOURCE_LIST,
             "GET",
             {
@@ -25,9 +26,11 @@ export function getResourcesList(pageNum) {
             },
             function done(response) {
                 //服务器响应数据
-                let body = response.body,
+                let data = response.data,
+                    //服务器响应body主题对象
+                    body = data.body,
                     //服务器响应head头部对象
-                    head = response.head,
+                    head = data.head,
                     //服务器响应code状态码
                     code = head.code,
                     //服务器对响应结果描述

@@ -3,7 +3,7 @@
  */
 import appActionsType from "./appActionsType";
 import api from "../configs/api";
-import keryiFetchConfig from "../configs/fetchConfig";
+import keryiAxiosConfig from "../configs/axiosConfig";
 import modalComponentConfig from "../configs/modalComponentConfig";
 import Success from "../prompt/successPrompt";
 import {
@@ -157,15 +157,22 @@ export function setTargetTagIdConfig(payload) {
  */
 export function changeTagFunction(key, initLeft, tag, tagList) {
     return function dispatcher(dispatch) {
-        keryiFetchConfig.fetchRequest(
+        //axios服务器请求响应集成对象
+        keryiAxiosConfig.axiosRequest(
             api.GET_RESOURCE_TAG_LIST + "/" + tag,
             "get",
             {},
             function done(response) {
-                let head = response.head,
+                //服务器响应数据
+                let data = response.data,
+                    //服务器响应body主题对象
+                    body = data.body,
+                    //服务器响应head头部对象
+                    head = data.head,
+                    //服务器响应code状态码
                     code = head.code,
-                    msg = head.message,
-                    body = response.body;
+                    //服务器对响应结果描述
+                    msg = head.message;
                 if (code === Success.GET_RESOURCE_TAG_SUCCESS_CODE) {
                     let rect = getFocusPosition();
                     let tagListNow = [];
@@ -214,7 +221,8 @@ export function changeTagFunction(key, initLeft, tag, tagList) {
  */
 export function publishResource(userId, title, intro, price_worth, imgUrls, tags, targetTags) {
     return function dispatcher(dispatch) {
-        keryiFetchConfig.fetchRequest(
+        //axios服务器请求响应集成对象
+        keryiAxiosConfig.axiosRequest(
             api.PUBLISH_RESOURCE,
             "post",
             {
@@ -227,9 +235,15 @@ export function publishResource(userId, title, intro, price_worth, imgUrls, tags
                 targetTags
             },
             function done(response) {
-                let body = response.body,
-                    head = response.head,
+                //服务器响应数据
+                let data = response.data,
+                    //服务器响应body主题对象
+                    body = data.body,
+                    //服务器响应head头部对象
+                    head = data.head,
+                    //服务器响应code状态码
                     code = head.code,
+                    //服务器对响应结果描述
                     msg = head.message;
                 if (code === Success.PUBLISH_RESOURCE_SUCCESS_CODE) {
                     this.setState({
