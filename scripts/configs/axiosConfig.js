@@ -6,7 +6,7 @@ import requestError from "./requestError";
 
 const GET_METHOD = "GET";
 const axiosInstance = axios.create({
-    xsrfHeaderName: "JSESSIONID"
+
 });
 //axios服务器请求响应集成对象
 const keryiAxiosConfig = {
