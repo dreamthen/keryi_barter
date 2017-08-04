@@ -5,9 +5,7 @@ import axios from "axios";
 import requestError from "./requestError";
 
 const GET_METHOD = "GET";
-const axiosInstance = axios.create({
 
-});
 //axios服务器请求响应集成对象
 const keryiAxiosConfig = {
     /**
@@ -18,7 +16,7 @@ const keryiAxiosConfig = {
      * @param done
      */
     axiosRequest: function (url, method, data, done) {
-        axiosInstance({
+        axios({
             //服务器请求地址
             url,
             //服务器请求方法

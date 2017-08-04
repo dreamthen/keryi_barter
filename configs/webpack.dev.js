@@ -194,12 +194,12 @@ const keryi_dev_config = {
         port: PORT,
         //跨域代理服务器配置
         proxy: {
-            "/keryi_barter": {
+            "/manager/*": {
                 //跨域代理服务器连接IP地址和端口号
-                target: "http://123.56.26.138:8080/",
+                target: "http://123.56.26.138:8080",
                 secure: false,
-                //利用模拟路径/keryi_barter/进行跨域连接,跨域连接完成之后,重写路径将模拟路径/keryi_barter/处理掉
-                pathRewrite: {"/keryi_barter": ""}
+                //可跨域联调后台接口
+                changeOrigin: true
             }
         }
     }
