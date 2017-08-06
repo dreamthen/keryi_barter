@@ -15,7 +15,7 @@ export function login(account, password) {
     //axios服务器请求响应集成对象
     keryiAxiosConfig.axiosRequest(
         api.KERYI_LOGIN,
-        "post",
+        "get",
         {
             account,
             password

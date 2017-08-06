@@ -34,17 +34,6 @@ const STYLE_DIR = path.resolve(__dirname, "../stylesheets/");
 //webpack-dev-server代理服务器在本地运行端口设置
 const PORT = "9077";
 
-//autoprefixer添加css扩展头以兼容浏览器的浏览器版本
-const AUTO_PREFIXER_BROWSERS = [
-    "Android >= 4",
-    "iOS >= 7",
-    "Chrome >= 35",
-    "Firefox >= 31",
-    "Explorer >= 9",
-    "Opera >= 12",
-    "Safari >= 7.1"
-];
-
 //webpack web开发环境打包管理配置
 const keryi_dev_config = {
     //webpack七种打包管理方式之一:eval
@@ -100,10 +89,7 @@ const keryi_dev_config = {
                     use: [
                         {loader: "css-loader", options: {importLoaders: 1}},
                         //添加选项插件,利用autoprefixer打包,再利用postcss-loader模块加载工具添加css扩展头以兼容浏览器
-                        {
-                            loader: "postcss-loader",
-                            options: {postcss: [autoprefixer({browsers: AUTO_PREFIXER_BROWSERS})]}
-                        }
+                        {loader: "postcss-loader"}
                     ],
                     publicPath: STYLE_DIR
                 })
