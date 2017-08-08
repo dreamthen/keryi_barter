@@ -4,8 +4,7 @@
 */
 .keryi_barter_card {
     position: relative;
-    width: calc(100% - 83px);
-    left: 15px;
+    width: 100%;
     padding-top: 15px;
     border-radius: 4px;
     box-sizing: border-box;

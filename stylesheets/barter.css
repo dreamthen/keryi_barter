@@ -44,6 +44,16 @@
 }
 
 /*
+    keryi_barter主页面主要内容barter列表主容器样式
+*/
+.keryi_barter_cardInfo > .keryi_barter_card_container {
+    position: relative;
+    width: calc(100% - 83px);
+    left: 15px;
+    cursor: pointer;
+}
+
+/*
     keryi_barter主页面主要内容边栏容器样式
 */
 .keryi_barter_main_container > .keryi_barter_main_aside {

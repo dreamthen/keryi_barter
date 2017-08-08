@@ -86,18 +86,6 @@ class KeryiCard extends React.Component {
     }
 
     /**
-     * render渲染card加载更多图片区域
-     * @returns {XML}
-     */
-    renderCardImageMore() {
-        return (
-            <section className="keryi_barter_card_image_more">
-
-            </section>
-        )
-    }
-
-    /**
      * render渲染card图片组(最多三张)
      * @param imageList
      */

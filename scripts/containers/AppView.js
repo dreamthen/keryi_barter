@@ -520,7 +520,7 @@ class AppView extends React.Component {
     }
 
     /**
-     * keryi_barter主页面添加"以物换物"需要对话框
+     * keryi_barter主页面添加"以物换物"资源对话框
      * @returns {XML}
      */
     renderModal() {
@@ -568,7 +568,7 @@ class AppView extends React.Component {
             renderShadow,
             //keryi_barter主页面主要内容barterList列表
             renderMain,
-            //keryi_barter主页面添加"以物换物"需要对话框
+            //keryi_barter主页面添加"以物换物"资源对话框
             renderModal
         } = this;
         return (
@@ -582,7 +582,7 @@ class AppView extends React.Component {
                 <footer>
 
                 </footer>
-                {/*keryi_barter主页面添加"以物换物"需要对话框*/}
+                {/*keryi_barter主页面添加"以物换物"资源对话框*/}
                 {renderModal.bind(this)()}
             </div>
         )

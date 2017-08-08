@@ -3,7 +3,11 @@
  */
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
-import {KeryiCard, HeadPortrait} from "../keryi";
+import {
+    HeadPortrait,
+    KeryiCard,
+    Modal
+} from "../keryi";
 import {getResourcesList} from "../actions/barterActions";
 import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
 import "../../stylesheets/barter.css";
@@ -18,7 +22,10 @@ class BarterView extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            //控制Modal组件对话框显示、隐藏或者消失
+            viewBarterVisible: false
+        }
     }
 
     /**
@@ -52,28 +59,67 @@ class BarterView extends React.Component {
     }
 
     /**
+     * 控制Modal组件对话框显示
+     * @params e
+     */
+    viewKeryiBarterHandler(e) {
+        this.setState({
+            viewBarterVisible: true
+        });
+        //取消冒泡
+        e.stopPropagation();
+    }
+
+    /**
      * render渲染用户资源卡片
      * @returns {XML}
      */
     renderKeryiCard(keryiCard) {
+        const {
+            //控制Modal组件对话框显示
+            viewKeryiBarterHandler
+        } = this;
         return (
-            <KeryiCard
-                userName="1000yardStyle"
-                imageList={eval("(" + keryiCard["imgUrls"] + ")")}
-                title={keryiCard["title"]}
-                introduce={keryiCard["intro"]}
-                tagList={[{
-                    type: "primary",
-                    content: "react"
-                }, {
-                    type: "primary",
-                    content: "react-redux"
-                }, {
-                    type: "primary",
-                    content: "react-router-redux"
-                }]}
-                needParty={keryiCard["price_worth"]}
-            />
+            <div
+                className="keryi_barter_card_container"
+                onClick={viewKeryiBarterHandler.bind(this)}
+            >
+                <KeryiCard
+                    userName="1000yardStyle"
+                    imageList={eval("(" + keryiCard["imgUrls"] + ")")}
+                    title={keryiCard["title"]}
+                    introduce={keryiCard["intro"]}
+                    tagList={[{
+                        type: "primary",
+                        content: "react"
+                    }, {
+                        type: "primary",
+                        content: "react-redux"
+                    }, {
+                        type: "primary",
+                        content: "react-router-redux"
+                    }]}
+                    needParty={keryiCard["price_worth"]}
+                />
+            </div>
+        )
+    }
+
+    /**
+     * keryi_barter主页面查看"以物换物"资源对话框
+     * @returns {XML}
+     */
+    renderModal() {
+        const {
+            //控制Modal组件对话框显示、隐藏或者消失
+            viewBarterVisible
+        } = this.state;
+        return (
+            <Modal
+                visible={viewBarterVisible}
+                closable
+            >
+            </Modal>
         )
     }
 
@@ -90,7 +136,9 @@ class BarterView extends React.Component {
             //render渲染用户头像
             renderHeadPortrait,
             //render渲染用户资源卡片
-            renderKeryiCard
+            renderKeryiCard,
+            //keryi_barter主页面查看"以物换物"资源对话框
+            renderModal
         } = this;
         return (
             <div className="keryi_barter_main_container">
@@ -117,6 +165,8 @@ class BarterView extends React.Component {
                             </article>
                     }
                 </div>
+                {/*keryi_barter主页面查看"以物换物"资源对话框*/}
+                {renderModal.bind(this)()}
                 <aside className="keryi_barter_main_module keryi_barter_main_aside">
 
                 </aside>

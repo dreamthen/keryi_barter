@@ -100,7 +100,10 @@ const keryi_dev_config = {
                 //利用url-loader模块加载工具对图片进行打包管理,限制大小为10000byte
                 //如果图片大小小于10000byte,就不会独立打包形成.js文件,而是以data:base64的形式存在
                 //如果图片大小超过10000byte,就会独立打包形成.js文件
-                use: "url-loader?limit=10000"
+                use: [
+                    "url-loader?limit=10000",
+                    "image-webpack-loader"
+                ]
             }
         ]
     },
