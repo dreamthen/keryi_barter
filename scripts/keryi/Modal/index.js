@@ -2,6 +2,7 @@
  * Created by yinwk on 2017/6/21.
  */
 import React, {PropTypes} from "react";
+import ReactDOM from "react-dom";
 import HeadPortrait from "../HeadPortrait";
 import Button from "../Button";
 import modalConfig from "./configs/modalConfig";
@@ -61,6 +62,22 @@ class Modal extends React.Component {
                 });
             }.bind(this), 100);
         }
+    }
+
+    componentDidUpdate(prevState) {
+        this._render();
+    }
+
+    /**
+     * 组件结束装载
+     */
+    componentDidMount() {
+        //创建Modal组件对话框DIV容器
+        this.modalDiv = document.createElement("div");
+        //添加到body标签中
+        document.body.appendChild(this.modalDiv);
+        //渲染Modal组件对话框
+        this._render.bind(this)();
     }
 
     /**
@@ -125,10 +142,6 @@ class Modal extends React.Component {
             //Modal组件对话框提交发布回调函数
             onOk
         } = this.props;
-        const {
-            //关闭Modal对话框,并执行参数方法函数
-            closeModal
-        } = this;
         //关闭Modal对话框,并执行提交发布回调函数
         onOk();
         //取消冒泡
@@ -243,7 +256,10 @@ class Modal extends React.Component {
         )
     }
 
-    render() {
+    /**
+     *  render渲染Modal组件对话框
+     */
+    _render() {
         const {
             //根据外部传入的props visible来设置Modal组件对话框className样式表
             visibleToClass,
@@ -268,7 +284,7 @@ class Modal extends React.Component {
             //Modal组件主要内容(外部传入)
             children
         } = this.props;
-        return (
+        ReactDOM.render(
             <section
                 tabIndex="-1"
                 className={appearToClass.bind(this)() + visibleToClass.bind(this)()}
@@ -301,8 +317,12 @@ class Modal extends React.Component {
                         </article>
                     </main>
                 </section>
-            </section>
-        )
+            </section>, this.modalDiv
+        );
+    }
+
+    render() {
+        return null;
     }
 }
 
