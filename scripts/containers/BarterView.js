@@ -38,8 +38,11 @@ class BarterView extends React.Component {
      * 组件结束装载
      */
     componentDidMount() {
-        const {dispatch, current} = this.props;
-        dispatch(getResourcesList(current));
+        const {
+            //dispatch获取资源数据列表
+            dispatchResourceList
+        } = this.props;
+        dispatchResourceList.bind(this)();
     }
 
     /**
@@ -59,18 +62,6 @@ class BarterView extends React.Component {
     }
 
     /**
-     * 控制Modal组件对话框显示
-     * @params e
-     */
-    viewKeryiBarterHandler(e) {
-        this.setState({
-            viewBarterVisible: true
-        });
-        //取消冒泡
-        e.stopPropagation();
-    }
-
-    /**
      * render渲染用户资源卡片
      * @returns {XML}
      */
@@ -78,11 +69,10 @@ class BarterView extends React.Component {
         const {
             //控制Modal组件对话框显示
             viewKeryiBarterHandler
-        } = this;
+        } = this.props;
         return (
             <div
                 className="keryi_barter_card_container"
-                onClick={viewKeryiBarterHandler.bind(this)}
             >
                 <KeryiCard
                     userName="1000yardStyle"
@@ -100,6 +90,8 @@ class BarterView extends React.Component {
                         content: "react-router-redux"
                     }]}
                     needParty={keryiCard["price_worth"]}
+                    viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
+                    onViewDetails={viewKeryiBarterHandler.bind(this)}
                 />
             </div>
         )
@@ -114,10 +106,15 @@ class BarterView extends React.Component {
             //控制Modal组件对话框显示、隐藏或者消失
             viewBarterVisible
         } = this.state;
+        const {
+            //控制Modal组件对话框隐藏并消失
+            closeBarterVisibleHandler
+        } = this.props;
         return (
             <Modal
                 visible={viewBarterVisible}
                 closable
+                onClose={closeBarterVisibleHandler.bind(this)}
             >
             </Modal>
         )
@@ -175,10 +172,41 @@ class BarterView extends React.Component {
     }
 }
 
-function select(state, ownProps) {
+function mapStateToProps(state, ownProps) {
     return {
         ...state.barterReducers
     }
 }
 
-export default connect(select)(BarterView);
+function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        /**
+         * 控制Modal组件对话框显示
+         * @params e
+         */
+        viewKeryiBarterHandler(e) {
+            this.setState({
+                viewBarterVisible: true
+            });
+            //取消冒泡
+            e.nativeEvent.stopImmediatePropagation();
+        },
+        /**
+         * dispatch获取资源数据列表
+         */
+        dispatchResourceList() {
+            const {current} = this.props;
+            dispatch(getResourcesList(current));
+        },
+        /**
+         * 控制Modal组件对话框隐藏并消失
+         */
+        closeBarterVisibleHandler() {
+            this.setState({
+                viewBarterVisible: false
+            });
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BarterView);

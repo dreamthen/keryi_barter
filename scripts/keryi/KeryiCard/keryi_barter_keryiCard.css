@@ -43,6 +43,24 @@
     line-height: 20px;
 }
 
+.keryi_barter_card_header > .keryi_barter_card_userName {
+    float: left;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.keryi_barter_card_header > .keryi_barter_card_viewDetail {
+    float: right;
+}
+
+.keryi_barter_card_header:after {
+    clear: both;
+    content: ".";
+    display: block;
+    visibility: hidden;
+    height: 0;
+}
+
 .keryi_barter_card_main > .keryi_barter_card_mainContent {
     width: 100%;
 }

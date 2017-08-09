@@ -623,9 +623,8 @@ function mapDispatchToProps(dispatch, ownProps) {
         },
         /**
          * 控制Modal组件对话框隐藏并消失
-         * @param e
          */
-        addBarterCloseHandler(e) {
+        addBarterCloseHandler() {
             this.setState({
                 //控制对话框隐藏并消失
                 addBarterVisible: false,

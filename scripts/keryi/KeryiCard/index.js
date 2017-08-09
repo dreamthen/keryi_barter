@@ -5,12 +5,15 @@ import React, {PropTypes} from "react";
 import SpinAnimation from "../SpinAnimation";
 import Tag from "../Tag";
 import keryiCardConfig from "./configs/keryiCardConfig";
+import viewDetailConfig from "./configs/keryiCardConfig";
 import "./keryi_barter_keryiCard.css";
 
 //KeryiCard组件卡片"更多图片"设置过渡动画以及透明度对象属性
 const loadingAppear = "loading";
 //KeryiCard组件卡片"更多图片"设置消失(透明度为0)对象属性
 const loadingDisappear = "loading_disAppear";
+//KeryiCard组件卡片查看资源详情默认Icon配置
+const defaultViewDetail = "default";
 
 /**
  * keryi_barter KeryiCard卡片组件
@@ -28,7 +31,11 @@ class KeryiCard extends React.Component {
         //KeryiCard组件卡片资源类型标签
         tagList: PropTypes.array,
         //KeryiCard组件卡片资源被需要数目
-        needParty: PropTypes.number
+        needParty: PropTypes.number,
+        //KeryiCard组件卡片查看资源详情icon className
+        viewDetails: PropTypes.string,
+        //KeryiCard组件卡片点击查看资源详情icon回调函数
+        onViewDetails: PropTypes.func
     };
 
     constructor(props) {
@@ -44,6 +51,46 @@ class KeryiCard extends React.Component {
     }
 
     /**
+     * 根据外部传入的props viewDetails来设置KeryiCard组件卡片查看资源详情icon className样式表
+     * @returns {*}
+     */
+    outSideViewDetailClassToClass() {
+        const {
+            //KeryiCard组件卡片查看资源详情icon className
+            viewDetails
+        } = this.props;
+        //如果外部传入的props viewDetails不为空,就使用外部传入的props viewDetails来设置KeryiCard组件卡片查看资源详情icon className样式表;如果外部传入的props viewDetails为空,就使用默认的KeryiCard组件卡片查看资源详情icon className样式表
+        return viewDetails ? viewDetails : viewDetailConfig[defaultViewDetail];
+    }
+
+    /**
+     * render渲染card主要内容头部查看资源详情icon
+     * @returns {XML}
+     */
+    renderCardViewDetail() {
+        const {
+            //KeryiCard组件卡片点击查看资源详情icon回调函数
+            onViewDetails
+        } = this.props;
+        const {
+            //根据外部传入的props viewDetails来设置KeryiCard组件卡片查看资源详情icon className样式表
+            outSideViewDetailClassToClass
+        } = this;
+        return (
+            <aside
+                className="keryi_barter_card_viewDetail"
+                onClick={onViewDetails.bind(this)}
+            >
+                <i
+                    className={outSideViewDetailClassToClass.bind(this)()}
+                >
+
+                </i>
+            </aside>
+        )
+    }
+
+    /**
      * render渲染card主要内容头部
      * @returns {XML}
      */
@@ -52,9 +99,15 @@ class KeryiCard extends React.Component {
             //KeryiCard组件卡片用户名
             userName
         } = this.props;
+        const {
+            //card主要内容头部查看资源详情icon
+            renderCardViewDetail
+        } = this;
         return (
             <header className="keryi_barter_card_header">
-                {userName}
+                <dfn className="keryi_barter_card_userName">{userName}</dfn>
+                {/*card主要内容头部查看资源详情icon*/}
+                {/*{renderCardViewDetail.bind(this)()}*/}
             </header>
         )
     }
@@ -196,6 +249,7 @@ class KeryiCard extends React.Component {
      * @returns {XML}
      */
     renderCardFoot() {
+        //KeryiCard组件卡片资源被需要数目
         const {needParty} = this.props;
         return (
             <section
