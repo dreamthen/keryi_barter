@@ -37,20 +37,33 @@
 .keryi_barter_card_main > .keryi_barter_card_header {
     font-family: "Microsoft YaHei UI";
     font-size: 13px;
-    font-weight: bolder;
     margin: -3px 0 13px;
     height: 20px;
     line-height: 20px;
+    overflow: hidden;
 }
 
 .keryi_barter_card_header > .keryi_barter_card_userName {
     float: left;
-    font-weight: normal;
+    font-weight: bolder;
     font-style: normal;
 }
 
 .keryi_barter_card_header > .keryi_barter_card_viewDetail {
+    position: relative;
+    left: 90px;
     float: right;
+    cursor: pointer;
+    transition: all .5s ease-in-out 0s;
+}
+
+.keryi_barter_card_viewDetail > .keryi_barter_card_viewDetail_description {
+    position: relative;
+    font-family: "Microsoft YaHei UI";
+    font-size: 12px;
+    bottom: 2px;
+    left: 2px;
+    margin-left: 4px;
 }
 
 .keryi_barter_card_header:after {
@@ -59,6 +72,11 @@
     display: block;
     visibility: hidden;
     height: 0;
+}
+
+.keryi_barter_card_viewDetail > i {
+    font-size: 25px;
+    color: #63A8F0;
 }
 
 .keryi_barter_card_main > .keryi_barter_card_mainContent {

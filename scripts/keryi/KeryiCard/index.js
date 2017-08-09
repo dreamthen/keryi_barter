@@ -86,6 +86,7 @@ class KeryiCard extends React.Component {
                 >
 
                 </i>
+                <span className="keryi_barter_card_viewDetail_description">查看资源详情</span>
             </aside>
         )
     }
@@ -107,7 +108,7 @@ class KeryiCard extends React.Component {
             <header className="keryi_barter_card_header">
                 <dfn className="keryi_barter_card_userName">{userName}</dfn>
                 {/*card主要内容头部查看资源详情icon*/}
-                {/*{renderCardViewDetail.bind(this)()}*/}
+                {renderCardViewDetail.bind(this)()}
             </header>
         )
     }
