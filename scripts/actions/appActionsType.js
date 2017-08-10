@@ -7,6 +7,8 @@ const appActionsType = {
     GET_RESOURCE_LIST: "GET_RESOURCE_LIST",
     //获取资源详情Action名称
     GET_RESOURCE_LIST_VIEW_DETAIL: "GET_RESOURCE_LIST_VIEW_DETAIL",
+    //获取资源详情用户头像Action名称
+    GET_USER_HEAD_PORTRAIT_VIEW_DETAIL: "GET_USER_HEAD_PORTRAIT_VIEW_DETAIL",
     //重置对话框状态Action名称
     RESET_MODAL_STATUS: "RESET_MODAL_STATUS",
     //选择资源类型初始距离添加选择资源类型输入框左边的位置

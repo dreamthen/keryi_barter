@@ -12,7 +12,9 @@ import {
     //获取资源列表Action
     getResourcesList,
     //获取资源详情Action
-    getResourcesListViewDetailsAction
+    getResourcesListViewDetailsAction,
+    //获取资源详情用户头像Action
+    getUserHeadPortraitViewDetail
 } from "../actions/barterActions";
 import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
 import "../../stylesheets/barter.css";
@@ -23,6 +25,8 @@ class BarterView extends React.Component {
         list: PropTypes.array,
         //资源数据列表页码
         current: PropTypes.number,
+        //资源详情用户头像
+        viewDetailHeadPortrait: PropTypes.string,
         //资源详情用户名
         viewDetailUserName: PropTypes.string,
         //资源详情上传图片数组
@@ -116,14 +120,22 @@ class BarterView extends React.Component {
      * keryi_barter主页面查看"以物换物"资源详情头部对话框
      * @returns {XML}
      */
-    renderModalHeader(){
+    renderModalHeader() {
         const {
+            //资源详情用户头像
+            viewDetailHeadPortrait,
             //资源详情用户名
             viewDetailUserName
         } = this.props;
         return (
             <header>
-
+                <figure
+                    className="keryi_barter_head_portrait_view_details"
+                >
+                    <HeadPortrait
+                        headPortrait={viewDetailHeadPortrait}
+                    />
+                </figure>
             </header>
         )
     }
@@ -156,7 +168,7 @@ class BarterView extends React.Component {
         return (
             <Modal
                 visible={viewBarterVisible}
-                width={640}
+                width={660}
                 closable
                 className="keryi_barter_modal_view_details_container"
                 onClose={closeBarterVisibleHandler.bind(this)}
@@ -235,6 +247,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 viewBarterVisible: true
             });
+            dispatch(getUserHeadPortraitViewDetail("/images/keryiBarter_login_bg.png"));
             dispatch(getResourcesListViewDetailsAction(keryiCard));
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();

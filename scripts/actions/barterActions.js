@@ -66,3 +66,15 @@ export function getResourcesListViewDetailsAction(payload) {
         payload
     }
 }
+
+/**
+ * 获取资源详情用户头像Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function getUserHeadPortraitViewDetail(payload) {
+    return {
+        type: appActionsType["GET_USER_HEAD_PORTRAIT_VIEW_DETAIL"],
+        payload
+    }
+}
