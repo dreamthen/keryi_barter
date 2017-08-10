@@ -5,7 +5,8 @@ import React, {PropTypes} from "react";
 import SpinAnimation from "../SpinAnimation";
 import Tag from "../Tag";
 import keryiCardConfig from "./configs/keryiCardConfig";
-import viewDetailConfig from "./configs/keryiCardConfig";
+import viewDetailConfig from "./configs/viewDetailConfig";
+import viewDetailAnimationConfig from "./configs/viewDetailAnimationConfig";
 import "./keryi_barter_keryiCard.css";
 
 //KeryiCard组件卡片"更多图片"设置过渡动画以及透明度对象属性
@@ -14,6 +15,10 @@ const loadingAppear = "loading";
 const loadingDisappear = "loading_disAppear";
 //KeryiCard组件卡片查看资源详情默认Icon配置
 const defaultViewDetail = "default";
+//KeryiCard组件卡片查看资源详情Icon默认动画状态
+const defaultViewDetailAnimation = "default";
+//KeryiCard组件卡片查看资源详情Icon移动动画状态
+const moveViewDetailAnimation = "move";
 
 /**
  * keryi_barter KeryiCard卡片组件
@@ -46,8 +51,23 @@ class KeryiCard extends React.Component {
             //是否动画操作透明度消除SpinAnimation组件动画加载容器
             disAppear: true,
             //是否显示剩下的多于3张的图片
-            imageAppear: true
+            imageAppear: true,
+            //查看资源详情Icon实现动画效果标识符
+            viewDetailsMove: false
         }
+    }
+
+    /**
+     * 根据state viewDetailMove来设置KeryiCard组件卡片动画效果
+     * @returns {*}
+     */
+    viewDetailsMoveClassToClass() {
+        const {
+            //查看资源详情Icon实现动画效果标识符
+            viewDetailsMove
+        } = this.state;
+        //根据state viewDetailsMove,如果state viewDetailsMove为true,就使用KeryiCard组件卡片查看资源详情Icon移动动画状态className样式表;如果state viewDetailsMove为false,就使用KeryiCard组件卡片查看资源详情Icon默认动画状态className样式表
+        return viewDetailsMove ? viewDetailAnimationConfig[moveViewDetailAnimation] : viewDetailAnimationConfig[defaultViewDetailAnimation];
     }
 
     /**
@@ -59,8 +79,28 @@ class KeryiCard extends React.Component {
             //KeryiCard组件卡片查看资源详情icon className
             viewDetails
         } = this.props;
-        //如果外部传入的props viewDetails不为空,就使用外部传入的props viewDetails来设置KeryiCard组件卡片查看资源详情icon className样式表;如果外部传入的props viewDetails为空,就使用默认的KeryiCard组件卡片查看资源详情icon className样式表
+        //根据外部传入的props viewDetail,如果外部传入的props viewDetails不为空,就使用外部传入的props viewDetails来设置KeryiCard组件卡片查看资源详情icon className样式表;如果外部传入的props viewDetails为空,就使用默认的KeryiCard组件卡片查看资源详情icon className样式表
         return viewDetails ? viewDetails : viewDetailConfig[defaultViewDetail];
+    }
+
+    /**
+     * 移入card主要内容头部查看资源详情icon,实现移动动画状态className样式表
+     * @param e
+     */
+    enterViewDetails(e) {
+        this.setState({
+            viewDetailsMove: true
+        });
+    }
+
+    /**
+     * 移出card主要内容头部查看资源详情icon,实现默认动画状态className样式表
+     * @param e
+     */
+    leaveViewDetails(e) {
+        this.setState({
+            viewDetailsMove: false
+        });
     }
 
     /**
@@ -74,11 +114,19 @@ class KeryiCard extends React.Component {
         } = this.props;
         const {
             //根据外部传入的props viewDetails来设置KeryiCard组件卡片查看资源详情icon className样式表
-            outSideViewDetailClassToClass
+            outSideViewDetailClassToClass,
+            //根据state viewDetailMove来设置KeryiCard组件卡片动画效果
+            viewDetailsMoveClassToClass,
+            //移入card主要内容头部查看资源详情icon,实现移动动画状态className样式表
+            enterViewDetails,
+            //移出card主要内容头部查看资源详情icon,实现默认动画状态className样式表
+            leaveViewDetails
         } = this;
         return (
             <aside
-                className="keryi_barter_card_viewDetail"
+                className={viewDetailsMoveClassToClass.bind(this)()}
+                onMouseEnter={enterViewDetails.bind(this)}
+                onMouseLeave={leaveViewDetails.bind(this)}
                 onClick={onViewDetails.bind(this)}
             >
                 <i

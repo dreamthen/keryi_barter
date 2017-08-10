@@ -113,7 +113,9 @@ class BarterView extends React.Component {
         return (
             <Modal
                 visible={viewBarterVisible}
+                width={640}
                 closable
+                className="keryi_barter_modal_view_details_container"
                 onClose={closeBarterVisibleHandler.bind(this)}
             >
             </Modal>

@@ -543,6 +543,7 @@ class AppView extends React.Component {
                 visible={addBarterVisible}
                 closable
                 footer
+                portrait
                 width={540}
                 title="1000yardStyle"
                 headPortrait="/images/keryiBarter_v.jpg"

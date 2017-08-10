@@ -31,6 +31,8 @@ class Modal extends React.Component {
         width: PropTypes.number,
         //Modal组件对话框HeadPortrait组件头像地址
         headPortrait: PropTypes.string,
+        //Modal组件对话框HeadPortrait组件头像是否显示
+        portrait: PropTypes.bool,
         //Modal组件对话框用户名
         title: PropTypes.string,
         //Modal组件对话框样式表配置
@@ -172,7 +174,10 @@ class Modal extends React.Component {
      * @returns {XML}
      */
     renderModalHeadPortrait() {
-        const {headPortrait} = this.props;
+        const {
+            //Modal组件对话框HeadPortrait组件头像地址
+            headPortrait
+        } = this.props;
         return (
             <header
                 className="keryi_barter_modal_avatarContainer"
@@ -282,7 +287,9 @@ class Modal extends React.Component {
             //对话框是否显示footer底部区域(包括关闭按钮和发布按钮)
             footer,
             //Modal组件主要内容(外部传入)
-            children
+            children,
+            //Modal组件对话框HeadPortrait组件头像是否显示
+            portrait
         } = this.props;
         ReactDOM.render(
             <section
@@ -298,7 +305,7 @@ class Modal extends React.Component {
                 {/*对话框副级容器*/}
                 <section className="keryi_barter_modalContainer">
                     {/*对话框头像*/}
-                    {renderModalHeadPortrait.bind(this)()}
+                    {portrait && renderModalHeadPortrait.bind(this)()}
                     <main
                         className={outsideClassToClass.bind(this)()}
                         style={{width: width ? width : defaultWidth}}

@@ -59,3 +59,7 @@
     width: calc(100% - 625px);
 }
 
+.keryi_barter_modalContainer > .keryi_barter_modal_view_details_container {
+    background-color: rgb(244, 244, 244);
+}
+
