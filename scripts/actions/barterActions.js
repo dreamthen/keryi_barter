@@ -54,3 +54,15 @@ export function getResourcesListAction(payload) {
         payload
     }
 }
+
+/**
+ * 获取资源详情Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function getResourcesListViewDetailsAction(payload) {
+    return {
+        type: appActionsType["GET_RESOURCE_LIST_VIEW_DETAIL"],
+        payload
+    }
+}

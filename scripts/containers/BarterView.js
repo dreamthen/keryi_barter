@@ -8,7 +8,12 @@ import {
     KeryiCard,
     Modal
 } from "../keryi";
-import {getResourcesList} from "../actions/barterActions";
+import {
+    //获取资源列表Action
+    getResourcesList,
+    //获取资源详情Action
+    getResourcesListViewDetailsAction
+} from "../actions/barterActions";
 import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
 import "../../stylesheets/barter.css";
 
@@ -17,7 +22,17 @@ class BarterView extends React.Component {
         //获取资源数据列表
         list: PropTypes.array,
         //资源数据列表页码
-        current: PropTypes.number
+        current: PropTypes.number,
+        //资源详情用户名
+        viewDetailUserName: PropTypes.string,
+        //资源详情上传图片数组
+        viewDetailImageList: PropTypes.string,
+        //资源详情标题
+        viewDetailTitle: PropTypes.string,
+        //资源详情资源介绍
+        viewDetailIntroduce: PropTypes.string,
+        //资源详情被需要数目
+        viewDetailNeedParty: PropTypes.number
     };
 
     constructor(props) {
@@ -91,22 +106,50 @@ class BarterView extends React.Component {
                     }]}
                     needParty={keryiCard["price_worth"]}
                     viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
-                    onViewDetails={viewKeryiBarterHandler.bind(this)}
+                    onViewDetails={viewKeryiBarterHandler.bind(this, keryiCard)}
                 />
             </div>
         )
     }
 
     /**
-     * keryi_barter主页面查看"以物换物"资源对话框
+     * keryi_barter主页面查看"以物换物"资源详情头部对话框
+     * @returns {XML}
+     */
+    renderModalHeader(){
+        const {
+            //资源详情用户名
+            viewDetailUserName
+        } = this.props;
+        return (
+            <header>
+
+            </header>
+        )
+    }
+
+    /**
+     * keryi_barter主页面查看"以物换物"资源详情对话框
      * @returns {XML}
      */
     renderModal() {
+        const {
+            //keryi_barter主页面查看"以物换物"资源详情头部对话框
+            renderModalHeader
+        } = this;
         const {
             //控制Modal组件对话框显示、隐藏或者消失
             viewBarterVisible
         } = this.state;
         const {
+            //资源详情上传图片数组
+            viewDetailImageList,
+            //资源详情标题
+            viewDetailTitle,
+            //资源详情资源介绍
+            viewDetailIntroduce,
+            //资源详情被需要数目
+            viewDetailNeedParty,
             //控制Modal组件对话框隐藏并消失
             closeBarterVisibleHandler
         } = this.props;
@@ -118,6 +161,8 @@ class BarterView extends React.Component {
                 className="keryi_barter_modal_view_details_container"
                 onClose={closeBarterVisibleHandler.bind(this)}
             >
+                {/*keryi_barter主页面查看"以物换物"资源详情头部对话框*/}
+                {renderModalHeader.bind(this)()}
             </Modal>
         )
     }
@@ -136,7 +181,7 @@ class BarterView extends React.Component {
             renderHeadPortrait,
             //render渲染用户资源卡片
             renderKeryiCard,
-            //keryi_barter主页面查看"以物换物"资源对话框
+            //keryi_barter主页面查看"以物换物"资源详情对话框
             renderModal
         } = this;
         return (
@@ -164,7 +209,7 @@ class BarterView extends React.Component {
                             </article>
                     }
                 </div>
-                {/*keryi_barter主页面查看"以物换物"资源对话框*/}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框*/}
                 {renderModal.bind(this)()}
                 <aside className="keryi_barter_main_module keryi_barter_main_aside">
 
@@ -186,10 +231,11 @@ function mapDispatchToProps(dispatch, ownProps) {
          * 控制Modal组件对话框显示
          * @params e
          */
-        viewKeryiBarterHandler(e) {
+        viewKeryiBarterHandler(keryiCard, e) {
             this.setState({
                 viewBarterVisible: true
             });
+            dispatch(getResourcesListViewDetailsAction(keryiCard));
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();
         },

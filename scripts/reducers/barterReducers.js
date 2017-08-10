@@ -9,7 +9,17 @@ const defaultState = {
     //获取资源数据列表
     list: [],
     //资源数据列表页码
-    current: 1
+    current: 1,
+    //资源详情用户名
+    viewDetailUserName: "",
+    //资源详情上传图片数组
+    viewDetailImageList: "",
+    //资源详情标题
+    viewDetailTitle: "",
+    //资源详情资源介绍
+    viewDetailIntroduce: "",
+    //资源详情被需要数目
+    viewDetailNeedParty: 0
 };
 
 /**
@@ -23,6 +33,13 @@ export function barterReducers(state = defaultState, actions) {
         newState = actions.payload;
     switch (type) {
         case appActionsType["GET_RESOURCE_LIST"]:
+            return insteadState.insteadObjState(state, newState);
+        case appActionsType["GET_RESOURCE_LIST_VIEW_DETAIL"]:
+            newState["viewDetailUserName"] = "1000yardStyle";
+            newState["viewDetailImageList"] = newState["imgUrls"];
+            newState["viewDetailTitle"] = newState["title"];
+            newState["viewDetailIntroduce"] = newState["intro"];
+            newState["viewDetailNeedParty"] = newState["price_worth"];
             return insteadState.insteadObjState(state, newState);
     }
     return state;
