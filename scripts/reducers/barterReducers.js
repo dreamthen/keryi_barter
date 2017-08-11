@@ -15,7 +15,7 @@ const defaultState = {
     //资源详情用户名
     viewDetailUserName: "",
     //资源详情上传图片数组
-    viewDetailImageList: "",
+    viewDetailImageList: [],
     //资源详情标题
     viewDetailTitle: "",
     //资源详情资源介绍
@@ -47,8 +47,9 @@ export function barterReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, newState);
         //获取资源详情用户头像
         case appActionsType["GET_USER_HEAD_PORTRAIT_VIEW_DETAIL"]:
-            newState["viewDetailHeadPortrait"] = newState;
-            return insteadState.insteadObjState(state, newState);
+            return insteadState.insteadObjState(state, {
+                viewDetailHeadPortrait: newState
+            });
     }
     return state;
 }

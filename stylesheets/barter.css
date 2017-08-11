@@ -63,3 +63,25 @@
     background-color: rgb(244, 244, 244);
 }
 
+.keryi_barter_modal_view_details_container .keryi_barter_view_details_head {
+    padding: 0 15px 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.keryi_barter_view_details_head > .keryi_barter_view_details_head_portrait {
+    position: relative;
+    width: 64px;
+    height: 64px;
+}
+
+.keryi_barter_view_details_head > .keryi_barter_view_details_userName {
+    font-style: normal;
+    font-size: 20px;
+    font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    margin-top: 8px;
+}
+
+

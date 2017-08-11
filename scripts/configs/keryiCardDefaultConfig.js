@@ -5,12 +5,10 @@
 const keryiCardDefaultConfig = {
     title: "today",
     intro: "react react-redux react-router-redux",
-    imgUrls: '[' +
-    '{src: "/images/keryiBarter_description_bg.png"}, ' +
-    '{src: "/images/keryiBarter_login_bg.png"}, ' +
-    '{src: "/images/keryiBarter_register_bg.png"}, ' +
-    '{src: "/images/keryiBarter_login_bg.png",name: "keryi登录背景"}' +
-    ']',
+    imgUrls: [{src: "/images/keryiBarter_description_bg.png"},
+        {src: "/images/keryiBarter_login_bg.png"},
+        {src: "/images/keryiBarter_register_bg.png"},
+        {src: "/images/keryiBarter_login_bg.png"}],
     price_worth: 77
 };
 
