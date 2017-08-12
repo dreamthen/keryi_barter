@@ -15,7 +15,7 @@ const defaultState = {
     //资源详情用户名
     viewDetailUserName: "",
     //资源详情上传图片数组
-    viewDetailImageList: [],
+    viewDetailImageList: "[]",
     //资源详情标题
     viewDetailTitle: "",
     //资源详情资源介绍

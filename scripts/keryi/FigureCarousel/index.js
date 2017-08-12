@@ -24,7 +24,9 @@ class FigureCarousel extends React.Component {
         //FigureCarousel组件图片轮播器className,外部传入样式表
         className: PropTypes.string,
         //改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器方法,外部传入函数
-        onChange: PropTypes.func
+        onChange: PropTypes.func,
+        //判断FigureCarousel组件图片轮播器中的图片组是否可关闭
+        close: PropTypes.bool.isRequired
     };
 
     constructor(props) {
@@ -49,7 +51,9 @@ class FigureCarousel extends React.Component {
     componentWillReceiveProps(nextProps) {
         const {
             //图片轮播器图片组
-            imageList
+            imageList,
+            //判断图片轮播器中的图片组是否可关闭
+            close
         } = this.props;
         if ((imageList.length === 0 && nextProps.imageList.length > 0) || imageList.length !== nextProps.imageList.length) {
             this.setState({
@@ -63,9 +67,11 @@ class FigureCarousel extends React.Component {
             timer = setTimeout(function timer() {
                 (imageList.length > nextProps.imageList.length) ? this.setState({
                     move: 0
+                }) : !close ? this.setState({
+                    move: 0
                 }) : this.setState({
                     move: -(nextProps.imageList.length - 1)
-                })
+                });
             }.bind(this), 500);
         }
     }
@@ -131,7 +137,9 @@ class FigureCarousel extends React.Component {
     renderFigureCarousel() {
         const {
             //图片组
-            imageList
+            imageList,
+            //判断图片轮播器中的图片组是否可关闭
+            close
         } = this.props;
         const {
             //图片className样式表控制所在的容器消失或者隐藏
@@ -155,6 +163,7 @@ class FigureCarousel extends React.Component {
                                 visible={figureVisible}
                                 src={imageItem["src"]}
                                 style={{left: (move + imageIndex) * 100 + "%"}}
+                                close={close}
                                 onClose={onFigureCarouselControlClose.bind(this)}
                             />
                         )

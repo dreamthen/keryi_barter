@@ -31,7 +31,7 @@ class BarterView extends React.Component {
         //资源详情用户名
         viewDetailUserName: PropTypes.string,
         //资源详情上传图片数组
-        viewDetailImageList: PropTypes.array,
+        viewDetailImageList: PropTypes.string,
         //资源详情标题
         viewDetailTitle: PropTypes.string,
         //资源详情资源介绍
@@ -96,7 +96,7 @@ class BarterView extends React.Component {
             >
                 <KeryiCard
                     userName="1000yardStyle"
-                    imageList={keryiCard["imgUrls"]}
+                    imageList={eval("(" + keryiCard["imgUrls"] + ")")}
                     title={keryiCard["title"]}
                     introduce={keryiCard["intro"]}
                     tagList={[{
@@ -126,7 +126,9 @@ class BarterView extends React.Component {
             //资源详情用户头像
             viewDetailHeadPortrait,
             //资源详情用户名
-            viewDetailUserName
+            viewDetailUserName,
+            //资源详情标题
+            viewDetailTitle
         } = this.props;
         return (
             <header className="keryi_barter_view_details_head">
@@ -137,8 +139,13 @@ class BarterView extends React.Component {
                         headPortrait={viewDetailHeadPortrait}
                     />
                 </figure>
-                <dfn className="keryi_barter_view_details_userName">
-                    {viewDetailUserName}
+                <dfn className="keryi_barter_view_details_description">
+                    <h3 className="keryi_barter_view_details_title">
+                        {viewDetailTitle}
+                    </h3>
+                    <cite className="keryi_barter_view_details_userName">
+                        资源由 <abbr className="keryi_barter_view_details_name">{viewDetailUserName}</abbr> 发布
+                    </cite>
                 </dfn>
             </header>
         )
@@ -154,10 +161,29 @@ class BarterView extends React.Component {
             viewDetailImageList
         } = this.props;
         return (
-            <section>
+            <section className="keryi_barter_view_details_figure_carousel">
                 <FigureCarousel
-                    imageList={viewDetailImageList}
+                    close={false}
+                    imageList={eval("(" + viewDetailImageList + ")")}
                 />
+            </section>
+        )
+    }
+
+    /**
+     * keryi_barter主页面查看"以物换物"资源详情对话框主体介绍
+     * @returns {XML}
+     */
+    renderModalIntroduce(){
+        const {
+            //资源详情资源介绍
+            viewDetailIntroduce
+        } = this.props;
+        return (
+            <section className="keryi_barter_view_details_introduce">
+                <p className="keryi_barter_view_details_introduce_content">
+                    {viewDetailIntroduce}
+                </p>
             </section>
         )
     }
@@ -171,17 +197,15 @@ class BarterView extends React.Component {
             //keryi_barter主页面查看"以物换物"资源详情对话框头部
             renderModalHeader,
             //keryi_barter主页面查看"以物换物"资源详情对话框图片轮播器
-            renderModalFigureCarousel
+            renderModalFigureCarousel,
+            //keryi_barter主页面查看"以物换物"资源详情对话框主体介绍
+            renderModalIntroduce
         } = this;
         const {
             //控制Modal组件对话框显示、隐藏或者消失
             viewBarterVisible
         } = this.state;
         const {
-            //资源详情标题
-            viewDetailTitle,
-            //资源详情资源介绍
-            viewDetailIntroduce,
             //资源详情被需要数目
             viewDetailNeedParty,
             //控制Modal组件对话框隐藏并消失
@@ -199,6 +223,8 @@ class BarterView extends React.Component {
                 {renderModalHeader.bind(this)()}
                 {/*keryi_barter主页面查看"以物换物"资源详情对话框图片轮播器*/}
                 {renderModalFigureCarousel.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框主体介绍*/}
+                {renderModalIntroduce.bind(this)()}
             </Modal>
         )
     }

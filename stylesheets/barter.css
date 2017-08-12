@@ -64,7 +64,7 @@
 }
 
 .keryi_barter_modal_view_details_container .keryi_barter_view_details_head {
-    padding: 0 15px 0 20px;
+    padding: 0 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -77,11 +77,49 @@
     height: 64px;
 }
 
-.keryi_barter_view_details_head > .keryi_barter_view_details_userName {
-    font-style: normal;
-    font-size: 20px;
-    font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+.keryi_barter_view_details_head > .keryi_barter_view_details_description {
     margin-top: 8px;
+}
+
+.keryi_barter_view_details_description > .keryi_barter_view_details_title {
+    text-align: center;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 30px;
+    font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+}
+
+.keryi_barter_view_details_description > .keryi_barter_view_details_userName {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 16px;
+    font-style: normal;
+    font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+}
+
+.keryi_barter_view_details_userName > .keryi_barter_view_details_name {
+    font-size: 14px;
+    color: #63A8F0;
+    font-weight: normal;
+}
+
+.keryi_barter_modal_view_details_container .keryi_barter_view_details_figure_carousel {
+    padding: 15px;
+    margin: 16px 10px 10px 10px;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.keryi_barter_modal_view_details_container .keryi_barter_view_details_introduce {
+    padding: 0 15px;
+    margin: 0 0 10px 0;
+}
+
+.keryi_barter_view_details_introduce > .keryi_barter_view_details_introduce_content {
+    text-indent: 8px;
+    line-height: 30px;
+    font-size: 14px;
+    font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
 }
 
 

@@ -423,6 +423,7 @@ class AppView extends React.Component {
                     <FigureCarousel
                         key={key}
                         imageList={imageList}
+                        close={true}
                         onChange={onFigureCarouselControlChangeImageList.bind(this)}
                     />
                 );

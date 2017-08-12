@@ -25,7 +25,9 @@ class Figure extends React.Component {
         //Figure组件图片关闭方法,外部传入函数
         onClose: PropTypes.func,
         //Figure组件内联样式,外部传入内联样式
-        style: PropTypes.object
+        style: PropTypes.object,
+        //判断Figure组件图片组是否可关闭
+        close: PropTypes.bool.isRequired
     };
 
     constructor(props) {
@@ -41,7 +43,7 @@ class Figure extends React.Component {
     /**
      * 组件开始装载
      */
-    componentWillMount(){
+    componentWillMount() {
 
     }
 
@@ -65,7 +67,7 @@ class Figure extends React.Component {
     /**
      * 组件结束装载
      */
-    componentDidMount(){
+    componentDidMount() {
         const {
             //图片是否显示
             visible
@@ -134,7 +136,9 @@ class Figure extends React.Component {
             //图片是否显示
             src,
             //内联样式,外部传入内联样式
-            style
+            style,
+            //判断图片组是否可以关闭
+            close
         } = this.props;
         const {
             //根据外部传入的props className来设置Figure组件图片的className样式表
@@ -149,12 +153,14 @@ class Figure extends React.Component {
                 className={visibleOrFigureVisibleToClass.bind(this)() + outsideClassToClass.bind(this)()}
                 style={Object.assign({}, styleConfig(src), style)}
             >
-                <i
-                    className="iconfontKeryiBarter keryiBarter-close"
-                    onClick={onFigureClose.bind(this, src)}
-                >
+                {
+                    close && <i
+                        className="iconfontKeryiBarter keryiBarter-close"
+                        onClick={onFigureClose.bind(this, src)}
+                    >
 
-                </i>
+                    </i>
+                }
             </figure>
         )
     }
