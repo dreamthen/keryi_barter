@@ -12,6 +12,7 @@ const keryiCardConfig = {
         title: "需要",
         className: "iconfontKeryiBarter keryiBarter-exchange"
     }, {
+        key: "like",
         title: "喜欢",
         className: "iconfontKeryiBarter keryiBarter-like"
     }]

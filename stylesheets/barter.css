@@ -123,4 +123,50 @@
     font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
 }
 
+.keryi_barter_modal_view_details_container .keryi_barter_view_details_statistics {
+    padding: 0 15px;
+}
+
+.keryi_barter_view_details_statistics > .keryi_barter_view_details_statistics_uiList {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.keryi_barter_view_details_statistics_uiList > li {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    margin: 0 20px 0 0;
+    color: #8f8f8f;
+}
+
+.keryi_barter_view_details_statistics_uiList > li > i {
+    position: relative;
+    font-size: 20px;
+}
+
+.keryi_barter_view_details_statistics_uiList > li > i.keryiBarter-priceWorth {
+    font-size: 18px;
+    bottom: 1px;
+}
+
+.keryi_barter_view_details_statistics_uiList > li > i.keryiBarter-exchange {
+    top: 1px;
+}
+
+.keryi_barter_view_details_statistics_uiList > li > .keryi_barter_view_details_statistics_description {
+    display: inline-block;
+    font-size: 12px;
+    font-style: normal;
+    margin: 0 0 0 6px;
+}
+
+
 

@@ -23,7 +23,9 @@ const defaultState = {
     //资源详情被需要数目
     viewDetailNeedParty: 0,
     //资源详情资源估值
-    viewDetailPriceWorth:0
+    viewDetailPriceWorth: 0,
+    //资源详情喜欢数目
+    viewDetailLike: 0
 };
 
 /**
@@ -46,6 +48,7 @@ export function barterReducers(state = defaultState, actions) {
             newState["viewDetailTitle"] = newState["title"];
             newState["viewDetailIntroduce"] = newState["intro"];
             newState["viewDetailPriceWorth"] = newState["price_worth"];
+            newState["viewDetailLike"] = newState["likeCount"];
             return insteadState.insteadObjState(state, newState);
         //获取资源详情用户头像
         case appActionsType["GET_USER_HEAD_PORTRAIT_VIEW_DETAIL"]:

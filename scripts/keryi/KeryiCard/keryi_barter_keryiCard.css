@@ -30,6 +30,7 @@
 .keryi_barter_card_main > .keryi_barter_card_header,
 .keryi_barter_card_mainContent > .keryi_barter_card_description,
 .keryi_barter_card_mainContent > .keryi_barter_card_tag,
+.keryi_barter_card_mainContent > .keryi_barter_card_targetTag,
 .keryi_barter_card_mainContent > .keryi_barter_card_foot {
     padding: 0 20px;
 }
@@ -131,8 +132,18 @@
     line-height: 21px;
 }
 
-.keryi_barter_card_mainContent > .keryi_barter_card_tag {
+.keryi_barter_card_mainContent > .keryi_barter_card_tag,
+.keryi_barter_card_mainContent > .keryi_barter_card_targetTag {
     margin-top: 15px;
+}
+
+.keryi_barter_card_tag > .keryi_barter_card_tag_title,
+.keryi_barter_card_targetTag > .keryi_barter_card_targetTag_title {
+    margin-bottom: 12px;
+    color: #8f8f8f;
+    font-size: 16px;
+    font-weight: normal;
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
 }
 
 .keryi_barter_card_mainContent > .keryi_barter_card_foot {
@@ -146,6 +157,12 @@
     display: block;
     visibility: hidden;
     height: 0;
+}
+
+.keryi_barter_card_mainContent .keryi_barter_card_wire {
+    width: 46%;
+    border: none;
+    border-top: 1px solid #e7e7e7;
 }
 
 .keryi_barter_card_foot > .keryi_barter_card_priceWorth {
@@ -166,7 +183,19 @@
     font-style: normal;
 }
 
-.keryi_barter_card_function > i {
+.keryi_barter_card_function > .keryi_barter_card_function_ulList {
+    height: inherit;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.keryi_barter_card_function > .keryi_barter_card_function_ulList > li {
+    height: inherit;
+}
+
+.keryi_barter_card_function > .keryi_barter_card_function_ulList > li > i {
     position: relative;
     line-height: inherit;
     font-size: 24px;
@@ -175,12 +204,17 @@
     cursor: pointer;
 }
 
-.keryi_barter_card_function > i.keryiBarter-exchange {
+.keryi_barter_card_function > .keryi_barter_card_function_ulList > li > sub {
+    font-size: 12px;
+    color: #8f8f8f;
+}
+
+.keryi_barter_card_function > .keryi_barter_card_function_ulList > li > i.keryiBarter-exchange {
     margin: 0;
     top: 3px;
 }
 
-.keryi_barter_card_function > i.keryiBarter-like {
+.keryi_barter_card_function > .keryi_barter_card_function_ulList > li > i.keryiBarter-like {
     top: 2px;
 }
 

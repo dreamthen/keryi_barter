@@ -24,6 +24,6 @@ if (process.env.NODE_ENV === develop) {
 //创建react-redux store,将reducers放进createStore中,生成react-redux store
 const store = createStore(reducers, compose(
     applyMiddleware(...middleware),
-    window.devToolExtension ? window.devToolExtension : f => f
+    window.devToolsExtension ? window.devToolsExtension : f => f
 ));
 export default store;

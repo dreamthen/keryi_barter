@@ -10,6 +10,10 @@ const viewDetailsStatisticsConfig = [{
     key: "viewDetailNeedParty",
     title: "需要",
     className: "iconfontKeryiBarter keryiBarter-exchange"
+}, {
+    key: "viewDetailLike",
+    title: "喜欢",
+    className: "iconfontKeryiBarter keryiBarter-like"
 }];
 
 export default viewDetailsStatisticsConfig;

@@ -35,8 +35,12 @@ class KeryiCard extends React.Component {
         introduce: PropTypes.string,
         //KeryiCard组件卡片资源类型标签
         tagList: PropTypes.array,
+        //KeryiCard组件卡片目标资源类型标签
+        targetTagList: PropTypes.array,
         //KeryiCard组件卡片资源估值
         priceWorth: PropTypes.number,
+        //KeryiCard组件卡片喜欢数目
+        like: PropTypes.number,
         //KeryiCard组件卡片查看资源详情icon className
         viewDetails: PropTypes.string,
         //KeryiCard组件卡片点击查看资源详情icon回调函数
@@ -262,12 +266,13 @@ class KeryiCard extends React.Component {
                 <p className="keryi_barter_card_paragraph">
                     {introduce}
                 </p>
+                <hr className="keryi_barter_card_wire"/>
             </section>
         )
     }
 
     /**
-     * render渲染card主要内容标签
+     * render渲染card主要内容资源标签类型
      * @returns {XML}
      */
     renderTag() {
@@ -277,14 +282,44 @@ class KeryiCard extends React.Component {
         } = this.props;
         return (
             <section className="keryi_barter_card_tag">
+                <h2 className="keryi_barter_card_tag_title">资源类型</h2>
                 {
-                    tagList.map(function tager(tagItem, tagIndex) {
+                    tagList.length > 0 && tagList.map(function tager(tagItem, tagIndex) {
                         return (
                             <Tag
-                                key={tagIndex}
+                                key={tagItem["id"]}
                                 type={tagItem["type"]}
                             >
-                                {'#' + tagItem["content"]}
+                                {'#' + tagItem["tag"]}
+                            </Tag>
+                        )
+                    })
+                }
+                <hr className="keryi_barter_card_wire"/>
+            </section>
+        )
+    }
+
+    /**
+     * render渲染card主要内容目标资源标签类型
+     * @returns {XML}
+     */
+    renderTargetTag(){
+        const {
+            //KeryiCard组件卡片目标资源标签类型
+            targetTagList
+        } = this.props;
+        return (
+            <section className="keryi_barter_card_targetTag">
+                <h2 className="keryi_barter_card_targetTag_title">目标资源类型</h2>
+                {
+                    targetTagList.length > 0 && targetTagList.map(function targetTager(targetTagItem, targetTagIndex) {
+                        return (
+                            <Tag
+                                key={targetTagItem["id"]}
+                                type={targetTagItem["type"]}
+                            >
+                                {'#' + targetTagItem["tag"]}
                             </Tag>
                         )
                     })
@@ -313,19 +348,27 @@ class KeryiCard extends React.Component {
                     </dfn>
                 </article>
                 <aside className="keryi_barter_card_function">
-                    {
-                        keryiCardConfig["card_function"].map(function configer(configItem, configIndex){
-                            return (
-                                <i
-                                    key={configIndex}
-                                    title={configItem["title"]}
-                                    className={configItem["className"]}
-                                >
+                    <ul className="keryi_barter_card_function_ulList">
+                        {
+                            keryiCardConfig["card_function"].map(function configer(configItem, configIndex) {
+                                return (
+                                    <li
+                                        key={configIndex}
+                                        title={configItem["title"] + (configItem["key"] ? " " + this.props[configItem["key"]] : "")}
+                                    >
+                                        <i
+                                            className={configItem["className"]}
+                                        >
 
-                                </i>
-                            )
-                        })
-                    }
+                                        </i>
+                                        {configItem["key"] && <sub>
+                                            {this.props[configItem["key"]]}
+                                        </sub>}
+                                    </li>
+                                )
+                            }.bind(this))
+                        }
+                    </ul>
                 </aside>
             </section>
         )
@@ -345,8 +388,10 @@ class KeryiCard extends React.Component {
             loadingImage,
             //card主要内容标题和介绍
             renderDescription,
-            //card主要内容标签
+            //card主要内容资源标签类型
             renderTag,
+            //card主要内容目标资源标签类型
+            renderTargetTag,
             //card主要内容底部
             renderCardFoot
         } = this;
@@ -374,8 +419,10 @@ class KeryiCard extends React.Component {
                     </div>}
                     {/*card主要内容标题和介绍*/}
                     {renderDescription.bind(this)()}
-                    {/*card主要内容标签*/}
+                    {/*card主要内容资源标签类型*/}
                     {renderTag.bind(this)()}
+                    {/*card主要内容目标资源标签类型*/}
+                    {renderTargetTag.bind(this)()}
                     {/*cord主要内容底部*/}
                     {renderCardFoot.bind(this)()}
                 </main>

@@ -40,7 +40,9 @@ class BarterView extends React.Component {
         //资源详情被需要数目
         viewDetailNeedParty: PropTypes.number,
         //资源详情资源估值
-        viewDetailPriceWorth: PropTypes.number
+        viewDetailPriceWorth: PropTypes.number,
+        //资源详情喜欢数目
+        viewDetailLike: PropTypes.number
     };
 
     constructor(props) {
@@ -72,16 +74,27 @@ class BarterView extends React.Component {
      * render渲染用户头像
      * @returns {XML}
      */
-    renderHeadPortrait(headPortraitSrc) {
+    renderHeadPortrait(keryiCard) {
         return (
             <figure
                 className="keryi_barter_head_portrait"
             >
                 <HeadPortrait
-                    headPortrait={headPortraitSrc}
+                    headPortrait={keryiCard["user"]["avatar"]}
                 />
             </figure>
         )
+    }
+
+    /**
+     * 处理Tag组件标签,添加type属性
+     * @constructor
+     * @returns {XML}
+     */
+    tagOrTargetTagListHandlerAddType(tags) {
+        return tags.map(function tager(tagItem, tagIndex) {
+            return tagItem["type"] = "primary";
+        }.bind(this));
     }
 
     /**
@@ -90,28 +103,27 @@ class BarterView extends React.Component {
      */
     renderKeryiCard(keryiCard) {
         const {
+            //处理Tag组件标签,添加type属性
+            tagOrTargetTagListHandlerAddType
+        } = this;
+        const {
             //控制Modal组件对话框显示
             viewKeryiBarterHandler
         } = this.props;
+        tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["tags"]);
+        tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["targetTags"]);
         return (
             <div
                 className="keryi_barter_card_container"
             >
                 <KeryiCard
-                    userName="1000yardStyle"
+                    userName={keryiCard["user"]["username"]}
                     imageList={eval("(" + keryiCard["imgUrls"] + ")")}
                     title={keryiCard["title"]}
                     introduce={keryiCard["intro"]}
-                    tagList={[{
-                        type: "primary",
-                        content: "react"
-                    }, {
-                        type: "primary",
-                        content: "react-redux"
-                    }, {
-                        type: "primary",
-                        content: "react-router-redux"
-                    }]}
+                    tagList={keryiCard["tags"]}
+                    targetTagList={keryiCard["targetTags"]}
+                    like={keryiCard["likeCount"]}
                     priceWorth={keryiCard["price_worth"]}
                     viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
                     onViewDetails={viewKeryiBarterHandler.bind(this, keryiCard)}
@@ -167,21 +179,25 @@ class BarterView extends React.Component {
         } = this.props;
         return (
             <section className="keryi_barter_view_details_statistics">
-                <ul>
+                <ul className="keryi_barter_view_details_statistics_uiList">
                     {
                         viewDetailsStatisticsConfig.map(function configer(configItem, configIndex) {
                             return (
                                 <li
                                     key={configIndex}
+                                    title={this.props[configItem["key"]] + " " + configItem["title"]}
                                 >
                                     <i
                                         className={configItem["className"]}
                                     >
 
                                     </i>
+                                    <dfn className="keryi_barter_view_details_statistics_description">
+                                        {this.props[configItem["key"]] + " " + configItem["title"]}
+                                    </dfn>
                                 </li>
                             )
-                        })
+                        }.bind(this))
                     }
                 </ul>
             </section>
@@ -304,7 +320,7 @@ class BarterView extends React.Component {
                             }.bind(this)) : //获取资源数据列表出现异常时,前端呈现默认约定数据
                             <article className="keryi_barter_cardInfo">
                                 {/*render渲染用户头像*/}
-                                {renderHeadPortrait.bind(this)("/images/keryiBarter_login_bg.png")}
+                                {renderHeadPortrait.bind(this)(keryiCardDefaultConfig)}
                                 {/*render渲染用户资源卡片*/}
                                 {renderKeryiCard.bind(this)(keryiCardDefaultConfig)}
                             </article>
