@@ -35,8 +35,8 @@ class KeryiCard extends React.Component {
         introduce: PropTypes.string,
         //KeryiCard组件卡片资源类型标签
         tagList: PropTypes.array,
-        //KeryiCard组件卡片资源被需要数目
-        needParty: PropTypes.number,
+        //KeryiCard组件卡片资源估值
+        priceWorth: PropTypes.number,
         //KeryiCard组件卡片查看资源详情icon className
         viewDetails: PropTypes.string,
         //KeryiCard组件卡片点击查看资源详情icon回调函数
@@ -299,32 +299,33 @@ class KeryiCard extends React.Component {
      */
     renderCardFoot() {
         //KeryiCard组件卡片资源被需要数目
-        const {needParty} = this.props;
+        const {priceWorth} = this.props;
         return (
             <section
                 className="keryi_barter_card_foot"
             >
-                <article className="keryi_barter_card_needParty">
+                <article className="keryi_barter_card_priceWorth">
                     <dfn
-                        className="keryi_barter_card_needPartyDescription"
-                        title={needParty + " 需要方"}
+                        className="keryi_barter_card_priceWorthDescription"
+                        title={priceWorth + " 资源估值"}
                     >
-                        {needParty} 需要方
+                        {priceWorth} 资源估值
                     </dfn>
                 </article>
                 <aside className="keryi_barter_card_function">
-                    <i
-                        title="需要"
-                        className="iconfontKeryiBarter keryiBarter-exchange"
-                    >
+                    {
+                        keryiCardConfig["card_function"].map(function configer(configItem, configIndex){
+                            return (
+                                <i
+                                    key={configIndex}
+                                    title={configItem["title"]}
+                                    className={configItem["className"]}
+                                >
 
-                    </i>
-                    <i
-                        title="喜欢"
-                        className="iconfontKeryiBarter keryiBarter-like"
-                    >
-
-                    </i>
+                                </i>
+                            )
+                        })
+                    }
                 </aside>
             </section>
         )

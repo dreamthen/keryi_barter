@@ -148,7 +148,7 @@
     height: 0;
 }
 
-.keryi_barter_card_foot > .keryi_barter_card_needParty {
+.keryi_barter_card_foot > .keryi_barter_card_priceWorth {
     font-size: 13px;
     font-weight: bolder;
     color: #8f8f8f;
@@ -162,7 +162,7 @@
     line-height: inherit;
 }
 
-.keryi_barter_card_needParty > .keryi_barter_card_needPartyDescription {
+.keryi_barter_card_priceWorth > .keryi_barter_card_priceWorthDescription {
     font-style: normal;
 }
 

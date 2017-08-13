@@ -18,6 +18,7 @@ import {
     getUserHeadPortraitViewDetail
 } from "../actions/barterActions";
 import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
+import viewDetailsStatisticsConfig from "../configs/viewDetailsStatisticsConfig";
 import "../../stylesheets/barter.css";
 
 class BarterView extends React.Component {
@@ -37,7 +38,9 @@ class BarterView extends React.Component {
         //资源详情资源介绍
         viewDetailIntroduce: PropTypes.string,
         //资源详情被需要数目
-        viewDetailNeedParty: PropTypes.number
+        viewDetailNeedParty: PropTypes.number,
+        //资源详情资源估值
+        viewDetailPriceWorth: PropTypes.number
     };
 
     constructor(props) {
@@ -109,7 +112,7 @@ class BarterView extends React.Component {
                         type: "primary",
                         content: "react-router-redux"
                     }]}
-                    needParty={keryiCard["price_worth"]}
+                    priceWorth={keryiCard["price_worth"]}
                     viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
                     onViewDetails={viewKeryiBarterHandler.bind(this, keryiCard)}
                 />
@@ -152,6 +155,40 @@ class BarterView extends React.Component {
     }
 
     /**
+     * keryi_barter主页面查看"以物换物"资源详情对话框资源统计
+     * @returns {XML}
+     */
+    renderModalStatistics() {
+        const {
+            //资源详情被需要数目
+            viewDetailNeedParty,
+            //资源详情资源估值
+            viewDetailPriceWorth
+        } = this.props;
+        return (
+            <section className="keryi_barter_view_details_statistics">
+                <ul>
+                    {
+                        viewDetailsStatisticsConfig.map(function configer(configItem, configIndex) {
+                            return (
+                                <li
+                                    key={configIndex}
+                                >
+                                    <i
+                                        className={configItem["className"]}
+                                    >
+
+                                    </i>
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
+            </section>
+        )
+    }
+
+    /**
      * keryi_barter主页面查看"以物换物"资源详情对话框图片轮播器
      * @returns {XML}
      */
@@ -174,7 +211,7 @@ class BarterView extends React.Component {
      * keryi_barter主页面查看"以物换物"资源详情对话框主体介绍
      * @returns {XML}
      */
-    renderModalIntroduce(){
+    renderModalIntroduce() {
         const {
             //资源详情资源介绍
             viewDetailIntroduce
@@ -196,6 +233,8 @@ class BarterView extends React.Component {
         const {
             //keryi_barter主页面查看"以物换物"资源详情对话框头部
             renderModalHeader,
+            //keryi_barter主页面查看"以物换物"资源详情对话框资源统计
+            renderModalStatistics,
             //keryi_barter主页面查看"以物换物"资源详情对话框图片轮播器
             renderModalFigureCarousel,
             //keryi_barter主页面查看"以物换物"资源详情对话框主体介绍
@@ -206,8 +245,6 @@ class BarterView extends React.Component {
             viewBarterVisible
         } = this.state;
         const {
-            //资源详情被需要数目
-            viewDetailNeedParty,
             //控制Modal组件对话框隐藏并消失
             closeBarterVisibleHandler
         } = this.props;
@@ -221,6 +258,8 @@ class BarterView extends React.Component {
             >
                 {/*keryi_barter主页面查看"以物换物"资源详情对话框头部*/}
                 {renderModalHeader.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框资源统计*/}
+                {renderModalStatistics.bind(this)()}
                 {/*keryi_barter主页面查看"以物换物"资源详情对话框图片轮播器*/}
                 {renderModalFigureCarousel.bind(this)()}
                 {/*keryi_barter主页面查看"以物换物"资源详情对话框主体介绍*/}
