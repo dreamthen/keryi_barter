@@ -33,6 +33,11 @@
     border: 1px solid transparent;
 }
 
+.keryi_barter_tag.keryi_barter_info_tag {
+    background-color: #fff;
+    border: 1px solid #63A8F0;
+}
+
 .keryi_barter_tag.keryi_barter_animation_tag {
     opacity: 0;
     transition: all .5s ease-in-out 0s;
@@ -50,4 +55,9 @@
 .keryi_barter_default_tag > a,
 .keryi_barter_default_tag:hover {
     color: rgba(0, 0, 0, .65);
+}
+
+.keryi_barter_info_tag > a,
+.keryi_barter_info_tag:hover {
+    color: #63A8F0;
 }

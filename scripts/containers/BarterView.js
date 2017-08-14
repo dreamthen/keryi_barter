@@ -7,7 +7,8 @@ import {
     FigureCarousel,
     HeadPortrait,
     KeryiCard,
-    Modal
+    Modal,
+    Tag
 } from "../keryi";
 import {
     //获取资源列表Action
@@ -91,9 +92,9 @@ class BarterView extends React.Component {
      * @constructor
      * @returns {XML}
      */
-    tagOrTargetTagListHandlerAddType(tags) {
+    tagOrTargetTagListHandlerAddType(tags, type) {
         return tags.map(function tager(tagItem, tagIndex) {
-            return tagItem["type"] = "primary";
+            return tagItem["type"] = type;
         }.bind(this));
     }
 
@@ -110,8 +111,8 @@ class BarterView extends React.Component {
             //控制Modal组件对话框显示
             viewKeryiBarterHandler
         } = this.props;
-        tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["tags"]);
-        tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["targetTags"]);
+        tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["tags"], "primary");
+        tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["targetTags"], "info");
         return (
             <div
                 className="keryi_barter_card_container"
@@ -155,9 +156,9 @@ class BarterView extends React.Component {
                     />
                 </figure>
                 <dfn className="keryi_barter_view_details_description">
-                    <h3 className="keryi_barter_view_details_title">
+                    <h1 className="keryi_barter_view_details_title">
                         {viewDetailTitle}
-                    </h3>
+                    </h1>
                     <cite className="keryi_barter_view_details_userName">
                         资源由 <abbr className="keryi_barter_view_details_name">{viewDetailUserName}</abbr> 发布
                     </cite>
@@ -171,12 +172,6 @@ class BarterView extends React.Component {
      * @returns {XML}
      */
     renderModalStatistics() {
-        const {
-            //资源详情被需要数目
-            viewDetailNeedParty,
-            //资源详情资源估值
-            viewDetailPriceWorth
-        } = this.props;
         return (
             <section className="keryi_barter_view_details_statistics">
                 <ul className="keryi_barter_view_details_statistics_uiList">
@@ -237,6 +232,74 @@ class BarterView extends React.Component {
                 <p className="keryi_barter_view_details_introduce_content">
                     {viewDetailIntroduce}
                 </p>
+                <hr className="keryi_barter_view_details_wire"/>
+            </section>
+        )
+    }
+
+    /**
+     * keryi_barter主页面查看"以物换物"资源详情对话框资源标签
+     * @returns {XML}
+     */
+    renderModalTag() {
+        const {
+            //资源详情资源标签
+            viewDetailTagList
+        } = this.props;
+        const {
+            //处理Tag组件标签,添加type属性
+            tagOrTargetTagListHandlerAddType
+        } = this;
+        tagOrTargetTagListHandlerAddType.bind(this)(viewDetailTagList, "primary");
+        return (
+            <section className="keryi_barter_view_details_tag">
+                <h2 className="keryi_barter_view_details_tag_title">资源类型</h2>
+                {
+                    viewDetailTagList.length > 0 && viewDetailTagList.map(function tager(tagItem, tagIndex) {
+                        return (
+                            <Tag
+                                key={tagItem["id"]}
+                                type={tagItem["type"]}
+                            >
+                                {"#" + tagItem["tag"]}
+                            </Tag>
+                        )
+                    }.bind(this))
+                }
+                <hr className="keryi_barter_view_details_wire"/>
+            </section>
+        )
+    }
+
+    /**
+     * keryi_barter主页面查看"以物换物"资源详情对话框目标资源标签
+     * @returns {XML}
+     */
+    renderModalTargetTag() {
+        const {
+            //资源详情目标资源标签
+            viewDetailTargetTagList
+        } = this.props;
+        const {
+            //处理Tag组件标签,添加type属性
+            tagOrTargetTagListHandlerAddType
+        } = this;
+        tagOrTargetTagListHandlerAddType.bind(this)(viewDetailTargetTagList, "info");
+        return (
+            <section className="keryi_barter_view_details_targetTag">
+                <h2 className="keryi_barter_view_details_targetTag_title">目标资源类型</h2>
+                {
+                    viewDetailTargetTagList.length > 0 && viewDetailTargetTagList.map(function tager(targetTagItem, targetTagIndex) {
+                        return (
+                            <Tag
+                                key={targetTagItem["id"]}
+                                type={targetTagItem["type"]}
+                            >
+                                {"#" + targetTagItem["tag"]}
+                            </Tag>
+                        )
+                    }.bind(this))
+                }
             </section>
         )
     }
@@ -254,7 +317,11 @@ class BarterView extends React.Component {
             //keryi_barter主页面查看"以物换物"资源详情对话框图片轮播器
             renderModalFigureCarousel,
             //keryi_barter主页面查看"以物换物"资源详情对话框主体介绍
-            renderModalIntroduce
+            renderModalIntroduce,
+            //keryi_barter主页面查看"以物换物"资源详情对话框资源标签
+            renderModalTag,
+            //keryi_barter主页面查看"以物换物"资源详情对话框目标资源标签
+            renderModalTargetTag
         } = this;
         const {
             //控制Modal组件对话框显示、隐藏或者消失
@@ -280,6 +347,10 @@ class BarterView extends React.Component {
                 {renderModalFigureCarousel.bind(this)()}
                 {/*keryi_barter主页面查看"以物换物"资源详情对话框主体介绍*/}
                 {renderModalIntroduce.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框资源标签*/}
+                {renderModalTag.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框目标资源标签*/}
+                {renderModalTargetTag.bind(this)()}
             </Modal>
         )
     }

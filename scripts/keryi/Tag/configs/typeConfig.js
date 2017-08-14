@@ -7,6 +7,8 @@ const typeConfig = {
     primary: "keryi_barter_tag keryi_barter_primary_tag",
     //Tag组件标签普通类型,也是默认类型
     default: "keryi_barter_tag keryi_barter_default_tag",
+    //Tag组件标签信息类型
+    info: "keryi_barter_tag keryi_barter_info_tag",
     //Tag组件标签警告类型
     warning: "keryi_barter_tag keryi_barter_warning_tag",
     //Tag组件标签错误类型

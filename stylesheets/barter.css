@@ -63,8 +63,16 @@
     background-color: rgb(244, 244, 244);
 }
 
-.keryi_barter_modal_view_details_container .keryi_barter_view_details_head {
+.keryi_barter_modal_view_details_container .keryi_barter_view_details_head,
+.keryi_barter_modal_view_details_container .keryi_barter_view_details_figure_carousel,
+.keryi_barter_modal_view_details_container .keryi_barter_view_details_introduce,
+.keryi_barter_modal_view_details_container .keryi_barter_view_details_statistics,
+.keryi_barter_modal_view_details_container .keryi_barter_view_details_tag,
+.keryi_barter_modal_view_details_container .keryi_barter_view_details_targetTag {
     padding: 0 15px;
+}
+
+.keryi_barter_modal_view_details_container .keryi_barter_view_details_head {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -104,14 +112,12 @@
 }
 
 .keryi_barter_modal_view_details_container .keryi_barter_view_details_figure_carousel {
-    padding: 15px;
     margin: 16px 10px 10px 10px;
     border-radius: 4px;
     background-color: #fff;
 }
 
 .keryi_barter_modal_view_details_container .keryi_barter_view_details_introduce {
-    padding: 0 15px;
     margin: 0 0 10px 0;
 }
 
@@ -121,10 +127,6 @@
     line-height: 30px;
     font-size: 14px;
     font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
-}
-
-.keryi_barter_modal_view_details_container .keryi_barter_view_details_statistics {
-    padding: 0 15px;
 }
 
 .keryi_barter_view_details_statistics > .keryi_barter_view_details_statistics_uiList {
@@ -166,6 +168,27 @@
     font-size: 12px;
     font-style: normal;
     margin: 0 0 0 6px;
+}
+
+.keryi_barter_view_details_tag > .keryi_barter_view_details_tag_title,
+.keryi_barter_view_details_targetTag > .keryi_barter_view_details_targetTag_title {
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    color: #8f8f8f;
+}
+
+.keryi_barter_view_details_introduce > .keryi_barter_view_details_wire,
+.keryi_barter_view_details_tag > .keryi_barter_view_details_wire {
+    width: 36%;
+    margin-top: 18px;
+    border: none;
+    border-top: 1px solid #e7e7e7;
+}
+
+.keryi_barter_modal_view_details_container .keryi_barter_view_details_targetTag {
+    margin: 0 0 16px 0;
 }
 
 

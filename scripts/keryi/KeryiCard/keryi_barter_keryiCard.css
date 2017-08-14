@@ -160,7 +160,8 @@
 }
 
 .keryi_barter_card_mainContent .keryi_barter_card_wire {
-    width: 46%;
+    width: 36%;
+    margin-top: 18px;
     border: none;
     border-top: 1px solid #e7e7e7;
 }
