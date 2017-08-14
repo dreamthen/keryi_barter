@@ -91,6 +91,14 @@ class AppView extends React.Component {
         this.state = {
             //用户登录的id
             userId: 0,
+            //用户登录的用户名
+            username: "",
+            //用户登录的手机号
+            phone: "",
+            //用户登录的邮箱
+            email: "",
+            //用户登录的头像
+            avatar: "",
             //控制Modal组件对话框显示、隐藏或者消失
             addBarterVisible: false,
             //控制选择资源类型框显示、隐藏或者消失
@@ -130,7 +138,11 @@ class AppView extends React.Component {
         }
         this.setState({
             ...props,
-            userId: userLoginInformation["id"]
+            userId: userLoginInformation["id"],
+            username: userLoginInformation["username"],
+            phone: userLoginInformation["phone"],
+            email: userLoginInformation["email"],
+            avatar: userLoginInformation["avatar"]
         });
     }
 
@@ -533,7 +545,11 @@ class AppView extends React.Component {
         } = this;
         const {
             //控制Modal组件对话框显示、隐藏或者消失
-            addBarterVisible
+            addBarterVisible,
+            //用户登录的用户名
+            username,
+            //用户登录的头像
+            avatar
         } = this.state;
         const {
             //控制Modal组件对话框隐藏并消失
@@ -548,8 +564,8 @@ class AppView extends React.Component {
                 footer
                 portrait
                 width={540}
-                title="1000yardStyle"
-                headPortrait="/images/keryiBarter_v.jpg"
+                title={username}
+                headPortrait={avatar ? avatar : "/images/keryiBarter_v.png"}
                 onOk={addBarterOkHandler.bind(this)}
                 onClose={addBarterCloseHandler.bind(this)}
             >
@@ -626,7 +642,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             } = this.props;
             const imageArrayString = mapArrayToString(imageList);
             //提交发布资源
-            dispatch(publishResource(userId, title, description, priceWorth, imageArrayString, tagIdList, tagTargetIdList, current));
+            dispatch(publishResource.bind(this)(userId, title, description, priceWorth, imageArrayString, tagIdList, tagTargetIdList, current));
         },
         /**
          * 控制Modal组件对话框隐藏并消失

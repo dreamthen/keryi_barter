@@ -81,7 +81,7 @@ class BarterView extends React.Component {
                 className="keryi_barter_head_portrait"
             >
                 <HeadPortrait
-                    headPortrait={keryiCard["user"]["avatar"] ? keryiCard["user"]["avatar"] : "/images/keryiBarter_v.jpg"}
+                    headPortrait={keryiCard["user"]["avatar"] ? keryiCard["user"]["avatar"] : "/images/keryiBarter_v.png"}
                 />
             </figure>
         )
@@ -125,7 +125,7 @@ class BarterView extends React.Component {
                     tagList={keryiCard["tags"]}
                     targetTagList={keryiCard["targetTags"]}
                     like={keryiCard["likeCount"]}
-                    priceWorth={keryiCard["price_worth"]}
+                    priceWorth={keryiCard["priceWorth"]}
                     viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
                     onViewDetails={viewKeryiBarterHandler.bind(this, keryiCard)}
                 />
@@ -152,7 +152,7 @@ class BarterView extends React.Component {
                     className="keryi_barter_view_details_head_portrait"
                 >
                     <HeadPortrait
-                        headPortrait={viewDetailHeadPortrait}
+                        headPortrait={viewDetailHeadPortrait ? viewDetailHeadPortrait : "/images/keryiBarter_v.png"}
                     />
                 </figure>
                 <dfn className="keryi_barter_view_details_description">

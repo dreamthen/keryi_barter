@@ -9,7 +9,7 @@ const keryiCardDefaultConfig = {
     '{src: "/images/keryiBarter_login_bg.png"},' +
     '{src: "/images/keryiBarter_register_bg.png"},' +
     '{src: "/images/keryiBarter_login_bg.png"}]',
-    price_worth: 77,
+    priceWorth: 77,
     user: {
         username: "1000yardStyle",
         avatar: "/images/keryiBarter_login_bg.png"

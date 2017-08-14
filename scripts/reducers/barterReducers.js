@@ -44,14 +44,16 @@ export function barterReducers(state = defaultState, actions) {
     switch (type) {
         //获取资源列表
         case appActionsType["GET_RESOURCE_LIST"]:
-            return insteadState.insteadObjState(state, newState);
+            return insteadState.insteadObjState(state, {
+                list: newState
+            });
         //获取资源详情
         case appActionsType["GET_RESOURCE_LIST_VIEW_DETAIL"]:
             newState["viewDetailUserName"] = newState["user"]["username"];
             newState["viewDetailImageList"] = newState["imgUrls"];
             newState["viewDetailTitle"] = newState["title"];
             newState["viewDetailIntroduce"] = newState["intro"];
-            newState["viewDetailPriceWorth"] = newState["price_worth"];
+            newState["viewDetailPriceWorth"] = newState["priceWorth"];
             newState["viewDetailLike"] = newState["likeCount"];
             newState["viewDetailTagList"] = newState["tags"];
             newState["viewDetailTargetTagList"] = newState["targetTags"];

@@ -51,13 +51,26 @@ class KeryiCard extends React.Component {
         super(props);
         this.state = {
             //是否显示SpinAnimation组件动画加载
-            loading: true,
+            loading: false,
             //是否动画操作透明度消除SpinAnimation组件动画加载容器
-            disAppear: true,
+            disAppear: false,
             //是否显示剩下的多于3张的图片
-            imageAppear: true,
+            imageAppear: false,
             //查看资源详情Icon实现动画效果标识符
             viewDetailsMove: false
+        }
+    }
+
+    componentDidMount() {
+        const {
+            imageList
+        } = this.props;
+        if (imageList.length > 3) {
+            this.setState({
+                loading: true,
+                disAppear: true,
+                imageAppear: true
+            });
         }
     }
 
@@ -221,6 +234,32 @@ class KeryiCard extends React.Component {
     }
 
     /**
+     * render渲染card主要内容加载更多图片
+     * returns {XML}
+     */
+    renderSpinAnimation() {
+        const {
+            //是否动画操作透明度消除SpinAnimation组件动画加载容器
+            disAppear,
+            //是否显示剩下的多于3张的图片
+            imageAppear
+        } = this.state;
+        const {
+            //点击SpinAnimation组件动画加载,点击加载更多图片
+            loadingImage
+        } = this;
+        return imageAppear &&
+            <div className={disAppear ? keryiCardConfig[loadingAppear] : keryiCardConfig[loadingDisappear]}>
+                <SpinAnimation
+                    size="default"
+                    onClick={
+                        loadingImage.bind(this)
+                    }
+                />
+            </div>
+    }
+
+    /**
      * 点击SpinAnimation组件动画加载,点击加载更多图片
      */
     loadingImage() {
@@ -304,7 +343,7 @@ class KeryiCard extends React.Component {
      * render渲染card主要内容目标资源标签类型
      * @returns {XML}
      */
-    renderTargetTag(){
+    renderTargetTag() {
         const {
             //KeryiCard组件卡片目标资源标签类型
             targetTagList
@@ -384,8 +423,8 @@ class KeryiCard extends React.Component {
             renderCardHead,
             //card主要内容图片
             renderCardImage,
-            //点击SpinAnimation组件动画加载,点击加载更多图片
-            loadingImage,
+            //card主要内容加载更多图片
+            renderSpinAnimation,
             //card主要内容标题和介绍
             renderDescription,
             //card主要内容资源标签类型
@@ -395,12 +434,6 @@ class KeryiCard extends React.Component {
             //card主要内容底部
             renderCardFoot
         } = this;
-        const {
-            //是否动画操作透明度消除SpinAnimation组件动画加载容器
-            disAppear,
-            //是否显示剩下的多于3张的图片
-            imageAppear
-        } = this.state;
         return (
             <section className="keryi_barter_card_main">
                 {/*card主要内容头部*/}
@@ -408,15 +441,8 @@ class KeryiCard extends React.Component {
                 <main className="keryi_barter_card_mainContent">
                     {/*card主要内容图片*/}
                     {renderCardImage.bind(this)()}
-                    {imageAppear &&
-                    <div className={disAppear ? keryiCardConfig[loadingAppear] : keryiCardConfig[loadingDisappear]}>
-                        <SpinAnimation
-                            size="default"
-                            onClick={
-                                loadingImage.bind(this)
-                            }
-                        />
-                    </div>}
+                    {/*card主要内容加载更多图片*/}
+                    {renderSpinAnimation.bind(this)()}
                     {/*card主要内容标题和介绍*/}
                     {renderDescription.bind(this)()}
                     {/*card主要内容资源标签类型*/}
