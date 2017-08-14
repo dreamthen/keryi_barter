@@ -47,7 +47,7 @@ export function barterReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, newState);
         //获取资源详情
         case appActionsType["GET_RESOURCE_LIST_VIEW_DETAIL"]:
-            newState["viewDetailUserName"] = "1000yardStyle";
+            newState["viewDetailUserName"] = newState["user"]["username"];
             newState["viewDetailImageList"] = newState["imgUrls"];
             newState["viewDetailTitle"] = newState["title"];
             newState["viewDetailIntroduce"] = newState["intro"];
@@ -59,7 +59,7 @@ export function barterReducers(state = defaultState, actions) {
         //获取资源详情用户头像
         case appActionsType["GET_USER_HEAD_PORTRAIT_VIEW_DETAIL"]:
             return insteadState.insteadObjState(state, {
-                viewDetailHeadPortrait: newState
+                viewDetailHeadPortrait: newState["user"]["avatar"]
             });
     }
     return state;

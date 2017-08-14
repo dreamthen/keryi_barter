@@ -54,6 +54,8 @@ let timer;
 
 class AppView extends React.Component {
     static propTypes = {
+        //资源数据列表页码
+        current: PropTypes.number,
         //对话框标题
         title: PropTypes.string,
         //对话框资源描述
@@ -593,7 +595,8 @@ class AppView extends React.Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        ...state.appReducers
+        ...state.appReducers,
+        current: state.barterReducers.current
     }
 }
 
@@ -612,6 +615,8 @@ function mapDispatchToProps(dispatch, ownProps) {
                 priceWorth
             } = this.state;
             const {
+                //资源数据列表页码
+                current,
                 //资源描述输入框上传图片组
                 imageList,
                 //选择资源类型id标签组
@@ -621,7 +626,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             } = this.props;
             const imageArrayString = mapArrayToString(imageList);
             //提交发布资源
-            dispatch(publishResource(userId, title, description, priceWorth, imageArrayString, tagIdList, tagTargetIdList));
+            dispatch(publishResource(userId, title, description, priceWorth, imageArrayString, tagIdList, tagTargetIdList, current));
         },
         /**
          * 控制Modal组件对话框隐藏并消失

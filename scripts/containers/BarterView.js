@@ -81,7 +81,7 @@ class BarterView extends React.Component {
                 className="keryi_barter_head_portrait"
             >
                 <HeadPortrait
-                    headPortrait={keryiCard["user"]["avatar"]}
+                    headPortrait={keryiCard["user"]["avatar"] ? keryiCard["user"]["avatar"] : "/images/keryiBarter_v.jpg"}
                 />
             </figure>
         )
@@ -423,7 +423,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 viewBarterVisible: true
             });
-            dispatch(getUserHeadPortraitViewDetail("/images/keryiBarter_login_bg.png"));
+            dispatch(getUserHeadPortraitViewDetail(keryiCard));
             dispatch(getResourcesListViewDetailsAction(keryiCard));
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();

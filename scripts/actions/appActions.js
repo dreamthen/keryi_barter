@@ -7,8 +7,13 @@ import keryiAxiosConfig from "../configs/axiosConfig";
 import modalComponentConfig from "../configs/modalComponentConfig";
 import Success from "../prompt/successPrompt";
 import {
+    //获取光标位置
     getFocusPosition
 } from "../configs/getElementPosition";
+import {
+    //获取资源列表
+    getResourcesList
+} from "./barterActions";
 
 /**
  * 设置选择资源类型下拉框距离添加选择资源类型输入框左边的位置
@@ -217,9 +222,10 @@ export function changeTagFunction(key, initLeft, tag, tagList) {
  * @param imgUrls
  * @param tags
  * @param targetTags
+ * @param pageNum
  * @returns {dispatcher}
  */
-export function publishResource(userId, title, intro, price_worth, imgUrls, tags, targetTags) {
+export function publishResource(userId, title, intro, price_worth, imgUrls, tags, targetTags, pageNum) {
     return function dispatcher(dispatch) {
         //axios服务器请求响应集成对象
         keryiAxiosConfig.axiosRequest(
@@ -264,6 +270,8 @@ export function publishResource(userId, title, intro, price_worth, imgUrls, tags
                     });
                     //重置对话框状态
                     dispatch(resetModalStatus());
+                    //获取资源列表
+                    dispatch(getResourcesList(pageNum));
                 }
             }.bind(this)
         )
