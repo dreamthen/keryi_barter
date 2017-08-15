@@ -241,7 +241,6 @@ export function publishResource(userId, title, intro, price_worth, imgUrls, tags
                 targetTags
             },
             function done(response) {
-                console.log(response);
                 //服务器响应数据
                 let data = response.data,
                     //服务器响应body主题对象
@@ -253,8 +252,6 @@ export function publishResource(userId, title, intro, price_worth, imgUrls, tags
                     //服务器对响应结果描述
                     msg = head.message;
                 if (code === Success.PUBLISH_RESOURCE_SUCCESS_CODE) {
-                    console.log("helloworld");
-                    console.log(this.state.addBarterVisible);
                     this.setState({
                         //控制对话框隐藏并消失
                         addBarterVisible: false,
@@ -275,8 +272,10 @@ export function publishResource(userId, title, intro, price_worth, imgUrls, tags
                     dispatch(resetModalStatus());
                     //获取资源列表
                     dispatch(getResourcesList(pageNum));
+                } else {
+
                 }
             }.bind(this)
         )
-    }
+    }.bind(this)
 }

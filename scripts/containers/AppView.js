@@ -29,7 +29,12 @@ import {
     //提交发布资源
     publishResource
 } from "../actions/appActions";
-import {mapArrayToString} from "../configs/mapArrayToString";
+import {
+    //将数组对象转化为数组对象字符串
+    mapArrayToString,
+    //去除文件路径,只留文件名称
+    removalPath
+} from "../configs/mapArrayToString";
 import modalComponentConfig from "../configs/modalComponentConfig";
 import {
     Area,
@@ -274,10 +279,11 @@ class AppView extends React.Component {
      * 设置选择资源输入框上方标签组
      * @param key
      * @param value
+     * @param type
      * @param iconName
      * @returns {XML}
      */
-    renderTagList(key, value, iconName) {
+    renderTagList(key, value, type, iconName) {
         //删除选择资源Tag标签数组元素方法函数
         const {deleteTagList} = this.props;
         return (
@@ -289,7 +295,7 @@ class AppView extends React.Component {
                     animation
                     className="keryi_barter_modal_tagArea_tag"
                     iconName={iconName}
-                    type="primary"
+                    type={type}
                     onClose={deleteTagList.bind(this, key)}
                 >
                     {"#" + value}
@@ -302,10 +308,11 @@ class AppView extends React.Component {
      * 设置选择目标资源输入框上方标签组
      * @param key
      * @param value
+     * @param type
      * @param iconName
      * @returns {XML}
      */
-    renderTargetTagList(key, value, iconName) {
+    renderTargetTagList(key, value, type, iconName) {
         //删除选择目标资源Tag标签数组元素方法函数
         const {deleteTargetTagList} = this.props;
         return (
@@ -317,7 +324,7 @@ class AppView extends React.Component {
                     animation
                     className="keryi_barter_modal_targetTagArea_tag"
                     iconName={iconName}
-                    type="primary"
+                    type={type}
                     onClose={deleteTargetTagList.bind(this, key)}
                 >
                     {"#" + value}
@@ -449,7 +456,7 @@ class AppView extends React.Component {
                     >
                         {
                             tagList && tagList.length > 0 && tagList.map(function tagger(tagItem, tagIndex) {
-                                return renderTagList.bind(this)(tagItem["id"], tagItem["tag"], iconName);
+                                return renderTagList.bind(this)(tagItem["id"], tagItem["tag"], type, iconName);
                             }.bind(this))
                         }
                     </ul>
@@ -462,7 +469,7 @@ class AppView extends React.Component {
                     >
                         {
                             tagTargetList && tagTargetList.length > 0 && tagTargetList.map(function tagger(tagItem, tagIndex) {
-                                return renderTargetTagList.bind(this)(tagItem["id"], tagItem["tag"], iconName);
+                                return renderTargetTagList.bind(this)(tagItem["id"], tagItem["tag"], type, iconName);
                             }.bind(this))
                         }
                     </ul>
@@ -640,6 +647,7 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //选择目标资源类型id标签组
                 tagTargetIdList
             } = this.props;
+            removalPath(imageList);
             const imageArrayString = mapArrayToString(imageList);
             //提交发布资源
             dispatch(publishResource.bind(this)(userId, title, description, priceWorth, imageArrayString, tagIdList, tagTargetIdList, current));

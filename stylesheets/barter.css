@@ -98,11 +98,13 @@
 }
 
 .keryi_barter_view_details_description > .keryi_barter_view_details_userName {
+    width: 100%;
     display: inline-block;
     margin-top: 5px;
     font-size: 16px;
     font-style: normal;
     font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    text-align: center;
 }
 
 .keryi_barter_view_details_userName > .keryi_barter_view_details_name {

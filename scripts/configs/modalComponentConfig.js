@@ -43,12 +43,13 @@ const modalComponentConfig = [
         key: "priceWorth",
         include: "input",
         size: "large",
-        placeholder:"请对您的资源估值",
+        placeholder: "请对您的资源估值",
         className: "keryi_barter_modal_area_priceWorth"
     },
     {
         key: "tagList",
         include: "tagArea",
+        type: "primary",
         classNameNone: "keryi_barter_modal_tagArea keryi_barter_modal_tagAreaNone",
         className: "keryi_barter_modal_tagArea",
         classNameShow: "keryi_barter_modal_tagArea keryi_barter_modal_tagAreaShow",
@@ -72,6 +73,7 @@ const modalComponentConfig = [
     {
         key: "targetTagList",
         include: "targetTagArea",
+        type: "info",
         classNameNone: "keryi_barter_modal_targetTagArea keryi_barter_modal_targetTagAreaNone",
         className: "keryi_barter_modal_targetTagArea",
         classNameShow: "keryi_barter_modal_targetTagArea keryi_barter_modal_targetTagAreaShow",
