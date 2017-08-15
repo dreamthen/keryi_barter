@@ -67,7 +67,8 @@ class Modal extends React.Component {
     }
 
     componentDidUpdate(prevState) {
-        this._render();
+        //渲染Modal组件对话框
+        this._render.bind(this)();
     }
 
     /**
@@ -144,8 +145,12 @@ class Modal extends React.Component {
             //Modal组件对话框提交发布回调函数
             onOk
         } = this.props;
+        const {
+            //关闭Modal对话框,并执行参数方法函数
+            closeModal
+        } = this;
         //关闭Modal对话框,并执行提交发布回调函数
-        onOk();
+        closeModal.bind(this)(onOk);
         //取消冒泡
         e.nativeEvent.stopImmediatePropagation();
     }
