@@ -66,6 +66,18 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * render渲染keryi_barter个人信息页面头部阴影
+     * @returns {XML}
+     */
+    renderPersonalShadow() {
+        return (
+            <div className="keryi_barter_personal_shadow">
+
+            </div>
+        )
+    }
+
+    /**
      * render渲染keryi_barter个人信息页面背景和头像
      * @returns {XML}
      */
@@ -92,6 +104,8 @@ class PersonalView extends React.Component {
      */
     renderPersonalHeader() {
         const {
+            //render渲染个人信息页面头部阴影
+            renderPersonalShadow,
             //render渲染个人信息页面背景和头像
             renderPersonalHeaderBackgroundAndPortrait
         } = this;
@@ -104,6 +118,8 @@ class PersonalView extends React.Component {
                 className="keryi_barter_personal_head"
                 style={{background: "url(/images/keryiBarter_login_bg.png) no-repeat center center / cover border-box content-box"}}
             >
+                {/*render渲染个人信息页面头部阴影*/}
+                {renderPersonalShadow.bind(this)()}
                 {/*render渲染个人信息页面背景和头像*/}
                 {renderPersonalHeaderBackgroundAndPortrait.bind(this)()}
             </header>
