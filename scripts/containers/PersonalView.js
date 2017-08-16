@@ -5,6 +5,7 @@
  */
 import React from "react";
 import {connect} from "react-redux";
+import "../../stylesheets/personal.css";
 
 class PersonalView extends React.Component {
     constructor(props) {
@@ -15,7 +16,9 @@ class PersonalView extends React.Component {
     render() {
         return (
             <div className="keryi_barter_personal_main_container">
+                <section className="keryi_barter_personal_main_module">
 
+                </section>
             </div>
         )
     }

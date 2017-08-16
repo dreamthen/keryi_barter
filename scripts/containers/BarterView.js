@@ -18,7 +18,9 @@ import {
     //获取资源详情用户头像Action
     getUserHeadPortraitViewDetail
 } from "../actions/barterActions";
+//获取资源数据列表出现异常时,前端呈现默认约定数据
 import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
+//资源统计静态Mode配置
 import viewDetailsStatisticsConfig from "../configs/viewDetailsStatisticsConfig";
 import "../../stylesheets/barter.css";
 
@@ -374,7 +376,7 @@ class BarterView extends React.Component {
         } = this;
         return (
             <div className="keryi_barter_main_container">
-                <div className="keryi_barter_main_module keryi_barter_main_barterList">
+                <section className="keryi_barter_main_module keryi_barter_main_barterList">
                     {
                         (list && list.length > 0) ? list.map(function lister(listItem, listIndex) {
                                 return (
@@ -396,7 +398,7 @@ class BarterView extends React.Component {
                                 {renderKeryiCard.bind(this)(keryiCardDefaultConfig)}
                             </article>
                     }
-                </div>
+                </section>
                 {/*keryi_barter主页面查看"以物换物"资源详情对话框*/}
                 {renderModal.bind(this)()}
                 <aside className="keryi_barter_main_module keryi_barter_main_aside">

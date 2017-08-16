@@ -1,0 +1,16 @@
+@charset "utf-8";
+/*
+    keryi_barter个人信息页面主要内容副级容器样式
+*/
+.keryi_barter_main > .keryi_barter_personal_main_container {
+    width: 60%;
+    min-width: 645px;
+    margin: 0 auto;
+}
+
+/*
+    keryi_barter主页面左右主要内容模块样式
+ */
+.keryi_barter_personal_main_container > .keryi_barter_personal_main_module {
+    display: inline-block;
+}
