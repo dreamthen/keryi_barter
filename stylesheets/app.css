@@ -110,6 +110,13 @@ body {
 }
 
 /*
+    keryi_barter页面个人信息子导航icon样式
+ */
+.keryi_barter_navItem .keryiBarter-barterPersonal {
+    font-size: 22px;
+}
+
+/*
     keryi_barter页面添加barter列表按钮样式
 */
 .keryi_barter_navItem .keryiBarter-addBarter {

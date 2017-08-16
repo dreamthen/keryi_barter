@@ -198,6 +198,7 @@ class AppView extends React.Component {
                                 return (
                                     <li
                                         key={routeIndex}
+                                        title={routeItem["title"]}
                                         className="keryi_barter_navItem"
                                     >
                                         <Link
