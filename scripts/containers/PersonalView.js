@@ -7,7 +7,8 @@ import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {
     Button,
-    HeadPortrait
+    HeadPortrait,
+    Input
 } from "../keryi";
 import "../../stylesheets/personal.css";
 
@@ -176,7 +177,9 @@ class PersonalView extends React.Component {
         } = this.state;
         return (
             <section className="keryi_barter_personal_main_username">
-
+                <h1 className="keryi_barter_personal_main_username_title">
+                    {username}
+                </h1>
             </section>
         )
     }

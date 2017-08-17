@@ -43,8 +43,8 @@
 
 .keryi_barter_personal_head > .keryi_barter_personal_head_portrait {
     position: relative;
-    width: 102px;
-    height: 102px;
+    width: 106px;
+    height: 106px;
     top: 20px;
     z-index: 2400;
 }
@@ -71,4 +71,20 @@
 .keryi_barter_personal_head_update_surface .keryi_barter_personal_head_update_surface_button {
     margin-top: 0;
     padding: 6px 10px;
+}
+
+.keryi_barter_personal_main_module > .keryi_barter_personal_main {
+    background-color: #fff;
+}
+
+.keryi_barter_personal_main > .keryi_barter_personal_main_username {
+    height: 75px;
+}
+
+.keryi_barter_personal_main_username > .keryi_barter_personal_main_username_title {
+    position: relative;
+    text-align: center;
+    font-size: 30px;
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    top: 30px;
 }
