@@ -6,6 +6,7 @@
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {
+    Button,
     HeadPortrait
 } from "../keryi";
 import "../../stylesheets/personal.css";
@@ -71,14 +72,48 @@ class PersonalView extends React.Component {
      */
     renderPersonalShadow() {
         return (
-            <div className="keryi_barter_personal_shadow">
+            <div className="keryi_barter_personal_head_shadow">
 
             </div>
         )
     }
 
     /**
-     * render渲染keryi_barter个人信息页面背景和头像
+     * render渲染keryi_barter个人信息页面头部用户名
+     * @returns {XML}
+     */
+    renderPersonalHeaderUsername() {
+        const {
+            //用户登录的用户名
+            username
+        } = this.state;
+        return (
+            <dfn className="keryi_barter_personal_head_username">
+                {username}
+            </dfn>
+        )
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面头部编辑外观按钮
+     * @returns {XML}
+     */
+    renderPersonalUpdateSurface() {
+        return (
+            <section className="keryi_barter_personal_head_update_surface">
+                <Button
+                    size="default"
+                    type="info"
+                    className="keryi_barter_personal_head_update_surface_button"
+                >
+                    编辑外观
+                </Button>
+            </section>
+        )
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面头部背景和头像
      * @returns {XML}
      */
     renderPersonalHeaderBackgroundAndPortrait() {
@@ -106,13 +141,13 @@ class PersonalView extends React.Component {
         const {
             //render渲染个人信息页面头部阴影
             renderPersonalShadow,
-            //render渲染个人信息页面背景和头像
+            //render渲染个人信息页面头部用户名
+            renderPersonalHeaderUsername,
+            //render渲染个人信息页面头部编辑外观按钮
+            renderPersonalUpdateSurface,
+            //render渲染个人信息页面头部背景和头像
             renderPersonalHeaderBackgroundAndPortrait
         } = this;
-        const {
-            //用户登录的用户名
-            username
-        } = this.state;
         return (
             <header
                 className="keryi_barter_personal_head"
@@ -120,9 +155,44 @@ class PersonalView extends React.Component {
             >
                 {/*render渲染个人信息页面头部阴影*/}
                 {renderPersonalShadow.bind(this)()}
-                {/*render渲染个人信息页面背景和头像*/}
+                {/*render渲染个人信息页面头部用户名*/}
+                {renderPersonalHeaderUsername.bind(this)()}
+                {/*render渲染个人信息页面头部编辑外观按钮*/}
+                {renderPersonalUpdateSurface.bind(this)()}
+                {/*render渲染个人信息页面头部背景和头像*/}
                 {renderPersonalHeaderBackgroundAndPortrait.bind(this)()}
             </header>
+        )
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面主体用户名
+     * @returns {XML}
+     */
+    renderMainUserName() {
+        const {
+            //用户登录的用户名
+            username
+        } = this.state;
+        return (
+            <section className="keryi_barter_personal_main_username">
+
+            </section>
+        )
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面主体部分
+     * @returns {XML}
+     */
+    renderPersonalMain() {
+        const {
+            renderMainUserName
+        } = this;
+        return (
+            <main className="keryi_barter_personal_main">
+                {renderMainUserName.bind(this)()}
+            </main>
         )
     }
 
@@ -133,13 +203,17 @@ class PersonalView extends React.Component {
     render() {
         const {
             //render渲染个人信息页面头部
-            renderPersonalHeader
+            renderPersonalHeader,
+            //render渲染个人信息页面主体部分
+            renderPersonalMain
         } = this;
         return (
             <div className="keryi_barter_personal_main_container">
                 <section className="keryi_barter_personal_main_module">
                     {/*render渲染个人信息页面头部*/}
                     {renderPersonalHeader.bind(this)()}
+                    {/*render渲染个人信息页面主体部分*/}
+                    {renderPersonalMain.bind(this)()}
                 </section>
             </div>
         )

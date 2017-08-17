@@ -29,16 +29,22 @@
     font-size: 16px;
 }
 
+.keryi_barter_default_button > button {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #d9d9d9;
+}
+
 .keryi_barter_primary_button > button {
     background-color: #63A8F0;
     color: #fff;
     border: 1px solid #63A8F0;
 }
 
-.keryi_barter_default_button > button {
-    background-color: #fff;
-    color: #000;
-    border: 1px solid #d9d9d9;
+.keryi_barter_info_button > button {
+    background-color: #FFF;
+    color: #63A8F0;
+    border: 1px solid #63A8F0;
 }
 
 button > i {
@@ -46,13 +52,19 @@ button > i {
     margin-left: 2px;
 }
 
+.keryi_barter_default_button > button:hover {
+    border: 1px solid #63A8F0;
+    color: #63A8F0;
+}
+
 .keryi_barter_primary_button > button:hover {
     border: 1px solid #63A8F0;
     color: #fff;
 }
 
-.keryi_barter_default_button > button:hover {
+.keryi_barter_info_button > button:hover {
+    background: #63A8F0;
+    color: #fff;
     border: 1px solid #63A8F0;
-    color: #63A8F0;
 }
 

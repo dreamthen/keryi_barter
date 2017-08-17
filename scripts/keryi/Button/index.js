@@ -16,7 +16,7 @@ const defaultSizeConfig = "default";
  */
 class Button extends React.Component {
     static propTypes = {
-        //Button组件按钮类型:default,primary,warning和error,默认为default
+        //Button组件按钮类型:default,primary,info,warning和error,默认为default
         type: PropTypes.string,
         //Button组件按钮尺寸:small,default和large,默认为default
         size: PropTypes.string,
