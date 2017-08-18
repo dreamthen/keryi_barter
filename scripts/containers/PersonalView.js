@@ -202,6 +202,9 @@ class PersonalView extends React.Component {
                     <h2 className="keryi_barter_personal_main_information_title">
                         个人信息
                     </h2>
+                    <dfn>
+                        {username}
+                    </dfn>
                 </aside>
             </section>
         )
