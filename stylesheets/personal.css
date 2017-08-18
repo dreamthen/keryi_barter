@@ -73,12 +73,9 @@
     padding: 6px 10px;
 }
 
-.keryi_barter_personal_main_module > .keryi_barter_personal_main {
-    background-color: #fff;
-}
-
 .keryi_barter_personal_main > .keryi_barter_personal_main_username {
     height: 75px;
+    background-color: #fff;
 }
 
 .keryi_barter_personal_main_username > .keryi_barter_personal_main_username_title {
@@ -86,5 +83,37 @@
     text-align: center;
     font-size: 30px;
     font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
-    top: 30px;
+    top: 32px;
+}
+
+.keryi_barter_personal_main > .keryi_barter_personal_main_information_container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.keryi_barter_personal_main_information_container > .keryi_barter_personal_main_information {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.keryi_barter_personal_main_information_container > .keryi_barter_personal_main_barterList {
+    width: 660px;
+}
+
+.keryi_barter_personal_main_information_container > .keryi_barter_personal_main_personalInformation {
+    width: calc(100% - 620px);
+    padding: 0 15px;
+    margin-left: 10px;
+}
+
+.keryi_barter_personal_main_personalInformation > .keryi_barter_personal_main_information_title {
+    padding: 4px 6px;
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    background-color: rgb(250, 250, 250);
 }

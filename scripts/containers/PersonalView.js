@@ -170,7 +170,7 @@ class PersonalView extends React.Component {
      * render渲染keryi_barter个人信息页面主体用户名
      * @returns {XML}
      */
-    renderMainUserName() {
+    renderPersonalMainUserName() {
         const {
             //用户登录的用户名
             username
@@ -185,16 +185,45 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * render渲染keryi_barter个人信息页面主体信息部分
+     */
+    renderPersonalMainInformation() {
+        const {
+            //用户登录的用户名
+            username
+        } = this.state;
+        return (
+            <section className="keryi_barter_personal_main_information_container">
+                <main className="keryi_barter_personal_main_information keryi_barter_personal_main_barterList">
+
+                </main>
+                <aside
+                    className="keryi_barter_personal_main_information keryi_barter_personal_main_personalInformation">
+                    <h2 className="keryi_barter_personal_main_information_title">
+                        个人信息
+                    </h2>
+                </aside>
+            </section>
+        )
+    }
+
+    /**
      * render渲染keryi_barter个人信息页面主体部分
      * @returns {XML}
      */
     renderPersonalMain() {
         const {
-            renderMainUserName
+            //render渲染个人信息页面主体用户名
+            renderPersonalMainUserName,
+            //render渲染个人信息页面主体信息部分
+            renderPersonalMainInformation
         } = this;
         return (
             <main className="keryi_barter_personal_main">
-                {renderMainUserName.bind(this)()}
+                {/*render渲染个人信息页面主体用户名*/}
+                {renderPersonalMainUserName.bind(this)()}
+                {/*render渲染个人信息页面主体信息部分*/}
+                {renderPersonalMainInformation.bind(this)()}
             </main>
         )
     }
