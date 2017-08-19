@@ -24,6 +24,8 @@ class Input extends React.Component {
         type: PropTypes.string,
         //Input组件输入框尺寸:small,default和large,默认为default
         size: PropTypes.string,
+        //Input组件输入框是否可编辑
+        disabled: PropTypes.bool,
         //Input组件输入框className,外部传入样式表
         className: PropTypes.string,
         //Input组件输入框onChange内容改变事件,外部传入Input输入框内容改变函数
@@ -72,6 +74,8 @@ class Input extends React.Component {
     render() {
         const {typeToClass, sizeToClass} = this;
         const {
+            //Input组件输入框是否可编辑
+            disabled,
             //Input组件输入框类型:text和password,默认为text
             type,
             //Input组件输入框className,外部传入样式表
@@ -100,6 +104,7 @@ class Input extends React.Component {
             <div className={typeToClass.bind(this)() + " " + sizeToClass.bind(this)()}>
                 {
                     type === inputType[typeAreaIndex - 1] ? <textarea
+                        disabled={disabled}
                         value={value}
                         placeholder={placeholder}
                         maxLength={maxLength}
@@ -110,6 +115,7 @@ class Input extends React.Component {
                         onBlur={onBlur}
                     >
                     </textarea> : <input
+                        disabled={disabled}
                         value={value}
                         placeholder={placeholder}
                         maxLength={maxLength}

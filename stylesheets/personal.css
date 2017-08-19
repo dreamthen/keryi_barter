@@ -90,11 +90,13 @@
 
 .keryi_barter_personal_main > .keryi_barter_personal_main_information_container {
     width: 100%;
+    position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+    z-index: 2410;
 }
 
 .keryi_barter_personal_main_information_container > .keryi_barter_personal_main_information {
@@ -122,4 +124,69 @@
     border-bottom: 1px solid #e7e7e7;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
+}
+
+.keryi_barter_personal_main_information_content > .keryi_barter_personal_main_information_personalMain {
+    padding: 0 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.keryi_barter_personal_main_information_personalMain > .keryi_barter_personal_main_information_personalMain_title {
+    width: 80px;
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.keryi_barter_personal_main_information_personalMain .keryi_barter_personal_main_information_personalMain_atom {
+    width: 200px;
+    color: #444;
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.keryi_barter_personal_main_personalInformation > .keryi_barter_personal_main_information_update_container {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    color: #000;
+    cursor: pointer;
+    opacity: 0;
+    transition: all .3s ease-in-out 0s;
+    z-index: 2420;
+}
+
+.keryi_barter_personal_main_personalInformation > .keryi_barter_personal_main_information_updateAnimation {
+    opacity: 0.4;
+}
+
+.keryi_barter_personal_main_information_update_container > i {
+    font-size: 20px;
+}
+
+.keryi_barter_personal_main_personalInformation > .keryi_barter_personal_main_information_footer {
+    opacity: 0;
+    border: none;
+    transition: all .3s ease-in-out 0s;
+}
+
+.keryi_barter_personal_main_information_footer .keryi_barter_personal_main_information_footer_button {
+    padding: 5px 12px;
+    margin: 8px 0 8px 6px;
+    font-size: 14px;
+}
+
+.keryi_barter_personal_main_information_footer .keryi_barter_personal_main_information_footer_cancel_button {
+    color: #9da6af;
+}
+
+.keryi_barter_personal_main_personalInformation > .keryi_barter_personal_main_information_footerAnimation {
+    border-top: 1px solid #e7e7e7;
+    opacity: 1;
 }

@@ -35,7 +35,8 @@ import {
     //去除文件路径,只留文件名称
     removalPath
 } from "../configs/mapArrayToString";
-import modalComponentConfig from "../configs/modalComponentConfig";
+//资源列表页面,Modal组件弹窗根据不同的组件类型配置来设置组件
+import barterModalComponentConfig from "../configs/barterModalComponentConfig";
 import {
     Area,
     Button,
@@ -50,9 +51,9 @@ import uploadConfig from "../configs/uploadConfig";
 import routesMode from "../configs/routesConfigMode";
 import "../../stylesheets/app.css";
 
-//Area组件编辑框类型
+//Modal组件弹出框类型
 const componentType = ["area", "functionIcons", "carousel", "tagArea", "targetTagArea", "input"];
-//Area组件icon功能图标类型
+//Modal组件弹出框icon功能图标类型
 const functionIconType = ["uploadPhoto"];
 //时间处理器,用来控制处理查询资源类型
 let timer;
@@ -506,7 +507,7 @@ class AppView extends React.Component {
             >
                 <section className="keryi_barter_modal_mainContainer">
                     {
-                        modalComponentConfig.map(function modal(modalItem, index) {
+                        barterModalComponentConfig.map(function modal(modalItem, index) {
                             //根据不同的组件类型配置来设置组件
                             return renderModalComponent.bind(this)(
                                 modalItem["key"],
@@ -698,24 +699,24 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 [key]: value
             });
-            if (key === modalComponentConfig[6]["key"] || key === modalComponentConfig[8]["key"]) {
+            if (key === barterModalComponentConfig[6]["key"] || key === barterModalComponentConfig[8]["key"]) {
                 //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题光标位置
                 timer = setTimeout(function controlTimer() {
                     //搜寻资源tag
                     if (value.slice(1) !== "" && (value.indexOf("#") === 0)) {
-                        (key === modalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagList));
-                        (key === modalComponentConfig[8]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagTargetList));
+                        (key === barterModalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagList));
+                        (key === barterModalComponentConfig[8]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagTargetList));
                     } else if (value !== "" && (value.indexOf("#") !== 0)) {
-                        (key === modalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagList));
-                        (key === modalComponentConfig[8]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagTargetList));
+                        (key === barterModalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagList));
+                        (key === barterModalComponentConfig[8]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagTargetList));
                     }
                     //控制PullListDown组件编辑框取消消失
                     if (value === "" || (value.indexOf("#") === 0 && value.slice(1) === "")) {
                         this.setState({[pullListDownKey]: false});
                         //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
-                        (key === modalComponentConfig[6]["key"]) && dispatch(resetDistance());
+                        (key === barterModalComponentConfig[6]["key"]) && dispatch(resetDistance());
                         //设置选择目标资源类型下拉框重置距离添加选择目标资源类型输入框左边的位置
-                        (key === modalComponentConfig[8]["key"]) && dispatch(resetTargetDistance());
+                        (key === barterModalComponentConfig[8]["key"]) && dispatch(resetTargetDistance());
                     } else {
                         this.setState({[pullListDownKey]: true});
                     }

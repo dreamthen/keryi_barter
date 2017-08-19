@@ -1,7 +1,8 @@
 /**
  * Created by yinwk on 2017/6/24.
  */
-const modalComponentConfig = [
+//资源列表页面,Modal组件弹窗根据不同的组件类型配置来设置组件
+const barterModalComponentConfig = [
     {
         key: "title",
         include: "area",
@@ -96,4 +97,5 @@ const modalComponentConfig = [
     }
 ];
 
-export default modalComponentConfig;
+//导出资源列表页面,Modal组件弹窗根据不同的组件类型配置来设置组件
+export default barterModalComponentConfig;

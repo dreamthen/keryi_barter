@@ -10,10 +10,24 @@ import {
     HeadPortrait,
     Input
 } from "../keryi";
+//个人信息页面,根据不同的组件类型配置来设置组件
+import personalComponentConfig from "../configs/personalComponentConfig";
+import {
+    //改变个人信息编辑状态,使得其可编辑
+    changePersonalInformation,
+    //改变个人信息编辑状态,使得其不可编辑
+    closeChangePersonalInformation
+} from "../actions/personalActions";
 import "../../stylesheets/personal.css";
 
+//个人信息可编辑组件类型
+const componentType = ["input"];
+
 class PersonalView extends React.Component {
-    static propTypes = {};
+    static propTypes = {
+        //判断个人信息是否可编辑
+        personalInformationDisabled: PropTypes.bool
+    };
 
     constructor(props) {
         super(props);
@@ -26,7 +40,9 @@ class PersonalView extends React.Component {
             //用户登录的邮箱
             email: "",
             //用户登录的头像
-            avatar: ""
+            avatar: "",
+            //判断个人信息编辑动画是否可渲染
+            personalInformationAnimationDisabled: false
         };
     }
 
@@ -37,6 +53,20 @@ class PersonalView extends React.Component {
         //将redux props转化为state
         const {mapPropsToState} = this;
         mapPropsToState.bind(this)();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const {
+            //判断个人信息是否可编辑
+            personalInformationDisabled
+        } = this.props;
+        if (personalInformationDisabled !== nextProps.personalInformationDisabled) {
+            setTimeout(function timer() {
+                this.setState({
+                    personalInformationAnimationDisabled: nextProps.personalInformationDisabled
+                });
+            }.bind(this), 100);
+        }
     }
 
     /**
@@ -185,13 +215,178 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * 改变Input输入框中的内容方法函数
+     * @param key
+     * @param e
+     */
+    onChangeInputHandler(key, e) {
+        this.setState({
+            [key]: e.target.value
+        });
+    }
+
+    /**
+     * 根据不同的组件类型配置来设置组件
+     * @param key
+     * @param value
+     * @param include
+     * @param size
+     * @param type
+     * @param className
+     * @param disabled
+     * @returns {XML}
+     */
+    renderPersonalMainInformationAreaItem(key, value, include, size, type, className, disabled) {
+        const {
+            //改变Input输入框中的内容方法函数
+            onChangeInputHandler
+        } = this;
+        switch (include) {
+            case componentType[0]:
+                return (
+                    <main className="keryi_barter_personal_main_information_personalMain">
+                        <dfn className="keryi_barter_personal_main_information_personalMain_title">
+                            {value}
+                        </dfn>
+                        <Input
+                            value={this.state[key]}
+                            size={size}
+                            type={type}
+                            className={className}
+                            disabled={!this.props[disabled]}
+                            onChange={onChangeInputHandler.bind(this, key)}
+                        />
+                    </main>
+                )
+        }
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面主体信息主要内容部分
+     * @returns {[XML]}
+     */
+    renderPersonalMainInformationArea() {
+        const {
+            //根据不同的组件类型配置来设置组件
+            renderPersonalMainInformationAreaItem
+        } = this;
+        return personalComponentConfig.map(function personaler(personalItem, personIndex) {
+            return (
+                <section
+                    key={personalItem["key"]}
+                    className="keryi_barter_personal_main_information_content"
+                >
+                    {/*根据不同的组件类型配置来设置组件*/}
+                    {renderPersonalMainInformationAreaItem.bind(this)(
+                        personalItem["key"],
+                        personalItem["value"],
+                        personalItem["include"],
+                        personalItem["size"],
+                        personalItem["type"],
+                        personalItem["className"],
+                        personalItem["disabled"]
+                    )}
+                </section>
+            )
+        }.bind(this))
+    }
+
+    /**
+     * 根据state personalInformationAnimationDisabled来设置个人信息页面主体信息编辑图标className样式表
+     * @returns string
+     */
+    updateClassToClass() {
+        //判断个人信息编辑动画是否可渲染
+        const {personalInformationAnimationDisabled} = this.state;
+        return !personalInformationAnimationDisabled ? "keryi_barter_personal_main_information_update_container keryi_barter_personal_main_information_updateAnimation" : "keryi_barter_personal_main_information_update_container";
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面主体信息编辑图标
+     * @returns {XML}
+     */
+    renderPersonalMainInformationUpdate() {
+        const {
+            //根据state personalInformationAnimationDisabled来设置个人信息页面主体信息编辑图标className样式表
+            updateClassToClass
+        } = this;
+        const {
+            //点击编辑图标,使个人信息页面主体信息可编辑
+            changePersonalInformationHandler
+        } = this.props;
+        return (
+            <section className={updateClassToClass.bind(this)()}>
+                <i
+                    className="iconfontKeryiBarter keryiBarter-update"
+                    onClick={changePersonalInformationHandler.bind(this)}
+                >
+
+                </i>
+            </section>
+        )
+    }
+
+    /**
+     * 根据state personalInformationAnimationDisabled来设置个人信息页面主体信息底部按钮className样式表
+     * @returns string
+     */
+    footerClassToClass() {
+        //判断个人信息编辑动画是否可渲染
+        const {personalInformationAnimationDisabled} = this.state;
+        return personalInformationAnimationDisabled ? "keryi_barter_personal_main_information_footer keryi_barter_personal_main_information_footerAnimation" : "keryi_barter_personal_main_information_footer";
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面主体信息底部按钮
+     * @returns {XML}
+     */
+    renderPersonalMainInformationFooter() {
+        const {
+            //根据state personalInformationAnimationDisabled来设置个人信息页面主体信息底部按钮className样式表
+            footerClassToClass
+        } = this;
+        const {
+            //点击取消按钮,使个人信息页面主体信息不可编辑
+            closeChangePersonalInformationHandler
+        } = this.props;
+        return (
+            <section className={footerClassToClass.bind(this)()}>
+                <Button
+                    type="default"
+                    size="large"
+                    onClick={closeChangePersonalInformationHandler.bind(this)}
+                    className="keryi_barter_personal_main_information_footer_button keryi_barter_personal_main_information_footer_cancel_button"
+                >
+                    取消
+                </Button>
+                <Button
+                    type="primary"
+                    size="large"
+                    className="keryi_barter_personal_main_information_footer_button keryi_barter_personal_main_information_footer_save_button"
+                >
+                    保存
+                </Button>
+            </section>
+        )
+    }
+
+    /**
      * render渲染keryi_barter个人信息页面主体信息部分
+     * @returns {XML}
      */
     renderPersonalMainInformation() {
         const {
-            //用户登录的用户名
-            username
-        } = this.state;
+            //render渲染个人信息页面主体信息主要内容部分
+            renderPersonalMainInformationArea,
+            //render渲染个人信息页面主体信息编辑图标
+            renderPersonalMainInformationUpdate,
+            //render渲染个人信息页面主体信息底部按钮
+            renderPersonalMainInformationFooter
+        } = this;
+        const {
+            //判断个人信息是否可编辑
+            personalInformationDisabled
+        } = this.props;
         return (
             <section className="keryi_barter_personal_main_information_container">
                 <main className="keryi_barter_personal_main_information keryi_barter_personal_main_barterList">
@@ -202,9 +397,12 @@ class PersonalView extends React.Component {
                     <h2 className="keryi_barter_personal_main_information_title">
                         个人信息
                     </h2>
-                    <dfn>
-                        {username}
-                    </dfn>
+                    {/*render渲染个人信息页面主体信息主要内容部分*/}
+                    {renderPersonalMainInformationArea.bind(this)()}
+                    {/*render渲染个人信息页面主体信息编辑图标*/}
+                    {!personalInformationDisabled && renderPersonalMainInformationUpdate.bind(this)()}
+                    {/*render渲染个人信息页面主体信息底部按钮*/}
+                    {personalInformationDisabled && renderPersonalMainInformationFooter.bind(this)()}
                 </aside>
             </section>
         )
@@ -262,7 +460,18 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-    return {}
+    return {
+        //点击编辑图标,使个人信息页面主体信息可编辑
+        changePersonalInformationHandler() {
+            //改变个人信息编辑状态,使得其可编辑
+            dispatch(changePersonalInformation());
+        },
+        //点击取消按钮,使个人信息页面主体信息不可编辑
+        closeChangePersonalInformationHandler() {
+            //改变个人信息编辑状态,使得其不可编辑
+            dispatch(closeChangePersonalInformation());
+        }
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonalView);

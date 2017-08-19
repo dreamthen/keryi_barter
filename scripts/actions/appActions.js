@@ -4,7 +4,7 @@
 import appActionsType from "./appActionsType";
 import api from "../configs/api";
 import keryiAxiosConfig from "../configs/axiosConfig";
-import modalComponentConfig from "../configs/modalComponentConfig";
+import modalComponentConfig from "../configs/barterModalComponentConfig";
 import Success from "../prompt/successPrompt";
 import {
     //获取光标位置
