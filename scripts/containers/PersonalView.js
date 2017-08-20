@@ -8,15 +8,20 @@ import {connect} from "react-redux";
 import {
     Button,
     HeadPortrait,
-    Input
+    Input,
+    KeryiCard
 } from "../keryi";
 //个人信息页面,根据不同的组件类型配置来设置组件
 import personalComponentConfig from "../configs/personalComponentConfig";
+//获取资源数据列表出现异常时,前端呈现默认约定数据
+import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
 import {
     //改变个人信息编辑状态,使得其可编辑
     changePersonalInformation,
     //改变个人信息编辑状态,使得其不可编辑
-    closeChangePersonalInformation
+    closeChangePersonalInformation,
+    //获取个人页资源列表
+    getPersonalResourcesList
 } from "../actions/personalActions";
 import "../../stylesheets/personal.css";
 
@@ -25,22 +30,27 @@ const componentType = ["input"];
 
 class PersonalView extends React.Component {
     static propTypes = {
+        //用户登录的id
+        userId: PropTypes.number,
+        //用户登录的用户名
+        username: PropTypes.string,
+        //用户登录的手机号
+        phone: PropTypes.string,
+        //用户登录的邮箱
+        email: PropTypes.string,
+        //用户登录的头像
+        avatar: PropTypes.string,
+        //获取个人页资源数据列表
+        list: PropTypes.array,
+        //个人页资源数据列表页码
+        current: PropTypes.number,
         //判断个人信息是否可编辑
         personalInformationDisabled: PropTypes.bool
     };
 
     constructor(props) {
         super(props);
-        this.state = {    //用户登录的id
-            userId: 0,
-            //用户登录的用户名
-            username: "",
-            //用户登录的手机号
-            phone: "",
-            //用户登录的邮箱
-            email: "",
-            //用户登录的头像
-            avatar: "",
+        this.state = {
             //判断个人信息编辑动画是否可渲染
             personalInformationAnimationDisabled: false
         };
@@ -56,16 +66,23 @@ class PersonalView extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        //将redux props转化为state
+        const {mapPropsToState} = this;
         const {
             //判断个人信息是否可编辑
             personalInformationDisabled
         } = this.props;
         if (personalInformationDisabled !== nextProps.personalInformationDisabled) {
+            //FIXME
             setTimeout(function timer() {
                 this.setState({
                     personalInformationAnimationDisabled: nextProps.personalInformationDisabled
                 });
             }.bind(this), 100);
+        }
+
+        if ((personalInformationDisabled !== nextProps.personalInformationDisabled) && (!nextProps.personalInformationDisabled)) {
+            mapPropsToState.bind(this)(nextProps);
         }
     }
 
@@ -73,27 +90,18 @@ class PersonalView extends React.Component {
      * 组件结束装载
      */
     componentDidMount() {
-
+        //dispatch获取资源数据列表
+        const {dispatchPersonalResourceList} = this.props;
+        dispatchPersonalResourceList.bind(this)();
     }
 
     /**
      * 将redux props转化为state
+     * @param props
      */
-    mapPropsToState() {
-        const {props} = this;
-        let userLoginInformation;
-        if (localStorage) {
-            userLoginInformation = JSON.parse(localStorage.getItem("userLoginInformation"));
-        } else {
-            return false;
-        }
+    mapPropsToState(props = this.props) {
         this.setState({
-            ...props,
-            userId: userLoginInformation["id"],
-            username: userLoginInformation["username"],
-            phone: userLoginInformation["phone"],
-            email: userLoginInformation["email"],
-            avatar: userLoginInformation["avatar"]
+            ...props
         });
     }
 
@@ -115,9 +123,9 @@ class PersonalView extends React.Component {
      */
     renderPersonalHeaderUsername() {
         const {
-            //用户登录的用户名
+            //静态用户登录的用户名
             username
-        } = this.state;
+        } = this.props;
         return (
             <dfn className="keryi_barter_personal_head_username">
                 {username}
@@ -197,14 +205,54 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * 处理Tag组件标签,添加type属性
+     * @constructor
+     * @returns {XML}
+     */
+    tagOrTargetTagListHandlerAddType(tags, type) {
+        return tags.map(function tager(tagItem, tagIndex) {
+            return tagItem["type"] = type;
+        }.bind(this));
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面资源信息
+     * @returns {XML}
+     */
+    renderPersonalInformationCard(keryiCard, key) {
+        const {
+            //处理Tag组件标签,添加type属性
+            tagOrTargetTagListHandlerAddType
+        } = this;
+        tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["tags"], "primary");
+        tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["targetTags"], "info");
+        return (
+            <KeryiCard
+                key={key}
+                userName={keryiCard["user"]["username"]}
+                title={keryiCard["title"]}
+                imageList={eval("(" + keryiCard["imgUrls"] + ")")}
+                introduce={keryiCard["intro"]}
+                tagList={keryiCard["tags"]}
+                targetTagList={keryiCard["targetTags"]}
+                priceWorth={keryiCard["priceWorth"]}
+                like={keryiCard["likeCount"]}
+                viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
+                onViewDetails={() => {
+                }}
+            />
+        )
+    }
+
+    /**
      * render渲染keryi_barter个人信息页面主体用户名
      * @returns {XML}
      */
     renderPersonalMainUserName() {
         const {
-            //用户登录的用户名
+            //静态用户登录的用户名
             username
-        } = this.state;
+        } = this.props;
         return (
             <section className="keryi_barter_personal_main_username">
                 <h1 className="keryi_barter_personal_main_username_title">
@@ -376,6 +424,8 @@ class PersonalView extends React.Component {
      */
     renderPersonalMainInformation() {
         const {
+            //render渲染个人信息页面资源信息
+            renderPersonalInformationCard,
             //render渲染个人信息页面主体信息主要内容部分
             renderPersonalMainInformationArea,
             //render渲染个人信息页面主体信息编辑图标
@@ -384,13 +434,19 @@ class PersonalView extends React.Component {
             renderPersonalMainInformationFooter
         } = this;
         const {
+            list,
             //判断个人信息是否可编辑
             personalInformationDisabled
         } = this.props;
         return (
             <section className="keryi_barter_personal_main_information_container">
                 <main className="keryi_barter_personal_main_information keryi_barter_personal_main_barterList">
-
+                    {
+                        (list && list.length > 0) ? list.map(function lister(listItem, listIndex) {
+                            //render渲染个人信息页面资源信息
+                            return renderPersonalInformationCard.bind(this)(listItem, listIndex);
+                        }.bind(this)) : renderPersonalInformationCard.bind(this)(keryiCardDefaultConfig, "default")
+                    }
                 </main>
                 <aside
                     className="keryi_barter_personal_main_information keryi_barter_personal_main_personalInformation">
@@ -461,12 +517,28 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch, ownProps) {
     return {
-        //点击编辑图标,使个人信息页面主体信息可编辑
+        /**
+         * dispatch获取个人页资源数据列表
+         */
+        dispatchPersonalResourceList() {
+            const {
+                //个人页资源数据列表页码
+                current,
+                //用户登录的id
+                userId
+            } = this.props;
+            dispatch(getPersonalResourcesList.bind(this)(current, userId));
+        },
+        /**
+         * 点击编辑图标,使个人信息页面主体信息可编辑
+         */
         changePersonalInformationHandler() {
             //改变个人信息编辑状态,使得其可编辑
             dispatch(changePersonalInformation());
         },
-        //点击取消按钮,使个人信息页面主体信息不可编辑
+        /**
+         * 点击取消按钮,使个人信息页面主体信息不可编辑
+         */
         closeChangePersonalInformationHandler() {
             //改变个人信息编辑状态,使得其不可编辑
             dispatch(closeChangePersonalInformation());

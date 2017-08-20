@@ -33,7 +33,6 @@ const keryiAxiosConfig = {
             //服务器设置set_cookie JSESSIONID
             withCredentials: true
         }).then(
-            //响应成功后的回调函数
             done
         ).catch(
             //响应抛出错误或者异常回调函数

@@ -13,6 +13,8 @@ const Success = {
     REGISTER_SUCCESS_MESSAGE: "注册成功,即将跳往登录页面",
     //获取资源列表成功状态码
     GET_RESOURCE_LIST_SUCCESS_CODE: "000000",
+    //获取个人页资源列表成功状态码
+    GET_PERSONAL_RESOURCE_LIST_SUCCESS_CODE: "000000",
     //上传图片成功状态码
     UPLOAD_RESOURCE_IMAGE_SUCCESS_CODE: "000000",
     //获取对话框模糊搜索标签组成功状态码

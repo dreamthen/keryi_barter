@@ -434,6 +434,7 @@ function mapDispatchToProps(dispatch, ownProps) {
          * dispatch获取资源数据列表
          */
         dispatchResourceList() {
+            //资源数据列表页码
             const {current} = this.props;
             dispatch(getResourcesList(current));
         },

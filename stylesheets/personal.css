@@ -95,7 +95,7 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     z-index: 2410;
 }
 
