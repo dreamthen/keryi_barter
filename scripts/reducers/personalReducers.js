@@ -25,6 +25,8 @@ const defaultState = {
     list: [],
     //个人页资源数据列表页码
     current: 1,
+    //个人信息部分距离父级元素顶部的高度
+    top: 0,
     //个人页资源详情用户头像
     viewDetailHeadPortrait: "",
     //个人页资源详情用户名

@@ -53,6 +53,8 @@ class PersonalView extends React.Component {
         list: PropTypes.array,
         //个人页资源数据列表页码
         current: PropTypes.number,
+        //个人信息部分距离父级元素顶部的高度
+        top: PropTypes.number,
         //个人页资源详情用户头像
         viewDetailHeadPortrait: PropTypes.string,
         //个人页资源详情用户名
@@ -120,6 +122,15 @@ class PersonalView extends React.Component {
         //dispatch获取资源数据列表
         const {dispatchPersonalResourceList} = this.props;
         dispatchPersonalResourceList.bind(this)();
+    }
+
+    /**
+     * 滚动事件监听函数
+     */
+    dispatchScrollEventListener() {
+        //监听窗口滚动事件,使个人信息页面主体信息随着窗口滚动而滚动
+        const {personalInformationScrollHandler} = this.props;
+        window.addEventListener("scroll", personalInformationScrollHandler.bind(this));
     }
 
     /**
@@ -288,20 +299,20 @@ class PersonalView extends React.Component {
             viewDetailTitle
         } = this.props;
         return (
-            <header className="keryi_barter_view_details_head">
+            <header className="keryi_barter_personal_view_details_head">
                 <figure
-                    className="keryi_barter_view_details_head_portrait"
+                    className="keryi_barter_personal_view_details_head_portrait"
                 >
                     <HeadPortrait
                         headPortrait={viewDetailHeadPortrait ? viewDetailHeadPortrait : "/images/keryiBarter_v.png"}
                     />
                 </figure>
-                <dfn className="keryi_barter_view_details_description">
-                    <h1 className="keryi_barter_view_details_title">
+                <dfn className="keryi_barter_personal_view_details_description">
+                    <h1 className="keryi_barter_personal_view_details_title">
                         {viewDetailTitle}
                     </h1>
-                    <cite className="keryi_barter_view_details_userName">
-                        资源由 <abbr className="keryi_barter_view_details_name">{viewDetailUserName}</abbr> 发布
+                    <cite className="keryi_barter_personal_view_details_userName">
+                        资源由 <abbr className="keryi_barter_personal_view_details_name">{viewDetailUserName}</abbr> 发布
                     </cite>
                 </dfn>
             </header>
@@ -314,8 +325,8 @@ class PersonalView extends React.Component {
      */
     renderModalStatistics() {
         return (
-            <section className="keryi_barter_view_details_statistics">
-                <ul className="keryi_barter_view_details_statistics_uiList">
+            <section className="keryi_barter_personal_view_details_statistics">
+                <ul className="keryi_barter_personal_view_details_statistics_uiList">
                     {
                         viewDetailsStatisticsConfig.map(function configer(configItem, configIndex) {
                             return (
@@ -328,7 +339,7 @@ class PersonalView extends React.Component {
                                     >
 
                                     </i>
-                                    <dfn className="keryi_barter_view_details_statistics_description">
+                                    <dfn className="keryi_barter_personal_view_details_statistics_description">
                                         {this.props[configItem["key"]] + " " + configItem["title"]}
                                     </dfn>
                                 </li>
@@ -350,7 +361,7 @@ class PersonalView extends React.Component {
             viewDetailImageList
         } = this.props;
         return (
-            <section className="keryi_barter_view_details_figure_carousel">
+            <section className="keryi_barter_personal_view_details_figure_carousel">
                 <FigureCarousel
                     close={false}
                     imageList={eval("(" + viewDetailImageList + ")")}
@@ -369,11 +380,11 @@ class PersonalView extends React.Component {
             viewDetailIntroduce
         } = this.props;
         return (
-            <section className="keryi_barter_view_details_introduce">
-                <p className="keryi_barter_view_details_introduce_content">
+            <section className="keryi_barter_personal_view_details_introduce">
+                <p className="keryi_barter_personal_view_details_introduce_content">
                     {viewDetailIntroduce}
                 </p>
-                <hr className="keryi_barter_view_details_wire"/>
+                <hr className="keryi_barter_personal_view_details_wire"/>
             </section>
         )
     }
@@ -393,8 +404,8 @@ class PersonalView extends React.Component {
         } = this;
         tagOrTargetTagListHandlerAddType.bind(this)(viewDetailTagList, "primary");
         return (
-            <section className="keryi_barter_view_details_tag">
-                <h2 className="keryi_barter_view_details_tag_title">资源类型</h2>
+            <section className="keryi_barter_personal_view_details_tag">
+                <h2 className="keryi_barter_personal_view_details_tag_title">资源类型</h2>
                 {
                     viewDetailTagList.length > 0 && viewDetailTagList.map(function tager(tagItem, tagIndex) {
                         return (
@@ -407,7 +418,7 @@ class PersonalView extends React.Component {
                         )
                     }.bind(this))
                 }
-                <hr className="keryi_barter_view_details_wire"/>
+                <hr className="keryi_barter_personal_view_details_wire"/>
             </section>
         )
     }
@@ -427,8 +438,8 @@ class PersonalView extends React.Component {
         } = this;
         tagOrTargetTagListHandlerAddType.bind(this)(viewDetailTargetTagList, "info");
         return (
-            <section className="keryi_barter_view_details_targetTag">
-                <h2 className="keryi_barter_view_details_targetTag_title">目标资源类型</h2>
+            <section className="keryi_barter_personal_view_details_targetTag">
+                <h2 className="keryi_barter_personal_view_details_targetTag_title">目标资源类型</h2>
                 {
                     viewDetailTargetTagList.length > 0 && viewDetailTargetTagList.map(function tager(targetTagItem, targetTagIndex) {
                         return (
@@ -686,7 +697,10 @@ class PersonalView extends React.Component {
             renderPersonalMainInformationFooter
         } = this;
         const {
+            //获取个人页资源数据列表
             list,
+            //个人信息部分距离父级元素顶部的高度
+            top,
             //判断个人信息是否可编辑
             personalInformationDisabled
         } = this.props;
@@ -701,16 +715,20 @@ class PersonalView extends React.Component {
                     }
                 </main>
                 <aside
-                    className="keryi_barter_personal_main_information keryi_barter_personal_main_personalInformation">
-                    <h2 className="keryi_barter_personal_main_information_title">
-                        个人信息
-                    </h2>
-                    {/*render渲染个人信息页面主体信息主要内容部分*/}
-                    {renderPersonalMainInformationArea.bind(this)()}
-                    {/*render渲染个人信息页面主体信息编辑图标*/}
-                    {!personalInformationDisabled && renderPersonalMainInformationUpdate.bind(this)()}
-                    {/*render渲染个人信息页面主体信息底部按钮*/}
-                    {personalInformationDisabled && renderPersonalMainInformationFooter.bind(this)()}
+                    className="keryi_barter_personal_main_information keryi_barter_personal_main_personalInformation"
+                    style={{top}}
+                >
+                    <section className="keryi_barter_personal_main_information_fixedContent">
+                        <h2 className="keryi_barter_personal_main_information_title">
+                            个人信息
+                        </h2>
+                        {/*render渲染个人信息页面主体信息主要内容部分*/}
+                        {renderPersonalMainInformationArea.bind(this)()}
+                        {/*render渲染个人信息页面主体信息编辑图标*/}
+                        {!personalInformationDisabled && renderPersonalMainInformationUpdate.bind(this)()}
+                        {/*render渲染个人信息页面主体信息底部按钮*/}
+                        {personalInformationDisabled && renderPersonalMainInformationFooter.bind(this)()}
+                    </section>
                 </aside>
             </section>
         )
@@ -789,7 +807,7 @@ function mapDispatchToProps(dispatch, ownProps) {
         /**
          * 控制Modal组件对话框隐藏并消失
          */
-        closePersonalBarterVisibleHandler(){
+        closePersonalBarterVisibleHandler() {
             this.setState({
                 viewPersonalBarterVisible: false
             });
@@ -819,6 +837,12 @@ function mapDispatchToProps(dispatch, ownProps) {
         closeChangePersonalInformationHandler() {
             //改变个人信息编辑状态,使得其不可编辑
             dispatch(closeChangePersonalInformation());
+        },
+        /**
+         * 监听窗口滚动事件,使个人信息页面主体信息随着窗口滚动而滚动
+         */
+        personalInformationScrollHandler() {
+
         }
     }
 }
