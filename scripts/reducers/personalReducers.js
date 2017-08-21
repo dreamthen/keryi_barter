@@ -90,6 +90,11 @@ export function personalReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 personalInformationDisabled: false
             });
+        //改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动
+        case appActionsType["CHANGE_PERSONAL_INFORMATION_SCROLL_TOP"]:
+            return insteadState.insteadObjState(state, {
+                top: newState
+            });
     }
     return state;
 }

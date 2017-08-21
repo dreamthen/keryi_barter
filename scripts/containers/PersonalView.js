@@ -30,7 +30,9 @@ import {
     //获取个人页资源详情Action
     getPersonalResourcesListViewDetailsAction,
     //获取个人页资源详情用户头像Action
-    getPersonalUserHeadPortraitViewDetail
+    getPersonalUserHeadPortraitViewDetail,
+    //改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动
+    changePersonalInformationScrollTop
 } from "../actions/personalActions";
 import "../../stylesheets/personal.css";
 
@@ -121,7 +123,19 @@ class PersonalView extends React.Component {
     componentDidMount() {
         //dispatch获取资源数据列表
         const {dispatchPersonalResourceList} = this.props;
+        //滚动事件监听函数
+        const {dispatchScrollEventListener} = this;
         dispatchPersonalResourceList.bind(this)();
+        dispatchScrollEventListener.bind(this)();
+    }
+
+    /**
+     * 组件卸载
+     */
+    componentWillUnmount() {
+        //消除滚动事件监听函数
+        const {dispatchCloseScrollEventListener} = this;
+        dispatchCloseScrollEventListener.bind(this)();
     }
 
     /**
@@ -131,6 +145,15 @@ class PersonalView extends React.Component {
         //监听窗口滚动事件,使个人信息页面主体信息随着窗口滚动而滚动
         const {personalInformationScrollHandler} = this.props;
         window.addEventListener("scroll", personalInformationScrollHandler.bind(this));
+    }
+
+    /**
+     * 消除滚动事件监听函数
+     */
+    dispatchCloseScrollEventListener() {
+        //监听窗口滚动事件,使个人信息页面主体信息随着窗口滚动而滚动
+        const {personalInformationScrollHandler} = this.props;
+        window.removeEventListener("scroll", personalInformationScrollHandler.bind(this));
     }
 
     /**
@@ -842,7 +865,9 @@ function mapDispatchToProps(dispatch, ownProps) {
          * 监听窗口滚动事件,使个人信息页面主体信息随着窗口滚动而滚动
          */
         personalInformationScrollHandler() {
-
+            //获取到滚动条距离顶部的高度
+            let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            dispatch(changePersonalInformationScrollTop(scrollTop));
         }
     }
 }
