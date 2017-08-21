@@ -58,7 +58,31 @@ export function getPersonalResourceListAction(payload) {
 }
 
 /**
- * 改变个人信息编辑状态,使得其可编辑
+ * 获取个人页资源详情Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function getPersonalResourcesListViewDetailsAction(payload) {
+    return {
+        type: appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"],
+        payload
+    }
+}
+
+/**
+ * 获取个人页资源详情用户头像Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function getPersonalUserHeadPortraitViewDetail(payload) {
+    return {
+        type: appActionsType["GET_PERSONAL_USER_HEAD_PORTRAIT_VIEW_DETAIL"],
+        payload
+    }
+}
+
+/**
+ * 改变个人信息编辑状态,使得其可编辑Action
  * @returns {{type: *}}
  */
 export function changePersonalInformation() {
@@ -68,7 +92,7 @@ export function changePersonalInformation() {
 }
 
 /**
- * 改变个人信息编辑状态,使得其不可编辑
+ * 改变个人信息编辑状态,使得其不可编辑Action
  * @returns {{type: *}}
  */
 export function closeChangePersonalInformation() {

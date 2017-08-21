@@ -7,12 +7,17 @@ import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {
     Button,
+    FigureCarousel,
     HeadPortrait,
     Input,
-    KeryiCard
+    KeryiCard,
+    Modal,
+    Tag
 } from "../keryi";
 //个人信息页面,根据不同的组件类型配置来设置组件
 import personalComponentConfig from "../configs/personalComponentConfig";
+//资源统计静态Mode配置
+import viewDetailsStatisticsConfig from "../configs/viewDetailsStatisticsConfig";
 //获取资源数据列表出现异常时,前端呈现默认约定数据
 import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
 import {
@@ -21,7 +26,11 @@ import {
     //改变个人信息编辑状态,使得其不可编辑
     closeChangePersonalInformation,
     //获取个人页资源列表
-    getPersonalResourcesList
+    getPersonalResourcesList,
+    //获取个人页资源详情Action
+    getPersonalResourcesListViewDetailsAction,
+    //获取个人页资源详情用户头像Action
+    getPersonalUserHeadPortraitViewDetail
 } from "../actions/personalActions";
 import "../../stylesheets/personal.css";
 
@@ -44,6 +53,22 @@ class PersonalView extends React.Component {
         list: PropTypes.array,
         //个人页资源数据列表页码
         current: PropTypes.number,
+        //个人页资源详情用户头像
+        viewDetailHeadPortrait: PropTypes.string,
+        //个人页资源详情用户名
+        viewDetailUserName: PropTypes.string,
+        //个人页资源详情上传图片数组
+        viewDetailImageList: PropTypes.string,
+        //个人页资源详情标题
+        viewDetailTitle: PropTypes.string,
+        //个人页资源详情资源介绍
+        viewDetailIntroduce: PropTypes.string,
+        //个人页资源详情被需要数目
+        viewDetailNeedParty: PropTypes.number,
+        //个人页资源详情资源估值
+        viewDetailPriceWorth: PropTypes.number,
+        //个人页资源详情喜欢数目
+        viewDetailLike: PropTypes.number,
         //判断个人信息是否可编辑
         personalInformationDisabled: PropTypes.bool
     };
@@ -52,7 +77,9 @@ class PersonalView extends React.Component {
         super(props);
         this.state = {
             //判断个人信息编辑动画是否可渲染
-            personalInformationAnimationDisabled: false
+            personalInformationAnimationDisabled: false,
+            //控制Modal组件对话框显示、隐藏或者消失
+            viewPersonalBarterVisible: false
         };
     }
 
@@ -224,6 +251,10 @@ class PersonalView extends React.Component {
             //处理Tag组件标签,添加type属性
             tagOrTargetTagListHandlerAddType
         } = this;
+        const {
+            //控制Modal组件对话框显示
+            viewPersonalKeryiBarterHandler
+        } = this.props;
         tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["tags"], "primary");
         tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["targetTags"], "info");
         return (
@@ -238,9 +269,230 @@ class PersonalView extends React.Component {
                 priceWorth={keryiCard["priceWorth"]}
                 like={keryiCard["likeCount"]}
                 viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
-                onViewDetails={() => {
-                }}
+                onViewDetails={viewPersonalKeryiBarterHandler.bind(this, keryiCard)}
             />
+        )
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框头部
+     * @returns {XML}
+     */
+    renderModalHeader() {
+        const {
+            //个人页资源详情用户头像
+            viewDetailHeadPortrait,
+            //个人页资源详情用户名
+            viewDetailUserName,
+            //个人页资源详情标题
+            viewDetailTitle
+        } = this.props;
+        return (
+            <header className="keryi_barter_view_details_head">
+                <figure
+                    className="keryi_barter_view_details_head_portrait"
+                >
+                    <HeadPortrait
+                        headPortrait={viewDetailHeadPortrait ? viewDetailHeadPortrait : "/images/keryiBarter_v.png"}
+                    />
+                </figure>
+                <dfn className="keryi_barter_view_details_description">
+                    <h1 className="keryi_barter_view_details_title">
+                        {viewDetailTitle}
+                    </h1>
+                    <cite className="keryi_barter_view_details_userName">
+                        资源由 <abbr className="keryi_barter_view_details_name">{viewDetailUserName}</abbr> 发布
+                    </cite>
+                </dfn>
+            </header>
+        )
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框资源统计
+     * @returns {XML}
+     */
+    renderModalStatistics() {
+        return (
+            <section className="keryi_barter_view_details_statistics">
+                <ul className="keryi_barter_view_details_statistics_uiList">
+                    {
+                        viewDetailsStatisticsConfig.map(function configer(configItem, configIndex) {
+                            return (
+                                <li
+                                    key={configIndex}
+                                    title={this.props[configItem["key"]] + " " + configItem["title"]}
+                                >
+                                    <i
+                                        className={configItem["className"]}
+                                    >
+
+                                    </i>
+                                    <dfn className="keryi_barter_view_details_statistics_description">
+                                        {this.props[configItem["key"]] + " " + configItem["title"]}
+                                    </dfn>
+                                </li>
+                            )
+                        }.bind(this))
+                    }
+                </ul>
+            </section>
+        )
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框图片轮播器
+     * @returns {XML}
+     */
+    renderModalFigureCarousel() {
+        const {
+            //个人页资源详情上传图片数组
+            viewDetailImageList
+        } = this.props;
+        return (
+            <section className="keryi_barter_view_details_figure_carousel">
+                <FigureCarousel
+                    close={false}
+                    imageList={eval("(" + viewDetailImageList + ")")}
+                />
+            </section>
+        )
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框主体介绍
+     * @returns {XML}
+     */
+    renderModalIntroduce() {
+        const {
+            //个人页资源详情资源介绍
+            viewDetailIntroduce
+        } = this.props;
+        return (
+            <section className="keryi_barter_view_details_introduce">
+                <p className="keryi_barter_view_details_introduce_content">
+                    {viewDetailIntroduce}
+                </p>
+                <hr className="keryi_barter_view_details_wire"/>
+            </section>
+        )
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框资源标签
+     * @returns {XML}
+     */
+    renderModalTag() {
+        const {
+            //个人页资源详情资源标签
+            viewDetailTagList
+        } = this.props;
+        const {
+            //处理Tag组件标签,添加type属性
+            tagOrTargetTagListHandlerAddType
+        } = this;
+        tagOrTargetTagListHandlerAddType.bind(this)(viewDetailTagList, "primary");
+        return (
+            <section className="keryi_barter_view_details_tag">
+                <h2 className="keryi_barter_view_details_tag_title">资源类型</h2>
+                {
+                    viewDetailTagList.length > 0 && viewDetailTagList.map(function tager(tagItem, tagIndex) {
+                        return (
+                            <Tag
+                                key={tagItem["id"]}
+                                type={tagItem["type"]}
+                            >
+                                {"#" + tagItem["tag"]}
+                            </Tag>
+                        )
+                    }.bind(this))
+                }
+                <hr className="keryi_barter_view_details_wire"/>
+            </section>
+        )
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框目标资源标签
+     * @returns {XML}
+     */
+    renderModalTargetTag() {
+        const {
+            //资源详情目标资源标签
+            viewDetailTargetTagList
+        } = this.props;
+        const {
+            //处理Tag组件标签,添加type属性
+            tagOrTargetTagListHandlerAddType
+        } = this;
+        tagOrTargetTagListHandlerAddType.bind(this)(viewDetailTargetTagList, "info");
+        return (
+            <section className="keryi_barter_view_details_targetTag">
+                <h2 className="keryi_barter_view_details_targetTag_title">目标资源类型</h2>
+                {
+                    viewDetailTargetTagList.length > 0 && viewDetailTargetTagList.map(function tager(targetTagItem, targetTagIndex) {
+                        return (
+                            <Tag
+                                key={targetTagItem["id"]}
+                                type={targetTagItem["type"]}
+                            >
+                                {"#" + targetTagItem["tag"]}
+                            </Tag>
+                        )
+                    }.bind(this))
+                }
+            </section>
+        )
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框
+     * @returns {XML}
+     */
+    renderPersonalModal() {
+        const {
+            //render渲染个人信息页面查看"以物换物"资源详情对话框头部
+            renderModalHeader,
+            //render渲染个人信息页面查看"以物换物"资源详情对话框资源统计
+            renderModalStatistics,
+            //render渲染个人信息页面查看"以物换物"资源详情对话框图片轮播器
+            renderModalFigureCarousel,
+            //render渲染个人信息页面查看"以物换物"资源详情对话框主体介绍
+            renderModalIntroduce,
+            //render渲染个人信息页面查看"以物换物"资源详情对话框资源标签
+            renderModalTag,
+            //render渲染个人信息页面查看"以物换物"资源详情对话框目标资源标签
+            renderModalTargetTag
+        } = this;
+        const {
+            //控制Modal组件对话框显示、隐藏或者消失
+            viewPersonalBarterVisible
+        } = this.state;
+        const {
+            //控制Modal组件对话框隐藏并消失
+            closePersonalBarterVisibleHandler
+        } = this.props;
+        return (
+            <Modal
+                visible={viewPersonalBarterVisible}
+                width={660}
+                closable
+                className="keryi_barter_personal_modal_view_details_container"
+                onClose={closePersonalBarterVisibleHandler.bind(this)}
+            >
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框头部*/}
+                {renderModalHeader.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框资源统计*/}
+                {renderModalStatistics.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框图片轮播器*/}
+                {renderModalFigureCarousel.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框主体介绍*/}
+                {renderModalIntroduce.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框资源标签*/}
+                {renderModalTag.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框目标资源标签*/}
+                {renderModalTargetTag.bind(this)()}
+            </Modal>
         )
     }
 
@@ -491,6 +743,8 @@ class PersonalView extends React.Component {
      */
     render() {
         const {
+            //render渲染个人信息页面查看"以物换物"资源详情对话框
+            renderPersonalModal,
             //render渲染个人信息页面头部
             renderPersonalHeader,
             //render渲染个人信息页面主体部分
@@ -504,6 +758,8 @@ class PersonalView extends React.Component {
                     {/*render渲染个人信息页面主体部分*/}
                     {renderPersonalMain.bind(this)()}
                 </section>
+                {/*render渲染个人信息页面查看"以物换物"资源详情对话框*/}
+                {renderPersonalModal.bind(this)()}
             </div>
         )
     }
@@ -517,6 +773,27 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch, ownProps) {
     return {
+        /**
+         * 控制Modal组件对话框显示
+         * @params e
+         */
+        viewPersonalKeryiBarterHandler(keryiCard, e) {
+            this.setState({
+                viewPersonalBarterVisible: true
+            });
+            dispatch(getPersonalUserHeadPortraitViewDetail(keryiCard));
+            dispatch(getPersonalResourcesListViewDetailsAction(keryiCard));
+            //取消冒泡
+            e.nativeEvent.stopImmediatePropagation();
+        },
+        /**
+         * 控制Modal组件对话框隐藏并消失
+         */
+        closePersonalBarterVisibleHandler(){
+            this.setState({
+                viewPersonalBarterVisible: false
+            });
+        },
         /**
          * dispatch获取个人页资源数据列表
          */

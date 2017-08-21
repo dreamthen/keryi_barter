@@ -24,7 +24,27 @@ const defaultState = {
     //获取个人页资源数据列表
     list: [],
     //个人页资源数据列表页码
-    current: 1
+    current: 1,
+    //个人页资源详情用户头像
+    viewDetailHeadPortrait: "",
+    //个人页资源详情用户名
+    viewDetailUserName: "",
+    //个人页资源详情上传图片数组
+    viewDetailImageList: "[]",
+    //个人页资源详情标题
+    viewDetailTitle: "",
+    //个人页资源详情资源介绍
+    viewDetailIntroduce: "",
+    //个人页资源详情被需要数目
+    viewDetailNeedParty: 0,
+    //个人页资源详情资源估值
+    viewDetailPriceWorth: 0,
+    //个人页资源详情喜欢数目
+    viewDetailLike: 0,
+    //个人页资源详情资源标签
+    viewDetailTagList: [],
+    //个人页资源详情目标资源标签
+    viewDetailTargetTagList: []
 };
 
 /**
@@ -37,6 +57,22 @@ export function personalReducers(state = defaultState, actions) {
     let type = actions.type,
         newState = actions.payload;
     switch (type) {
+        //获取个人页资源详情用户头像
+        case appActionsType["GET_PERSONAL_USER_HEAD_PORTRAIT_VIEW_DETAIL"]:
+            return insteadState.insteadObjState(state, {
+                viewDetailHeadPortrait: newState["user"]["avatar"]
+            });
+        //获取个人页资源详情
+        case appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]:
+            newState["viewDetailUserName"] = newState["user"]["username"];
+            newState["viewDetailImageList"] = newState["imgUrls"];
+            newState["viewDetailTitle"] = newState["title"];
+            newState["viewDetailIntroduce"] = newState["intro"];
+            newState["viewDetailPriceWorth"] = newState["priceWorth"];
+            newState["viewDetailLike"] = newState["likeCount"];
+            newState["viewDetailTagList"] = newState["tags"];
+            newState["viewDetailTargetTagList"] = newState["targetTags"];
+            return insteadState.insteadObjState(state, newState);
         //获取个人页资源列表
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_ACTION"]:
             return insteadState.insteadObjState(state, {
