@@ -23,6 +23,8 @@ import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
 import {
     //改变个人信息编辑状态,使得其可编辑
     changePersonalInformation,
+    //更新、保存个人信息,并改变个人信息编辑状态,使得其不可编辑
+    saveUpdatePersonalInformation,
     //改变个人信息编辑状态,使得其不可编辑
     closeChangePersonalInformation,
     //获取个人页资源列表
@@ -51,6 +53,8 @@ class PersonalView extends React.Component {
         email: PropTypes.string,
         //用户登录的头像
         avatar: PropTypes.string,
+        //用户登录的个性签名
+        motto: PropTypes.string,
         //获取个人页资源数据列表
         list: PropTypes.array,
         //个人页资源数据列表页码
@@ -184,7 +188,7 @@ class PersonalView extends React.Component {
      */
     renderPersonalHeaderUsername() {
         const {
-            //静态用户登录的用户名
+            //用户登录的用户名
             username
         } = this.props;
         return (
@@ -536,13 +540,13 @@ class PersonalView extends React.Component {
      */
     renderPersonalMainUserName() {
         const {
-            //静态用户登录的用户名
-            username
+            //用户登录的座右铭
+            motto
         } = this.props;
         return (
             <section className="keryi_barter_personal_main_username">
                 <h1 className="keryi_barter_personal_main_username_title">
-                    {username}
+                    {motto}
                 </h1>
             </section>
         )
@@ -681,7 +685,9 @@ class PersonalView extends React.Component {
         } = this;
         const {
             //点击取消按钮,使个人信息页面主体信息不可编辑
-            closeChangePersonalInformationHandler
+            closeChangePersonalInformationHandler,
+            //点击保存按钮,更新个人信息页面主体信息
+            saveChangePersonalInformationHandler
         } = this.props;
         return (
             <section className={footerClassToClass.bind(this)()}>
@@ -696,6 +702,7 @@ class PersonalView extends React.Component {
                 <Button
                     type="primary"
                     size="large"
+                    onClick={saveChangePersonalInformationHandler.bind(this)}
                     className="keryi_barter_personal_main_information_footer_button keryi_barter_personal_main_information_footer_save_button"
                 >
                     保存
@@ -853,6 +860,12 @@ function mapDispatchToProps(dispatch, ownProps) {
         changePersonalInformationHandler() {
             //改变个人信息编辑状态,使得其可编辑
             dispatch(changePersonalInformation());
+        },
+        /**
+         * 点击保存按钮,更新个人信息页面主体信息
+         */
+        saveChangePersonalInformationHandler() {
+
         },
         /**
          * 点击取消按钮,使个人信息页面主体信息不可编辑

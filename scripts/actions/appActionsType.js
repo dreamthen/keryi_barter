@@ -41,6 +41,8 @@ const appActionsType = {
     GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL: "GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL",
     //改变个人信息编辑状态,使得其可编辑Action名称
     CHANGE_PERSONAL_INFORMATION: "CHANGE_PERSONAL_INFORMATION",
+    //更新并保存个人信息并改变个人信息编辑状态,使得其不可编辑Action名称
+    SAVE_CHANGE_PERSONAL_INFORMATION: "SAVE_CHANGE_PERSONAL_INFORMATION",
     //改变个人信息编辑状态,使得其不可编辑Action名称
     CLOSE_CHANGE_PERSONAL_INFORMATION: "CLOSE_CHANGE_PERSONAL_INFORMATION",
     //改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动Action名称

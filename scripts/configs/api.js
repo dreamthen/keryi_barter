@@ -24,7 +24,9 @@ if (!isMock) {
         //搜索资源tag
         GET_RESOURCE_TAG_LIST: keryi_cover + "tags",
         //提交发布资源
-        PUBLISH_RESOURCE: keryi_cover + "resources"
+        PUBLISH_RESOURCE: keryi_cover + "resources",
+        //修改用户信息
+        UPDATE_INFORMATION: keryi_cover + "users"
     }
 } else {
 

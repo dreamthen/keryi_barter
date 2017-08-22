@@ -31,6 +31,15 @@ const personalComponentConfig = [
         type: "text",
         disabled: "personalInformationDisabled",
         className: "keryi_barter_personal_main_information_personalMain_atom keryi_barter_personal_main_information_personalMain_phone"
+    },
+    {
+        key: "motto",
+        value: "个性签名",
+        include: "input",
+        size: "large",
+        type: "text",
+        disabled: "personalInformationDisabled",
+        className: "keryi_barter_personal_main_information_personalMain_atom keryi_barter_personal_main_information_personalMain_motto"
     }
 ];
 

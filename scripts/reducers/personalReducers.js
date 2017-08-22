@@ -3,22 +3,30 @@
  * createTime 2017/8/16 17:56
  * description clown laugh at you~
  */
+//app页面action类型
 import appActionsType from "../actions/appActionsType";
+//redux reducer更换state状态对象
 import insteadState from "../configs/insteadState";
+import {
+    //校验字段undefined和null,进行处理
+    checkField
+} from "../configs/checkField";
 
 let userLoginInformation = localStorage && JSON.parse(localStorage.getItem("userLoginInformation"));
 
 const defaultState = {
     //用户登录的id
-    userId: userLoginInformation["id"],
+    userId: checkField(userLoginInformation["id"]),
     //用户登录的用户名
-    username: userLoginInformation["username"],
+    username: checkField(userLoginInformation["username"]),
     //用户登录的手机号
-    phone: userLoginInformation["phone"],
+    phone: checkField(userLoginInformation["phone"]),
     //用户登录的邮箱
-    email: userLoginInformation["email"],
+    email: checkField(userLoginInformation["email"]),
     //用户登录的头像
-    avatar: userLoginInformation["avatar"],
+    avatar: checkField(userLoginInformation["avatar"]),
+    //用户登录的个性签名
+    motto: checkField(userLoginInformation["motto"]),
     //判断个人信息是否可编辑
     personalInformationDisabled: false,
     //获取个人页资源数据列表
@@ -85,6 +93,9 @@ export function personalReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 personalInformationDisabled: true
             });
+        //更新并保存个人信息
+        case appActionsType["SAVE_CHANGE_PERSONAL_INFORMATION"]:
+            return insteadState.insteadObjState(state, newState);
         //改变个人信息编辑状态,使得其不可编辑
         case appActionsType["CLOSE_CHANGE_PERSONAL_INFORMATION"]:
             return insteadState.insteadObjState(state, {

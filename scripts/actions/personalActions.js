@@ -47,6 +47,49 @@ export function getPersonalResourcesList(pageNum, userId) {
 }
 
 /**
+ * 更新、保存个人信息,并改变个人信息编辑状态,使得其不可编辑
+ * @returns {function(this:getResourcesList)}
+ */
+export function saveUpdatePersonalInformation(userId, username, email, phone, motto) {
+    return function dispatcher(dispatch) {
+        keryiAxiosConfig.axiosRequest(
+            api.UPDATE_INFORMATION + "/" + userId,
+            "put",
+            {
+                id: userId,
+                username,
+                email,
+                phone,
+                motto
+            },
+            function done(response) {
+                //服务器响应数据
+                let data = response.data,
+                    //服务器响应head头部对象
+                    head = data.head,
+                    //服务器响应body主题对象
+                    body = data.body,
+                    //服务器响应code状态码
+                    code = head.code,
+                    //服务器对响应结果描述
+                    msg = head.message;
+                if (code === Success.SAVE_CHANGE_PERSONAL_INFORMATION_SUCCESS_CODE) {
+                    //更新并保存个人信息
+                    dispatch(saveChangePersonalInformation({
+                        username,
+                        email,
+                        phone,
+                        motto
+                    }));
+                    //改变个人信息编辑状态,使得其不可编辑
+                    dispatch(closeChangePersonalInformation());
+                }
+            }.bind(this)
+        )
+    }.bind(this)
+}
+
+/**
  * 改变个人信息编辑状态,使得其可编辑
  * @returns {{type: *, payload: *}}
  */
@@ -88,6 +131,18 @@ export function getPersonalUserHeadPortraitViewDetail(payload) {
 export function changePersonalInformation() {
     return {
         type: appActionsType["CHANGE_PERSONAL_INFORMATION"]
+    }
+}
+
+/**
+ * 更新并保存个人信息Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function saveChangePersonalInformation(payload) {
+    return {
+        type: appActionsType["SAVE_CHANGE_PERSONAL_INFORMATION"],
+        payload
     }
 }
 
