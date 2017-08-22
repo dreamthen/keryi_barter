@@ -23,6 +23,8 @@ import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
 import {
     //改变个人信息编辑状态,使得其可编辑
     changePersonalInformation,
+    //获取个人信息
+    getPersonalInformation,
     //更新、保存个人信息,并改变个人信息编辑状态,使得其不可编辑
     saveUpdatePersonalInformation,
     //改变个人信息编辑状态,使得其不可编辑
@@ -125,11 +127,16 @@ class PersonalView extends React.Component {
      * 组件结束装载
      */
     componentDidMount() {
-        //dispatch获取资源数据列表
-        const {dispatchPersonalResourceList} = this.props;
+        const {
+            //dispatch获取资源数据列表
+            dispatchPersonalResourceList,
+            //dispatch获取个人信息
+            dispatchPersonalInformation
+        } = this.props;
         //滚动事件监听函数
         const {dispatchScrollEventListener} = this;
         dispatchPersonalResourceList.bind(this)();
+        dispatchPersonalInformation.bind(this)();
         dispatchScrollEventListener.bind(this)();
     }
 
@@ -852,7 +859,19 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //用户登录的id
                 userId
             } = this.props;
+            //获取个人页资源列表
             dispatch(getPersonalResourcesList.bind(this)(current, userId));
+        },
+        /**
+         * dispatch获取个人信息
+         */
+        dispatchPersonalInformation() {
+            const {
+                //用户登录的id
+                userId
+            } = this.props;
+            //获取个人信息
+            dispatch(getPersonalInformation(userId));
         },
         /**
          * 点击编辑图标,使个人信息页面主体信息可编辑
@@ -865,7 +884,19 @@ function mapDispatchToProps(dispatch, ownProps) {
          * 点击保存按钮,更新个人信息页面主体信息
          */
         saveChangePersonalInformationHandler() {
-
+            const {
+                //用户登录的id
+                userId,
+                //用户登录的用户名
+                username,
+                //用户登录的手机号
+                phone,
+                //用户登录的邮箱
+                email,
+                //用户登录的个性签名
+                motto
+            } = this.state;
+            dispatch(saveUpdatePersonalInformation(userId, username, email, phone, motto));
         },
         /**
          * 点击取消按钮,使个人信息页面主体信息不可编辑

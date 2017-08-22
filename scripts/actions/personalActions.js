@@ -47,13 +47,53 @@ export function getPersonalResourcesList(pageNum, userId) {
 }
 
 /**
+ * 获取个人信息
+ * @param userId
+ */
+export function getPersonalInformation(userId) {
+    return function dispatcher(dispatch) {
+        keryiAxiosConfig.axiosRequest(
+            api.GET_PERSONAL_INFORMATION + "/" + userId,
+            "get",
+            {},
+            function done(response) {
+                //服务器响应数据
+                let data = response.data,
+                    //服务器响应head头部对象
+                    head = data.head,
+                    //服务器响应body主题对象
+                    body = data.body,
+                    //服务器响应code状态码
+                    code = head.code,
+                    //服务器对响应结果描述
+                    msg = head.message;
+                if (code === Success.GET_PERSONAL_INFORMATION_SUCCESS_CODE) {
+                    //更新并保存个人信息
+                    dispatch(saveChangePersonalInformation({
+                        username: body["username"],
+                        email: body["email"],
+                        phone: body["phone"],
+                        motto: body["motto"]
+                    }));
+                }
+            }
+        );
+    }.bind(this)
+}
+
+/**
  * 更新、保存个人信息,并改变个人信息编辑状态,使得其不可编辑
+ * @param userId
+ * @param username
+ * @param email
+ * @param phone
+ * @param motto
  * @returns {function(this:getResourcesList)}
  */
 export function saveUpdatePersonalInformation(userId, username, email, phone, motto) {
     return function dispatcher(dispatch) {
         keryiAxiosConfig.axiosRequest(
-            api.UPDATE_INFORMATION + "/" + userId,
+            api.UPDATE_PERSONAL_INFORMATION + "/" + userId,
             "put",
             {
                 id: userId,
@@ -91,6 +131,7 @@ export function saveUpdatePersonalInformation(userId, username, email, phone, mo
 
 /**
  * 改变个人信息编辑状态,使得其可编辑
+ * @param payload
  * @returns {{type: *, payload: *}}
  */
 export function getPersonalResourceListAction(payload) {

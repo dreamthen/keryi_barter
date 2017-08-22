@@ -25,8 +25,10 @@ if (!isMock) {
         GET_RESOURCE_TAG_LIST: keryi_cover + "tags",
         //提交发布资源
         PUBLISH_RESOURCE: keryi_cover + "resources",
+        //获取用户信息
+        GET_PERSONAL_INFORMATION: keryi_cover + "users",
         //修改用户信息
-        UPDATE_INFORMATION: keryi_cover + "users"
+        UPDATE_PERSONAL_INFORMATION: keryi_cover + "users"
     }
 } else {
 

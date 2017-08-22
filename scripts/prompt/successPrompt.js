@@ -15,6 +15,8 @@ const Success = {
     GET_RESOURCE_LIST_SUCCESS_CODE: "000000",
     //获取个人页资源列表成功状态码
     GET_PERSONAL_RESOURCE_LIST_SUCCESS_CODE: "000000",
+    //获取个人信息成功状态码
+    GET_PERSONAL_INFORMATION_SUCCESS_CODE:"000000",
     //更新并保存个人信息成功状态码
     SAVE_CHANGE_PERSONAL_INFORMATION_SUCCESS_CODE: "000000",
     //上传图片成功状态码
