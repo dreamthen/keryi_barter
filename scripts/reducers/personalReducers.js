@@ -106,6 +106,9 @@ export function personalReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 top: newState
             });
+        //重置个人页资源详情
+        case appActionsType["RESET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]:
+            return defaultState;
     }
     return state;
 }

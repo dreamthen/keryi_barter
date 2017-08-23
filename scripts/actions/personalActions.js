@@ -161,6 +161,16 @@ export function getPersonalResourcesListViewDetailsAction(payload) {
 }
 
 /**
+ * 重置个人页资源详情Action
+ * @returns {{type: *}}
+ */
+export function resetPersonalResourceListViewDetailsAction() {
+    return {
+        type: appActionsType["RESET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]
+    }
+}
+
+/**
  * 获取个人页资源详情用户头像Action
  * @param payload
  * @returns {{type: *, payload: *}}

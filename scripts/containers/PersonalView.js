@@ -36,7 +36,9 @@ import {
     //获取个人页资源详情用户头像Action
     getPersonalUserHeadPortraitViewDetail,
     //改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动
-    changePersonalInformationScrollTop
+    changePersonalInformationScrollTop,
+    //重置个人页资源详情Action
+    resetPersonalResourceListViewDetailsAction
 } from "../actions/personalActions";
 import "../../stylesheets/personal.css";
 
@@ -141,9 +143,16 @@ class PersonalView extends React.Component {
      * 组件卸载
      */
     componentWillUnmount() {
-        //消除滚动事件监听函数
-        const {dispatchCloseScrollEventListener} = this;
+        const {
+            //消除滚动事件监听函数
+            dispatchCloseScrollEventListener
+        } = this;
+        const {
+            //重置个人页资源详情
+            resetPersonalResourceListViewDetailsHandler
+        } = this.props;
         dispatchCloseScrollEventListener.bind(this)();
+        resetPersonalResourceListViewDetailsHandler.bind(this)();
     }
 
     /**
@@ -914,6 +923,13 @@ function mapDispatchToProps(dispatch, ownProps) {
             //获取到滚动条距离顶部的高度
             let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
             dispatch(changePersonalInformationScrollTop(scrollTop));
+        },
+        /**
+         * 重置个人页资源详情
+         */
+        resetPersonalResourceListViewDetailsHandler() {
+            //重置个人页资源详情Action
+            dispatch(resetPersonalResourceListViewDetailsAction());
         }
     }
 }
