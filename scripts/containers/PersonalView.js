@@ -117,10 +117,7 @@ class PersonalView extends React.Component {
                 });
             }.bind(this), 100);
         }
-
-        if ((personalInformationDisabled !== nextProps.personalInformationDisabled) && (!nextProps.personalInformationDisabled)) {
-            mapPropsToState.bind(this)(nextProps);
-        }
+        mapPropsToState.bind(this)(nextProps);
     }
 
     /**
@@ -900,7 +897,9 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //用户登录的个性签名
                 motto
             } = this.state;
+            //更新、保存个人信息,并改变个人信息编辑状态,使得其不可编辑
             dispatch(saveUpdatePersonalInformation.bind(this)(userId, username, email, phone, motto));
+            //获取个人页资源列表
             dispatch(getPersonalResourcesList.bind(this)(current, userId));
         },
         /**
