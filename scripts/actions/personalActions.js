@@ -114,6 +114,10 @@ export function saveUpdatePersonalInformation(userId, username, email, phone, mo
                     //服务器对响应结果描述
                     msg = head.message;
                 if (code === Success.SAVE_CHANGE_PERSONAL_INFORMATION_SUCCESS_CODE) {
+                    //控制Modal组件对话框隐藏并消失
+                    this.setState({
+                        viewPersonalBarterVisible: false
+                    });
                     //更新并保存个人信息
                     dispatch(saveChangePersonalInformation({
                         username,

@@ -885,6 +885,10 @@ function mapDispatchToProps(dispatch, ownProps) {
          */
         saveChangePersonalInformationHandler() {
             const {
+                //个人页资源数据列表页码
+                current
+            } = this.props;
+            const {
                 //用户登录的id
                 userId,
                 //用户登录的用户名
@@ -896,7 +900,8 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //用户登录的个性签名
                 motto
             } = this.state;
-            dispatch(saveUpdatePersonalInformation(userId, username, email, phone, motto));
+            dispatch(saveUpdatePersonalInformation.bind(this)(userId, username, email, phone, motto));
+            dispatch(getPersonalResourcesList.bind(this)(current, userId));
         },
         /**
          * 点击取消按钮,使个人信息页面主体信息不可编辑
