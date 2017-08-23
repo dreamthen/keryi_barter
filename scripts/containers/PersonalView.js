@@ -898,9 +898,7 @@ function mapDispatchToProps(dispatch, ownProps) {
                 motto
             } = this.state;
             //更新、保存个人信息,并改变个人信息编辑状态,使得其不可编辑
-            dispatch(saveUpdatePersonalInformation.bind(this)(userId, username, email, phone, motto));
-            //获取个人页资源列表
-            dispatch(getPersonalResourcesList.bind(this)(current, userId));
+            dispatch(saveUpdatePersonalInformation.bind(this)(userId, username, email, phone, motto, current));
         },
         /**
          * 点击取消按钮,使个人信息页面主体信息不可编辑

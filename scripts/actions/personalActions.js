@@ -88,9 +88,10 @@ export function getPersonalInformation(userId) {
  * @param email
  * @param phone
  * @param motto
+ * @param current
  * @returns {function(this:getResourcesList)}
  */
-export function saveUpdatePersonalInformation(userId, username, email, phone, motto) {
+export function saveUpdatePersonalInformation(userId, username, email, phone, motto, current) {
     return function dispatcher(dispatch) {
         keryiAxiosConfig.axiosRequest(
             api.UPDATE_PERSONAL_INFORMATION + "/" + userId,
@@ -127,6 +128,8 @@ export function saveUpdatePersonalInformation(userId, username, email, phone, mo
                     }));
                     //改变个人信息编辑状态,使得其不可编辑
                     dispatch(closeChangePersonalInformation());
+                    //获取个人页资源列表
+                    dispatch(getPersonalResourcesList.bind(this)(current, userId));
                 }
             }.bind(this)
         )
