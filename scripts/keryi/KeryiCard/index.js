@@ -41,6 +41,8 @@ class KeryiCard extends React.Component {
         priceWorth: PropTypes.number,
         //KeryiCard组件卡片喜欢数目
         like: PropTypes.number,
+        //KeryiCard组件卡片底部需要数和喜欢数显示控制
+        control: PropTypes.array,
         //KeryiCard组件卡片查看资源详情icon className
         viewDetails: PropTypes.string,
         //KeryiCard组件卡片点击查看资源详情icon回调函数
@@ -372,8 +374,12 @@ class KeryiCard extends React.Component {
      * @returns {XML}
      */
     renderCardFoot() {
-        //KeryiCard组件卡片资源被需要数目
-        const {priceWorth} = this.props;
+        const {
+            //KeryiCard组件卡片资源被需要数目
+            priceWorth,
+            //KeryiCard组件卡片底部需要数和喜欢数显示控制
+            control
+        } = this.props;
         return (
             <section
                 className="keryi_barter_card_foot"
@@ -390,7 +396,7 @@ class KeryiCard extends React.Component {
                     <ul className="keryi_barter_card_function_ulList">
                         {
                             keryiCardConfig["card_function"].map(function configer(configItem, configIndex) {
-                                return (
+                                return (control[configIndex] === configItem["key"]) && (
                                     <li
                                         key={configIndex}
                                         title={configItem["title"] + (configItem["key"] ? " " + this.props[configItem["key"]] : "")}

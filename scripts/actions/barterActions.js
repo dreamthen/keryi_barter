@@ -68,6 +68,16 @@ export function getResourcesListViewDetailsAction(payload) {
 }
 
 /**
+ * 重置资源详情Action
+ * @returns {{type: *}}
+ */
+export function resetResourcesListViewDetailsAction() {
+    return {
+        type: appActionsType["RESET_RESOURCE_LIST_VIEW_DETAIL"]
+    }
+}
+
+/**
  * 获取资源详情用户头像Action
  * @param payload
  * @returns {{type: *, payload: *}}

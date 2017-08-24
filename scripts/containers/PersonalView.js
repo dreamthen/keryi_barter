@@ -88,6 +88,8 @@ class PersonalView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            //获取到个人信息容器距离顶部的绝对位置
+            absoluteTop: 0,
             //判断个人信息编辑动画是否可渲染
             personalInformationAnimationDisabled: false,
             //控制Modal组件对话框显示、隐藏或者消失
@@ -132,11 +134,21 @@ class PersonalView extends React.Component {
             //dispatch获取个人信息
             dispatchPersonalInformation
         } = this.props;
+        //获取到滚动条距离顶部的高度
+        let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        //个人信息容器距离顶部的高度
+        let mainInformationTop = this.refs["mainInformation"].getBoundingClientRect().top;
+        //获取到个人信息容器距离顶部的绝对位置
+        let absoluteTop = scrollTop + mainInformationTop;
         //滚动事件监听函数
         const {dispatchScrollEventListener} = this;
-        dispatchPersonalResourceList.bind(this)();
-        dispatchPersonalInformation.bind(this)();
-        dispatchScrollEventListener.bind(this)();
+        this.setState({
+            absoluteTop
+        }, function absoluteToper() {
+            dispatchPersonalResourceList.bind(this)();
+            dispatchPersonalInformation.bind(this)();
+            dispatchScrollEventListener.bind(this)();
+        }.bind(this));
     }
 
     /**
@@ -319,6 +331,7 @@ class PersonalView extends React.Component {
                 targetTagList={keryiCard["targetTags"]}
                 priceWorth={keryiCard["priceWorth"]}
                 like={keryiCard["likeCount"]}
+                control={["exchange"]}
                 viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
                 onViewDetails={viewPersonalKeryiBarterHandler.bind(this, keryiCard)}
             />
@@ -621,9 +634,10 @@ class PersonalView extends React.Component {
             //根据不同的组件类型配置来设置组件
             renderPersonalMainInformationAreaItem
         } = this;
-        return personalComponentConfig.map(function personaler(personalItem, personIndex) {
+        return personalComponentConfig.map(function personaler(personalItem, personalIndex) {
             return (
                 <section
+                    ref="mainInformationContent"
                     key={personalItem["key"]}
                     className="keryi_barter_personal_main_information_content"
                 >
@@ -758,11 +772,15 @@ class PersonalView extends React.Component {
                     }
                 </main>
                 <aside
+                    ref="mainInformation"
                     className="keryi_barter_personal_main_information keryi_barter_personal_main_personalInformation"
                     style={{top}}
                 >
                     <section className="keryi_barter_personal_main_information_fixedContent">
-                        <h2 className="keryi_barter_personal_main_information_title">
+                        <h2
+                            ref="mainInformationTitle"
+                            className="keryi_barter_personal_main_information_title"
+                        >
                             个人信息
                         </h2>
                         {/*render渲染个人信息页面主体信息主要内容部分*/}
@@ -920,9 +938,19 @@ function mapDispatchToProps(dispatch, ownProps) {
          * 监听窗口滚动事件,使个人信息页面主体信息随着窗口滚动而滚动
          */
         personalInformationScrollHandler() {
+            const {absoluteTop} = this.state;
             //获取到滚动条距离顶部的高度
             let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            dispatch(changePersonalInformationScrollTop(scrollTop));
+            //个人信息部分标题高度
+            let titleHeight = this.refs["mainInformationTitle"].clientHeight;
+            //个人信息部分内容用户名部分高度
+            let contentHeight = this.refs["mainInformationContent"].clientHeight;
+            //获取到个人信息容器上外边距
+            let marginTop = window.getComputedStyle(this.refs["mainInformation"]) ? window.getComputedStyle(this.refs["mainInformation"]).marginTop : this.refs["mainInformation"].currentStyle.marginTop;
+            //个人信息部分标题和内容用户名部分总高度
+            let totalHeight = titleHeight + contentHeight + parseInt(marginTop.slice(0, -2));
+            //改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动
+            scrollTop >= (absoluteTop - totalHeight) ? dispatch(changePersonalInformationScrollTop(scrollTop - absoluteTop + totalHeight)) : dispatch(changePersonalInformationScrollTop(0));
         },
         /**
          * 重置个人页资源详情

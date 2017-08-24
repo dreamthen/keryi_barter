@@ -9,6 +9,7 @@ const keryiCardConfig = {
     loading_disAppear: "keryi_barter_loading_spinAnimation keryi_barter_loading_spinAnimation_disAppear",
     //Card组件卡片底部资源统计图标组
     card_function: [{
+        key: "exchange",
         title: "需要",
         className: "iconfontKeryiBarter keryiBarter-exchange"
     }, {

@@ -63,6 +63,9 @@ export function barterReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 viewDetailHeadPortrait: newState["user"]["avatar"]
             });
+        //重置资源详情
+        case appActionsType["RESET_RESOURCE_LIST_VIEW_DETAIL"]:
+            return defaultState;
     }
     return state;
 }

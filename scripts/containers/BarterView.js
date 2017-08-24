@@ -16,7 +16,9 @@ import {
     //获取资源详情Action
     getResourcesListViewDetailsAction,
     //获取资源详情用户头像Action
-    getUserHeadPortraitViewDetail
+    getUserHeadPortraitViewDetail,
+    //重置资源详情Action
+    resetResourcesListViewDetailsAction
 } from "../actions/barterActions";
 //获取资源数据列表出现异常时,前端呈现默认约定数据
 import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
@@ -74,6 +76,17 @@ class BarterView extends React.Component {
     }
 
     /**
+     * 组件卸载
+     */
+    componentWillUnmount() {
+        const {
+            //重置资源详情
+            resetResourcesListViewDetailsHandler
+        } = this.props;
+        resetResourcesListViewDetailsHandler.bind(this)();
+    }
+
+    /**
      * render渲染用户头像
      * @returns {XML}
      */
@@ -127,6 +140,7 @@ class BarterView extends React.Component {
                     tagList={keryiCard["tags"]}
                     targetTagList={keryiCard["targetTags"]}
                     like={keryiCard["likeCount"]}
+                    control={["exchange", "like"]}
                     priceWorth={keryiCard["priceWorth"]}
                     viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
                     onViewDetails={viewKeryiBarterHandler.bind(this, keryiCard)}
@@ -445,6 +459,13 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 viewBarterVisible: false
             });
+        },
+        /**
+         * 重置资源详情
+         */
+        resetResourcesListViewDetailsHandler() {
+            //重置资源详情Action
+            dispatch(resetResourcesListViewDetailsAction());
         }
     }
 }
