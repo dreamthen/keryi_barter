@@ -942,15 +942,15 @@ function mapDispatchToProps(dispatch, ownProps) {
             //获取到滚动条距离顶部的高度
             let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
             //个人信息部分标题高度
-            let titleHeight = this.refs["mainInformationTitle"].clientHeight;
+            let titleHeight = this.refs["mainInformationTitle"] && this.refs["mainInformationTitle"].clientHeight;
             //个人信息部分内容用户名部分高度
-            let contentHeight = this.refs["mainInformationContent"].clientHeight;
+            let contentHeight = this.refs["mainInformationContent"] && this.refs["mainInformationContent"].clientHeight;
             //获取到个人信息容器上外边距
-            let marginTop = window.getComputedStyle(this.refs["mainInformation"]) ? window.getComputedStyle(this.refs["mainInformation"]).marginTop : this.refs["mainInformation"].currentStyle.marginTop;
+            let marginTop = this.refs["mainInformation"] && (window.getComputedStyle(this.refs["mainInformation"]) ? window.getComputedStyle(this.refs["mainInformation"]).marginTop : this.refs["mainInformation"].currentStyle.marginTop);
             //个人信息部分标题和内容用户名部分总高度
-            let totalHeight = titleHeight + contentHeight + parseInt(marginTop.slice(0, -2));
+            let totalHeight = this.refs["mainInformation"] && (titleHeight + contentHeight + parseInt(marginTop.slice(0, -2)));
             //改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动
-            scrollTop >= (absoluteTop - totalHeight) ? dispatch(changePersonalInformationScrollTop(scrollTop - absoluteTop + totalHeight)) : dispatch(changePersonalInformationScrollTop(0));
+            this.refs["mainInformation"] && (scrollTop >= (absoluteTop - totalHeight) ? dispatch(changePersonalInformationScrollTop(scrollTop - absoluteTop + totalHeight)) : dispatch(changePersonalInformationScrollTop(0)));
         },
         /**
          * 重置个人页资源详情

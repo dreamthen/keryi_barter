@@ -124,7 +124,9 @@ class BarterView extends React.Component {
         } = this;
         const {
             //控制Modal组件对话框显示
-            viewKeryiBarterHandler
+            viewKeryiBarterHandler,
+            //点击喜欢图标,更新喜欢数
+            onLikeHandler
         } = this.props;
         tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["tags"], "primary");
         tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["targetTags"], "info");
@@ -140,6 +142,7 @@ class BarterView extends React.Component {
                     tagList={keryiCard["tags"]}
                     targetTagList={keryiCard["targetTags"]}
                     like={keryiCard["likeCount"]}
+                    onLike={onLikeHandler.bind(this)}
                     control={["exchange", "like"]}
                     priceWorth={keryiCard["priceWorth"]}
                     viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
@@ -466,6 +469,12 @@ function mapDispatchToProps(dispatch, ownProps) {
         resetResourcesListViewDetailsHandler() {
             //重置资源详情Action
             dispatch(resetResourcesListViewDetailsAction());
+        },
+        /**
+         * 点击喜欢图标,更新喜欢数
+         */
+        onLikeHandler(){
+            
         }
     }
 }

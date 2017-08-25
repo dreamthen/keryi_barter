@@ -28,7 +28,9 @@ if (!isMock) {
         //获取用户信息
         GET_PERSONAL_INFORMATION: keryi_cover + "users",
         //修改用户信息
-        UPDATE_PERSONAL_INFORMATION: keryi_cover + "users"
+        UPDATE_PERSONAL_INFORMATION: keryi_cover + "users",
+        //更新喜欢数
+        UPDATE_LIKE_COUNT: keryi_cover + "resources"
     }
 } else {
 

@@ -44,6 +44,28 @@ export function getResourcesList(pageNum) {
 }
 
 /**
+ * 更新喜欢数
+ * @param resourceId
+ * @param likeCount
+ * @returns {function(this:updateLikeCount)}
+ */
+export function updateLikeCount(resourceId, likeCount) {
+    return function dispatcher(dispatch) {
+        keryiAxiosConfig.axiosRequest(
+            api.UPDATE_LIKE_COUNT,
+            "put",
+            {
+                resourceId,
+                likeCount
+            },
+            function done(response) {
+
+            }.bind(this)
+        );
+    }.bind(this)
+}
+
+/**
  * 获取资源列表Action
  * @param payload
  * @returns {{type: *, payload: *}}
