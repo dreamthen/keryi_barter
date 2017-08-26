@@ -148,7 +148,8 @@ body {
     z-index: 1500;
 }
 
-.keryi_barter_modal_innerMain {
+.keryi_barter_modal_innerMain,
+.keryi_barter_modal_asideMain {
     max-height: 650px;
     overflow: auto;
 }

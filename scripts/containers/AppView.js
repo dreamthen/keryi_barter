@@ -573,6 +573,7 @@ class AppView extends React.Component {
                 footer
                 portrait
                 width={540}
+                aside={false}
                 title={username}
                 headPortrait={avatar ? avatar : "/images/keryiBarter_v.png"}
                 onOk={addBarterOkHandler.bind(this)}

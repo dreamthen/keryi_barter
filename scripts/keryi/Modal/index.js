@@ -19,6 +19,8 @@ const modalInnerMain = "modalInnerMain";
 const modalDefaultHeadPortrait = "defaultHeadPortrait";
 //Modal组件对话框在外部不传入props width的情况下的默认宽度
 const defaultWidth = 520;
+//Modal组件对话框在外部不传入props asideWidth的情况下的默认宽度
+const defaultAsideWidth = 200;
 
 /**
  * keryi_barter Modal对话框组件
@@ -43,6 +45,16 @@ class Modal extends React.Component {
         onOk: PropTypes.func,
         //Modal组件对话框关闭回调函数
         onClose: PropTypes.func,
+        //Modal组件对话框是否显示aside侧面边栏区域
+        aside: PropTypes.bool,
+        //Modal组件对话框aside侧面区域样式表配置
+        asideClassName: PropTypes.string,
+        //Modal组件对话框aside侧面边栏区域宽度
+        asideWidth: PropTypes.number,
+        //Modal组件对话框aside侧面边栏区域标题
+        asideTitle: PropTypes.string,
+        //Modal组件对话框aside侧面边栏区域列表
+        asideDataSource: PropTypes.array,
         //Modal组件对话框是否显示footer底部区域(包括关闭按钮和发布按钮)
         footer: PropTypes.bool
     };
@@ -118,6 +130,14 @@ class Modal extends React.Component {
             className
         } = this.props;
         return className ? modalConfig[modalInnerMain] + " " + className : modalConfig[modalInnerMain];
+    }
+
+    /**
+     * 根据props asideClassName来设置Modal组件对话框侧面边栏区域容器的className样式表
+     * @returns {string}
+     */
+    outAsideClassToClass(){
+
     }
 
     /**
@@ -289,12 +309,16 @@ class Modal extends React.Component {
         const {
             //Modal组件对话框宽度
             width,
-            //对话框是否显示footer底部区域(包括关闭按钮和发布按钮)
+            //Modal组件对话框是否显示footer底部区域(包括关闭按钮和发布按钮)
             footer,
             //Modal组件主要内容(外部传入)
             children,
             //Modal组件对话框HeadPortrait组件头像是否显示
-            portrait
+            portrait,
+            //Modal组件对话框是否显示aside侧面边栏区域
+            aside,
+            //Modal组件对话框aside侧面边栏区域宽度
+            asideWidth
         } = this.props;
         ReactDOM.render(
             <section
@@ -328,6 +352,14 @@ class Modal extends React.Component {
                             }
                         </article>
                     </main>
+                    {
+                        aside && <aside
+                            className="keryi_barter_modal_aside"
+                            style={{width: asideWidth ? asideWidth : defaultAsideWidth}}
+                        >
+
+                        </aside>
+                    }
                 </section>
             </section>, this.modalDiv
         );

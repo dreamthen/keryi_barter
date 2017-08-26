@@ -82,7 +82,9 @@ class PersonalView extends React.Component {
         //个人页资源详情喜欢数目
         viewDetailLike: PropTypes.number,
         //判断个人信息是否可编辑
-        personalInformationDisabled: PropTypes.bool
+        personalInformationDisabled: PropTypes.bool,
+        //个人页资源详情匹配到的所有的资源列表
+        viewDetailMatchedResources: PropTypes.array
     };
 
     constructor(props) {
@@ -540,6 +542,9 @@ class PersonalView extends React.Component {
             <Modal
                 visible={viewPersonalBarterVisible}
                 width={660}
+                aside
+                asideWidth={240}
+                asideClassName="keryi_barter_modal_asideMain"
                 closable
                 className="keryi_barter_personal_modal_view_details_container"
                 onClose={closePersonalBarterVisibleHandler.bind(this)}

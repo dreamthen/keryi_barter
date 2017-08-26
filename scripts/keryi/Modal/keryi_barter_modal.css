@@ -66,7 +66,8 @@
     z-index: 9910;
 }
 
-.keryi_barter_modalContainer > .keryi_barter_modal_main {
+.keryi_barter_modalContainer > .keryi_barter_modal_main,
+.keryi_barter_modalContainer > .keryi_barter_modal_aside {
     position: relative;
     height: auto;
     margin-left: 15px;
@@ -74,6 +75,10 @@
     border-radius: 4px;
     background-color: #fff;
     z-index: 9900;
+}
+
+.keryi_barter_modalContainer > .keryi_barter_modal_aside {
+    margin-left: 10px;
 }
 
 .keryi_barter_modal_article > .keryi_barter_modal_head {
@@ -142,3 +147,5 @@
     color: #fff;
     border: 1px solid #9da6af;
 }
+
+

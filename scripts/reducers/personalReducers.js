@@ -54,7 +54,9 @@ const defaultState = {
     //个人页资源详情资源标签
     viewDetailTagList: [],
     //个人页资源详情目标资源标签
-    viewDetailTargetTagList: []
+    viewDetailTargetTagList: [],
+    //个人页资源详情匹配到的所有的资源列表
+    viewDetailMatchedResources: []
 };
 
 /**
@@ -82,6 +84,7 @@ export function personalReducers(state = defaultState, actions) {
             newState["viewDetailLike"] = newState["likeCount"];
             newState["viewDetailTagList"] = newState["tags"];
             newState["viewDetailTargetTagList"] = newState["targetTags"];
+            newState["viewDetailMatchedResources"] = newState["matchedResources"];
             return insteadState.insteadObjState(state, newState);
         //获取个人页资源列表
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_ACTION"]:
