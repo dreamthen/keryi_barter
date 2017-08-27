@@ -5,7 +5,10 @@ import React, {PropTypes} from "react";
 import ReactDOM from "react-dom";
 import HeadPortrait from "../HeadPortrait";
 import Button from "../Button";
+//Modal组件对话框样式表配置
 import modalConfig from "./configs/modalConfig";
+//Modal组件对话框资源统计静态Mode配置
+import statisticsConfig from "./configs/statisticsConfig";
 import "./keryi_barter_modal.css";
 //Modal组件对话框显示样式表配置
 const modalVisible = "visible";
@@ -15,6 +18,8 @@ const modalVisibleDisappear = "visibleDisappear";
 const modalVisibleNone = "visibleNone";
 //Modal组件对话框内部副级容器样式表配置
 const modalInnerMain = "modalInnerMain";
+//Modal组件对话框侧面边栏区域容器样式表配置
+const modalAsideMain = "modalAsideMain";
 //Modal组件对话框头像默认配置
 const modalDefaultHeadPortrait = "defaultHeadPortrait";
 //Modal组件对话框在外部不传入props width的情况下的默认宽度
@@ -45,9 +50,11 @@ class Modal extends React.Component {
         onOk: PropTypes.func,
         //Modal组件对话框关闭回调函数
         onClose: PropTypes.func,
+        //Modal组件对话框侧面边栏区域列表选择回调函数
+        onAsideSelect: PropTypes.func,
         //Modal组件对话框是否显示aside侧面边栏区域
         aside: PropTypes.bool,
-        //Modal组件对话框aside侧面区域样式表配置
+        //Modal组件对话框aside侧面边栏区域样式表配置
         asideClassName: PropTypes.string,
         //Modal组件对话框aside侧面边栏区域宽度
         asideWidth: PropTypes.number,
@@ -136,8 +143,12 @@ class Modal extends React.Component {
      * 根据props asideClassName来设置Modal组件对话框侧面边栏区域容器的className样式表
      * @returns {string}
      */
-    outAsideClassToClass(){
-
+    outAsideClassToClass() {
+        const {
+            //Modal组件对话框aside侧面区域样式表配置
+            asideClassName
+        } = this.props;
+        return asideClassName ? modalConfig[modalAsideMain] + " " + asideClassName : modalConfig[modalAsideMain];
     }
 
     /**
@@ -287,6 +298,99 @@ class Modal extends React.Component {
     }
 
     /**
+     * render渲染对话框侧面边栏区域列表内容头像部分
+     * @param keryiModalDataSource
+     * @returns {XML}
+     */
+    renderAsideDataSourceHead(keryiModalDataSource) {
+        return (
+            <section className="keryi_barter_modal_asideAvatar">
+                <HeadPortrait
+                    headPortrait={keryiModalDataSource["user"]["avatar"] ? keryiModalDataSource["user"]["avatar"] : "/images/keryiBarter_v.png"}
+                />
+            </section>
+        )
+    }
+
+    /**
+     * render渲染对话框侧面边栏区域列表内容主体部分
+     * @param keryiModalDataSource
+     * @returns {XML}
+     */
+    renderAsideDataSourceMain(keryiModalDataSource) {
+        return (
+            <section className="keryi_barter_modal_asideSourceMain">
+                <header className="keryi_barter_modal_asideTitle">
+                    <h3 title={keryiModalDataSource["title"]}>
+                        {keryiModalDataSource["title"]}
+                    </h3>
+                </header>
+                <main className="keryi_barter_modal_asideIntroduce">
+                    <p title={keryiModalDataSource["intro"]}>
+                        {keryiModalDataSource["intro"]}
+                    </p>
+                </main>
+                <footer className="keryi_barter_modal_asideStatistics">
+                    <ul className="keryi_barter_modal_asideStatistics_ulList">
+                        {
+                            statisticsConfig.map(function statisticser(statisticsItem, statisticsIndex) {
+                                return (
+                                    <li
+                                        key={statisticsIndex}
+                                        title={keryiModalDataSource[statisticsItem["key"]] + " " + statisticsItem["title"]}
+                                    >
+                                        <i className={statisticsItem["className"]}>
+
+                                        </i>
+                                        <dfn className="keryi_barter_modal_asideStatistics_description">
+                                            {keryiModalDataSource[statisticsItem["key"]] + " " + statisticsItem["title"]}
+                                        </dfn>
+                                    </li>
+                                )
+                            }.bind(this))
+                        }
+                    </ul>
+                </footer>
+            </section>
+        )
+    }
+
+    /**
+     * render渲染对话框侧面边栏区域列表内容
+     * @returns {XML}
+     */
+    renderModalAsideMain() {
+        const {
+            //Modal组件对话框aside侧面边栏区域列表
+            asideDataSource
+        } = this.props;
+        const {
+            //render渲染对话框侧面边栏区域列表内容头像部分
+            renderAsideDataSourceHead,
+            //render渲染对话框侧面边栏区域列表内容主体部分
+            renderAsideDataSourceMain
+        } = this;
+        return (
+            <ul className="keryi_barter_modal_asideList">
+                {
+                    (asideDataSource && asideDataSource.length > 0) && asideDataSource.map(function asideDataer(dataItem, dataIndex) {
+                        return (
+                            <li
+                                key={dataIndex}
+                                className="keryi_barter_modal_asideItem">
+                                {/*render渲染对话框侧面边栏区域列表内容头像部分*/}
+                                {renderAsideDataSourceHead.bind(this)(dataItem)}
+                                {/*render渲染对话框侧面边栏区域列表内容主体部分*/}
+                                {renderAsideDataSourceMain.bind(this)(dataItem)}
+                            </li>
+                        )
+                    }.bind(this))
+                }
+            </ul>
+        )
+    }
+
+    /**
      *  render渲染Modal组件对话框
      */
     _render() {
@@ -304,7 +408,11 @@ class Modal extends React.Component {
             //对话框头像
             renderModalHeadPortrait,
             //对话框footer底部(包括关闭按钮和发布按钮)
-            renderModalFooter
+            renderModalFooter,
+            //对话框侧面边栏区域列表内容
+            renderModalAsideMain,
+            //根据props asideClassName来设置Modal组件对话框侧面边栏区域容器的className样式表
+            outAsideClassToClass
         } = this;
         const {
             //Modal组件对话框宽度
@@ -318,7 +426,9 @@ class Modal extends React.Component {
             //Modal组件对话框是否显示aside侧面边栏区域
             aside,
             //Modal组件对话框aside侧面边栏区域宽度
-            asideWidth
+            asideWidth,
+            //Modal组件对话框aside侧面边栏区域标题
+            asideTitle
         } = this.props;
         ReactDOM.render(
             <section
@@ -354,10 +464,16 @@ class Modal extends React.Component {
                     </main>
                     {
                         aside && <aside
-                            className="keryi_barter_modal_aside"
+                            className={outAsideClassToClass.bind(this)()}
                             style={{width: asideWidth ? asideWidth : defaultAsideWidth}}
                         >
-
+                            <header className="keryi_barter_modal_aside_head">
+                                {asideTitle}
+                            </header>
+                            <main className="keryi_barter_modal_aside_main">
+                                {/*对话框侧面边栏区域列表内容*/}
+                                {renderModalAsideMain.bind(this)()}
+                            </main>
                         </aside>
                     }
                 </section>

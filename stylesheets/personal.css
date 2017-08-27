@@ -197,7 +197,8 @@
     opacity: 1;
 }
 
-.keryi_barter_modalContainer > .keryi_barter_personal_modal_view_details_container {
+.keryi_barter_modalContainer > .keryi_barter_personal_modal_view_details_container,
+.keryi_barter_modalContainer > .keryi_barter_personal_modal_view_details_asideMain {
     background-color: rgb(244, 244, 244);
 }
 
@@ -269,7 +270,7 @@
     font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
 }
 
-.keryi_barter_personal_view_details_statistics > .keryi_barter_personal_view_details_statistics_uiList {
+.keryi_barter_personal_view_details_statistics > .keryi_barter_personal_view_details_statistics_ulList {
     margin-top: 5px;
     display: flex;
     flex-direction: row;
@@ -278,7 +279,7 @@
     align-items: center;
 }
 
-.keryi_barter_personal_view_details_statistics_uiList > li {
+.keryi_barter_personal_view_details_statistics_ulList > li {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -289,21 +290,25 @@
     color: #8f8f8f;
 }
 
-.keryi_barter_personal_view_details_statistics_uiList > li > i {
+.keryi_barter_personal_view_details_statistics_ulList > li:last-child {
+    margin: 0;
+}
+
+.keryi_barter_personal_view_details_statistics_ulList > li > i {
     position: relative;
     font-size: 20px;
 }
 
-.keryi_barter_personal_view_details_statistics_uiList > li > i.keryiBarter-priceWorth {
+.keryi_barter_personal_view_details_statistics_ulList > li > i.keryiBarter-priceWorth {
     font-size: 18px;
     bottom: 1px;
 }
 
-.keryi_barter_personal_view_details_statistics_uiList > li > i.keryiBarter-exchange {
+.keryi_barter_personal_view_details_statistics_ulList > li > i.keryiBarter-exchange {
     top: 1px;
 }
 
-.keryi_barter_personal_view_details_statistics_uiList > li > .keryi_barter_personal_view_details_statistics_description {
+.keryi_barter_personal_view_details_statistics_ulList > li > .keryi_barter_personal_view_details_statistics_description {
     display: inline-block;
     font-size: 12px;
     font-style: normal;

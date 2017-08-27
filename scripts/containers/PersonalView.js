@@ -20,6 +20,8 @@ import personalComponentConfig from "../configs/personalComponentConfig";
 import viewDetailsStatisticsConfig from "../configs/viewDetailsStatisticsConfig";
 //获取资源数据列表出现异常时,前端呈现默认约定数据
 import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
+//获取匹配到的资源数据列表出现异常时,前端呈现默认约定数据
+import keryiModalDefaultConfig from "../configs/keryiModalDefaultConfig";
 import {
     //改变个人信息编辑状态,使得其可编辑
     changePersonalInformation,
@@ -381,7 +383,7 @@ class PersonalView extends React.Component {
     renderModalStatistics() {
         return (
             <section className="keryi_barter_personal_view_details_statistics">
-                <ul className="keryi_barter_personal_view_details_statistics_uiList">
+                <ul className="keryi_barter_personal_view_details_statistics_ulList">
                     {
                         viewDetailsStatisticsConfig.map(function configer(configItem, configIndex) {
                             return (
@@ -535,6 +537,8 @@ class PersonalView extends React.Component {
             viewPersonalBarterVisible
         } = this.state;
         const {
+            //个人页资源详情匹配到的所有的资源列表
+            viewDetailMatchedResources,
             //控制Modal组件对话框隐藏并消失
             closePersonalBarterVisibleHandler
         } = this.props;
@@ -543,10 +547,13 @@ class PersonalView extends React.Component {
                 visible={viewPersonalBarterVisible}
                 width={660}
                 aside
-                asideWidth={240}
-                asideClassName="keryi_barter_modal_asideMain"
+                asideWidth={300}
+                asideTitle="匹配到的资源列表"
+                asideDataSource={(viewDetailMatchedResources && viewDetailMatchedResources.length > 0) ? viewDetailMatchedResources : keryiModalDefaultConfig}
+                asideClassName="keryi_barter_personal_modal_view_details_asideMain"
                 closable
                 className="keryi_barter_personal_modal_view_details_container"
+                onAsideSelect={()=>{}}
                 onClose={closePersonalBarterVisibleHandler.bind(this)}
             >
                 {/*keryi_barter主页面查看"以物换物"资源详情对话框头部*/}
