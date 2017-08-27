@@ -39,7 +39,7 @@ export function getPersonalResourcesList(pageNum, userId) {
                     //服务器对响应结果描述
                     msg = head.message;
                 if (code === Success.GET_PERSONAL_RESOURCE_LIST_SUCCESS_CODE) {
-                    dispatch(getPersonalResourceListAction(body));
+                    dispatch(getPersonalResourcesListAction(body));
                 }
             }.bind(this)
         );
@@ -137,11 +137,23 @@ export function saveUpdatePersonalInformation(userId, username, email, phone, mo
 }
 
 /**
- * 改变个人信息编辑状态,使得其可编辑
+ * 保存个人页资源详情Action
  * @param payload
  * @returns {{type: *, payload: *}}
  */
-export function getPersonalResourceListAction(payload) {
+export function rememberPersonalResourceListViewDetails(payload) {
+    return {
+        type: appActionsType["REMEMBER_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"],
+        payload
+    }
+}
+
+/**
+ * 获取个人页资源列表Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function getPersonalResourcesListAction(payload) {
     return {
         type: appActionsType["GET_PERSONAL_RESOURCE_LIST_ACTION"],
         payload
@@ -164,7 +176,7 @@ export function getPersonalResourcesListViewDetailsAction(payload) {
  * 重置个人页资源详情Action
  * @returns {{type: *}}
  */
-export function resetPersonalResourceListViewDetailsAction() {
+export function resetPersonalResourcesListViewDetailsAction() {
     return {
         type: appActionsType["RESET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]
     }

@@ -52,6 +52,10 @@ class Modal extends React.Component {
         onClose: PropTypes.func,
         //Modal组件对话框侧面边栏区域列表选择回调函数
         onAsideSelect: PropTypes.func,
+        //Modal组件对话框返回(在这里也就是返回到我的资源)回调函数
+        onBack: PropTypes.func,
+        //Modal组件对话框返回提示语
+        backDfn: PropTypes.string,
         //Modal组件对话框是否显示aside侧面边栏区域
         aside: PropTypes.bool,
         //Modal组件对话框aside侧面边栏区域样式表配置
@@ -244,12 +248,17 @@ class Modal extends React.Component {
             //对话框用户名
             title,
             //对话框是否显示右上角关闭按钮
-            closable
+            closable,
+            //对话框返回提示语
+            backDfn
         } = this.props;
         return (
             <header className="keryi_barter_modal_head">
                 <div className="keryi_barter_modal_head_title">
                     {title}
+                </div>
+                <div className="keryi_barter_modal_head_backDescription">
+                    {backDfn}
                 </div>
                 {
                     closable && <i
@@ -362,7 +371,9 @@ class Modal extends React.Component {
     renderModalAsideMain() {
         const {
             //Modal组件对话框aside侧面边栏区域列表
-            asideDataSource
+            asideDataSource,
+            //Modal组件对话框侧面边栏区域列表选择回调函数
+            onAsideSelect
         } = this.props;
         const {
             //render渲染对话框侧面边栏区域列表内容头像部分
@@ -377,7 +388,9 @@ class Modal extends React.Component {
                         return (
                             <li
                                 key={dataIndex}
-                                className="keryi_barter_modal_asideItem">
+                                className="keryi_barter_modal_asideItem"
+                                onClick={onAsideSelect.bind(this, dataItem)}
+                            >
                                 {/*render渲染对话框侧面边栏区域列表内容头像部分*/}
                                 {renderAsideDataSourceHead.bind(this)(dataItem)}
                                 {/*render渲染对话框侧面边栏区域列表内容主体部分*/}

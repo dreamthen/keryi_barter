@@ -31,6 +31,8 @@ import {
     saveUpdatePersonalInformation,
     //改变个人信息编辑状态,使得其不可编辑
     closeChangePersonalInformation,
+    //保存个人页资源详情
+    rememberPersonalResourceListViewDetails,
     //获取个人页资源列表
     getPersonalResourcesList,
     //获取个人页资源详情Action
@@ -40,7 +42,7 @@ import {
     //改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动
     changePersonalInformationScrollTop,
     //重置个人页资源详情Action
-    resetPersonalResourceListViewDetailsAction
+    resetPersonalResourcesListViewDetailsAction
 } from "../actions/personalActions";
 import "../../stylesheets/personal.css";
 
@@ -67,6 +69,8 @@ class PersonalView extends React.Component {
         current: PropTypes.number,
         //个人信息部分距离父级元素顶部的高度
         top: PropTypes.number,
+        //个人页资源详情对象
+        viewDetailKeryiCard: PropTypes.object,
         //个人页资源详情用户头像
         viewDetailHeadPortrait: PropTypes.string,
         //个人页资源详情用户名
@@ -319,7 +323,7 @@ class PersonalView extends React.Component {
             tagOrTargetTagListHandlerAddType
         } = this;
         const {
-            //控制Modal组件对话框显示
+            //控制Modal组件对话框显示,获取个人信息页面资源详情
             viewPersonalKeryiBarterHandler
         } = this.props;
         tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["tags"], "primary");
@@ -540,7 +544,9 @@ class PersonalView extends React.Component {
             //个人页资源详情匹配到的所有的资源列表
             viewDetailMatchedResources,
             //控制Modal组件对话框隐藏并消失
-            closePersonalBarterVisibleHandler
+            closePersonalBarterVisibleHandler,
+            //点击个人信息页面匹配资源列表,更新个人信息页面资源详情
+            viewPersonalKeryiBarterModalHandler
         } = this.props;
         return (
             <Modal
@@ -551,9 +557,12 @@ class PersonalView extends React.Component {
                 asideTitle="匹配到的资源列表"
                 asideDataSource={(viewDetailMatchedResources && viewDetailMatchedResources.length > 0) ? viewDetailMatchedResources : keryiModalDefaultConfig}
                 asideClassName="keryi_barter_personal_modal_view_details_asideMain"
+                backDfn="我的资源"
                 closable
                 className="keryi_barter_personal_modal_view_details_container"
-                onAsideSelect={()=>{}}
+                onAsideSelect={viewPersonalKeryiBarterModalHandler.bind(this)}
+                onBack={() => {
+                }}
                 onClose={closePersonalBarterVisibleHandler.bind(this)}
             >
                 {/*keryi_barter主页面查看"以物换物"资源详情对话框头部*/}
@@ -865,13 +874,23 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch, ownProps) {
     return {
         /**
-         * 控制Modal组件对话框显示
+         * 控制Modal组件对话框显示,获取个人信息页面资源详情
          * @params e
          */
         viewPersonalKeryiBarterHandler(keryiCard, e) {
             this.setState({
                 viewPersonalBarterVisible: true
             });
+            dispatch(rememberPersonalResourceListViewDetails(keryiCard));
+            dispatch(getPersonalUserHeadPortraitViewDetail(keryiCard));
+            dispatch(getPersonalResourcesListViewDetailsAction(keryiCard));
+            //取消冒泡
+            e.nativeEvent.stopImmediatePropagation();
+        },
+        /**
+         * 点击个人信息页面匹配资源列表,更新个人信息页面资源详情
+         */
+        viewPersonalKeryiBarterModalHandler(keryiCard, e) {
             dispatch(getPersonalUserHeadPortraitViewDetail(keryiCard));
             dispatch(getPersonalResourcesListViewDetailsAction(keryiCard));
             //取消冒泡
@@ -969,7 +988,7 @@ function mapDispatchToProps(dispatch, ownProps) {
          */
         resetPersonalResourceListViewDetailsHandler() {
             //重置个人页资源详情Action
-            dispatch(resetPersonalResourceListViewDetailsAction());
+            dispatch(resetPersonalResourcesListViewDetailsAction());
         }
     }
 }

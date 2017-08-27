@@ -35,6 +35,8 @@ const defaultState = {
     current: 1,
     //个人信息部分距离父级元素顶部的高度
     top: 0,
+    //个人页资源详情对象
+    viewDetailKeryiCard: {},
     //个人页资源详情用户头像
     viewDetailHeadPortrait: "",
     //个人页资源详情用户名
@@ -69,6 +71,11 @@ export function personalReducers(state = defaultState, actions) {
     let type = actions.type,
         newState = actions.payload;
     switch (type) {
+        //保存个人页资源详情
+        case appActionsType["REMEMBER_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]:
+            return insteadState.insteadObjState(state, {
+                viewDetailKeryiCard: newState
+            });
         //获取个人页资源详情用户头像
         case appActionsType["GET_PERSONAL_USER_HEAD_PORTRAIT_VIEW_DETAIL"]:
             return insteadState.insteadObjState(state, {
