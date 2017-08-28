@@ -545,8 +545,10 @@ class PersonalView extends React.Component {
             viewDetailMatchedResources,
             //控制Modal组件对话框隐藏并消失
             closePersonalBarterVisibleHandler,
-            //点击个人信息页面匹配资源列表,更新个人信息页面资源详情
-            viewPersonalKeryiBarterModalHandler
+            //点击个人信息页面资源详情匹配资源列表,更新个人信息页面资源详情
+            viewPersonalKeryiBarterModalHandler,
+            //点击个人信息页面资源详情返回"我的资源",更新个人信息页面资源详情
+            onBackHandler
         } = this.props;
         return (
             <Modal
@@ -561,8 +563,7 @@ class PersonalView extends React.Component {
                 closable
                 className="keryi_barter_personal_modal_view_details_container"
                 onAsideSelect={viewPersonalKeryiBarterModalHandler.bind(this)}
-                onBack={() => {
-                }}
+                onBack={onBackHandler.bind(this)}
                 onClose={closePersonalBarterVisibleHandler.bind(this)}
             >
                 {/*keryi_barter主页面查看"以物换物"资源详情对话框头部*/}
@@ -893,6 +894,19 @@ function mapDispatchToProps(dispatch, ownProps) {
         viewPersonalKeryiBarterModalHandler(keryiCard, e) {
             dispatch(getPersonalUserHeadPortraitViewDetail(keryiCard));
             dispatch(getPersonalResourcesListViewDetailsAction(keryiCard));
+            //取消冒泡
+            e.nativeEvent.stopImmediatePropagation();
+        },
+        /**
+         * 点击个人信息页面资源详情返回"我的资源",更新个人信息页面资源详情
+         */
+        onBackHandler(e) {
+            const {
+                //个人页资源详情对象
+                viewDetailKeryiCard
+            } = this.props;
+            dispatch(getPersonalUserHeadPortraitViewDetail(viewDetailKeryiCard));
+            dispatch(getPersonalResourcesListViewDetailsAction(viewDetailKeryiCard));
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();
         },

@@ -16,6 +16,10 @@ const modalVisible = "visible";
 const modalVisibleDisappear = "visibleDisappear";
 //Modal组件对话框消失样式表配置
 const modalVisibleNone = "visibleNone";
+//Modal组件对话框返回提示语显示样式表配置
+const modalBackDfnAppear = "backDfnAppearAnimation";
+///Modal组件对话框返回提示语隐藏样式表配置
+const modalBackDfnDisappear = "backDfnDisappear";
 //Modal组件对话框内部副级容器样式表配置
 const modalInnerMain = "modalInnerMain";
 //Modal组件对话框侧面边栏区域容器样式表配置
@@ -74,7 +78,11 @@ class Modal extends React.Component {
         super(props);
         this.state = {
             //Modal组件对话框显示或者隐藏判断标志位
-            modalAppear: false
+            modalAppear: false,
+            //Modal组件对话框返回提示语消失或者隐藏判断标志位
+            backDfnAppear: false,
+            //Modal组件对话框返回提示语显示或者因此判断标志位
+            backDfnAppearAnimation: false
         }
     }
 
@@ -236,13 +244,49 @@ class Modal extends React.Component {
     }
 
     /**
+     * 根据state backDfnAppearAnimation来设置Modal组件对话框返回提示语的className样式表
+     */
+    backDfnToClass() {
+        const {
+            //Modal组件对话框返回提示语显示或者因此判断标志位
+            backDfnAppearAnimation
+        } = this.state;
+        return backDfnAppearAnimation ? modalConfig[modalBackDfnAppear] : modalConfig[modalBackDfnDisappear];
+    }
+
+    /**
+     * 对话框返回(在这里也就是返回到我的资源)
+     */
+    onBackHandler(e) {
+        const {
+            //对话框返回(在这里也就是返回到我的资源)回调函数
+            onBack
+        } = this.props;
+        this.setState({
+            backDfnAppearAnimation: false
+        }, function backDfner() {
+            //FIXME 这里设置一个时间控制器,Modal组件对话框返回提示语从显示到隐藏这个过程动画500ms之后,将Modal组件对话框返回提示语消失
+            setTimeout(function timer() {
+                this.setState({
+                    backDfnAppear: false
+                })
+            }.bind(this), 500);
+        }.bind(this));
+        onBack(e);
+    }
+
+    /**
      * render渲染对话框header头部(包括用户名等信息)
      * @returns {XML}
      */
     renderModalHeader() {
         const {
             //对话框关闭函数
-            onCloseHandler
+            onCloseHandler,
+            //根据state backDfnAppearAnimation来设置Modal组件对话框返回提示语的className样式表
+            backDfnToClass,
+            //对话框返回(在这里也就是返回到我的资源)
+            onBackHandler
         } = this;
         const {
             //对话框用户名
@@ -250,16 +294,30 @@ class Modal extends React.Component {
             //对话框是否显示右上角关闭按钮
             closable,
             //对话框返回提示语
-            backDfn
+            backDfn,
+            //对话框是否显示aside侧面边栏区域
+            aside
         } = this.props;
+        const {
+            //对话框返回提示语显示或者隐藏判断标志位
+            backDfnAppear
+        } = this.state;
         return (
             <header className="keryi_barter_modal_head">
                 <div className="keryi_barter_modal_head_title">
                     {title}
                 </div>
-                <div className="keryi_barter_modal_head_backDescription">
-                    {backDfn}
-                </div>
+                {
+                    (aside && backDfnAppear) && <div
+                        onClick={onBackHandler.bind(this)}
+                        className={backDfnToClass.bind(this)()}
+                    >
+                        <i className="iconfontKeryiBarter keryiBarter-back">
+
+                        </i>
+                        {backDfn}
+                    </div>
+                }
                 {
                     closable && <i
                         className="iconfontKeryiBarter keryiBarter-close"
@@ -365,21 +423,42 @@ class Modal extends React.Component {
     }
 
     /**
+     * 选择Modal组件对话框侧面边栏区域列表
+     */
+    onAsideSelectHandler(dataSource, e) {
+        const {
+            //Modal组件对话框侧面边栏区域列表选择回调函数
+            onAsideSelect
+        } = this.props;
+        this.setState({
+            backDfnAppear: true
+        }, function backDfner() {
+            //FIXME 在这里设置一个时间控制器,Modal组件对话框返回提示语从消失到隐藏100ms之后,将Modal组件对话框返回提示语显示
+            setTimeout(function timer(e) {
+                this.setState({
+                    backDfnAppearAnimation: true
+                })
+            }.bind(this), 100);
+        }.bind(this));
+        onAsideSelect(dataSource, e);
+    }
+
+    /**
      * render渲染对话框侧面边栏区域列表内容
      * @returns {XML}
      */
     renderModalAsideMain() {
         const {
             //Modal组件对话框aside侧面边栏区域列表
-            asideDataSource,
-            //Modal组件对话框侧面边栏区域列表选择回调函数
-            onAsideSelect
+            asideDataSource
         } = this.props;
         const {
             //render渲染对话框侧面边栏区域列表内容头像部分
             renderAsideDataSourceHead,
             //render渲染对话框侧面边栏区域列表内容主体部分
-            renderAsideDataSourceMain
+            renderAsideDataSourceMain,
+            //选择Modal组件对话框侧面边栏区域列表
+            onAsideSelectHandler
         } = this;
         return (
             <ul className="keryi_barter_modal_asideList">
@@ -389,7 +468,7 @@ class Modal extends React.Component {
                             <li
                                 key={dataIndex}
                                 className="keryi_barter_modal_asideItem"
-                                onClick={onAsideSelect.bind(this, dataItem)}
+                                onClick={onAsideSelectHandler.bind(this, dataItem)}
                             >
                                 {/*render渲染对话框侧面边栏区域列表内容头像部分*/}
                                 {renderAsideDataSourceHead.bind(this)(dataItem)}

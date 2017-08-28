@@ -207,6 +207,23 @@
     color: #444;
 }
 
+.keryi_barter_modal_head > .keryi_barter_modal_head_backDescription {
+    opacity: 1;
+    font-size: 14px;
+    font-weight: normal;
+    color: #8f8f8f;
+    cursor: pointer;
+}
+
+.keryi_barter_modal_head > .keryi_barter_modal_head_backDescriptionDisAppear {
+    opacity: 0;
+    transition: all .5s linear 0s;
+}
+
+.keryi_barter_modal_head_backDescription > i {
+    font-size: 13px;
+}
+
 .keryi_barter_modal_head > .keryiBarter-close {
     float: right;
     font-size: 18px;

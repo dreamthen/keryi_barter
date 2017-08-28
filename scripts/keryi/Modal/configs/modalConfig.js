@@ -9,6 +9,10 @@ const modalConfig = {
     visibleDisappear: "keryi_barter_modal keryi_barter_modalDisAppear",
     //Modal组件对话框消失样式表配置
     visibleNone: "keryi_barter_modalNone",
+    //Modal组件对话框返回提示语显示样式表配置
+    backDfnAppearAnimation: "keryi_barter_modal_head_backDescription",
+    //Modal组件对话框返回提示语隐藏样式表配置
+    backDfnDisappear: "keryi_barter_modal_head_backDescriptionDisAppear",
     //Modal组件对话框内部副级容器样式表配置
     modalInnerMain: "keryi_barter_modal_main",
     //Modal组件对话框侧面边栏区域容器样式表配置
