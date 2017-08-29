@@ -209,8 +209,12 @@ class Modal extends React.Component {
         } = this.props;
         const {
             //关闭Modal对话框,并执行参数方法函数
-            closeModal
+            closeModal,
+            //对话框返回(在这里也就是返回到我的资源)
+            onBackHandler
         } = this;
+        //对话框返回(在这里也就是返回到我的资源)
+        onBackHandler.bind(this)(e);
         //关闭Modal对话框,并执行关闭回调函数
         closeModal.bind(this)(onClose);
         //取消冒泡
@@ -272,7 +276,7 @@ class Modal extends React.Component {
                 })
             }.bind(this), 500);
         }.bind(this));
-        onBack(e);
+        onBack && onBack(e);
     }
 
     /**
