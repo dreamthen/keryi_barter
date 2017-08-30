@@ -108,6 +108,10 @@
     width: 660px;
 }
 
+.keryi_barter_personal_main_barterList > .keryi_barter_personal_cardInfo {
+    margin: 0 0 20px 0;
+}
+
 .keryi_barter_personal_main_information_container > .keryi_barter_personal_main_personalInformation {
     position: relative;
     width: calc(100% - 640px);

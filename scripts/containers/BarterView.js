@@ -13,10 +13,8 @@ import {
 import {
     //获取资源列表Action
     getResourcesList,
-    //获取资源详情Action
-    getResourcesListViewDetailsAction,
-    //获取资源详情用户头像Action
-    getUserHeadPortraitViewDetail,
+    //获取资源详情
+    getResourcesListViewDetails,
     //重置资源详情Action
     resetResourcesListViewDetailsAction
 } from "../actions/barterActions";
@@ -440,11 +438,11 @@ function mapDispatchToProps(dispatch, ownProps) {
          * @params e
          */
         viewKeryiBarterHandler(keryiCard, e) {
+            let id = keryiCard["id"];
+            dispatch(getResourcesListViewDetails.bind(this)(id));
             this.setState({
                 viewBarterVisible: true
             });
-            dispatch(getUserHeadPortraitViewDetail(keryiCard));
-            dispatch(getResourcesListViewDetailsAction(keryiCard));
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();
         },

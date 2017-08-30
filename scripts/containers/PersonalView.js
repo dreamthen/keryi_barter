@@ -31,10 +31,10 @@ import {
     saveUpdatePersonalInformation,
     //改变个人信息编辑状态,使得其不可编辑
     closeChangePersonalInformation,
-    //保存个人页资源详情
-    rememberPersonalResourceListViewDetails,
     //获取个人页资源列表
     getPersonalResourcesList,
+    //获取个人页资源详情
+    getPersonalResourceListViewDetails,
     //获取个人页资源详情Action
     getPersonalResourcesListViewDetailsAction,
     //获取个人页资源详情用户头像Action
@@ -329,20 +329,24 @@ class PersonalView extends React.Component {
         tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["tags"], "primary");
         tagOrTargetTagListHandlerAddType.bind(this)(keryiCard["targetTags"], "info");
         return (
-            <KeryiCard
+            <section
                 key={key}
-                userName={keryiCard["user"]["username"]}
-                title={keryiCard["title"]}
-                imageList={eval("(" + keryiCard["imgUrls"] + ")")}
-                introduce={keryiCard["intro"]}
-                tagList={keryiCard["tags"]}
-                targetTagList={keryiCard["targetTags"]}
-                priceWorth={keryiCard["priceWorth"]}
-                like={keryiCard["likeCount"]}
-                control={["exchange"]}
-                viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
-                onViewDetails={viewPersonalKeryiBarterHandler.bind(this, keryiCard)}
-            />
+                className="keryi_barter_personal_cardInfo"
+            >
+                <KeryiCard
+                    userName={keryiCard["user"]["username"]}
+                    title={keryiCard["title"]}
+                    imageList={eval("(" + keryiCard["imgUrls"] + ")")}
+                    introduce={keryiCard["intro"]}
+                    tagList={keryiCard["tags"]}
+                    targetTagList={keryiCard["targetTags"]}
+                    priceWorth={keryiCard["priceWorth"]}
+                    like={keryiCard["likeCount"]}
+                    control={["exchange"]}
+                    viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
+                    onViewDetails={viewPersonalKeryiBarterHandler.bind(this, keryiCard)}
+                />
+            </section>
         )
     }
 
@@ -879,12 +883,11 @@ function mapDispatchToProps(dispatch, ownProps) {
          * @params e
          */
         viewPersonalKeryiBarterHandler(keryiCard, e) {
+            let id = keryiCard["id"];
+            dispatch(getPersonalResourceListViewDetails.bind(this)(id));
             this.setState({
                 viewPersonalBarterVisible: true
             });
-            dispatch(rememberPersonalResourceListViewDetails(keryiCard));
-            dispatch(getPersonalUserHeadPortraitViewDetail(keryiCard));
-            dispatch(getPersonalResourcesListViewDetailsAction(keryiCard));
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();
         },

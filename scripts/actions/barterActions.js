@@ -44,6 +44,36 @@ export function getResourcesList(pageNum) {
 }
 
 /**
+ * 获取资源详情
+ * @param resourceId
+ */
+export function getResourcesListViewDetails(resourceId) {
+    return function dispatcher(dispatch) {
+        keryiAxiosConfig.axiosRequest(
+            api.GET_RESOURCE_LIST_VIEW_DETAIL + "/" + resourceId,
+            "get",
+            {},
+            function done(response) {
+                //服务器响应数据
+                let data = response.data,
+                    //服务器响应body主题对象
+                    body = data.body,
+                    //服务器响应head头部对象
+                    head = data.head,
+                    //服务器响应code状态码
+                    code = head.code,
+                    //服务器对响应结果描述
+                    msg = head.message;
+                if (code === Success.GET_RESOURCE_LIST_VIEW_DETAIL_SUCCESS_CODE) {
+                    dispatch(getUserHeadPortraitViewDetail(body));
+                    dispatch(getResourcesListViewDetailsAction(body));
+                }
+            }.bind(this)
+        );
+    }.bind(this)
+}
+
+/**
  * 更新喜欢数
  * @param resourceId
  * @param likeCount

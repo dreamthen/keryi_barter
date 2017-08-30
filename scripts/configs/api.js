@@ -17,6 +17,8 @@ if (!isMock) {
         KERYI_REGISTER: keryi_cover + "sessions",
         //获取资源列表
         GET_RESOURCE_LIST: keryi_cover + "resources",
+        //获取资源详情
+        GET_RESOURCE_LIST_VIEW_DETAIL: keryi_cover + "resources",
         //上传资源图片
         UPLOAD_RESOURCE_IMAGE: keryi_cover + "resources/images",
         //获取资源图片
