@@ -396,21 +396,23 @@ class KeryiCard extends React.Component {
                     <ul className="keryi_barter_card_function_ulList">
                         {
                             keryiCardConfig["card_function"].map(function configer(configItem, configIndex) {
-                                return (control[configIndex] === configItem["key"]) && (
-                                    <li
-                                        key={configIndex}
-                                        title={configItem["title"] + (configItem["key"] ? " " + this.props[configItem["key"]] : "")}
-                                    >
-                                        <i
-                                            className={configItem["className"]}
+                                return control.map(function controler(controlItem, controlIndex) {
+                                    return (controlItem === configItem["key"]) && (
+                                        <li
+                                            key={configIndex}
+                                            title={configItem["title"] + (configItem["key"] ? " " + this.props[configItem["key"]] : "")}
                                         >
+                                            <i
+                                                className={configItem["className"]}
+                                            >
 
-                                        </i>
-                                        {configItem["key"] && <sub>
-                                            {this.props[configItem["key"]]}
-                                        </sub>}
-                                    </li>
-                                )
+                                            </i>
+                                            {configItem["key"] && <sub>
+                                                {this.props[configItem["key"]]}
+                                            </sub>}
+                                        </li>
+                                    );
+                                }.bind(this));
                             }.bind(this))
                         }
                     </ul>

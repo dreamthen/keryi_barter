@@ -342,7 +342,7 @@ class PersonalView extends React.Component {
                     targetTagList={keryiCard["targetTags"]}
                     priceWorth={keryiCard["priceWorth"]}
                     like={keryiCard["likeCount"]}
-                    control={["exchange"]}
+                    control={[]}
                     viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
                     onViewDetails={viewPersonalKeryiBarterHandler.bind(this, keryiCard)}
                 />

@@ -141,7 +141,7 @@ class BarterView extends React.Component {
                     targetTagList={keryiCard["targetTags"]}
                     like={keryiCard["likeCount"]}
                     onLike={onLikeHandler.bind(this)}
-                    control={["exchange", "like"]}
+                    control={["like"]}
                     priceWorth={keryiCard["priceWorth"]}
                     viewDetails="iconfontKeryiBarter keryiBarter-moreInformation"
                     onViewDetails={viewKeryiBarterHandler.bind(this, keryiCard)}
