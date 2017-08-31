@@ -91,7 +91,7 @@ export function personalReducers(state = defaultState, actions) {
             newState["viewDetailLike"] = newState["likeCount"];
             newState["viewDetailTagList"] = newState["tags"];
             newState["viewDetailTargetTagList"] = newState["targetTags"];
-            newState["viewDetailMatchedResources"] = newState["matchedResources"];
+            (newState["matchedResources"] && newState["matchedResources"].length > 0) && (newState["viewDetailMatchedResources"] = newState["matchedResources"]);
             return insteadState.insteadObjState(state, newState);
         //获取个人页资源列表
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_ACTION"]:
