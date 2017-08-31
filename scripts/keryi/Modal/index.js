@@ -30,6 +30,10 @@ const modalDefaultHeadPortrait = "defaultHeadPortrait";
 const defaultWidth = 520;
 //Modal组件对话框在外部不传入props asideWidth的情况下的默认宽度
 const defaultAsideWidth = 200;
+//Modal组件对话框footer底部区域确定按钮默认文本
+const defaultOkText = "确定";
+//Modal组件对话框footer底部区域取消按钮默认文本
+const defaultCloseText = "取消";
 
 /**
  * keryi_barter Modal对话框组件
@@ -70,8 +74,12 @@ class Modal extends React.Component {
         asideTitle: PropTypes.string,
         //Modal组件对话框aside侧面边栏区域列表
         asideDataSource: PropTypes.array,
-        //Modal组件对话框是否显示footer底部区域(包括关闭按钮和发布按钮)
-        footer: PropTypes.bool
+        //Modal组件对话框是否显示footer底部区域(包括取消按钮和确定按钮)
+        footer: PropTypes.bool,
+        //Modal组件对话框footer底部区域确定按钮文本
+        okText: PropTypes.string,
+        //Modal组件对话框footer底部区域取消按钮文本
+        closeText: PropTypes.string
     };
 
     constructor(props) {
@@ -344,6 +352,12 @@ class Modal extends React.Component {
             //对话框关闭
             onCloseHandler
         } = this;
+        const {
+            //对话框footer底部区域确定按钮文本
+            okText,
+            //对话框footer底部区域取消按钮文本
+            closeText
+        } = this.props;
         return (
             <footer className="keryi_barter_modal_foot">
                 <section className="keryi_barter_modal_close">
@@ -352,7 +366,7 @@ class Modal extends React.Component {
                         className="keryi_barter_button_close"
                         onClick={onCloseHandler.bind(this)}
                     >
-                        关闭
+                        {closeText ? closeText : defaultCloseText}
                     </Button>
                 </section>
                 <section className="keryi_barter_modal_publish">
@@ -361,7 +375,7 @@ class Modal extends React.Component {
                         className="keryi_barter_button_publish"
                         onClick={onOkHandler.bind(this)}
                     >
-                        发布
+                        {okText ? okText : defaultOkText}
                     </Button>
                 </section>
             </footer>

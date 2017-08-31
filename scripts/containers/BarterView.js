@@ -354,6 +354,9 @@ class BarterView extends React.Component {
                 width={660}
                 aside={false}
                 closable
+                footer
+                okText="资源交换"
+                closeText="关闭"
                 className="keryi_barter_modal_view_details_container"
                 onClose={closeBarterVisibleHandler.bind(this)}
             >
