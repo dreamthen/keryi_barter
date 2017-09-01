@@ -35,6 +35,8 @@ const defaultState = {
     current: 1,
     //个人信息部分距离父级元素顶部的高度
     top: 0,
+    //个人页资源详情对话框是否显示footer底部区域
+    viewDetailFooter: false,
     //个人页资源详情对象
     viewDetailKeryiCard: {},
     //个人页资源详情用户头像
@@ -115,6 +117,16 @@ export function personalReducers(state = defaultState, actions) {
         case appActionsType["CHANGE_PERSONAL_INFORMATION_SCROLL_TOP"]:
             return insteadState.insteadObjState(state, {
                 top: newState
+            });
+        //显示个人页资源详情对话框footer底部区域
+        case appActionsType["OPEN_PERSONAL_VIEW_DETAIL_FOOTER"]:
+            return insteadState.insteadObjState(state, {
+                viewDetailFooter: true
+            });
+        //隐藏个人页资源详情对话框footer底部区域
+        case appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_FOOTER"]:
+            return insteadState.insteadObjState(state, {
+                viewDetailFooter: false
             });
         //重置个人页资源详情
         case appActionsType["RESET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]:

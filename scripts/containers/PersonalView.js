@@ -42,7 +42,11 @@ import {
     //改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动
     changePersonalInformationScrollTop,
     //重置个人页资源详情Action
-    resetPersonalResourcesListViewDetailsAction
+    resetPersonalResourcesListViewDetailsAction,
+    //显示个人页资源详情对话框footer底部区域Action
+    openPersonalViewDetailFooter,
+    //隐藏个人页资源详情对话框footer底部区域Action
+    closePersonalViewDetailFooter
 } from "../actions/personalActions";
 import "../../stylesheets/personal.css";
 
@@ -69,6 +73,8 @@ class PersonalView extends React.Component {
         current: PropTypes.number,
         //个人信息部分距离父级元素顶部的高度
         top: PropTypes.number,
+        //个人页资源详情对话框是否显示footer底部区域
+        viewDetailFooter: PropTypes.bool,
         //个人页资源详情对象
         viewDetailKeryiCard: PropTypes.object,
         //个人页资源详情用户头像
@@ -547,6 +553,8 @@ class PersonalView extends React.Component {
         const {
             //个人页资源详情匹配到的所有的资源列表
             viewDetailMatchedResources,
+            //个人页资源详情对话框是否显示footer底部区域
+            viewDetailFooter,
             //控制Modal组件对话框隐藏并消失
             closePersonalBarterVisibleHandler,
             //点击个人信息页面资源详情匹配资源列表,更新个人信息页面资源详情
@@ -565,6 +573,9 @@ class PersonalView extends React.Component {
                 asideClassName="keryi_barter_personal_modal_view_details_asideMain"
                 backDfn="我的资源"
                 closable
+                footer={viewDetailFooter}
+                okText="资源交换"
+                closeText="关闭"
                 className="keryi_barter_personal_modal_view_details_container"
                 onAsideSelect={viewPersonalKeryiBarterModalHandler.bind(this)}
                 onBack={onBackHandler.bind(this)}
@@ -897,6 +908,7 @@ function mapDispatchToProps(dispatch, ownProps) {
         viewPersonalKeryiBarterModalHandler(keryiCard, e) {
             dispatch(getPersonalUserHeadPortraitViewDetail(keryiCard));
             dispatch(getPersonalResourcesListViewDetailsAction(keryiCard));
+            dispatch(openPersonalViewDetailFooter());
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();
         },
@@ -910,6 +922,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             } = this.props;
             dispatch(getPersonalUserHeadPortraitViewDetail(viewDetailKeryiCard));
             dispatch(getPersonalResourcesListViewDetailsAction(viewDetailKeryiCard));
+            dispatch(closePersonalViewDetailFooter());
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();
         },

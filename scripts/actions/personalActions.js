@@ -258,7 +258,7 @@ export function closeChangePersonalInformation() {
 }
 
 /**
- * 改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动
+ * 改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动Action
  * @param payload
  * @returns {{type: *, payload: *}}
  */
@@ -266,5 +266,25 @@ export function changePersonalInformationScrollTop(payload) {
     return {
         type: appActionsType["CHANGE_PERSONAL_INFORMATION_SCROLL_TOP"],
         payload
+    }
+}
+
+/**
+ * 显示个人页资源详情对话框footer底部区域Action
+ * @returns {{type: *}}
+ */
+export function openPersonalViewDetailFooter() {
+    return {
+        type: appActionsType["OPEN_PERSONAL_VIEW_DETAIL_FOOTER"]
+    }
+}
+
+/**
+ * 隐藏个人页资源详情对话框footer底部区域Action
+ * @returns {{type: *}}
+ */
+export function closePersonalViewDetailFooter() {
+    return {
+        type: appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_FOOTER"]
     }
 }
