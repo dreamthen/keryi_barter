@@ -397,25 +397,26 @@ class BarterView extends React.Component {
             <div className="keryi_barter_main_container">
                 <section className="keryi_barter_main_module keryi_barter_main_barterList">
                     {
-                        (list && list.length > 0) ? list.map(function lister(listItem, listIndex) {
-                                return (
-                                    <article
-                                        key={listIndex}
-                                        className="keryi_barter_cardInfo"
-                                    >
-                                        {/*render渲染用户头像*/}
-                                        {renderHeadPortrait.bind(this)(listItem)}
-                                        {/*render渲染用户资源卡片*/}
-                                        {renderKeryiCard.bind(this)(listItem)}
-                                    </article>
-                                )
-                            }.bind(this)) : //获取资源数据列表出现异常时,前端呈现默认约定数据
-                            <article className="keryi_barter_cardInfo">
-                                {/*render渲染用户头像*/}
-                                {renderHeadPortrait.bind(this)(keryiCardDefaultConfig)}
-                                {/*render渲染用户资源卡片*/}
-                                {renderKeryiCard.bind(this)(keryiCardDefaultConfig)}
-                            </article>
+                        (list && list.length > 0) && list.map(function lister(listItem, listIndex) {
+                            return (
+                                <article
+                                    key={listIndex}
+                                    className="keryi_barter_cardInfo"
+                                >
+                                    {/*render渲染用户头像*/}
+                                    {renderHeadPortrait.bind(this)(listItem)}
+                                    {/*render渲染用户资源卡片*/}
+                                    {renderKeryiCard.bind(this)(listItem)}
+                                </article>
+                            )
+                        }.bind(this))
+                        // : //获取资源数据列表出现异常时,前端呈现默认约定数据
+                        // <article className="keryi_barter_cardInfo">
+                        //     {/*render渲染用户头像*/}
+                        //     {renderHeadPortrait.bind(this)(keryiCardDefaultConfig)}
+                        //     {/*render渲染用户资源卡片*/}
+                        //     {renderKeryiCard.bind(this)(keryiCardDefaultConfig)}
+                        // </article>
                     }
                 </section>
                 {/*keryi_barter主页面查看"以物换物"资源详情对话框*/}
@@ -475,8 +476,8 @@ function mapDispatchToProps(dispatch, ownProps) {
         /**
          * 点击喜欢图标,更新喜欢数
          */
-        onLikeHandler(){
-            
+        onLikeHandler() {
+
         }
     }
 }

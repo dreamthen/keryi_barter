@@ -802,10 +802,11 @@ class PersonalView extends React.Component {
             <section className="keryi_barter_personal_main_information_container">
                 <main className="keryi_barter_personal_main_information keryi_barter_personal_main_barterList">
                     {
-                        (list && list.length > 0) ? list.map(function lister(listItem, listIndex) {
+                        (list && list.length > 0) && list.map(function lister(listItem, listIndex) {
                             //render渲染个人信息页面资源信息
                             return renderPersonalInformationCard.bind(this)(listItem, listIndex);
-                        }.bind(this)) : renderPersonalInformationCard.bind(this)(keryiCardDefaultConfig, "default")
+                        }.bind(this))
+                        //: renderPersonalInformationCard.bind(this)(keryiCardDefaultConfig, "default")
                     }
                 </main>
                 <aside
