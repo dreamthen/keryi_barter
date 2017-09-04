@@ -32,7 +32,9 @@ if (!isMock) {
         //修改用户信息
         UPDATE_PERSONAL_INFORMATION: keryi_cover + "users",
         //更新喜欢数
-        UPDATE_LIKE_COUNT: keryi_cover + "resources"
+        UPDATE_LIKE_COUNT: keryi_cover + "resources",
+        //发起交换
+        HAVE_EXCHANGE: keryi_cover + "exchanges"
     }
 } else {
 

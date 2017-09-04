@@ -96,6 +96,31 @@ export function updateLikeCount(resourceId, likeCount) {
 }
 
 /**
+ * 发起交换
+ * @param initiativeResourceId
+ * @param passiveResourceId,
+ * @param initiativeUserId
+ * @param passiveUserId
+ */
+export function haveExchange({initiativeResourceId, passiveResourceId, initiativeUserId, passiveUserId}) {
+    return function dispatcher(dispatch) {
+        keryiAxiosConfig.axiosRequest(
+            api.HAVE_EXCHANGE,
+            "post",
+            {
+                initiativeResourceId,
+                passiveResourceId,
+                initiativeUserId,
+                passiveUserId
+            },
+            function done(data) {
+
+            }.bind(this)
+        )
+    }.bind(this)
+}
+
+/**
  * 获取资源列表Action
  * @param payload
  * @returns {{type: *, payload: *}}
