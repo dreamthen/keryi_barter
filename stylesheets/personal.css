@@ -201,6 +201,11 @@
     opacity: 1;
 }
 
+.keryi_barter_modalContainer > .keryi_barter_personal_modal_view_details_container {
+    max-height: 725px;
+    overflow: auto;
+}
+
 .keryi_barter_modalContainer > .keryi_barter_personal_modal_view_details_container,
 .keryi_barter_modalContainer > .keryi_barter_personal_modal_view_details_asideMain {
     background-color: rgb(244, 244, 244);
