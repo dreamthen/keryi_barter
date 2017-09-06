@@ -10,6 +10,7 @@ import {
     FigureCarousel,
     HeadPortrait,
     Input,
+    ItemCarousel,
     KeryiCard,
     Modal,
     Tag

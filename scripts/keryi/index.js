@@ -11,6 +11,8 @@ import FigureCarousel from "./FigureCarousel";
 import HeadPortrait from "./HeadPortrait";
 //导入keryi_barter Input输入框组件
 import Input from "./Input";
+//倒入keryi_barter ItemCarousel元素轮播器组件
+import ItemCarousel from "./ItemCarousel";
 //导入keryi_barter KeryiCard卡片组件
 import KeryiCard from "./KeryiCard";
 //导入keryi_barter Modal对话框组件
@@ -31,6 +33,7 @@ const keryi = {
     FigureCarousel,
     HeadPortrait,
     Input,
+    ItemCarousel,
     KeryiCard,
     Modal,
     Prompt,
