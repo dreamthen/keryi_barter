@@ -2,7 +2,7 @@
  * Created by yinwk on 2017/7/15.
  */
 import React, {PropTypes} from "react";
-import Figure from "./components/Figure";
+import Item from "./components/Item";
 import ItemCarouselConfig from "./configs/ItemCarouselConfig";
 import "./keryi_barter_ItemCarousel.css";
 //ItemCarousel组件元素轮播器显示样式表配置
@@ -160,7 +160,7 @@ class ItemCarousel extends React.Component {
                 {
                     itemList.map(function itemLister(itemItem, itemIndex) {
                         return (
-                            <Figure
+                            <Item
                                 key={itemIndex}
                                 visible={itemVisible}
                                 src={itemItem["src"]}

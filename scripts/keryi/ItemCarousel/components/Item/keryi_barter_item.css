@@ -1,5 +1,5 @@
 @charset "utf-8";
-.keryi_barter_figure {
+.keryi_barter_item {
     position: absolute;
     display: inline-block;
     float: left;
@@ -10,15 +10,15 @@
     transition: all .5s ease-in-out 0s;
 }
 
-.keryi_barter_figure_disappear {
+.keryi_barter_item_disappear {
     display: none;
 }
 
-.keryi_barter_figure_show {
+.keryi_barter_item_show {
     opacity: 1;
 }
 
-.keryi_barter_figure > .keryiBarter-close {
+.keryi_barter_item > .keryiBarter-close {
     width: 16px;
     height: 16px;
     line-height: 16px;
@@ -31,7 +31,7 @@
     background-color: #8f8f8f;
 }
 
-.keryi_barter_figure::after {
+.keryi_barter_item::after {
     display: block;
     content: ".";
     visibility: hidden;
