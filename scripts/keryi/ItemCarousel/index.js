@@ -5,11 +5,11 @@ import React, {PropTypes} from "react";
 import Figure from "./components/Figure";
 import ItemCarouselConfig from "./configs/ItemCarouselConfig";
 import "./keryi_barter_ItemCarousel.css";
-//FigureCarousel组件图片轮播器显示样式表配置
+//ItemCarousel组件元素轮播器显示样式表配置
 const itemCarouselShow = "itemCarouselShow";
-//FigureCarousel组件图片轮播器隐藏样式表配置
+//ItemCarousel组件元素轮播器隐藏样式表配置
 const itemCarousel = "itemCarousel";
-//FigureCarousel组件图片轮播器消失样式表配置
+//ItemCarousel组件元素轮播器消失样式表配置
 const itemCarouselDisappear = "itemCarouselDisappear";
 //时间处理器变量
 let timer;
@@ -99,7 +99,7 @@ class ItemCarousel extends React.Component {
             itemList
         } = this.props;
         const {
-            //图片轮播器className样式表控制所在的容器显示或者隐藏
+            //元素轮播器className样式表控制所在的容器显示或者隐藏
             itemCarouselVisible
         } = this.state;
         return (!itemList || itemList.length <= 0) ? ItemCarouselConfig[itemCarouselDisappear] : itemCarouselVisible ? ItemCarouselConfig[itemCarouselShow] : ItemCarouselConfig[itemCarousel];
@@ -108,22 +108,22 @@ class ItemCarousel extends React.Component {
     /**
      * ItemCarousel组件元素轮播器控制Item组件元素关闭,外部传入的关闭方法
      */
-    onFigureCarouselControlClose(src) {
+    onItemCarouselControlClose(src) {
         const {
-            //图片组
-            imageList,
-            //改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器方法,外部传入函数
+            //元素组
+            itemList,
+            //改变ItemCarousel组件元素轮播器中的元素组或者关闭ItemCarousel组件元素轮播器方法,外部传入函数
             onChange
         } = this.props;
         let index = 0;
         this.setState({
-            figureVisible: false
+            itemVisible: false
         });
-        if (imageList.length <= 0) {
+        if (itemList.length <= 0) {
             this.setState({
-                figureCarouselVisible: false
-            }, function figureCarouseler() {
-                //FIXME 这里设置一个时间控制器,在FigureCarousel组件图片容器关闭时,先控制其所在的容器隐藏,在500ms之后设置其所在的容器改变其中的图片组或者关闭图片轮播器
+                itemCarouselVisible: false
+            }, function itemCarouseler() {
+                //FIXME 这里设置一个时间控制器,在itemCarousel组件元素容器关闭时,先控制其所在的容器隐藏,在500ms之后设置其所在的容器改变其中的元素组或者关闭元素轮播器
                 setTimeout(function timer() {
                     onChange(src);
                 }.bind(this), 500);
@@ -136,7 +136,7 @@ class ItemCarousel extends React.Component {
     /**
      * render渲染ItemCarousel组件元素轮播器元素组
      */
-    renderFigureCarousel() {
+    renderItemCarousel() {
         const {
             //元素组
             itemList,
@@ -150,13 +150,13 @@ class ItemCarousel extends React.Component {
             move
         } = this.state;
         const {
-            //图片轮播器控制Figure组件图片关闭,外部传入的关闭方法
-            onFigureCarouselControlClose,
+            //元素轮播器控制Item组件元素关闭,外部传入的关闭方法
+            onItemCarouselControlClose,
             //左右移动标志Icon
             renderMovePoint
         } = this;
         return (
-            <section className="keryi_barter_figureCarousel_figure">
+            <section className="keryi_barter_itemCarousel_item">
                 {
                     itemList.map(function itemLister(itemItem, itemIndex) {
                         return (
@@ -166,7 +166,7 @@ class ItemCarousel extends React.Component {
                                 src={itemItem["src"]}
                                 style={{left: (move + itemIndex) * 100 + "%"}}
                                 close={close}
-                                onClose={onFigureCarouselControlClose.bind(this)}
+                                onClose={onItemCarouselControlClose.bind(this)}
                             />
                         )
                     }.bind(this))
@@ -178,18 +178,18 @@ class ItemCarousel extends React.Component {
     }
 
     /**
-     * 点击左移动标志Icon,向左移动figureCarousel组件图片轮播器
+     * 点击左移动标志Icon,向左移动itemCarousel组件元素轮播器
      */
     moveLeft() {
         const {
-            //图片组
-            imageList
+            //元素组
+            itemList
         } = this.props;
         const {
-            //图片移动距离
+            //元素移动距离
             move
         } = this.state;
-        if (move <= 0 && move > -(imageList.length - 1)) {
+        if (move <= 0 && move > -(itemList.length - 1)) {
             this.setState({
                 move: move - 1
             });
@@ -201,15 +201,15 @@ class ItemCarousel extends React.Component {
     }
 
     /**
-     * 点击右移动标志Icon,向右移动figureCarousel组件图片轮播器
+     * 点击右移动标志Icon,向右移动itemCarousel组件元素轮播器
      */
     moveRight() {
         const {
-            //图片组
-            imageList
+            //元素组
+            itemList
         } = this.props;
         const {
-            //图片移动距离
+            //元素移动距离
             move
         } = this.state;
         if (move < 0) {
@@ -218,7 +218,7 @@ class ItemCarousel extends React.Component {
             });
         } else {
             this.setState({
-                move: -(imageList.length - 1)
+                move: -(itemList.length - 1)
             })
         }
     }
@@ -229,13 +229,13 @@ class ItemCarousel extends React.Component {
      */
     renderMovePoint() {
         const {
-            //点击左移动标志Icon,向左移动figureCarousel组件图片轮播器
+            //点击左移动标志Icon,向左移动itemCarousel组件元素轮播器
             moveLeft,
-            //点击右移动标志Icon,向右移动figureCarousel组件图片轮播器
+            //点击右移动标志Icon,向右移动itemCarousel组件元素轮播器
             moveRight
         } = this;
         return (
-            <div className="keryi_barter_figureCarousel_movePoint">
+            <div className="keryi_barter_itemCarousel_movePoint">
                 <i
                     className="iconfontKeryiBarter keryiBarter-left"
                     onClick={moveLeft.bind(this)}
@@ -254,18 +254,18 @@ class ItemCarousel extends React.Component {
 
     render() {
         const {
-            //根据外部传入的props className来设置ItemCarousel组件图片轮播器容器的className样式表
+            //根据外部传入的props className来设置ItemCarousel组件元素轮播器容器的className样式表
             outsideClassToClass,
             //根据props itemList数组和state itemCarouselVisible来设置ItemCarousel组件元素轮播器的className样式表
             itemCarouselVisibleOrImageListToClass,
-            //图片轮播器图片组
-            renderFigureCarousel
+            //元素轮播器元素组
+            renderItemCarousel
         } = this;
         return (
             <section
                 className={itemCarouselVisibleOrImageListToClass.bind(this)() + outsideClassToClass.bind(this)()}>
-                {/*图片轮播器图片组*/}
-                {renderFigureCarousel.bind(this)()}
+                {/*元素轮播器元素组*/}
+                {renderItemCarousel.bind(this)()}
             </section>
         )
     }

@@ -7,7 +7,7 @@
     margin: 5px 0;
     overflow: hidden;
     opacity: 1;
-    transition: all .5s ease-in-out 0s;
+    transition: all .5s linear 0s;
     z-index: 9912;
 }
 
