@@ -21,13 +21,13 @@ class ItemCarousel extends React.Component {
     static propTypes = {
         //ItemCarousel组件元素轮播器元素组
         itemList: PropTypes.array,
-        //ItemCarousel组件元素轮播器可显示的元素个数
-        split: PropTypes.number,
+        //ItemCarousel组件元素轮播器可显示的元素个数(必须为整型)
+        split: PropTypes.number.isRequired,
         //ItemCarousel组件元素轮播器className,外部传入样式表
         className: PropTypes.string,
         //改变ItemCarousel组件元素轮播器中的元素组或者关闭ItemCarousel组件元素轮播器方法,外部传入函数
         onChange: PropTypes.func,
-        //判断ItemCarousel组件元素轮播器中的元素组是否可关闭
+        //判断ItemCarousel组件元素轮播器中的元素组是否可关闭(必须为布尔类型)
         close: PropTypes.bool.isRequired
     };
 
@@ -138,6 +138,8 @@ class ItemCarousel extends React.Component {
      */
     renderItemCarousel() {
         const {
+            //元素轮播器可显示的元素个数
+            split,
             //元素组
             itemList,
             //判断元素轮播器中的元素组是否可关闭
@@ -164,7 +166,7 @@ class ItemCarousel extends React.Component {
                                 key={itemIndex}
                                 visible={itemVisible}
                                 src={itemItem["src"]}
-                                style={{left: (move + itemIndex) * 100 + "%"}}
+                                style={{width: (100 / split) + "%", left: (move + itemIndex) * (100 / split) + "%"}}
                                 close={close}
                                 onClose={onItemCarouselControlClose.bind(this)}
                             />
