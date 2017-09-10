@@ -1,6 +1,6 @@
 @charset "utf-8";
 .keryi_barter_item {
-    position: relative;
+    position: absolute;
     display: inline-block;
     float: left;
     height: 100%;

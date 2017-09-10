@@ -19,8 +19,6 @@ import {
 import personalComponentConfig from "../configs/personalComponentConfig";
 //资源统计静态Mode配置
 import viewDetailsStatisticsConfig from "../configs/viewDetailsStatisticsConfig";
-//获取资源数据列表出现异常时,前端呈现默认约定数据
-import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
 //获取匹配到的资源数据列表出现异常时,前端呈现默认约定数据
 import keryiModalDefaultConfig from "../configs/keryiModalDefaultConfig";
 import {
@@ -50,6 +48,7 @@ import {
     closePersonalViewDetailFooter
 } from "../actions/personalActions";
 import "../../stylesheets/personal.css";
+import Item from "../keryi/ItemCarousel/components/Item/index";
 
 //个人信息可编辑组件类型
 const componentType = ["input"];
@@ -529,6 +528,20 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框已交换的资源
+     * @returns {XML}
+     */
+    renderModalItemCarousel() {
+        return (
+            <ItemCarousel
+                itemList={[{src: "images/keryiBarter_login_bg.png"}, {src: "images/keryiBarter_register_bg.png"}]}
+                split={4}
+                close={true}
+            />
+        )
+    }
+
+    /**
      * render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框
      * @returns {XML}
      */
@@ -545,7 +558,9 @@ class PersonalView extends React.Component {
             //render渲染个人信息页面查看"以物换物"资源详情对话框资源标签
             renderModalTag,
             //render渲染个人信息页面查看"以物换物"资源详情对话框目标资源标签
-            renderModalTargetTag
+            renderModalTargetTag,
+            //render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框已交换的资源
+            renderModalItemCarousel
         } = this;
         const {
             //控制Modal组件对话框显示、隐藏或者消失
@@ -594,6 +609,8 @@ class PersonalView extends React.Component {
                 {renderModalTag.bind(this)()}
                 {/*keryi_barter主页面查看"以物换物"资源详情对话框目标资源标签*/}
                 {renderModalTargetTag.bind(this)()}
+                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框已交换的资源*/}
+                {renderModalItemCarousel.bind(this)()}
             </Modal>
         )
     }

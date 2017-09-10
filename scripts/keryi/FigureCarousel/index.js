@@ -65,7 +65,7 @@ class FigureCarousel extends React.Component {
             }
             //FIXME 这里设置一个时间控制器,FigureCarousel组件图片className样式表由隐藏变为显示动画500ms过渡之后,改变图片组移动距离
             timer = setTimeout(function timer() {
-                (imageList.length > nextProps.imageList.length) ? this.setState({
+                (imageList.length >= nextProps.imageList.length) ? this.setState({
                     move: 0
                 }) : !close ? this.setState({
                     move: 0
