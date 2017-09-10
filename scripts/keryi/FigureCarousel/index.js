@@ -170,7 +170,7 @@ class FigureCarousel extends React.Component {
                     }.bind(this))
                 }
                 {/*左右移动标志Icon*/}
-                {renderMovePoint.bind(this)()}
+                {imageList.length > 1 && renderMovePoint.bind(this)()}
             </section>
         );
     }

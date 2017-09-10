@@ -534,7 +534,7 @@ class PersonalView extends React.Component {
     renderModalItemCarousel() {
         return (
             <ItemCarousel
-                itemList={[{src: "images/keryiBarter_login_bg.png"}, {src: "images/keryiBarter_register_bg.png"}]}
+                itemList={[{src: "images/keryiBarter_login_bg.png"}, {src: "images/keryiBarter_register_bg.png"}, {src: "images/keryiBarter_v.png"}, {src: "images/keryiBarter_description_bg.png"}, {src: "images/keryiBarter_headPortrait.png"}, {src: "images/keryiBarter_v.png"}]}
                 split={4}
                 close={true}
             />

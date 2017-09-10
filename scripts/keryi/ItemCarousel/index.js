@@ -55,7 +55,9 @@ class ItemCarousel extends React.Component {
             //元素轮播器元素组
             itemList,
             //判断元素轮播器中的元素组是否可关闭
-            close
+            close,
+            //元素轮播器可显示的元素个数
+            split
         } = this.props;
         // if ((itemList.length === 0 && nextProps.itemList.length > 0) || itemList.length !== nextProps.itemList.length) {
         if (itemList.length > 0) {
@@ -73,7 +75,7 @@ class ItemCarousel extends React.Component {
                 }) : !close ? this.setState({
                     move: 0
                 }) : this.setState({
-                    move: -(nextProps.itemList.length - 1)
+                    move: -(nextProps.itemList.length - split)
                 });
             }.bind(this), 500);
         }
@@ -175,7 +177,9 @@ class ItemCarousel extends React.Component {
                     }.bind(this))
                 }
                 {/*左右移动标志Icon*/}
-                {renderMovePoint.bind(this)()}
+                {
+                    itemList.length > split && renderMovePoint.bind(this)()
+                }
             </section>
         );
     }
@@ -186,13 +190,15 @@ class ItemCarousel extends React.Component {
     moveLeft() {
         const {
             //元素组
-            itemList
+            itemList,
+            //元素轮播器可显示的元素个数
+            split
         } = this.props;
         const {
             //元素移动距离
             move
         } = this.state;
-        if (move <= 0 && move > -(itemList.length - 1)) {
+        if (move <= 0 && move > -(itemList.length - split)) {
             this.setState({
                 move: move - 1
             });
@@ -209,7 +215,9 @@ class ItemCarousel extends React.Component {
     moveRight() {
         const {
             //元素组
-            itemList
+            itemList,
+            //元素轮播器可显示的元素个数
+            split
         } = this.props;
         const {
             //元素移动距离
@@ -221,7 +229,7 @@ class ItemCarousel extends React.Component {
             });
         } else {
             this.setState({
-                move: -(itemList.length - 1)
+                move: -(itemList.length - split)
             })
         }
     }
