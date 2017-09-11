@@ -533,11 +533,19 @@ class PersonalView extends React.Component {
      */
     renderModalItemCarousel() {
         return (
-            <ItemCarousel
-                itemList={[{src: "images/keryiBarter_login_bg.png"}, {src: "images/keryiBarter_register_bg.png"}, {src: "images/keryiBarter_v.png"}, {src: "images/keryiBarter_description_bg.png"}, {src: "images/keryiBarter_headPortrait.png"}, {src: "images/keryiBarter_v.png"}]}
-                split={4}
-                close={true}
-            />
+            <section className="keryi_barter_personal_view_details_item_carousel">
+                <h2 className="keryi_barter_personal_view_details_item_carousel_title">
+                    资源交换列表
+                </h2>
+                <main className="keryi_barter_personal_view_details_item_carousel_content">
+                    <ItemCarousel
+                        itemList={[{src: "images/keryiBarter_login_bg.png"}, {src: "images/keryiBarter_register_bg.png"}, {src: "images/keryiBarter_v.png"}, {src: "images/keryiBarter_description_bg.png"}, {src: "images/keryiBarter_headPortrait.png"}, {src: "images/keryiBarter_v.png"}]}
+                        split={4}
+                        close={true}
+                        className="keryi_barter_personal_view_details_itemCarousel"
+                    />
+                </main>
+            </section>
         )
     }
 
