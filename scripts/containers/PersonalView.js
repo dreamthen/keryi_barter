@@ -539,9 +539,10 @@ class PersonalView extends React.Component {
                 </h2>
                 <main className="keryi_barter_personal_view_details_item_carousel_content">
                     <ItemCarousel
-                        itemList={[{src: "images/keryiBarter_login_bg.png"}, {src: "images/keryiBarter_register_bg.png"}, {src: "images/keryiBarter_v.png"}, {src: "images/keryiBarter_description_bg.png"}, {src: "images/keryiBarter_headPortrait.png"}, {src: "images/keryiBarter_v.png"}]}
+                        itemList={[]}
                         split={4}
                         close={true}
+                        noneAlert="您还没有过资源交换~"
                         className="keryi_barter_personal_view_details_itemCarousel"
                     />
                 </main>

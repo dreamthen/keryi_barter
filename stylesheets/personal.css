@@ -216,8 +216,7 @@
 .keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_introduce,
 .keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_statistics,
 .keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_tag,
-.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_targetTag,
-.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_item_carousel {
+.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_targetTag {
     padding: 0 15px;
 }
 
@@ -335,14 +334,18 @@
     color: #8f8f8f;
 }
 
+.keryi_barter_personal_view_details_item_carousel > .keryi_barter_personal_view_details_item_carousel_title,
 .keryi_barter_personal_view_details_item_carousel > .keryi_barter_personal_view_details_item_carousel_content {
     padding: 0 15px;
+}
+
+.keryi_barter_personal_view_details_item_carousel > .keryi_barter_personal_view_details_item_carousel_content {
     border-radius: 4px;
     background-color: #fff;
 }
 
 .keryi_barter_personal_view_details_item_carousel_content > .keryi_barter_personal_view_details_itemCarousel {
-    height: 136px;
+    height: 145px;
 }
 
 .keryi_barter_personal_view_details_introduce > .keryi_barter_personal_view_details_wire,

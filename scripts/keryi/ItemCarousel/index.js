@@ -25,6 +25,8 @@ class ItemCarousel extends React.Component {
         split: PropTypes.number.isRequired,
         //ItemCarousel组件元素轮播器className,外部传入样式表
         className: PropTypes.string,
+        //ItemCarousel组件元素轮播器当itemList元素不存在或者itemList元素个数为零时,为空提示语
+        noneAlert: PropTypes.string,
         //改变ItemCarousel组件元素轮播器中的元素组或者关闭ItemCarousel组件元素轮播器方法,外部传入函数
         onChange: PropTypes.func,
         //判断ItemCarousel组件元素轮播器中的元素组是否可关闭(必须为布尔类型)
@@ -60,25 +62,25 @@ class ItemCarousel extends React.Component {
             split
         } = this.props;
         // if ((itemList.length === 0 && nextProps.itemList.length > 0) || itemList.length !== nextProps.itemList.length) {
-        if (itemList.length > 0) {
-            this.setState({
-                itemCarouselVisible: true,
-                itemVisible: true
-            });
-            if (timer) {
-                clearTimeout(timer);
-            }
-            //FIXME 这里设置一个时间控制器,ItemCarousel组件元素className样式表由隐藏变为显示动画500ms过渡之后,改变元素组移动距离
-            timer = setTimeout(function timer() {
-                (itemList.length >= nextProps.itemList.length) ? this.setState({
-                    move: 0
-                }) : !close ? this.setState({
-                    move: 0
-                }) : this.setState({
-                    move: -(nextProps.itemList.length - split)
-                });
-            }.bind(this), 500);
+        //if (itemList.length > 0) {
+        this.setState({
+            itemCarouselVisible: true,
+            itemVisible: true
+        });
+        if (timer) {
+            clearTimeout(timer);
         }
+        //FIXME 这里设置一个时间控制器,ItemCarousel组件元素className样式表由隐藏变为显示动画500ms过渡之后,改变元素组移动距离
+        timer = setTimeout(function timer() {
+            (itemList.length >= nextProps.itemList.length) ? this.setState({
+                move: 0
+            }) : !close ? this.setState({
+                move: 0
+            }) : this.setState({
+                move: -(nextProps.itemList.length - split)
+            });
+        }.bind(this), 500);
+        //}
     }
 
     /**
@@ -98,14 +100,10 @@ class ItemCarousel extends React.Component {
      */
     itemCarouselVisibleOrImageListToClass() {
         const {
-            //元素组
-            itemList
-        } = this.props;
-        const {
             //元素轮播器className样式表控制所在的容器显示或者隐藏
             itemCarouselVisible
         } = this.state;
-        return (!itemList || itemList.length <= 0) ? ItemCarouselConfig[itemCarouselDisappear] : itemCarouselVisible ? ItemCarouselConfig[itemCarouselShow] : ItemCarouselConfig[itemCarousel];
+        return itemCarouselVisible ? ItemCarouselConfig[itemCarouselShow] : ItemCarouselConfig[itemCarousel];
     }
 
     /**
@@ -146,7 +144,9 @@ class ItemCarousel extends React.Component {
             //元素组
             itemList,
             //判断元素轮播器中的元素组是否可关闭
-            close
+            close,
+            //当itemList元素不存在或者itemList元素个数为零时,为空提示语
+            noneAlert
         } = this.props;
         const {
             //元素className样式表控制所在的容器消失或者隐藏
@@ -163,7 +163,7 @@ class ItemCarousel extends React.Component {
         return (
             <section className="keryi_barter_itemCarousel_item">
                 {
-                    itemList.map(function itemLister(itemItem, itemIndex) {
+                    (itemList && itemList.length > 0) ? itemList.map(function itemLister(itemItem, itemIndex) {
                         return (
                             <Item
                                 key={itemIndex}
@@ -174,11 +174,17 @@ class ItemCarousel extends React.Component {
                                 onClose={onItemCarouselControlClose.bind(this)}
                             />
                         )
-                    }.bind(this))
+                    }.bind(this)) : (
+                        <div className="keryi_barter_itemCarousel_itemListNoneAlert">
+                            <dfn className="keryi_barter_itemCarousel_itemListNoneAlert_content">
+                                {noneAlert ? noneAlert : ""}
+                            </dfn>
+                        </div>
+                    )
                 }
                 {/*左右移动标志Icon*/}
                 {
-                    itemList.length > split && renderMovePoint.bind(this)()
+                    (itemList.length > split) && renderMovePoint.bind(this)()
                 }
             </section>
         );
