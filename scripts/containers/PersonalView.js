@@ -48,7 +48,6 @@ import {
     closePersonalViewDetailFooter
 } from "../actions/personalActions";
 import "../../stylesheets/personal.css";
-import Item from "../keryi/ItemCarousel/components/Item/index";
 
 //个人信息可编辑组件类型
 const componentType = ["input"];
@@ -539,7 +538,7 @@ class PersonalView extends React.Component {
                 </h2>
                 <main className="keryi_barter_personal_view_details_item_carousel_content">
                     <ItemCarousel
-                        itemList={[]}
+                        itemList={[{src: "images/keryiBarter_login_bg.png"}, {src: "images/keryiBarter_register_bg.png"}, {src: "images/keryiBarter_v.png"}, {src: "images/keryiBarter_description_bg.png"}, {src: "images/keryiBarter_headPortrait.png"}, {src: "images/keryiBarter_v.png"}]}
                         split={4}
                         close={true}
                         noneAlert="您还没有过资源交换~"
@@ -968,10 +967,12 @@ function mapDispatchToProps(dispatch, ownProps) {
         dispatchPersonalResourceList() {
             const {
                 //个人页资源数据列表页码
-                current,
+                current
+            } = this.props;
+            const {
                 //用户登录的id
                 userId
-            } = this.props;
+            } = this.state;
             //获取个人页资源列表
             dispatch(getPersonalResourcesList.bind(this)(current, userId));
         },
@@ -982,7 +983,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             const {
                 //用户登录的id
                 userId
-            } = this.props;
+            } = this.state;
             //获取个人信息
             dispatch(getPersonalInformation(userId));
         },

@@ -34,7 +34,9 @@ if (!isMock) {
         //更新喜欢数
         UPDATE_LIKE_COUNT: keryi_cover + "resources",
         //发起交换
-        HAVE_EXCHANGE: keryi_cover + "exchanges"
+        HAVE_EXCHANGE: keryi_cover + "exchanges",
+        //获取用户的资源交换列表
+        GET_EXCHANGE_LIST: keryi_cover + "exchanges"
     }
 } else {
 

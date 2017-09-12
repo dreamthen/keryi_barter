@@ -11,6 +11,8 @@ const itemCarouselShow = "itemCarouselShow";
 const itemCarousel = "itemCarousel";
 //ItemCarousel组件元素轮播器消失样式表配置
 const itemCarouselDisappear = "itemCarouselDisappear";
+//ItemCarousel组件元素轮播器当itemList元素不存在或者itemList元素个数为零时,默认图标className
+const itemCarouselNoneIconDefault = "itemCarouselNoneIconDefault";
 //时间处理器变量
 let timer;
 
@@ -27,6 +29,8 @@ class ItemCarousel extends React.Component {
         className: PropTypes.string,
         //ItemCarousel组件元素轮播器当itemList元素不存在或者itemList元素个数为零时,为空提示语
         noneAlert: PropTypes.string,
+        //ItemCarousel组件元素轮播器当itemList元素不存在或者itemList元素个数为零时,为空图标className,外部传入样式表
+        noneIconClassName: PropTypes.string,
         //改变ItemCarousel组件元素轮播器中的元素组或者关闭ItemCarousel组件元素轮播器方法,外部传入函数
         onChange: PropTypes.func,
         //判断ItemCarousel组件元素轮播器中的元素组是否可关闭(必须为布尔类型)
@@ -146,7 +150,9 @@ class ItemCarousel extends React.Component {
             //判断元素轮播器中的元素组是否可关闭
             close,
             //当itemList元素不存在或者itemList元素个数为零时,为空提示语
-            noneAlert
+            noneAlert,
+            //当itemList元素不存在或者itemList元素个数为零时,为空图标className,外部传入样式表
+            noneIconClassName
         } = this.props;
         const {
             //元素className样式表控制所在的容器消失或者隐藏
@@ -176,6 +182,9 @@ class ItemCarousel extends React.Component {
                         )
                     }.bind(this)) : (
                         <div className="keryi_barter_itemCarousel_itemListNoneAlert">
+                            <i className={noneIconClassName ? noneIconClassName : ItemCarouselConfig[itemCarouselNoneIconDefault]}>
+
+                            </i>
                             <dfn className="keryi_barter_itemCarousel_itemListNoneAlert_content">
                                 {noneAlert ? noneAlert : ""}
                             </dfn>

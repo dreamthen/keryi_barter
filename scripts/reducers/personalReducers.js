@@ -60,7 +60,11 @@ const defaultState = {
     //个人页资源详情目标资源标签
     viewDetailTargetTagList: [],
     //个人页资源详情匹配到的所有的资源列表
-    viewDetailMatchedResources: []
+    viewDetailMatchedResources: [],
+    //个人页资源详情资源交换上传图片(第一张)列表
+    viewDetailItemImageList: [],
+    //个人页资源详情资源交换列表
+    viewDetailItemList: []
 };
 
 /**
@@ -85,16 +89,24 @@ export function personalReducers(state = defaultState, actions) {
             });
         //获取个人页资源详情
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]:
-            newState["viewDetailUserName"] = newState["user"]["username"];
-            newState["viewDetailImageList"] = newState["imgUrls"];
-            newState["viewDetailTitle"] = newState["title"];
-            newState["viewDetailIntroduce"] = newState["intro"];
-            newState["viewDetailPriceWorth"] = newState["priceWorth"];
-            newState["viewDetailLike"] = newState["likeCount"];
-            newState["viewDetailTagList"] = newState["tags"];
-            newState["viewDetailTargetTagList"] = newState["targetTags"];
-            (newState["matchedResources"] && newState["matchedResources"].length > 0) && (newState["viewDetailMatchedResources"] = newState["matchedResources"]);
-            return insteadState.insteadObjState(state, newState);
+            let viewDetail = {
+                viewDetailUserName: newState["user"]["username"],
+                viewDetailImageList: newState["imgUrls"],
+                viewDetailTitle: newState["title"],
+                viewDetailIntroduce: newState["intro"],
+                viewDetailPriceWorth: newState["priceWorth"],
+                viewDetailLike: newState["likeCount"],
+                viewDetailTagList: newState["tags"],
+                viewDetailTargetTagList: newState["targetTags"],
+                matchedResources: (newState["matchedResources"] && newState["matchedResources"].length > 0) && newState["matchedResources"]
+            };
+            return insteadState.insteadObjState(state, viewDetail);
+        //获取个人页资源详情资源交换列表
+        case appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST"]:
+            let viewDetailItemListConfig = {
+                viewDetailItemList: newState["list"]
+            };
+            return insteadState.insteadObjState(state, viewDetailItemListConfig);
         //获取个人页资源列表
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_ACTION"]:
             return insteadState.insteadObjState(state, {

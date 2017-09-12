@@ -10,6 +10,8 @@ import Success from "../prompt/successPrompt";
 
 //获取个人页资源列表的每页页码数量
 const PAGE_SIZE = 10;
+//获取个人页资源详情资源交换列表的每页页码数量
+const ITEM_PAGE_SIZE = 4;
 
 /**
  * 获取个人页资源列表
@@ -74,6 +76,43 @@ export function getPersonalResourceListViewDetails(resourceId) {
                 }
             }.bind(this)
         );
+    }.bind(this)
+}
+
+/**
+ * 获取个人页资源详情资源交换列表
+ * @param userId
+ * @param resourceId
+ * @param itemCurrent
+ * @returns {function(this:getPersonalResourceListViewDetailsItemList)}
+ */
+export function getPersonalResourceListViewDetailsItemList(itemCurrent, userId, resourceId) {
+    return function dispatcher(dispatch) {
+        keryiAxiosConfig.axiosRequest(
+            api.GET_EXCHANGE_LIST,
+            "GET",
+            {
+                pageNum: itemCurrent,
+                pageSize: ITEM_PAGE_SIZE,
+                initiativeUserId: userId,
+                initiativeResourceId: resourceId
+            },
+            function done(response) {
+                //服务器响应数据
+                let data = response.data,
+                    //服务器响应head头部对象
+                    head = data.head,
+                    //服务器响应body主题对象
+                    body = data.body,
+                    //服务器响应code状态码
+                    code = head.code,
+                    //服务器对响应结果描述
+                    msg = head.message;
+                if (code === Success.GET_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST_SUCCESS_CODE) {
+                    dispatch(getPersonalResourceListViewDetailsItemListAction.bind(this)(body));
+                }
+            }.bind(this)
+        )
     }.bind(this)
 }
 
@@ -199,6 +238,18 @@ export function getPersonalResourcesListAction(payload) {
 export function getPersonalResourcesListViewDetailsAction(payload) {
     return {
         type: appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"],
+        payload
+    }
+}
+
+/**
+ * 获取个人页资源详情资源交换列表Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function getPersonalResourceListViewDetailsItemListAction(payload) {
+    return {
+        type: appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST"],
         payload
     }
 }

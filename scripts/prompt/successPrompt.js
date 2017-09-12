@@ -15,6 +15,8 @@ const Success = {
     GET_RESOURCE_LIST_SUCCESS_CODE: "000000",
     //获取资源详情成功状态码
     GET_RESOURCE_LIST_VIEW_DETAIL_SUCCESS_CODE: "000000",
+    //获取个人页资源详情资源交换列表成功状态码
+    GET_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST_SUCCESS_CODE: "000000",
     //获取个人页资源列表成功状态码
     GET_PERSONAL_RESOURCE_LIST_SUCCESS_CODE: "000000",
     //获取个人信息成功状态码
