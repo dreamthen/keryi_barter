@@ -36,6 +36,8 @@ import {
     getPersonalResourceListViewDetails,
     //获取个人页资源详情Action
     getPersonalResourcesListViewDetailsAction,
+    //获取个人页资源详情资源交换列表
+    getPersonalResourceListViewDetailsItemList,
     //获取个人页资源详情用户头像Action
     getPersonalUserHeadPortraitViewDetail,
     //改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动
@@ -70,6 +72,8 @@ class PersonalView extends React.Component {
         list: PropTypes.array,
         //个人页资源数据列表页码
         current: PropTypes.number,
+        //个人页资源详情资源交换列表页码
+        itemCurrent: PropTypes.number,
         //个人信息部分距离父级元素顶部的高度
         top: PropTypes.number,
         //个人页资源详情对话框是否显示footer底部区域
@@ -531,6 +535,9 @@ class PersonalView extends React.Component {
      * @returns {XML}
      */
     renderModalItemCarousel() {
+        const {
+            viewDetailItemImageList
+        } = this.props;
         return (
             <section className="keryi_barter_personal_view_details_item_carousel">
                 <h2 className="keryi_barter_personal_view_details_item_carousel_title">
@@ -538,7 +545,7 @@ class PersonalView extends React.Component {
                 </h2>
                 <main className="keryi_barter_personal_view_details_item_carousel_content">
                     <ItemCarousel
-                        itemList={[{src: "images/keryiBarter_login_bg.png"}, {src: "images/keryiBarter_register_bg.png"}, {src: "images/keryiBarter_v.png"}, {src: "images/keryiBarter_description_bg.png"}, {src: "images/keryiBarter_headPortrait.png"}, {src: "images/keryiBarter_v.png"}]}
+                        itemList={viewDetailItemImageList}
                         split={4}
                         close={true}
                         noneAlert="您还没有过资源交换~"
@@ -922,7 +929,16 @@ function mapDispatchToProps(dispatch, ownProps) {
          */
         viewPersonalKeryiBarterHandler(keryiCard, e) {
             let id = keryiCard["id"];
+            const {
+                //用户登录的id
+                userId
+            } = this.state;
+            const {
+                //个人页资源详情资源交换列表页码
+                itemCurrent
+            } = this.props;
             dispatch(getPersonalResourceListViewDetails.bind(this)(id));
+            dispatch(getPersonalResourceListViewDetailsItemList.bind(this)(itemCurrent, userId, id));
             this.setState({
                 viewPersonalBarterVisible: true
             });

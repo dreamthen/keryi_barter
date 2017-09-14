@@ -7,6 +7,8 @@
 import appActionsType from "../actions/appActionsType";
 //redux reducer更换state状态对象
 import insteadState from "../configs/insteadState";
+//对个人页资源详情资源交换图片(第一张)列表进行整理,获取到整理后的图片列表
+import {getImageItemListConfig} from "../configs/getImageItemListConfig";
 import {
     //校验字段undefined和null,进行处理
     checkField
@@ -31,6 +33,8 @@ const defaultState = {
     personalInformationDisabled: false,
     //获取个人页资源数据列表
     list: [],
+    //个人页资源详情资源交换列表页码
+    itemCurrent: 1,
     //个人页资源数据列表页码
     current: 1,
     //个人信息部分距离父级元素顶部的高度
@@ -103,8 +107,10 @@ export function personalReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, viewDetail);
         //获取个人页资源详情资源交换列表
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST"]:
+            let FirstImgUrlsList = getImageItemListConfig(newState["list"]);
             let viewDetailItemListConfig = {
-                viewDetailItemList: newState["list"]
+                viewDetailItemList: newState["list"],
+                viewDetailItemImageList: FirstImgUrlsList
             };
             return insteadState.insteadObjState(state, viewDetailItemListConfig);
         //获取个人页资源列表
