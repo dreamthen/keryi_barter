@@ -10,8 +10,8 @@
 export function getImageItemListConfig(exchangePropertyList) {
     let list = exchangePropertyList;
     let FirstImgUrlsList = [];
-    list.forEach(function lister(listItem, listIndex) {
-        let imgUrlsProperty = eval("(" + listItem["imgUrls"] + ")");
+    (list && list.length > 0) && list.forEach(function lister(listItem, listIndex) {
+        let imgUrlsProperty = eval("(" + listItem["passiveResource"]["imgUrls"] + ")");
         FirstImgUrlsList.push((imgUrlsProperty && imgUrlsProperty.length > 0) ? imgUrlsProperty[0] : {src: "images/keryiBarter_headPortrait.png"});
     });
     return FirstImgUrlsList;

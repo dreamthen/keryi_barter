@@ -339,3 +339,23 @@ export function closePersonalViewDetailFooter() {
         type: appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_FOOTER"]
     }
 }
+
+/**
+ * 个人页资源详情资源交换列表显示可关闭标志位Action
+ * @returns {{type: *}}
+ */
+export function openPersonalItemClose() {
+    return {
+        type: appActionsType["OPEN_PERSONAL_ITEM_CLOSE"]
+    }
+}
+
+/**
+ * 个人页资源详情资源交换列表隐藏可关闭标志位Action
+ * @returns {{type: *}}
+ */
+export function closePersonalItemClose() {
+    return {
+        type: appActionsType["CLOSE_PERSONAL_ITEM_CLOSE"]
+    }
+}

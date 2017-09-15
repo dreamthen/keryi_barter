@@ -35,6 +35,8 @@ const defaultState = {
     list: [],
     //个人页资源详情资源交换列表页码
     itemCurrent: 1,
+    //个人页资源详情资源交换列表是否可关闭标志位
+    itemClose: false,
     //个人页资源数据列表页码
     current: 1,
     //个人信息部分距离父级元素顶部的高度
@@ -145,6 +147,16 @@ export function personalReducers(state = defaultState, actions) {
         case appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_FOOTER"]:
             return insteadState.insteadObjState(state, {
                 viewDetailFooter: false
+            });
+        //个人页资源详情资源交换列表显示可关闭标志位
+        case appActionsType["OPEN_PERSONAL_ITEM_CLOSE"]:
+            return insteadState.insteadObjState(state, {
+                itemClose: true
+            });
+        //个人页资源详情资源交换列表隐藏可关闭标志位
+        case appActionsType["CLOSE_PERSONAL_ITEM_CLOSE"]:
+            return insteadState.insteadObjState(state, {
+                itemClose: false
             });
         //重置个人页资源详情
         case appActionsType["RESET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]:

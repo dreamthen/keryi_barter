@@ -47,7 +47,11 @@ import {
     //显示个人页资源详情对话框footer底部区域Action
     openPersonalViewDetailFooter,
     //隐藏个人页资源详情对话框footer底部区域Action
-    closePersonalViewDetailFooter
+    closePersonalViewDetailFooter,
+    //个人页资源详情资源交换列表显示可关闭标志位Action
+    openPersonalItemClose,
+    //个人页资源详情资源交换列表隐藏可关闭标志位Action
+    closePersonalItemClose
 } from "../actions/personalActions";
 import "../../stylesheets/personal.css";
 
@@ -74,6 +78,8 @@ class PersonalView extends React.Component {
         current: PropTypes.number,
         //个人页资源详情资源交换列表页码
         itemCurrent: PropTypes.number,
+        //个人页资源详情资源交换列表是否可关闭标志位
+        itemClose: PropTypes.bool,
         //个人信息部分距离父级元素顶部的高度
         top: PropTypes.number,
         //个人页资源详情对话框是否显示footer底部区域
@@ -536,7 +542,10 @@ class PersonalView extends React.Component {
      */
     renderModalItemCarousel() {
         const {
-            viewDetailItemImageList
+            //个人页资源详情上传图片数组
+            viewDetailItemImageList,
+            //个人页资源详情资源交换列表是否可关闭标志位
+            itemClose
         } = this.props;
         return (
             <section className="keryi_barter_personal_view_details_item_carousel">
@@ -547,7 +556,7 @@ class PersonalView extends React.Component {
                     <ItemCarousel
                         itemList={viewDetailItemImageList}
                         split={4}
-                        close={true}
+                        close={itemClose}
                         noneAlert="您还没有过资源交换~"
                         className="keryi_barter_personal_view_details_itemCarousel"
                     />
@@ -952,6 +961,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             dispatch(getPersonalUserHeadPortraitViewDetail(keryiCard));
             dispatch(getPersonalResourcesListViewDetailsAction(keryiCard));
             dispatch(openPersonalViewDetailFooter());
+            dispatch(openPersonalItemClose());
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();
         },
@@ -966,6 +976,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             dispatch(getPersonalUserHeadPortraitViewDetail(viewDetailKeryiCard));
             dispatch(getPersonalResourcesListViewDetailsAction(viewDetailKeryiCard));
             dispatch(closePersonalViewDetailFooter());
+            dispatch(closePersonalItemClose());
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();
         },

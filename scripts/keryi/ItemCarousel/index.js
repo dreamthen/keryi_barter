@@ -65,26 +65,27 @@ class ItemCarousel extends React.Component {
             //元素轮播器可显示的元素个数
             split
         } = this.props;
-        // if ((itemList.length === 0 && nextProps.itemList.length > 0) || itemList.length !== nextProps.itemList.length) {
-        //if (itemList.length > 0) {
-        this.setState({
-            itemCarouselVisible: true,
-            itemVisible: true
-        });
-        if (timer) {
-            clearTimeout(timer);
-        }
-        //FIXME 这里设置一个时间控制器,ItemCarousel组件元素className样式表由隐藏变为显示动画500ms过渡之后,改变元素组移动距离
-        timer = setTimeout(function timer() {
-            (itemList.length >= nextProps.itemList.length) ? this.setState({
-                move: 0
-            }) : !close ? this.setState({
-                move: 0
-            }) : this.setState({
-                move: -(nextProps.itemList.length - split)
+        if ((itemList.length === 0 && nextProps.itemList.length > 0) || itemList.length !== nextProps.itemList.length) {
+            this.setState({
+                itemCarouselVisible: true,
+                itemVisible: true
             });
-        }.bind(this), 500);
-        //}
+            if (timer) {
+                clearTimeout(timer);
+            }
+            //FIXME 这里设置一个时间控制器,ItemCarousel组件元素className样式表由隐藏变为显示动画500ms过渡之后,改变元素组移动距离
+            timer = setTimeout(function timer() {
+                (itemList.length >= nextProps.itemList.length) ? this.setState({
+                    move: 0
+                }) : !close ? this.setState({
+                    move: 0
+                }) : nextProps.itemList.length <= split ? this.setState({
+                    move: 0
+                }) : this.setState({
+                    move: -(nextProps.itemList.length - split)
+                });
+            }.bind(this), 500);
+        }
     }
 
     /**
