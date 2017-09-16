@@ -320,7 +320,7 @@ class Modal extends React.Component {
                     {title}
                 </div>
                 {
-                    (aside && backDfnAppear) && <div
+                    (!aside && backDfnAppear) && <div
                         onClick={onBackHandler.bind(this)}
                         className={backDfnToClass.bind(this)()}
                     >

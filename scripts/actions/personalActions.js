@@ -344,9 +344,9 @@ export function closePersonalViewDetailFooter() {
  * 个人页资源详情资源交换列表显示可关闭标志位Action
  * @returns {{type: *}}
  */
-export function openPersonalItemClose() {
+export function openPersonalViewDetailItemClose() {
     return {
-        type: appActionsType["OPEN_PERSONAL_ITEM_CLOSE"]
+        type: appActionsType["OPEN_PERSONAL_VIEW_DETAIL_ITEM_CLOSE"]
     }
 }
 
@@ -354,8 +354,28 @@ export function openPersonalItemClose() {
  * 个人页资源详情资源交换列表隐藏可关闭标志位Action
  * @returns {{type: *}}
  */
-export function closePersonalItemClose() {
+export function closePersonalViewDetailItemClose() {
     return {
-        type: appActionsType["CLOSE_PERSONAL_ITEM_CLOSE"]
+        type: appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_ITEM_CLOSE"]
+    }
+}
+
+/**
+ * 个人页资源详情匹配到的资源列表边栏显示Action
+ * @returns {{type: *}}
+ */
+export function openPersonalViewDetailAside() {
+    return {
+        type: appActionsType["OPEN_PERSONAL_VIEW_DETAIL_ASIDE"]
+    }
+}
+
+/**
+ * 个人页资源详情匹配到的资源列表边栏隐藏Action
+ * @returns {{type: *}}
+ */
+export function closePersonalViewDetailAside() {
+    return {
+        type: appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_ASIDE"]
     }
 }

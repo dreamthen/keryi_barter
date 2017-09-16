@@ -49,9 +49,13 @@ import {
     //隐藏个人页资源详情对话框footer底部区域Action
     closePersonalViewDetailFooter,
     //个人页资源详情资源交换列表显示可关闭标志位Action
-    openPersonalItemClose,
+    openPersonalViewDetailItemClose,
     //个人页资源详情资源交换列表隐藏可关闭标志位Action
-    closePersonalItemClose
+    closePersonalViewDetailItemClose,
+    //个人页资源详情匹配到的资源列表边栏显示Action
+    openPersonalViewDetailAside,
+    //个人页资源详情匹配到的资源列表边栏隐藏Action
+    closePersonalViewDetailAside
 } from "../actions/personalActions";
 import "../../stylesheets/personal.css";
 
@@ -76,6 +80,8 @@ class PersonalView extends React.Component {
         list: PropTypes.array,
         //个人页资源数据列表页码
         current: PropTypes.number,
+        //个人页资源详情匹配到的资源列表边栏是否显示
+        asideAble: PropTypes.bool,
         //个人页资源详情资源交换列表页码
         itemCurrent: PropTypes.number,
         //个人页资源详情资源交换列表是否可关闭标志位
@@ -595,6 +601,8 @@ class PersonalView extends React.Component {
             viewDetailMatchedResources,
             //个人页资源详情对话框是否显示footer底部区域
             viewDetailFooter,
+            //个人页资源详情匹配到的资源列表边栏是否显示
+            asideAble,
             //控制Modal组件对话框隐藏并消失
             closePersonalBarterVisibleHandler,
             //点击个人信息页面资源详情匹配资源列表,更新个人信息页面资源详情
@@ -606,7 +614,7 @@ class PersonalView extends React.Component {
             <Modal
                 visible={viewPersonalBarterVisible}
                 width={660}
-                aside
+                aside={asideAble}
                 asideWidth={300}
                 asideTitle="匹配到的资源列表"
                 asideDataSource={(viewDetailMatchedResources && viewDetailMatchedResources.length > 0) ? viewDetailMatchedResources : keryiModalDefaultConfig}
@@ -948,6 +956,8 @@ function mapDispatchToProps(dispatch, ownProps) {
             } = this.props;
             dispatch(getPersonalResourceListViewDetails.bind(this)(id));
             dispatch(getPersonalResourceListViewDetailsItemList.bind(this)(itemCurrent, userId, id));
+            dispatch(openPersonalViewDetailItemClose());
+            dispatch(openPersonalViewDetailAside());
             this.setState({
                 viewPersonalBarterVisible: true
             });
@@ -961,7 +971,8 @@ function mapDispatchToProps(dispatch, ownProps) {
             dispatch(getPersonalUserHeadPortraitViewDetail(keryiCard));
             dispatch(getPersonalResourcesListViewDetailsAction(keryiCard));
             dispatch(openPersonalViewDetailFooter());
-            dispatch(openPersonalItemClose());
+            dispatch(closePersonalViewDetailItemClose());
+            dispatch(closePersonalViewDetailAside());
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();
         },
@@ -976,7 +987,8 @@ function mapDispatchToProps(dispatch, ownProps) {
             dispatch(getPersonalUserHeadPortraitViewDetail(viewDetailKeryiCard));
             dispatch(getPersonalResourcesListViewDetailsAction(viewDetailKeryiCard));
             dispatch(closePersonalViewDetailFooter());
-            dispatch(closePersonalItemClose());
+            dispatch(openPersonalViewDetailItemClose());
+            dispatch(openPersonalViewDetailAside());
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();
         },
