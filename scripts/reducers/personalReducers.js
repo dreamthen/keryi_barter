@@ -19,6 +19,10 @@ let userLoginInformation = localStorage && JSON.parse(localStorage.getItem("user
 const defaultState = {
     //用户登录的id
     userId: checkField(userLoginInformation["id"]),
+    //确认进行资源交换的匹配资源的用户id
+    matchedUserId: 0,
+    //确认进行资源交换的匹配资源id
+    matchedId: 0,
     //用户登录的用户名
     username: checkField(userLoginInformation["username"]),
     //用户登录的手机号
@@ -72,7 +76,7 @@ const defaultState = {
     //个人页资源详情资源交换上传图片(第一张)列表
     viewDetailItemImageList: [],
     //个人页资源详情资源交换列表
-    viewDetailItemList: []
+    viewDetailItemExchange: {}
 };
 
 /**
@@ -109,11 +113,30 @@ export function personalReducers(state = defaultState, actions) {
                 viewDetailMatchedResources: (newState["matchedResources"] && newState["matchedResources"].length > 0) && newState["matchedResources"]
             };
             return insteadState.insteadObjState(state, viewDetail);
+        //获取个人页匹配列表资源详情
+        case appActionsType["GET_PERSONAL_RESOURCE_MATCHED_LIST_VIEW_DETAIL"]:
+            let matchedViewDetail = {
+                viewDetailUserName: newState["user"]["username"],
+                viewDetailImageList: newState["imgUrls"],
+                viewDetailTitle: newState["title"],
+                viewDetailIntroduce: newState["intro"],
+                viewDetailPriceWorth: newState["priceWorth"],
+                viewDetailLike: newState["likeCount"],
+                viewDetailTagList: newState["tags"],
+                viewDetailTargetTagList: newState["targetTags"],
+                matchedUserId: newState["userId"],
+                matchedId: newState["id"]
+            };
+            return insteadState.insteadObjState(state, matchedViewDetail);
+        //保存个人页资源详情资源交换列表
+        case appActionsType["REMEMBER_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST"]:
+            return insteadState.insteadObjState(state, {
+                viewDetailItemExchange: newState
+            });
         //获取个人页资源详情资源交换列表
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST"]:
             let FirstImgUrlsList = getImageItemListConfig(newState["list"]);
             let viewDetailItemListConfig = {
-                viewDetailItemList: newState["list"],
                 viewDetailItemImageList: FirstImgUrlsList
             };
             return insteadState.insteadObjState(state, viewDetailItemListConfig);

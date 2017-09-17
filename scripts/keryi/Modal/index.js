@@ -201,7 +201,7 @@ class Modal extends React.Component {
             closeModal
         } = this;
         //关闭Modal对话框,并执行提交发布回调函数
-        closeModal.bind(this)(onOk);
+        onOk();
         //取消冒泡
         e.nativeEvent.stopImmediatePropagation();
     }

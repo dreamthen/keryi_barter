@@ -98,11 +98,12 @@ export function updateLikeCount(resourceId, likeCount) {
 /**
  * 发起交换
  * @param initiativeResourceId
- * @param passiveResourceId,
+ * @param passiveResourceId
  * @param initiativeUserId
  * @param passiveUserId
+ * @returns {function(this:haveResourcesExchange)}
  */
-export function haveExchange({initiativeResourceId, passiveResourceId, initiativeUserId, passiveUserId}) {
+export function haveResourcesExchange({initiativeResourceId, passiveResourceId, initiativeUserId, passiveUserId}) {
     return function dispatcher(dispatch) {
         keryiAxiosConfig.axiosRequest(
             api.HAVE_EXCHANGE,
@@ -113,7 +114,7 @@ export function haveExchange({initiativeResourceId, passiveResourceId, initiativ
                 initiativeUserId,
                 passiveUserId
             },
-            function done(data) {
+            function done(response) {
 
             }.bind(this)
         )

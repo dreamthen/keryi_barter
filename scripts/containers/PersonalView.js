@@ -33,11 +33,17 @@ import {
     //获取个人页资源列表
     getPersonalResourcesList,
     //获取个人页资源详情
-    getPersonalResourceListViewDetails,
+    getPersonalResourcesListViewDetails,
+    //个人信息页面发起资源交换
+    havePersonalResourcesExchange,
+    //获取个人页匹配列表资源详情Action
+    getPersonalResourcesMatchedListViewDetailsAction,
     //获取个人页资源详情Action
     getPersonalResourcesListViewDetailsAction,
     //获取个人页资源详情资源交换列表
-    getPersonalResourceListViewDetailsItemList,
+    getPersonalResourcesListViewDetailsItemList,
+    //获取个人页资源详情资源交换列表Action
+    getPersonalResourcesListViewDetailsItemListAction,
     //获取个人页资源详情用户头像Action
     getPersonalUserHeadPortraitViewDetail,
     //改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动
@@ -66,6 +72,10 @@ class PersonalView extends React.Component {
     static propTypes = {
         //用户登录的id
         userId: PropTypes.number,
+        //确认进行资源交换的匹配资源的用户id
+        matchedUserId: PropTypes.number,
+        //确认进行资源交换的匹配资源id
+        matchedId: PropTypes.number,
         //用户登录的用户名
         username: PropTypes.string,
         //用户登录的手机号
@@ -108,10 +118,18 @@ class PersonalView extends React.Component {
         viewDetailPriceWorth: PropTypes.number,
         //个人页资源详情喜欢数目
         viewDetailLike: PropTypes.number,
+        //个人页资源详情资源标签
+        viewDetailTagList: PropTypes.array,
+        //个人页资源详情目标资源标签
+        viewDetailTargetTagList: PropTypes.array,
         //判断个人信息是否可编辑
         personalInformationDisabled: PropTypes.bool,
         //个人页资源详情匹配到的所有的资源列表
-        viewDetailMatchedResources: PropTypes.array
+        viewDetailMatchedResources: PropTypes.array,
+        //个人页资源详情资源交换上传图片(第一张)列表
+        viewDetailItemImageList: PropTypes.array,
+        //个人页资源详情资源交换列表
+        viewDetailItemExchange: PropTypes.object
     };
 
     constructor(props) {
@@ -608,7 +626,9 @@ class PersonalView extends React.Component {
             //点击个人信息页面资源详情匹配资源列表,更新个人信息页面资源详情
             viewPersonalKeryiBarterModalHandler,
             //点击个人信息页面资源详情返回"我的资源",更新个人信息页面资源详情
-            onBackHandler
+            onBackHandler,
+            //点击个人信息页面资源详情返回"资源交换",发起与其他用户的资源交换请求
+            onOkHandler
         } = this.props;
         return (
             <Modal
@@ -627,6 +647,7 @@ class PersonalView extends React.Component {
                 className="keryi_barter_personal_modal_view_details_container"
                 onAsideSelect={viewPersonalKeryiBarterModalHandler.bind(this)}
                 onBack={onBackHandler.bind(this)}
+                onOk={onOkHandler.bind(this)}
                 onClose={closePersonalBarterVisibleHandler.bind(this)}
             >
                 {/*keryi_barter主页面查看"以物换物"资源详情对话框头部*/}
@@ -954,8 +975,8 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //个人页资源详情资源交换列表页码
                 itemCurrent
             } = this.props;
-            dispatch(getPersonalResourceListViewDetails.bind(this)(id));
-            dispatch(getPersonalResourceListViewDetailsItemList.bind(this)(itemCurrent, userId, id));
+            dispatch(getPersonalResourcesListViewDetails.bind(this)(id));
+            dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id, true));
             dispatch(openPersonalViewDetailItemClose());
             dispatch(openPersonalViewDetailAside());
             this.setState({
@@ -968,8 +989,15 @@ function mapDispatchToProps(dispatch, ownProps) {
          * 点击个人信息页面匹配资源列表,更新个人信息页面资源详情
          */
         viewPersonalKeryiBarterModalHandler(keryiCard, e) {
+            let id = keryiCard["id"],
+                userId = keryiCard["userId"];
+            const {
+                //个人页资源详情资源交换列表页码
+                itemCurrent
+            } = this.props;
             dispatch(getPersonalUserHeadPortraitViewDetail(keryiCard));
-            dispatch(getPersonalResourcesListViewDetailsAction(keryiCard));
+            dispatch(getPersonalResourcesMatchedListViewDetailsAction(keryiCard));
+            dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id));
             dispatch(openPersonalViewDetailFooter());
             dispatch(closePersonalViewDetailItemClose());
             dispatch(closePersonalViewDetailAside());
@@ -982,15 +1010,45 @@ function mapDispatchToProps(dispatch, ownProps) {
         onBackHandler(e) {
             const {
                 //个人页资源详情对象
-                viewDetailKeryiCard
+                viewDetailKeryiCard,
+                //个人页资源详情资源交换列表
+                viewDetailItemExchange
             } = this.props;
             dispatch(getPersonalUserHeadPortraitViewDetail(viewDetailKeryiCard));
             dispatch(getPersonalResourcesListViewDetailsAction(viewDetailKeryiCard));
+            dispatch(getPersonalResourcesListViewDetailsItemListAction(viewDetailItemExchange));
             dispatch(closePersonalViewDetailFooter());
             dispatch(openPersonalViewDetailItemClose());
             dispatch(openPersonalViewDetailAside());
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();
+        },
+        /**
+         * 点击个人信息页面资源详情返回"资源交换",发起与其他用户的资源交换请求
+         */
+        onOkHandler() {
+            const {
+                //个人页资源详情对象
+                viewDetailKeryiCard,
+                //确认进行资源交换的匹配资源的用户id
+                matchedUserId,
+                //确认进行资源交换的匹配资源id
+                matchedId,
+                //个人页资源详情资源交换列表页码
+                itemCurrent
+            } = this.props;
+            const {
+                //用户登录的id
+                userId
+            } = this.state;
+            let id = viewDetailKeryiCard["id"];
+            dispatch(havePersonalResourcesExchange({
+                initiativeResourceId: id,
+                passiveResourceId: matchedId,
+                initiativeUserId: userId,
+                passiveUserId: matchedUserId,
+                itemCurrent
+            }));
         },
         /**
          * 控制Modal组件对话框隐藏并消失

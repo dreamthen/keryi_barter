@@ -52,7 +52,7 @@ export function getPersonalResourcesList(pageNum, userId) {
  * 获取个人页资源详情
  * @param resourceId
  */
-export function getPersonalResourceListViewDetails(resourceId) {
+export function getPersonalResourcesListViewDetails(resourceId) {
     return function dispatcher(dispatch) {
         keryiAxiosConfig.axiosRequest(
             api.GET_RESOURCE_LIST_VIEW_DETAIL + "/" + resourceId,
@@ -70,7 +70,7 @@ export function getPersonalResourceListViewDetails(resourceId) {
                     //服务器对响应结果描述
                     msg = head.message;
                 if (code === Success.GET_RESOURCE_LIST_VIEW_DETAIL_SUCCESS_CODE) {
-                    dispatch(rememberPersonalResourceListViewDetails(body));
+                    dispatch(rememberPersonalResourcesListViewDetails(body));
                     dispatch(getPersonalUserHeadPortraitViewDetail(body));
                     dispatch(getPersonalResourcesListViewDetailsAction(body));
                 }
@@ -84,9 +84,10 @@ export function getPersonalResourceListViewDetails(resourceId) {
  * @param userId
  * @param resourceId
  * @param itemCurrent
- * @returns {function(this:getPersonalResourceListViewDetailsItemList)}
+ * @param remember
+ * @returns {function(this:getPersonalResourcesListViewDetailsItemList)}
  */
-export function getPersonalResourceListViewDetailsItemList(itemCurrent, userId, resourceId) {
+export function getPersonalResourcesListViewDetailsItemList(itemCurrent, userId, resourceId, remember) {
     return function dispatcher(dispatch) {
         keryiAxiosConfig.axiosRequest(
             api.GET_EXCHANGE_LIST,
@@ -109,7 +110,52 @@ export function getPersonalResourceListViewDetailsItemList(itemCurrent, userId, 
                     //服务器对响应结果描述
                     msg = head.message;
                 if (code === Success.GET_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST_SUCCESS_CODE) {
-                    dispatch(getPersonalResourceListViewDetailsItemListAction.bind(this)(body));
+                    dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(body));
+                    remember && dispatch(rememberPersonalResourcesListViewDetailsItemListAction(body));
+                }
+            }.bind(this)
+        )
+    }.bind(this)
+}
+
+/**
+ * 个人信息页面发起资源交换
+ * @param initiativeResourceId
+ * @param passiveResourceId
+ * @param initiativeUserId
+ * @param passiveUserId
+ * @param viewDetailKeryiCard
+ * @param itemCurrent
+ * @returns {function(this:havePersonalResourcesExchange)}
+ */
+export function havePersonalResourcesExchange({initiativeResourceId, passiveResourceId, initiativeUserId, passiveUserId, itemCurrent}) {
+    return function dispatcher(dispatch) {
+        keryiAxiosConfig.axiosRequest(
+            api.HAVE_EXCHANGE,
+            "post",
+            {
+                initiativeResourceId,
+                passiveResourceId,
+                initiativeUserId,
+                passiveUserId
+            },
+            function done(response) {
+                //服务器响应数据
+                let data = response.data,
+                    //服务器响应head头部对象
+                    head = data.head,
+                    //服务器响应body主题对象
+                    body = data.body,
+                    //服务器响应code状态码
+                    code = head.code,
+                    //服务器对响应结果描述
+                    msg = head.message;
+                if (code === Success.HAVE_EXCHANGE_SUCCESS_CODE) {
+                    dispatch(closePersonalViewDetailFooter());
+                    dispatch(getPersonalResourcesListViewDetails.bind(this)(initiativeUserId));
+                    dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, initiativeUserId, initiativeResourceId, true));
+                    dispatch(openPersonalViewDetailItemClose());
+                    dispatch(openPersonalViewDetailAside());
                 }
             }.bind(this)
         )
@@ -211,9 +257,21 @@ export function saveUpdatePersonalInformation(userId, username, email, phone, mo
  * @param payload
  * @returns {{type: *, payload: *}}
  */
-export function rememberPersonalResourceListViewDetails(payload) {
+export function rememberPersonalResourcesListViewDetails(payload) {
     return {
         type: appActionsType["REMEMBER_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"],
+        payload
+    }
+}
+
+/**
+ * 保存个人页资源详情资源交换列表Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function rememberPersonalResourcesListViewDetailsItemListAction(payload) {
+    return {
+        type: appActionsType["REMEMBER_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST"],
         payload
     }
 }
@@ -243,11 +301,23 @@ export function getPersonalResourcesListViewDetailsAction(payload) {
 }
 
 /**
+ * 获取个人页匹配列表资源详情Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function getPersonalResourcesMatchedListViewDetailsAction(payload) {
+    return {
+        type: appActionsType["GET_PERSONAL_RESOURCE_MATCHED_LIST_VIEW_DETAIL"],
+        payload
+    }
+}
+
+/**
  * 获取个人页资源详情资源交换列表Action
  * @param payload
  * @returns {{type: *, payload: *}}
  */
-export function getPersonalResourceListViewDetailsItemListAction(payload) {
+export function getPersonalResourcesListViewDetailsItemListAction(payload) {
     return {
         type: appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST"],
         payload
