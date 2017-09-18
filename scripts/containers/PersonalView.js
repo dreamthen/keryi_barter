@@ -126,8 +126,10 @@ class PersonalView extends React.Component {
         personalInformationDisabled: PropTypes.bool,
         //个人页资源详情匹配到的所有的资源列表
         viewDetailMatchedResources: PropTypes.array,
-        //个人页资源详情资源交换上传图片(第一张)列表
-        viewDetailItemImageList: PropTypes.array,
+        //个人页资源详情资源交换上传图片(第一张)以及标题内容列表
+        viewDetailItemImageOrContentList: PropTypes.array,
+        //个人页资源详情资源交换列表是否显示描述浮层
+        viewDetailItemHover: PropTypes.bool,
         //个人页资源详情资源交换列表
         viewDetailItemExchange: PropTypes.object
     };
@@ -567,9 +569,11 @@ class PersonalView extends React.Component {
     renderModalItemCarousel() {
         const {
             //个人页资源详情上传图片数组
-            viewDetailItemImageList,
+            viewDetailItemImageOrContentList,
             //个人页资源详情资源交换列表是否可关闭标志位
-            itemClose
+            itemClose,
+            //个人页资源详情资源交换列表是否显示描述浮层
+            viewDetailItemHover
         } = this.props;
         return (
             <section className="keryi_barter_personal_view_details_item_carousel">
@@ -578,7 +582,8 @@ class PersonalView extends React.Component {
                 </h2>
                 <main className="keryi_barter_personal_view_details_item_carousel_content">
                     <ItemCarousel
-                        itemList={viewDetailItemImageList}
+                        itemList={viewDetailItemImageOrContentList}
+                        hover={viewDetailItemHover}
                         split={4}
                         close={itemClose}
                         noneAlert="您还没有过资源交换~"

@@ -27,7 +27,9 @@ class Item extends React.Component {
         //Item组件内联样式,外部传入内联样式
         style: PropTypes.object,
         //判断Item组件元素组是否可关闭
-        close: PropTypes.bool.isRequired
+        close: PropTypes.bool.isRequired,
+        //判断Item组件元素是否显示描述浮层
+        hover: PropTypes.bool
     };
 
     constructor(props) {
@@ -138,7 +140,9 @@ class Item extends React.Component {
             //内联样式,外部传入内联样式
             style,
             //判断元素组是否可以关闭
-            close
+            close,
+            //判断元素是否显示描述浮层
+            hover
         } = this.props;
         const {
             //根据外部传入的props className来设置Item组件元素的className样式表
@@ -153,6 +157,9 @@ class Item extends React.Component {
                 className={itemVisibleOrAnimationToClass.bind(this)() + outsideClassToClass.bind(this)()}
                 style={Object.assign({}, styleConfig(src), style)}
             >
+                {
+
+                }
                 {
                     close && <i
                         className="iconfontKeryiBarter keryiBarter-close"

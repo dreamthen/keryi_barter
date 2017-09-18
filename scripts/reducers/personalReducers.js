@@ -7,8 +7,8 @@
 import appActionsType from "../actions/appActionsType";
 //redux reducer更换state状态对象
 import insteadState from "../configs/insteadState";
-//对个人页资源详情资源交换图片(第一张)列表进行整理,获取到整理后的图片列表
-import {getImageItemListConfig} from "../configs/getImageItemListConfig";
+//对个人页资源详情资源交换图片(第一张)以及标题内容列表进行整理,获取到整理后的图片列表
+import {getImageOrContentItemListConfig} from "../configs/getImageItemListConfig";
 import {
     //校验字段undefined和null,进行处理
     checkField
@@ -73,8 +73,10 @@ const defaultState = {
     viewDetailTargetTagList: [],
     //个人页资源详情匹配到的所有的资源列表
     viewDetailMatchedResources: [],
-    //个人页资源详情资源交换上传图片(第一张)列表
-    viewDetailItemImageList: [],
+    //个人页资源详情资源交换上传图片(第一张)以及标题内容列表
+    viewDetailItemImageOrContentList: [],
+    //个人页资源详情资源交换列表是否显示描述浮层
+    viewDetailItemHover: false,
     //个人页资源详情资源交换列表
     viewDetailItemExchange: {}
 };
@@ -135,9 +137,9 @@ export function personalReducers(state = defaultState, actions) {
             });
         //获取个人页资源详情资源交换列表
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST"]:
-            let FirstImgUrlsList = getImageItemListConfig(newState["list"]);
+            let FirstImgOrContentUrlsList = getImageOrContentItemListConfig(newState["list"]);
             let viewDetailItemListConfig = {
-                viewDetailItemImageList: FirstImgUrlsList
+                viewDetailItemImageOrContentList: FirstImgOrContentUrlsList
             };
             return insteadState.insteadObjState(state, viewDetailItemListConfig);
         //获取个人页资源列表

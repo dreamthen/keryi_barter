@@ -33,6 +33,8 @@ class ItemCarousel extends React.Component {
         noneIconClassName: PropTypes.string,
         //改变ItemCarousel组件元素轮播器中的元素组或者关闭ItemCarousel组件元素轮播器方法,外部传入函数
         onChange: PropTypes.func,
+        //判断ItemCarousel组件元素轮播器是否显示描述浮层
+        hover: PropTypes.bool,
         //判断ItemCarousel组件元素轮播器中的元素组是否可关闭(必须为布尔类型)
         close: PropTypes.bool.isRequired
     };
@@ -153,7 +155,9 @@ class ItemCarousel extends React.Component {
             //当itemList元素不存在或者itemList元素个数为零时,为空提示语
             noneAlert,
             //当itemList元素不存在或者itemList元素个数为零时,为空图标className,外部传入样式表
-            noneIconClassName
+            noneIconClassName,
+            //是否显示描述浮层
+            hover
         } = this.props;
         const {
             //元素className样式表控制所在的容器消失或者隐藏
@@ -174,6 +178,7 @@ class ItemCarousel extends React.Component {
                         return (
                             <Item
                                 key={itemIndex}
+                                hover={hover}
                                 visible={itemVisible}
                                 src={itemItem["src"]}
                                 style={{width: (100 / split) + "%", left: (move + itemIndex) * (100 / split) + "%"}}
