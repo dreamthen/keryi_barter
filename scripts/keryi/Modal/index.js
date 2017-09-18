@@ -85,6 +85,8 @@ class Modal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            //Modal组件对话框隐藏或者消失判断标志位
+            modalVisible: false,
             //Modal组件对话框显示或者隐藏判断标志位
             modalAppear: false,
             //Modal组件对话框返回提示语消失或者隐藏判断标志位
@@ -95,14 +97,30 @@ class Modal extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.visible !== nextProps.visible) {
+        //当外部传入Modal组件对话框是否弹出属性为true时,Modal组件对话框先从消失变为隐藏,然后时间控制器控制在Modal组件对话框取消消失100ms之后从隐藏变为显示
+        (this.props.visible !== nextProps.visible && nextProps.visible) &&
+        this.setState({
+            modalVisible: true
+        }, function visibler() {
             //FIXME 在这里设置一个时间控制器,Modal组件对话框取消消失100ms之后,从隐藏到显示的过程
             setTimeout(function timer() {
                 this.setState({
                     modalAppear: nextProps.visible
                 });
             }.bind(this), 100);
-        }
+        }.bind(this));
+        //当外部传入Modal组件对话框是否弹出属性为false时,Modal组件对话框先从显示变为隐藏,然后时间控制器控制在Modal组件对话框从显示到隐藏这个过程动画1s之后,将Modal组件对话框消失
+        (this.props.visible !== nextProps.visible && !nextProps.visible) &&
+        this.setState({
+            modalAppear: nextProps.visible
+        }, function disVisibler() {
+            //FIXME 在这里设置一个时间控制器,Modal组件对话框从显示到隐藏这个过程动画1s之后,将Modal组件对话框消失
+            setTimeout(function timer() {
+                this.setState({
+                    modalVisible: nextProps.visible
+                });
+            }.bind(this), 1000);
+        }.bind(this));
     }
 
     componentDidUpdate(prevState) {
@@ -128,11 +146,11 @@ class Modal extends React.Component {
      */
     visibleToClass() {
         const {
-            //Modal组件对话框是否弹出,必写属性
-            visible
-        } = this.props;
-        //在传入对话框判断标志位visible且visible类型为bool时,Modal组件对话框用modalConfig中的指定className样式表显示;在不传入对话框判断标志位visible、visible为空或者visible类型错误时,Modal对话框className样式表消失
-        return visible ? "" : " " + modalConfig[modalVisibleNone];
+            //Modal组件对话框隐藏或者消失判断标志位
+            modalVisible
+        } = this.state;
+        //在Modal组件对话框隐藏或者消失判断标志位为true时,Modal组件对话框用modalConfig中的指定className样式表隐藏;在Modal组件对话框隐藏或者消失判断标志位为false时,Modal对话框className样式表消失
+        return modalVisible ? "" : " " + modalConfig[modalVisibleNone];
     }
 
     /**
@@ -144,6 +162,7 @@ class Modal extends React.Component {
             //Modal组件对话框显示或者隐藏判断标志位
             modalAppear
         } = this.state;
+        //在Modal组件对话框显示或者隐藏判断标志位为true时,Modal组件对话框用modalConfig中的指定className样式表显示;在Modal组件对话框隐藏或者消失判断标志位为false时,Modal对话框className样式表隐藏
         return modalAppear ? modalConfig[modalVisible] : modalConfig[modalVisibleDisappear];
     }
 
@@ -172,22 +191,6 @@ class Modal extends React.Component {
     }
 
     /**
-     * 关闭Modal对话框,并执行参数方法函数
-     * @param callback
-     */
-    closeModal(callback) {
-        this.setState({
-            modalAppear: false
-        }, function closer() {
-            //FIXME 在这里设置一个时间控制器,Modal组件对话框从显示到隐藏这个过程动画1s之后,将Modal组件对话框消失
-            setTimeout(function timer() {
-                //Modal组件对话框关闭回调函数
-                callback();
-            }.bind(this), 1000);
-        }.bind(this));
-    }
-
-    /**
      * 根据外部传入的props onOk来设置Modal组件对话框提交发布
      * @param e
      */
@@ -196,11 +199,7 @@ class Modal extends React.Component {
             //Modal组件对话框提交发布回调函数
             onOk
         } = this.props;
-        const {
-            //关闭Modal对话框,并执行参数方法函数
-            closeModal
-        } = this;
-        //关闭Modal对话框,并执行提交发布回调函数
+        //执行提交发布回调函数
         onOk();
         //取消冒泡
         e.nativeEvent.stopImmediatePropagation();
@@ -216,15 +215,13 @@ class Modal extends React.Component {
             onClose
         } = this.props;
         const {
-            //关闭Modal对话框,并执行参数方法函数
-            closeModal,
             //对话框返回(在这里也就是返回到我的资源)
             onBackHandler
         } = this;
         //对话框返回(在这里也就是返回到我的资源)
         onBackHandler.bind(this)(e);
-        //关闭Modal对话框,并执行关闭回调函数
-        closeModal.bind(this)(onClose);
+        //执行关闭回调函数
+        onClose();
         //取消冒泡
         e.nativeEvent.stopImmediatePropagation();
     }

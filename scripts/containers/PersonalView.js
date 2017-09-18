@@ -1042,7 +1042,7 @@ function mapDispatchToProps(dispatch, ownProps) {
                 userId
             } = this.state;
             let id = viewDetailKeryiCard["id"];
-            dispatch(havePersonalResourcesExchange({
+            dispatch(havePersonalResourcesExchange.bind(this)({
                 initiativeResourceId: id,
                 passiveResourceId: matchedId,
                 initiativeUserId: userId,
