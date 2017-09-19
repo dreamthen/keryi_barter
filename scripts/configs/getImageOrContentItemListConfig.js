@@ -16,13 +16,15 @@ export function getImageOrContentItemListConfig(exchangePropertyList) {
             introProperty = passiveResource["intro"],
             imgUrlsProperty = eval("(" + passiveResource["imgUrls"] + ")"),
             likeCountProperty = passiveResource["likeCount"],
-            priceWorthProperty = passiveResource["priceWorth"];
+            priceWorthProperty = passiveResource["priceWorth"],
+            userProperty = listItem["passiveUser"];
         let itemProperty = {
             src: (imgUrlsProperty && imgUrlsProperty.length > 0) ? imgUrlsProperty[0]["src"] : "images/keryiBarter_headPortrait.png",
             title: titleProperty,
             intro: introProperty,
             likeCount: likeCountProperty,
-            priceWorth: priceWorthProperty
+            priceWorth: priceWorthProperty,
+            user: userProperty
         };
         FirstImgOrContentUrlsList.push(itemProperty);
     });

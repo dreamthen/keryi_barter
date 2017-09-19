@@ -2,6 +2,7 @@
  * Created by yinwk on 2017/7/16.
  */
 import React, {PropTypes} from "react";
+import HeadPortrait from "../../../HeadPortrait";
 import itemConfig from "./configs/itemConfig";
 import {styleConfig} from "./configs/styleConfig";
 import "./keryi_barter_item.css";
@@ -196,6 +197,15 @@ class Item extends React.Component {
                         </ul>
                     </section>
                 }
+                <cite className="keryi_barter_item_hover_user">
+                    <figure>
+                        <HeadPortrait
+                            headPortrait={hoverContent["user"]["avatar"] ? hoverContent["user"]["avatar"] : "/images/keryiBarter_v.png"}
+                            borderJudgement
+                        />
+                    </figure>
+                    {hoverContent["user"]["username"]}
+                </cite>
                 {
                     close && <i
                         className="iconfontKeryiBarter keryiBarter-close"

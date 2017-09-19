@@ -8,7 +8,7 @@ import appActionsType from "../actions/appActionsType";
 //redux reducer更换state状态对象
 import insteadState from "../configs/insteadState";
 //对个人页资源详情资源交换图片(第一张)以及标题内容列表进行整理,获取到整理后的图片列表
-import {getImageOrContentItemListConfig} from "../configs/getImageItemListConfig";
+import {getImageOrContentItemListConfig} from "../configs/getImageOrContentItemListConfig";
 import {
     //校验字段undefined和null,进行处理
     checkField
