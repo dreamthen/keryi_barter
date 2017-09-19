@@ -325,12 +325,22 @@ export function getPersonalResourcesListViewDetailsItemListAction(payload) {
 }
 
 /**
- * 重置个人页资源详情Action
+ * 重置个人页资源页面Action
  * @returns {{type: *}}
  */
 export function resetPersonalResourcesListViewDetailsAction() {
     return {
         type: appActionsType["RESET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]
+    }
+}
+
+/**
+ * 重置个人页资源详情Action
+ * @returns {{type: *}}
+ */
+export function resetPersonalResourcesListViewDetailsContentAction() {
+    return {
+        type: appActionsType["RESET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_CONTENT"]
     }
 }
 

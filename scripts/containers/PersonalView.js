@@ -50,8 +50,10 @@ import {
     getPersonalUserHeadPortraitViewDetail,
     //改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动
     changePersonalInformationScrollTop,
-    //重置个人页资源详情Action
+    //重置个人页资源页面Action
     resetPersonalResourcesListViewDetailsAction,
+    //重置个人页资源详情Action
+    resetPersonalResourcesListViewDetailsContentAction,
     //显示个人页资源详情对话框footer底部区域Action
     openPersonalViewDetailsFooter,
     //隐藏个人页资源详情对话框footer底部区域Action
@@ -1071,6 +1073,10 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 viewPersonalBarterVisible: false
             });
+            dispatch(resetPersonalResourcesListViewDetailsContentAction());
+            dispatch(closePersonalViewDetailsAside());
+            dispatch(closePersonalViewDetailsFooter());
+            dispatch(closePersonalViewDetailsItemClose());
             dispatch(closePersonalViewDetailsItemHover());
         },
         /**
@@ -1155,10 +1161,10 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.refs["mainInformation"] && (scrollTop >= (absoluteTop - totalHeight) ? dispatch(changePersonalInformationScrollTop(scrollTop - absoluteTop + totalHeight)) : dispatch(changePersonalInformationScrollTop(0)));
         },
         /**
-         * 重置个人页资源详情
+         * 重置个人页资源页面
          */
         resetPersonalResourceListViewDetailsHandler() {
-            //重置个人页资源详情Action
+            //重置个人页资源页面Action
             dispatch(resetPersonalResourcesListViewDetailsAction());
         }
     }

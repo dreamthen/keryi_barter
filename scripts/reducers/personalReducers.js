@@ -205,9 +205,27 @@ export function personalReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 viewDetailItemHover: false
             });
-        //重置个人页资源详情
+        //重置个人页资源页面
         case appActionsType["RESET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]:
             return defaultState;
+        //重置个人页资源详情
+        case appActionsType["RESET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_CONTENT"]:
+            return insteadState.insteadObjState(state, {
+                viewDetailKeryiCard: {},
+                viewDetailHeadPortrait: "",
+                viewDetailUserName: "",
+                viewDetailImageList: "[]",
+                viewDetailTitle: "",
+                viewDetailIntroduce: "",
+                viewDetailNeedParty: 0,
+                viewDetailPriceWorth: 0,
+                viewDetailLike: 0,
+                viewDetailTagList: [],
+                viewDetailTargetTagList: [],
+                viewDetailMatchedResources: [],
+                viewDetailItemImageOrContentList: [],
+                viewDetailItemExchange: {}
+            });
     }
     return state;
 }
