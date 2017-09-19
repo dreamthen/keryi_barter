@@ -29,7 +29,11 @@ class Item extends React.Component {
         //判断Item组件元素组是否可关闭
         close: PropTypes.bool.isRequired,
         //判断Item组件元素是否显示描述浮层
-        hover: PropTypes.bool
+        hover: PropTypes.bool,
+        //Item组件元素浮层内容(标题、描述内容、喜欢数以及资源估值数)
+        hoverContent: PropTypes.object,
+        //Item组件元素浮层统计Mode配置
+        hoverStatisticsConfig: PropTypes.array
     };
 
     constructor(props) {
@@ -142,7 +146,11 @@ class Item extends React.Component {
             //判断元素组是否可以关闭
             close,
             //判断元素是否显示描述浮层
-            hover
+            hover,
+            //元素浮层内容(标题、描述内容、喜欢数以及资源估值数)
+            hoverContent,
+            //元素浮层统计Mode配置
+            hoverStatisticsConfig
         } = this.props;
         const {
             //根据外部传入的props className来设置Item组件元素的className样式表
@@ -158,14 +166,41 @@ class Item extends React.Component {
                 style={Object.assign({}, styleConfig(src), style)}
             >
                 {
+                    hover && <section
+                        className="keryi_barter_item_hover"
+                    >
+                        <h4 className="keryi_barter_item_hover_title">
+                            {hoverContent["title"]}
+                        </h4>
+                        <dfn className="keryi_barter_item_hover_introduce">
+                            {hoverContent["intro"]}
+                        </dfn>
+                        <ul className="keryi_barter_item_hover_uiList">
+                            {
+                                hoverStatisticsConfig.map(function statisticser(hoverStatisticsItem, hoverStatisticsIndex) {
+                                    return (
+                                        <li
+                                            key={hoverStatisticsItem["key"]}
+                                            title={hoverContent[hoverStatisticsItem["key"]] + " " + hoverStatisticsItem["title"]}
+                                        >
+                                            <i className={hoverStatisticsItem["className"]}>
 
+                                            </i>
+                                            <dfn className="keryi_barter_item_hover_description">
+                                                {hoverContent[hoverStatisticsItem["key"]]}
+                                            </dfn>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </section>
                 }
                 {
                     close && <i
                         className="iconfontKeryiBarter keryiBarter-close"
                         onClick={onItemClose.bind(this, src)}
                     >
-
                     </i>
                 }
             </figure>

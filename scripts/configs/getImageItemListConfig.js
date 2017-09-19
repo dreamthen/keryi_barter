@@ -11,14 +11,19 @@ export function getImageOrContentItemListConfig(exchangePropertyList) {
     let list = exchangePropertyList;
     let FirstImgOrContentUrlsList = [];
     (list && list.length > 0) && list.forEach(function lister(listItem, listIndex) {
-        let itemProperty = {},
-            passiveResource = listItem["passiveResource"],
+        let passiveResource = listItem["passiveResource"],
             titleProperty = passiveResource["title"],
             introProperty = passiveResource["intro"],
-            imgUrlsProperty = eval("(" + passiveResource["imgUrls"] + ")");
-        itemProperty.src = (imgUrlsProperty && imgUrlsProperty.length > 0) ? imgUrlsProperty[0]["src"] : "images/keryiBarter_headPortrait.png";
-        itemProperty.title = titleProperty;
-        itemProperty.intro = introProperty;
+            imgUrlsProperty = eval("(" + passiveResource["imgUrls"] + ")"),
+            likeCountProperty = passiveResource["likeCount"],
+            priceWorthProperty = passiveResource["priceWorth"];
+        let itemProperty = {
+            src: (imgUrlsProperty && imgUrlsProperty.length > 0) ? imgUrlsProperty[0]["src"] : "images/keryiBarter_headPortrait.png",
+            title: titleProperty,
+            intro: introProperty,
+            likeCount: likeCountProperty,
+            priceWorth: priceWorthProperty
+        };
         FirstImgOrContentUrlsList.push(itemProperty);
     });
     return FirstImgOrContentUrlsList;

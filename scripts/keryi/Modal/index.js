@@ -7,8 +7,6 @@ import HeadPortrait from "../HeadPortrait";
 import Button from "../Button";
 //Modal组件对话框样式表配置
 import modalConfig from "./configs/modalConfig";
-//Modal组件对话框资源统计静态Mode配置
-import statisticsConfig from "./configs/statisticsConfig";
 import "./keryi_barter_modal.css";
 //Modal组件对话框显示样式表配置
 const modalVisible = "visible";
@@ -74,6 +72,8 @@ class Modal extends React.Component {
         asideTitle: PropTypes.string,
         //Modal组件对话框aside侧面边栏区域列表
         asideDataSource: PropTypes.array,
+        //Modal组件对话框aside侧面边栏区域列表统计Mode配置
+        asideStatisticsConfig: PropTypes.array,
         //Modal组件对话框是否显示footer底部区域(包括取消按钮和确定按钮)
         footer: PropTypes.bool,
         //Modal组件对话框footer底部区域确定按钮文本
@@ -400,6 +400,10 @@ class Modal extends React.Component {
      * @returns {XML}
      */
     renderAsideDataSourceMain(keryiModalDataSource) {
+        const {
+            //Modal组件对话框aside侧面边栏区域列表统计Mode配置
+            asideStatisticsConfig
+        } = this.props;
         return (
             <section className="keryi_barter_modal_asideSourceMain">
                 <header className="keryi_barter_modal_asideTitle">
@@ -415,7 +419,7 @@ class Modal extends React.Component {
                 <footer className="keryi_barter_modal_asideStatistics">
                     <ul className="keryi_barter_modal_asideStatistics_ulList">
                         {
-                            statisticsConfig.map(function statisticser(statisticsItem, statisticsIndex) {
+                            asideStatisticsConfig.map(function statisticser(statisticsItem, statisticsIndex) {
                                 return (
                                     <li
                                         key={statisticsIndex}

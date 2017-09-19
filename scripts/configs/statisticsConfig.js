@@ -3,7 +3,7 @@
  * createTime 2017/8/27 18:10
  * description clown laugh at you~
  */
-//Modal组件对话框资源统计静态Mode配置
+//对话框匹配到的资源统计静态Mode配置
 const statisticsConfig = [{
     key: "priceWorth",
     title: "资源估值",
@@ -14,5 +14,5 @@ const statisticsConfig = [{
     className: "iconfontKeryiBarter keryiBarter-like"
 }];
 
-//导出Modal组件对话框资源统计静态Mode配置
+//导出对话框匹配到的资源统计静态Mode配置
 export default statisticsConfig;

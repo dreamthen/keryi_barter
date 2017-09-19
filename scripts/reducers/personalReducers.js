@@ -195,6 +195,16 @@ export function personalReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 asideAble: false
             });
+        //个人页资源详情资源交换列表显示描述浮层
+        case appActionsType["OPEN_PERSONAL_VIEW_DETAIL_ITEM_HOVER"]:
+            return insteadState.insteadObjState(state, {
+                viewDetailItemHover: true
+            });
+        //个人页资源详情资源交换列表隐藏使描述浮层消失
+        case appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_ITEM_HOVER"]:
+            return insteadState.insteadObjState(state, {
+                viewDetailItemHover: false
+            });
         //重置个人页资源详情
         case appActionsType["RESET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]:
             return defaultState;

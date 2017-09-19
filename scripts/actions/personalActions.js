@@ -151,11 +151,11 @@ export function havePersonalResourcesExchange({initiativeResourceId, passiveReso
                     //服务器对响应结果描述
                     msg = head.message;
                 if (code === Success.HAVE_EXCHANGE_SUCCESS_CODE) {
-                    dispatch(closePersonalViewDetailFooter());
+                    dispatch(closePersonalViewDetailsFooter());
                     dispatch(getPersonalResourcesListViewDetails.bind(this)(initiativeUserId));
                     dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, initiativeUserId, initiativeResourceId, true));
-                    dispatch(openPersonalViewDetailItemClose());
-                    dispatch(openPersonalViewDetailAside());
+                    dispatch(openPersonalViewDetailsItemClose());
+                    dispatch(openPersonalViewDetailsAside());
                 }
             }.bind(this)
         )
@@ -394,7 +394,7 @@ export function changePersonalInformationScrollTop(payload) {
  * 显示个人页资源详情对话框footer底部区域Action
  * @returns {{type: *}}
  */
-export function openPersonalViewDetailFooter() {
+export function openPersonalViewDetailsFooter() {
     return {
         type: appActionsType["OPEN_PERSONAL_VIEW_DETAIL_FOOTER"]
     }
@@ -404,7 +404,7 @@ export function openPersonalViewDetailFooter() {
  * 隐藏个人页资源详情对话框footer底部区域Action
  * @returns {{type: *}}
  */
-export function closePersonalViewDetailFooter() {
+export function closePersonalViewDetailsFooter() {
     return {
         type: appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_FOOTER"]
     }
@@ -414,7 +414,7 @@ export function closePersonalViewDetailFooter() {
  * 个人页资源详情资源交换列表显示可关闭标志位Action
  * @returns {{type: *}}
  */
-export function openPersonalViewDetailItemClose() {
+export function openPersonalViewDetailsItemClose() {
     return {
         type: appActionsType["OPEN_PERSONAL_VIEW_DETAIL_ITEM_CLOSE"]
     }
@@ -424,7 +424,7 @@ export function openPersonalViewDetailItemClose() {
  * 个人页资源详情资源交换列表隐藏可关闭标志位Action
  * @returns {{type: *}}
  */
-export function closePersonalViewDetailItemClose() {
+export function closePersonalViewDetailsItemClose() {
     return {
         type: appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_ITEM_CLOSE"]
     }
@@ -434,7 +434,7 @@ export function closePersonalViewDetailItemClose() {
  * 个人页资源详情匹配到的资源列表边栏显示Action
  * @returns {{type: *}}
  */
-export function openPersonalViewDetailAside() {
+export function openPersonalViewDetailsAside() {
     return {
         type: appActionsType["OPEN_PERSONAL_VIEW_DETAIL_ASIDE"]
     }
@@ -444,8 +444,28 @@ export function openPersonalViewDetailAside() {
  * 个人页资源详情匹配到的资源列表边栏隐藏Action
  * @returns {{type: *}}
  */
-export function closePersonalViewDetailAside() {
+export function closePersonalViewDetailsAside() {
     return {
         type: appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_ASIDE"]
+    }
+}
+
+/**
+ * 个人页资源详情资源交换列表显示描述浮层Action
+ * @returns {{type: *}}
+ */
+export function openPersonalViewDetailsItemHover() {
+    return {
+        type: appActionsType["OPEN_PERSONAL_VIEW_DETAIL_ITEM_HOVER"]
+    }
+}
+
+/**
+ * 个人页资源详情资源交换列表隐藏使描述浮层消失Action
+ * @returns {{type: *}}
+ */
+export function closePersonalViewDetailsItemHover() {
+    return {
+        type: appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_ITEM_HOVER"]
     }
 }
