@@ -21,6 +21,8 @@ import personalComponentConfig from "../configs/personalComponentConfig";
 import viewDetailsStatisticsConfig from "../configs/viewDetailsStatisticsConfig";
 //对话框匹配到的资源统计静态Mode配置
 import statisticsConfig from "../configs/statisticsConfig";
+//对话框资源交换列表交换状态静态Mode配置
+import exchangeStatusConfig from "../configs/exchangeStatusConfig";
 //获取匹配到的资源数据列表出现异常时,前端呈现默认约定数据
 import keryiModalDefaultConfig from "../configs/keryiModalDefaultConfig";
 import {
@@ -593,6 +595,7 @@ class PersonalView extends React.Component {
                         itemList={viewDetailItemImageOrContentList}
                         hover={viewDetailItemHover}
                         hoverStatisticsConfig={statisticsConfig}
+                        exchangeStatusConfig={exchangeStatusConfig}
                         split={4}
                         close={itemClose}
                         noneAlert="您还没有过资源交换~"

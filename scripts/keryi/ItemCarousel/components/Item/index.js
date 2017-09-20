@@ -34,7 +34,9 @@ class Item extends React.Component {
         //Item组件元素浮层内容(标题、描述内容、喜欢数以及资源估值数)
         hoverContent: PropTypes.object,
         //Item组件元素浮层统计Mode配置
-        hoverStatisticsConfig: PropTypes.array
+        hoverStatisticsConfig: PropTypes.array,
+        //Item组件元素状态Mode配置
+        exchangeStatusConfig: PropTypes.array
     };
 
     constructor(props) {
@@ -151,7 +153,9 @@ class Item extends React.Component {
             //元素浮层内容(标题、描述内容、喜欢数以及资源估值数)
             hoverContent,
             //元素浮层统计Mode配置
-            hoverStatisticsConfig
+            hoverStatisticsConfig,
+            //元素状态Mode配置
+            exchangeStatusConfig
         } = this.props;
         const {
             //根据外部传入的props className来设置Item组件元素的className样式表
@@ -197,14 +201,26 @@ class Item extends React.Component {
                         </ul>
                     </section>
                 }
-                <cite className="keryi_barter_item_hover_user">
-                    <figure>
+                <cite className="keryi_barter_item_user">
+                    <figure className="keryi_barter_item_user_avatar">
                         <HeadPortrait
                             headPortrait={hoverContent["user"]["avatar"] ? hoverContent["user"]["avatar"] : "/images/keryiBarter_v.png"}
                             borderJudgement
                         />
                     </figure>
-                    {hoverContent["user"]["username"]}
+                    <figcaption className="keryi_barter_item_user_description">
+                        {hoverContent["user"]["username"]}
+                    </figcaption>
+                    {
+                        exchangeStatusConfig.map(function exchangerStatus(exchangeStatusItem, exchangeStatusIndex) {
+                            return exchangeStatusItem["key"] === hoverContent["status"] &&
+                                <i className={exchangeStatusItem["className"]}
+                                   title={exchangeStatusItem["value"]}
+                                >
+
+                                </i>
+                        })
+                    }
                 </cite>
                 {
                     close && <i

@@ -37,8 +37,12 @@ class ItemCarousel extends React.Component {
         hover: PropTypes.bool,
         //ItemCarousel组件元素轮播器浮层统计Mode配置
         hoverStatisticsConfig: PropTypes.array,
+        //ItemCarousel组件元素轮播器状态Mode配置
+        exchangeStatusConfig: PropTypes.array,
         //判断ItemCarousel组件元素轮播器中的元素组是否可关闭(必须为布尔类型)
-        close: PropTypes.bool.isRequired
+        close: PropTypes.bool.isRequired,
+        //判断ItemCarousel组件元素轮播器中的元素组是否可关闭标识位
+        closeJudgement: PropTypes.array
     };
 
     constructor(props) {
@@ -154,6 +158,8 @@ class ItemCarousel extends React.Component {
             itemList,
             //判断元素轮播器中的元素组是否可关闭
             close,
+            //判断元素轮播器中的元素组是否可关闭标识位
+            closeJudgement,
             //当itemList元素不存在或者itemList元素个数为零时,为空提示语
             noneAlert,
             //当itemList元素不存在或者itemList元素个数为零时,为空图标className,外部传入样式表
@@ -161,7 +167,9 @@ class ItemCarousel extends React.Component {
             //是否显示描述浮层
             hover,
             //浮层统计Mode配置
-            hoverStatisticsConfig
+            hoverStatisticsConfig,
+            //状态Mode配置
+            exchangeStatusConfig
         } = this.props;
         const {
             //元素className样式表控制所在的容器消失或者隐藏
@@ -185,10 +193,11 @@ class ItemCarousel extends React.Component {
                                 hover={hover}
                                 hoverContent={itemItem}
                                 hoverStatisticsConfig={hoverStatisticsConfig}
+                                exchangeStatusConfig={exchangeStatusConfig}
                                 visible={itemVisible}
                                 src={itemItem["src"]}
                                 style={{width: (100 / split) + "%", left: (move + itemIndex) * (100 / split) + "%"}}
-                                close={close}
+                                close={itemItem["statusClose"]}
                                 onClose={onItemCarouselControlClose.bind(this)}
                             />
                         )

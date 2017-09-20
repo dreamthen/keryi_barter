@@ -53,6 +53,50 @@
     z-index: 9915;
 }
 
+.keryi_barter_item > .keryi_barter_item_user {
+    position: absolute;
+    width: 100%;
+    left: 2px;
+    bottom: -30px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.keryi_barter_item_user > .keryi_barter_item_user_avatar {
+    width: 25px;
+    height: 25px;
+}
+
+.keryi_barter_item_user > .keryi_barter_item_user_description {
+    position: relative;
+    font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif, "Microsoft YaHei UI";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: bolder;
+    margin: 0 0 0 4px;
+    color: #63A8F0;
+    bottom: 3px;
+}
+
+.keryi_barter_item_user > i {
+    position: absolute;
+    font-size: 17px;
+    right: 5px;
+    bottom: 2px;
+    color: #63A8F0;
+}
+
+.keryi_barter_item_user > i.iconfontKeryiBarter-complete {
+    color: rgb(123, 187, 94);
+}
+
+.keryi_barter_item_user > i.iconfontKeryiBarter-refuse {
+    color: #CC0E00;
+}
+
 .keryi_barter_item > .keryi_barter_item_hover:hover {
     opacity: .86;
 }
