@@ -6,8 +6,10 @@
 /**
  * 对个人页资源详情资源交换图片(第一张)以及标题内容列表进行整理,获取到整理后的图片列表
  * @param exchangePropertyList
+ * @param matched
+ * @param exchangeStatus
  */
-export function getImageOrContentItemListConfig(exchangePropertyList) {
+export function getImageOrContentItemListConfig(exchangePropertyList, matched, exchangeStatus) {
     let list = exchangePropertyList;
     let FirstImgOrContentUrlsList = [];
     (list && list.length > 0) && list.forEach(function lister(listItem, listIndex) {
@@ -20,7 +22,7 @@ export function getImageOrContentItemListConfig(exchangePropertyList) {
             priceWorthProperty = passiveResource["priceWorth"],
             userProperty = listItem["passiveUser"],
             statusProperty = listItem["status"],
-            statusCloseJudgement = listItem["status"] !== closeJudgement;
+            statusCloseJudgement = matched ? false : statusProperty !== closeJudgement;
         let itemProperty = {
             src: (imgUrlsProperty && imgUrlsProperty.length > 0) ? imgUrlsProperty[0]["src"] : "images/keryiBarter_headPortrait.png",
             title: titleProperty,

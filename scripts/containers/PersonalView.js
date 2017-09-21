@@ -77,6 +77,8 @@ import "../../stylesheets/personal.css";
 
 //个人信息可编辑组件类型
 const componentType = ["input"];
+//个人信息资源详情资源交换列表状态切换标识className样式表
+const exchangeStatusClassName = ["keryi_barter_personal_view_details_item_carousel_checked", "keryi_barter_personal_view_details_item_carousel_unchecked"];
 
 class PersonalView extends React.Component {
     static propTypes = {
@@ -149,6 +151,8 @@ class PersonalView extends React.Component {
         this.state = {
             //获取到个人信息容器距离顶部的绝对位置
             absoluteTop: 0,
+            //个人信息资源详情资源交换列表状态切换标识
+            exchangeStatus: exchangeStatusConfig[0]["key"],
             //判断个人信息编辑动画是否可渲染
             personalInformationAnimationDisabled: false,
             //控制Modal组件对话框显示、隐藏或者消失
@@ -578,18 +582,43 @@ class PersonalView extends React.Component {
      */
     renderModalItemCarousel() {
         const {
+            //个人信息资源详情资源交换列表状态切换标识
+            exchangeStatus
+        } = this.state;
+        const {
             //个人页资源详情上传图片数组
             viewDetailItemImageOrContentList,
             //个人页资源详情资源交换列表是否可关闭标志位
             itemClose,
             //个人页资源详情资源交换列表是否显示描述浮层
-            viewDetailItemHover
+            viewDetailItemHover,
+            //改变个人信息资源详情资源交换列表状态
+            changeExchangeStatus
         } = this.props;
         return (
             <section className="keryi_barter_personal_view_details_item_carousel">
                 <h2 className="keryi_barter_personal_view_details_item_carousel_title">
                     资源交换列表
                 </h2>
+                <ul className="keryi_barter_personal_view_details_item_carousel_menu">
+                    {
+                        exchangeStatusConfig.map(function exchanger(exchangeItem, exchangeIndex) {
+                            return (
+                                <li
+                                    key={exchangeItem["key"]}
+                                    className={exchangeItem["key"] === exchangeStatus ? exchangeStatusClassName[0] : exchangeStatusClassName[1]}
+                                    onClick={changeExchangeStatus.bind(this, exchangeItem["key"])}
+                                >
+                                    <i className={exchangeItem["className"]}>
+
+                                    </i>
+                                    {exchangeItem["value"]}
+                                    <hr className="keryi_barter_personal_view_details_item_carousel_wired"/>
+                                </li>
+                            )
+                        }.bind(this))
+                    }
+                </ul>
                 <main className="keryi_barter_personal_view_details_item_carousel_content">
                     <ItemCarousel
                         itemList={viewDetailItemImageOrContentList}
@@ -987,14 +1016,16 @@ function mapDispatchToProps(dispatch, ownProps) {
             let id = keryiCard["id"];
             const {
                 //用户登录的id
-                userId
+                userId,
+                //个人信息资源详情资源交换列表状态切换标识
+                exchangeStatus
             } = this.state;
             const {
                 //个人页资源详情资源交换列表页码
                 itemCurrent
             } = this.props;
             dispatch(getPersonalResourcesListViewDetails.bind(this)(id));
-            dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id, true));
+            dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id, true, false, exchangeStatus));
             dispatch(openPersonalViewDetailsItemClose());
             dispatch(openPersonalViewDetailsAside());
             dispatch(openPersonalViewDetailsItemHover());
@@ -1016,7 +1047,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             } = this.props;
             dispatch(getPersonalUserHeadPortraitViewDetail(keryiCard));
             dispatch(getPersonalResourcesMatchedListViewDetailsAction(keryiCard));
-            dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id));
+            dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id, false, true));
             dispatch(openPersonalViewDetailsFooter());
             dispatch(closePersonalViewDetailsItemClose());
             dispatch(closePersonalViewDetailsAside());
@@ -1169,6 +1200,14 @@ function mapDispatchToProps(dispatch, ownProps) {
         resetPersonalResourceListViewDetailsHandler() {
             //重置个人页资源页面Action
             dispatch(resetPersonalResourcesListViewDetailsAction());
+        },
+        /**
+         * 改变个人信息资源详情资源交换列表状态
+         */
+        changeExchangeStatus(key) {
+            this.setState({
+                exchangeStatus: key
+            });
         }
     }
 }

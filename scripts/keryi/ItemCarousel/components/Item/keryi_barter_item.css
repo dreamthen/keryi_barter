@@ -87,6 +87,7 @@
     right: 5px;
     bottom: 2px;
     color: #63A8F0;
+    cursor: pointer;
 }
 
 .keryi_barter_item_user > i.keryiBarter-complete {

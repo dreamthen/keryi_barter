@@ -89,7 +89,9 @@ const defaultState = {
  */
 export function personalReducers(state = defaultState, actions) {
     let type = actions.type,
-        newState = actions.payload;
+        newState = actions.payload,
+        matched = actions.matched,
+        exchangeStatus = actions.exchangeStatus;
     switch (type) {
         //保存个人页资源详情
         case appActionsType["REMEMBER_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]:
@@ -137,7 +139,7 @@ export function personalReducers(state = defaultState, actions) {
             });
         //获取个人页资源详情资源交换列表
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST"]:
-            let FirstImgOrContentUrlsList = getImageOrContentItemListConfig(newState["list"]);
+            let FirstImgOrContentUrlsList = getImageOrContentItemListConfig(newState["list"], matched, exchangeStatus);
             let viewDetailItemListConfig = {
                 viewDetailItemImageOrContentList: FirstImgOrContentUrlsList
             };

@@ -5,6 +5,10 @@
  */
 //对话框资源交换列表交换状态静态Mode配置
 const exchangeStatusConfig = [{
+    key: "F",
+    value: "已完成",
+    className: "iconfontKeryiBarter keryiBarter-complete"
+}, {
     key: "I",
     value: "交换中",
     className: "iconfontKeryiBarter keryiBarter-changing"
@@ -12,10 +16,6 @@ const exchangeStatusConfig = [{
     key: "R",
     value: "已拒绝",
     className: "iconfontKeryiBarter keryiBarter-refuse"
-}, {
-    key: "F",
-    value: "已完成",
-    className: "iconfontKeryiBarter keryiBarter-complete"
 }];
 
 //导出对话框资源交换列表交换状态静态Mode配置

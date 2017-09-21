@@ -214,8 +214,10 @@ class Item extends React.Component {
                     {
                         exchangeStatusConfig.map(function exchangerStatus(exchangeStatusItem, exchangeStatusIndex) {
                             return exchangeStatusItem["key"] === hoverContent["status"] &&
-                                <i className={exchangeStatusItem["className"]}
-                                   title={exchangeStatusItem["value"]}
+                                <i
+                                    key={exchangeStatusIndex}
+                                    className={exchangeStatusItem["className"]}
+                                    title={exchangeStatusItem["value"]}
                                 >
 
                                 </i>

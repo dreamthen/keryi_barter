@@ -335,8 +335,86 @@
 }
 
 .keryi_barter_personal_view_details_item_carousel > .keryi_barter_personal_view_details_item_carousel_title,
+.keryi_barter_personal_view_details_item_carousel > .keryi_barter_personal_view_details_item_carousel_menu,
 .keryi_barter_personal_view_details_item_carousel > .keryi_barter_personal_view_details_item_carousel_content {
     padding: 0 15px;
+}
+
+.keryi_barter_personal_view_details_item_carousel > .keryi_barter_personal_view_details_item_carousel_title {
+    margin: 0;
+}
+
+.keryi_barter_personal_view_details_item_carousel > .keryi_barter_personal_view_details_item_carousel_menu {
+    padding-top: 4px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.keryi_barter_personal_view_details_item_carousel_menu > li {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    padding: 0 6px 8px 5px;
+    margin: 0 4px 0 0;
+    color: #63A8F0;
+    cursor: pointer;
+    transition: all .5s linear 0s;
+}
+
+.keryi_barter_personal_view_details_item_carousel_menu > li > hr.keryi_barter_personal_view_details_item_carousel_wired {
+    position: absolute;
+    width: 100%;
+    border: none;
+    border-top: 2px solid transparent;
+    left: 0;
+    bottom: -8px;
+    transition: all .5s linear 0s;
+}
+
+.keryi_barter_personal_view_details_item_carousel_menu > li.keryi_barter_personal_view_details_item_carousel_checked > hr.keryi_barter_personal_view_details_item_carousel_wired {
+    border-top: 2px solid #63A8F0;
+}
+
+.keryi_barter_personal_view_details_item_carousel_menu > li.keryi_barter_personal_view_details_item_carousel_unchecked {
+    color: rgba(0, 0, 0, .35);
+}
+
+.keryi_barter_personal_view_details_item_carousel_menu > li:last-child {
+    margin: 0;
+}
+
+.keryi_barter_personal_view_details_item_carousel_menu > li > i {
+    position: relative;
+    display: inline-block;
+    font-size: 22px;
+    color: #63A8F0;
+    margin-right: 2px;
+}
+
+.keryi_barter_personal_view_details_item_carousel_menu > li > i.keryiBarter-changing {
+    top: 1px;
+}
+
+.keryi_barter_personal_view_details_item_carousel_menu > li > i.keryiBarter-refuse {
+    color: #CC0E00;
+    left: 2px;
+}
+
+.keryi_barter_personal_view_details_item_carousel_menu > li > i.keryiBarter-complete {
+    color: rgb(123, 187, 94);
+}
+
+.keryi_barter_personal_view_details_item_carousel_menu > li.keryi_barter_personal_view_details_item_carousel_unchecked > i {
+    color: rgba(0, 0, 0, .35);
 }
 
 .keryi_barter_personal_view_details_item_carousel > .keryi_barter_personal_view_details_item_carousel_content {

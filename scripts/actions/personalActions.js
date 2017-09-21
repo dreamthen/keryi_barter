@@ -85,9 +85,11 @@ export function getPersonalResourcesListViewDetails(resourceId) {
  * @param resourceId
  * @param itemCurrent
  * @param remember
+ * @param matched
+ * @param exchangeStatus
  * @returns {function(this:getPersonalResourcesListViewDetailsItemList)}
  */
-export function getPersonalResourcesListViewDetailsItemList(itemCurrent, userId, resourceId, remember) {
+export function getPersonalResourcesListViewDetailsItemList(itemCurrent, userId, resourceId, remember, matched, exchangeStatus) {
     return function dispatcher(dispatch) {
         keryiAxiosConfig.axiosRequest(
             api.GET_EXCHANGE_LIST,
@@ -110,7 +112,7 @@ export function getPersonalResourcesListViewDetailsItemList(itemCurrent, userId,
                     //服务器对响应结果描述
                     msg = head.message;
                 if (code === Success.GET_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST_SUCCESS_CODE) {
-                    dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(body));
+                    dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(body, matched, exchangeStatus));
                     remember && dispatch(rememberPersonalResourcesListViewDetailsItemListAction(body));
                 }
             }.bind(this)
@@ -315,12 +317,16 @@ export function getPersonalResourcesMatchedListViewDetailsAction(payload) {
 /**
  * 获取个人页资源详情资源交换列表Action
  * @param payload
- * @returns {{type: *, payload: *}}
+ * @param matched
+ * @param exchangeStatus
+ * @returns {{type: *, payload: {payload: *, matched: *}}}
  */
-export function getPersonalResourcesListViewDetailsItemListAction(payload) {
+export function getPersonalResourcesListViewDetailsItemListAction(payload, matched, exchangeStatus) {
     return {
         type: appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST"],
-        payload
+        payload,
+        matched,
+        exchangeStatus
     }
 }
 
