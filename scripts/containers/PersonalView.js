@@ -56,6 +56,8 @@ import {
     resetPersonalResourcesListViewDetailsAction,
     //重置个人页资源详情Action
     resetPersonalResourcesListViewDetailsContentAction,
+    //个人信息页面删除资源交换列表
+    deletePersonalResourcesExchange,
     //显示个人页资源详情对话框footer底部区域Action
     openPersonalViewDetailsFooter,
     //隐藏个人页资源详情对话框footer底部区域Action
@@ -143,12 +145,16 @@ class PersonalView extends React.Component {
         //个人页资源详情资源交换列表是否显示描述浮层
         viewDetailItemHover: PropTypes.bool,
         //个人页资源详情资源交换列表
-        viewDetailItemExchange: PropTypes.object
+        viewDetailItemExchange: PropTypes.object,
+        //个人页资源详情匹配资源交换列表
+        viewDetailMatchedItemExchange: PropTypes.object
     };
 
     constructor(props) {
         super(props);
         this.state = {
+            //判断个人信息资源详情是否是匹配资源
+            isMatched: false,
             //获取到个人信息容器距离顶部的绝对位置
             absoluteTop: 0,
             //个人信息资源详情资源交换列表状态切换标识
@@ -586,7 +592,7 @@ class PersonalView extends React.Component {
             exchangeStatus
         } = this.state;
         const {
-            //个人页资源详情上传图片数组
+            //个人页资源详情上传图片(第一张)以及标题内容列表
             viewDetailItemImageOrContentList,
             //个人页资源详情资源交换列表是否可关闭标志位
             itemClose,
@@ -1045,9 +1051,18 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //个人页资源详情资源交换列表页码
                 itemCurrent
             } = this.props;
+            this.setState({
+                exchangeStatus: exchangeStatusConfig[0]["key"],
+                isMatched: true
+            }, function exchangerStatus() {
+                const {
+                    //个人信息资源详情资源交换列表状态切换标识
+                    exchangeStatus
+                } = this.state;
+                dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id, false, true, exchangeStatus));
+            }.bind(this));
             dispatch(getPersonalUserHeadPortraitViewDetail(keryiCard));
             dispatch(getPersonalResourcesMatchedListViewDetailsAction(keryiCard));
-            dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id, false, true));
             dispatch(openPersonalViewDetailsFooter());
             dispatch(closePersonalViewDetailsItemClose());
             dispatch(closePersonalViewDetailsAside());
@@ -1064,9 +1079,18 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //个人页资源详情资源交换列表
                 viewDetailItemExchange
             } = this.props;
+            this.setState({
+                exchangeStatus: exchangeStatusConfig[0]["key"],
+                isMatched: false
+            }, function exchangerStatus() {
+                const {
+                    //个人信息资源详情资源交换列表状态切换标识
+                    exchangeStatus
+                } = this.state;
+                dispatch(getPersonalResourcesListViewDetailsItemListAction(viewDetailItemExchange, false, exchangeStatus));
+            }.bind(this));
             dispatch(getPersonalUserHeadPortraitViewDetail(viewDetailKeryiCard));
             dispatch(getPersonalResourcesListViewDetailsAction(viewDetailKeryiCard));
-            dispatch(getPersonalResourcesListViewDetailsItemListAction(viewDetailItemExchange));
             dispatch(closePersonalViewDetailsFooter());
             dispatch(openPersonalViewDetailsItemClose());
             dispatch(openPersonalViewDetailsAside());
@@ -1205,9 +1229,25 @@ function mapDispatchToProps(dispatch, ownProps) {
          * 改变个人信息资源详情资源交换列表状态
          */
         changeExchangeStatus(key) {
+            const {
+                //判断个人信息资源详情是否是匹配资源
+                isMatched
+            } = this.state;
+            const {
+                //个人页资源详情资源交换列表
+                viewDetailItemExchange,
+                //个人页资源详情匹配资源交换列表
+                viewDetailMatchedItemExchange
+            } = this.props;
             this.setState({
                 exchangeStatus: key
-            });
+            }, function exchangerStatus() {
+                const {
+                    //个人信息资源详情资源交换列表状态切换标识
+                    exchangeStatus
+                } = this.state;
+                !isMatched ? dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(viewDetailItemExchange, false, exchangeStatus)) : dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(viewDetailMatchedItemExchange, true, exchangeStatus));
+            }.bind(this));
         }
     }
 }

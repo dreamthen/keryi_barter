@@ -13,6 +13,9 @@ export function getImageOrContentItemListConfig(exchangePropertyList, matched, e
     let list = exchangePropertyList;
     let FirstImgOrContentUrlsList = [];
     (list && list.length > 0) && list.forEach(function lister(listItem, listIndex) {
+        if (listItem["status"] && exchangeStatus && listItem["status"] !== exchangeStatus) {
+            return false;
+        }
         let passiveResource = listItem["passiveResource"],
             titleProperty = passiveResource["title"],
             introProperty = passiveResource["intro"],

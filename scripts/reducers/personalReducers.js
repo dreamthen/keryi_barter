@@ -78,7 +78,9 @@ const defaultState = {
     //个人页资源详情资源交换列表是否显示描述浮层
     viewDetailItemHover: false,
     //个人页资源详情资源交换列表
-    viewDetailItemExchange: {}
+    viewDetailItemExchange: {},
+    //个人页资源详情匹配资源交换列表
+    viewDetailMatchedItemExchange: {}
 };
 
 /**
@@ -136,6 +138,11 @@ export function personalReducers(state = defaultState, actions) {
         case appActionsType["REMEMBER_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST"]:
             return insteadState.insteadObjState(state, {
                 viewDetailItemExchange: newState
+            });
+        //保存个人页匹配列表资源交换列表
+        case appActionsType["REMEMBER_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_MATCHED_ITEM_LIST"]:
+            return insteadState.insteadObjState(state, {
+                viewDetailMatchedItemExchange: newState
             });
         //获取个人页资源详情资源交换列表
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST"]:

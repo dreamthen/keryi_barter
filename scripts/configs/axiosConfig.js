@@ -2,6 +2,7 @@
  * Created by yinwk on 2017/6/10.
  */
 import axios from "axios";
+import Success from "../prompt/successPrompt";
 import requestError from "./requestError";
 
 const GET_METHOD = "GET";
@@ -9,7 +10,7 @@ const GET_METHOD = "GET";
 //axios服务器请求响应集成对象
 const keryiAxiosConfig = {
     /**
-     * axios服务器请求响应集成对象属性
+     * axios服务器请求响应集成对象请求配置
      * @param url
      * @param method
      * @param data
@@ -37,17 +38,35 @@ const keryiAxiosConfig = {
         ).catch(
             //响应抛出错误或者异常回调函数
             this.errorHandler
-        )
+        );
     },
     /**
-     * 响应出现错误或者异常处理的回调函数
+     * axios服务器请求响应集成对象拦截器配置
+     */
+    interceptorsHandler: function () {
+        axios.interceptors.response.use(function (response) {
+            let data = response.data,
+                status = response.status,
+                head = data.head,
+                body = data.body,
+                code = head.code;
+            if (code === Success.SUCCESS_CODE) {
+                return body;
+            }
+        }, function () {
+
+        });
+    },
+    /**
+     * 响应后台出现错误(500,404)的回调函数
      * @param error
      */
     errorHandler: function (error) {
-        let status = error.status;
-        //根据服务器响应的错误或者异常status状态码来进行处理
-        requestError.error(status);
+        console.error(error);
     }
 };
+
+//执行axios服务器请求响应集成对象拦截器
+keryiAxiosConfig.interceptorsHandler();
 
 export default keryiAxiosConfig;

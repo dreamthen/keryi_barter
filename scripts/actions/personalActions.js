@@ -114,6 +114,7 @@ export function getPersonalResourcesListViewDetailsItemList(itemCurrent, userId,
                 if (code === Success.GET_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST_SUCCESS_CODE) {
                     dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(body, matched, exchangeStatus));
                     remember && dispatch(rememberPersonalResourcesListViewDetailsItemListAction(body));
+                    matched && dispatch(rememberPersonalResourcesListViewDetailsMatchedItemListAction(body));
                 }
             }.bind(this)
         )
@@ -161,6 +162,24 @@ export function havePersonalResourcesExchange({initiativeResourceId, passiveReso
                 }
             }.bind(this)
         )
+    }.bind(this)
+}
+
+/**
+ * 个人信息页面删除资源交换列表
+ * @param exchangeId
+ * @returns {function(this:deletePersonalResourcesExchange)}
+ */
+export function deletePersonalResourcesExchange(exchangeId) {
+    return function dispatcher(dispatch) {
+        keryiAxiosConfig.axiosRequest(
+            api.DELETE_EXCHANGE_LIST + "/" + exchangeId,
+            "delete",
+            {},
+            function done(response) {
+
+            }.bind(this)
+        );
     }.bind(this)
 }
 
@@ -274,6 +293,18 @@ export function rememberPersonalResourcesListViewDetails(payload) {
 export function rememberPersonalResourcesListViewDetailsItemListAction(payload) {
     return {
         type: appActionsType["REMEMBER_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST"],
+        payload
+    }
+}
+
+/**
+ * 保存个人页资源详情匹配资源交换列表Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function rememberPersonalResourcesListViewDetailsMatchedItemListAction(payload) {
+    return {
+        type: appActionsType["REMEMBER_PERSONAL_RESOURCE_LIST_VIEW_DETAIL_MATCHED_ITEM_LIST"],
         payload
     }
 }

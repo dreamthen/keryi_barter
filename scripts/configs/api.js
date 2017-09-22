@@ -36,7 +36,9 @@ if (!isMock) {
         //发起交换
         HAVE_EXCHANGE: keryi_cover + "exchanges",
         //获取用户的资源交换列表
-        GET_EXCHANGE_LIST: keryi_cover + "exchanges"
+        GET_EXCHANGE_LIST: keryi_cover + "exchanges",
+        //删除用户的资源交换列表
+        DELETE_EXCHANGE_LIST: keryi_cover + "exchanges"
     }
 } else {
 
