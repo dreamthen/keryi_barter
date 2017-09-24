@@ -45,6 +45,7 @@ const keryiAxiosConfig = {
      */
     interceptorsHandler: function () {
         axios.interceptors.response.use(function (response) {
+            console.log(response);
             //服务器响应数据
             let data = response.data,
                 //服务器响应头状态码
@@ -58,6 +59,7 @@ const keryiAxiosConfig = {
             if (code === Success.SUCCESS_CODE) {
                 return body;
             }
+            console.log(status);
             requestError.error(status);
             return Promise.reject(response);
         }, function () {

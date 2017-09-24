@@ -100,7 +100,7 @@ class Modal extends React.Component {
         //当外部传入Modal组件对话框是否弹出属性为true时,Modal组件对话框先从消失变为隐藏,然后时间控制器控制在Modal组件对话框取消消失100ms之后从隐藏变为显示
         (this.props.visible !== nextProps.visible && nextProps.visible) &&
         this.setState({
-            modalVisible: true
+            modalVisible: nextProps.visible
         }, function visibler() {
             //FIXME 在这里设置一个时间控制器,Modal组件对话框取消消失100ms之后,从隐藏到显示的过程
             setTimeout(function timer() {

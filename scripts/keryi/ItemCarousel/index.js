@@ -198,7 +198,7 @@ class ItemCarousel extends React.Component {
                                 src={itemItem["src"]}
                                 style={{width: (100 / split) + "%", left: (move + itemIndex) * (100 / split) + "%"}}
                                 close={itemItem["statusClose"]}
-                                onClose={onItemCarouselControlClose.bind(this)}
+                                onClose={onItemCarouselControlClose.bind(this, itemItem["src"])}
                             />
                         )
                     }.bind(this)) : (

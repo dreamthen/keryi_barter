@@ -599,7 +599,9 @@ class PersonalView extends React.Component {
             //个人页资源详情资源交换列表是否显示描述浮层
             viewDetailItemHover,
             //改变个人信息资源详情资源交换列表状态
-            changeExchangeStatus
+            changeExchangeStatus,
+            //改变个人信息资源详情资源交换列表元素个数
+            onChangeExchangeItemListHandler
         } = this.props;
         return (
             <section className="keryi_barter_personal_view_details_item_carousel">
@@ -635,6 +637,7 @@ class PersonalView extends React.Component {
                         close={itemClose}
                         noneAlert="您还没有过资源交换~"
                         className="keryi_barter_personal_view_details_itemCarousel"
+                        onChange={onChangeExchangeItemListHandler.bind(this)}
                     />
                 </main>
             </section>
@@ -1227,6 +1230,7 @@ function mapDispatchToProps(dispatch, ownProps) {
         },
         /**
          * 改变个人信息资源详情资源交换列表状态
+         * @param key
          */
         changeExchangeStatus(key) {
             const {
@@ -1248,6 +1252,13 @@ function mapDispatchToProps(dispatch, ownProps) {
                 } = this.state;
                 !isMatched ? dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(viewDetailItemExchange, false, exchangeStatus)) : dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(viewDetailMatchedItemExchange, true, exchangeStatus));
             }.bind(this));
+        },
+        /**
+         * 改变个人信息资源详情资源交换列表元素个数
+         * @param src
+         */
+        onChangeExchangeItemListHandler(src) {
+
         }
     }
 }
