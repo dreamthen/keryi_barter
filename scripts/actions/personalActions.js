@@ -30,19 +30,12 @@ export function getPersonalResourcesList(pageNum, userId) {
                 userId
             },
             function done(response) {
-                //服务器响应数据
-                let data = response.data,
-                    //服务器响应head头部对象
-                    head = data.head,
-                    //服务器响应body主题对象
-                    body = data.body,
-                    //服务器响应code状态码
-                    code = head.code,
-                    //服务器对响应结果描述
-                    msg = head.message;
-                if (code === Success.GET_PERSONAL_RESOURCE_LIST_SUCCESS_CODE) {
-                    dispatch(getPersonalResourcesListAction(body));
-                }
+                //服务器响应body主体对象
+                let body = response;
+                dispatch(getPersonalResourcesListAction(body));
+            }.bind(this),
+            function error(response) {
+
             }.bind(this)
         );
     }.bind(this)
@@ -59,21 +52,14 @@ export function getPersonalResourcesListViewDetails(resourceId) {
             "get",
             {},
             function done(response) {
-                //服务器响应数据
-                let data = response.data,
-                    //服务器响应head头部对象
-                    head = data.head,
-                    //服务器响应body主题对象
-                    body = data.body,
-                    //服务器响应code状态码
-                    code = head.code,
-                    //服务器对响应结果描述
-                    msg = head.message;
-                if (code === Success.GET_RESOURCE_LIST_VIEW_DETAIL_SUCCESS_CODE) {
-                    dispatch(rememberPersonalResourcesListViewDetails(body));
-                    dispatch(getPersonalUserHeadPortraitViewDetail(body));
-                    dispatch(getPersonalResourcesListViewDetailsAction(body));
-                }
+                //服务器响应body主体对象
+                let body = response;
+                dispatch(rememberPersonalResourcesListViewDetails(body));
+                dispatch(getPersonalUserHeadPortraitViewDetail(body));
+                dispatch(getPersonalResourcesListViewDetailsAction(body));
+            }.bind(this),
+            function error(response) {
+
             }.bind(this)
         );
     }.bind(this)
@@ -101,21 +87,14 @@ export function getPersonalResourcesListViewDetailsItemList(itemCurrent, userId,
                 initiativeResourceId: resourceId
             },
             function done(response) {
-                //服务器响应数据
-                let data = response.data,
-                    //服务器响应head头部对象
-                    head = data.head,
-                    //服务器响应body主题对象
-                    body = data.body,
-                    //服务器响应code状态码
-                    code = head.code,
-                    //服务器对响应结果描述
-                    msg = head.message;
-                if (code === Success.GET_RESOURCE_LIST_VIEW_DETAIL_ITEM_LIST_SUCCESS_CODE) {
-                    dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(body, matched, exchangeStatus));
-                    remember && dispatch(rememberPersonalResourcesListViewDetailsItemListAction(body));
-                    matched && dispatch(rememberPersonalResourcesListViewDetailsMatchedItemListAction(body));
-                }
+                //服务器响应body主体对象
+                let body = response;
+                dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(body, matched, exchangeStatus));
+                remember && dispatch(rememberPersonalResourcesListViewDetailsItemListAction(body));
+                matched && dispatch(rememberPersonalResourcesListViewDetailsMatchedItemListAction(body));
+            }.bind(this),
+            function error(response) {
+
             }.bind(this)
         )
     }.bind(this)
@@ -143,23 +122,16 @@ export function havePersonalResourcesExchange({initiativeResourceId, passiveReso
                 passiveUserId
             },
             function done(response) {
-                //服务器响应数据
-                let data = response.data,
-                    //服务器响应head头部对象
-                    head = data.head,
-                    //服务器响应body主题对象
-                    body = data.body,
-                    //服务器响应code状态码
-                    code = head.code,
-                    //服务器对响应结果描述
-                    msg = head.message;
-                if (code === Success.HAVE_EXCHANGE_SUCCESS_CODE) {
-                    dispatch(closePersonalViewDetailsFooter());
-                    dispatch(getPersonalResourcesListViewDetails.bind(this)(initiativeUserId));
-                    dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, initiativeUserId, initiativeResourceId, true));
-                    dispatch(openPersonalViewDetailsItemClose());
-                    dispatch(openPersonalViewDetailsAside());
-                }
+                //服务器响应body主体对象
+                let body = response;
+                dispatch(closePersonalViewDetailsFooter());
+                dispatch(getPersonalResourcesListViewDetails.bind(this)(initiativeUserId));
+                dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, initiativeUserId, initiativeResourceId, true));
+                dispatch(openPersonalViewDetailsItemClose());
+                dispatch(openPersonalViewDetailsAside());
+            }.bind(this),
+            function error(response) {
+
             }.bind(this)
         )
     }.bind(this)
@@ -178,6 +150,9 @@ export function deletePersonalResourcesExchange(exchangeId) {
             {},
             function done(response) {
 
+            }.bind(this),
+            function error(response) {
+
             }.bind(this)
         );
     }.bind(this)
@@ -186,6 +161,7 @@ export function deletePersonalResourcesExchange(exchangeId) {
 /**
  * 获取个人信息
  * @param userId
+ * @returns {function(this:getPersonalInformation)}
  */
 export function getPersonalInformation(userId) {
     return function dispatcher(dispatch) {
@@ -194,26 +170,19 @@ export function getPersonalInformation(userId) {
             "get",
             {},
             function done(response) {
-                //服务器响应数据
-                let data = response.data,
-                    //服务器响应head头部对象
-                    head = data.head,
-                    //服务器响应body主题对象
-                    body = data.body,
-                    //服务器响应code状态码
-                    code = head.code,
-                    //服务器对响应结果描述
-                    msg = head.message;
-                if (code === Success.GET_PERSONAL_INFORMATION_SUCCESS_CODE) {
-                    //更新并保存个人信息
-                    dispatch(saveChangePersonalInformation({
-                        username: body["username"],
-                        email: body["email"],
-                        phone: body["phone"],
-                        motto: body["motto"]
-                    }));
-                }
-            }
+                //服务器响应body主体对象
+                let body = response;
+                //更新并保存个人信息
+                dispatch(saveChangePersonalInformation({
+                    username: body["username"],
+                    email: body["email"],
+                    phone: body["phone"],
+                    motto: body["motto"]
+                }));
+            }.bind(this),
+            function error(response) {
+
+            }.bind(this)
         );
     }.bind(this)
 }
@@ -226,7 +195,7 @@ export function getPersonalInformation(userId) {
  * @param phone
  * @param motto
  * @param current
- * @returns {function(this:getResourcesList)}
+ * @returns {function(this:saveUpdatePersonalInformation)}
  */
 export function saveUpdatePersonalInformation(userId, username, email, phone, motto, current) {
     return function dispatcher(dispatch) {
@@ -241,33 +210,26 @@ export function saveUpdatePersonalInformation(userId, username, email, phone, mo
                 motto
             },
             function done(response) {
-                //服务器响应数据
-                let data = response.data,
-                    //服务器响应head头部对象
-                    head = data.head,
-                    //服务器响应body主题对象
-                    body = data.body,
-                    //服务器响应code状态码
-                    code = head.code,
-                    //服务器对响应结果描述
-                    msg = head.message;
-                if (code === Success.SAVE_CHANGE_PERSONAL_INFORMATION_SUCCESS_CODE) {
-                    //控制Modal组件对话框隐藏并消失
-                    this.setState({
-                        viewPersonalBarterVisible: false
-                    });
-                    //更新并保存个人信息
-                    dispatch(saveChangePersonalInformation({
-                        username,
-                        email,
-                        phone,
-                        motto
-                    }));
-                    //改变个人信息编辑状态,使得其不可编辑
-                    dispatch(closeChangePersonalInformation());
-                    //获取个人页资源列表
-                    dispatch(getPersonalResourcesList.bind(this)(current, userId));
-                }
+                //服务器响应body主体对象
+                let body = response;
+                //控制Modal组件对话框隐藏并消失
+                this.setState({
+                    viewPersonalBarterVisible: false
+                });
+                //更新并保存个人信息
+                dispatch(saveChangePersonalInformation({
+                    username,
+                    email,
+                    phone,
+                    motto
+                }));
+                //改变个人信息编辑状态,使得其不可编辑
+                dispatch(closeChangePersonalInformation());
+                //获取个人页资源列表
+                dispatch(getPersonalResourcesList.bind(this)(current, userId));
+            }.bind(this),
+            function error(response) {
+
             }.bind(this)
         )
     }.bind(this)

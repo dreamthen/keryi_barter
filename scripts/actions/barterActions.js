@@ -25,22 +25,15 @@ export function getResourcesList(pageNum) {
                 pageNum
             },
             function done(response) {
-                //服务器响应数据
-                let data = response.data,
-                    //服务器响应body主题对象
-                    body = data.body,
-                    //服务器响应head头部对象
-                    head = data.head,
-                    //服务器响应code状态码
-                    code = head.code,
-                    //服务器对响应结果描述
-                    msg = head.message;
-                if (code === Success.GET_RESOURCE_LIST_SUCCESS_CODE) {
-                    dispatch(getResourcesListAction(body));
-                }
-            }
+                //服务器响应body主体对象
+                let body = response;
+                dispatch(getResourcesListAction(body));
+            }.bind(this),
+            function error(response) {
+
+            }.bind(this)
         );
-    }
+    }.bind(this)
 }
 
 /**
@@ -54,20 +47,13 @@ export function getResourcesListViewDetails(resourceId) {
             "get",
             {},
             function done(response) {
-                //服务器响应数据
-                let data = response.data,
-                    //服务器响应body主题对象
-                    body = data.body,
-                    //服务器响应head头部对象
-                    head = data.head,
-                    //服务器响应code状态码
-                    code = head.code,
-                    //服务器对响应结果描述
-                    msg = head.message;
-                if (code === Success.GET_RESOURCE_LIST_VIEW_DETAIL_SUCCESS_CODE) {
-                    dispatch(getUserHeadPortraitViewDetail(body));
-                    dispatch(getResourcesListViewDetailsAction(body));
-                }
+                //服务器响应body主体对象
+                let body = response;
+                dispatch(getUserHeadPortraitViewDetail(body));
+                dispatch(getResourcesListViewDetailsAction(body));
+            }.bind(this),
+            function error() {
+
             }.bind(this)
         );
     }.bind(this)
@@ -89,6 +75,9 @@ export function updateLikeCount(resourceId, likeCount) {
                 likeCount
             },
             function done(response) {
+
+            }.bind(this),
+            function error(response) {
 
             }.bind(this)
         );
@@ -115,6 +104,9 @@ export function haveResourcesExchange({initiativeResourceId, passiveResourceId, 
                 passiveUserId
             },
             function done(response) {
+
+            }.bind(this),
+            function error(response) {
 
             }.bind(this)
         )

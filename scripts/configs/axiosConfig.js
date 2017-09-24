@@ -16,7 +16,7 @@ const keryiAxiosConfig = {
      * @param data
      * @param done
      */
-    axiosRequest: function (url, method, data, done) {
+    axiosRequest: function (url, method, data, done, error) {
         axios({
             //服务器请求地址
             url,
@@ -45,14 +45,21 @@ const keryiAxiosConfig = {
      */
     interceptorsHandler: function () {
         axios.interceptors.response.use(function (response) {
+            //服务器响应数据
             let data = response.data,
+                //服务器响应头状态码
                 status = response.status,
+                //服务器响应head头部对象
                 head = data.head,
+                //服务器响应body主体对象
                 body = data.body,
+                //服务器响应code状态码
                 code = head.code;
             if (code === Success.SUCCESS_CODE) {
                 return body;
             }
+            requestError.error(status);
+            return Promise.reject(response);
         }, function () {
 
         });

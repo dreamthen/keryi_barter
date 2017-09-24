@@ -158,7 +158,7 @@ export function setTargetTagIdConfig(payload) {
  * @param initLeft
  * @param tag
  * @param tagList
- * @returns {dispatcher}
+ * @returns {function(this:changeTagFunction)}
  */
 export function changeTagFunction(key, initLeft, tag, tagList) {
     return function dispatcher(dispatch) {
@@ -168,46 +168,39 @@ export function changeTagFunction(key, initLeft, tag, tagList) {
             "get",
             {},
             function done(response) {
-                //服务器响应数据
-                let data = response.data,
-                    //服务器响应body主题对象
-                    body = data.body,
-                    //服务器响应head头部对象
-                    head = data.head,
-                    //服务器响应code状态码
-                    code = head.code,
-                    //服务器对响应结果描述
-                    msg = head.message;
-                if (code === Success.GET_RESOURCE_TAG_SUCCESS_CODE) {
-                    let rect = getFocusPosition();
-                    let tagListNow = [];
-                    //设置选择资源类型下拉框光标距离添加对话框左边的位置
-                    (key === modalComponentConfig[6]["key"]) && dispatch(changeDistance({
-                        rectLeft: rect.left,
-                        initLeft
-                    }));
-                    //设置选择目标资源类型下拉框光标距离添加对话框左边的位置
-                    (key === modalComponentConfig[8]["key"]) && dispatch(changeTargetDistance({
-                        rectLeft: rect.left,
-                        initLeft
-                    }));
-                    body.forEach(function tagger(tagItem, tagIndex) {
-                        let flag = false;
-                        tagList.forEach(function tagBody(item, index) {
-                            if (tagItem["id"] === item["id"]) {
-                                flag = true;
-                                return false;
-                            }
-                        });
-                        if (!flag) {
-                            tagListNow.push(tagItem);
+                //服务器响应body主体对象
+                let body = response;
+                let rect = getFocusPosition();
+                let tagListNow = [];
+                //设置选择资源类型下拉框光标距离添加对话框左边的位置
+                (key === modalComponentConfig[6]["key"]) && dispatch(changeDistance({
+                    rectLeft: rect.left,
+                    initLeft
+                }));
+                //设置选择目标资源类型下拉框光标距离添加对话框左边的位置
+                (key === modalComponentConfig[8]["key"]) && dispatch(changeTargetDistance({
+                    rectLeft: rect.left,
+                    initLeft
+                }));
+                body.forEach(function tagger(tagItem, tagIndex) {
+                    let flag = false;
+                    tagList.forEach(function tagBody(item, index) {
+                        if (tagItem["id"] === item["id"]) {
+                            flag = true;
+                            return false;
                         }
                     });
-                    //设置对话框模糊搜索资源类型标签组
-                    (key === modalComponentConfig[6]["key"]) && dispatch(changeTagList({pullList: tagListNow}));
-                    //设置对话框模糊搜索选择目标资源类型标签组
-                    (key === modalComponentConfig[8]["key"]) && dispatch(changeTagList({pullListTarget: tagListNow}));
-                }
+                    if (!flag) {
+                        tagListNow.push(tagItem);
+                    }
+                });
+                //设置对话框模糊搜索资源类型标签组
+                (key === modalComponentConfig[6]["key"]) && dispatch(changeTagList({pullList: tagListNow}));
+                //设置对话框模糊搜索选择目标资源类型标签组
+                (key === modalComponentConfig[8]["key"]) && dispatch(changeTagList({pullListTarget: tagListNow}));
+            }.bind(this),
+            function error(response) {
+
             }.bind(this)
         );
     }
@@ -223,7 +216,7 @@ export function changeTagFunction(key, initLeft, tag, tagList) {
  * @param tags
  * @param targetTags
  * @param pageNum
- * @returns {dispatcher}
+ * @returns {function(this:publishResource)}
  */
 export function publishResource(userId, title, intro, price_worth, imgUrls, tags, targetTags, pageNum) {
     return function dispatcher(dispatch) {
@@ -241,40 +234,31 @@ export function publishResource(userId, title, intro, price_worth, imgUrls, tags
                 targetTags
             },
             function done(response) {
-                //服务器响应数据
-                let data = response.data,
-                    //服务器响应body主题对象
-                    body = data.body,
-                    //服务器响应head头部对象
-                    head = data.head,
-                    //服务器响应code状态码
-                    code = head.code,
-                    //服务器对响应结果描述
-                    msg = head.message;
-                if (code === Success.PUBLISH_RESOURCE_SUCCESS_CODE) {
-                    this.setState({
-                        //控制对话框隐藏并消失
-                        addBarterVisible: false,
-                        //设置对话框标题为空
-                        title: "",
-                        //设置对话框资源描述为空
-                        description: "",
-                        //设置对话框选择资源类型为空
-                        sourceTag: "",
-                        //设置对话框选择目标资源类型为空
-                        targetSourceTag: "",
-                        //控制选择资源类型框消失
-                        pullListDownVisible: false,
-                        //控制选择目标资源类型框消失
-                        pullListTargetDownVisible: false
-                    });
-                    //重置对话框状态
-                    dispatch(resetModalStatus());
-                    //获取资源列表
-                    dispatch(getResourcesList(pageNum));
-                } else {
+                //服务器响应body主体对象
+                let body = response;
+                this.setState({
+                    //控制对话框隐藏并消失
+                    addBarterVisible: false,
+                    //设置对话框标题为空
+                    title: "",
+                    //设置对话框资源描述为空
+                    description: "",
+                    //设置对话框选择资源类型为空
+                    sourceTag: "",
+                    //设置对话框选择目标资源类型为空
+                    targetSourceTag: "",
+                    //控制选择资源类型框消失
+                    pullListDownVisible: false,
+                    //控制选择目标资源类型框消失
+                    pullListTargetDownVisible: false
+                });
+                //重置对话框状态
+                dispatch(resetModalStatus());
+                //获取资源列表
+                dispatch(getResourcesList(pageNum));
+            }.bind(this),
+            function error(response) {
 
-                }
             }.bind(this)
         )
     }.bind(this)
