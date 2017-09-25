@@ -484,15 +484,3 @@ export function closePersonalViewDetailsItemHover() {
         type: appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_ITEM_HOVER"]
     }
 }
-
-/**
- * 改变个人信息资源详情资源交换列表元素个数Action
- * @param payload
- * @returns {{type: *, payload: *}}
- */
-export function closePersonalViewDetailsItemList(payload) {
-    return {
-        type: appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_ITEM_LIST"],
-        payload
-    }
-}
