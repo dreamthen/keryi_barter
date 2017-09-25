@@ -159,6 +159,8 @@ class PersonalView extends React.Component {
             absoluteTop: 0,
             //个人信息资源详情资源交换列表状态切换标识
             exchangeStatus: exchangeStatusConfig[0]["key"],
+            //个人信息资源详情资源交换列表状态描述
+            exchangeStatusText: exchangeStatusConfig[0]["value"],
             //判断个人信息编辑动画是否可渲染
             personalInformationAnimationDisabled: false,
             //控制Modal组件对话框显示、隐藏或者消失
@@ -615,7 +617,7 @@ class PersonalView extends React.Component {
                                 <li
                                     key={exchangeItem["key"]}
                                     className={exchangeItem["key"] === exchangeStatus ? exchangeStatusClassName[0] : exchangeStatusClassName[1]}
-                                    onClick={changeExchangeStatus.bind(this, exchangeItem["key"])}
+                                    onClick={changeExchangeStatus.bind(this, exchangeItem["key"], exchangeItem["value"])}
                                 >
                                     <i className={exchangeItem["className"]}>
 
@@ -1056,6 +1058,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             } = this.props;
             this.setState({
                 exchangeStatus: exchangeStatusConfig[0]["key"],
+                exchangeStatusText: exchangeStatusConfig[0]["value"],
                 isMatched: true
             }, function exchangerStatus() {
                 const {
@@ -1084,6 +1087,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             } = this.props;
             this.setState({
                 exchangeStatus: exchangeStatusConfig[0]["key"],
+                exchangeStatusText: exchangeStatusConfig[0]["value"],
                 isMatched: false
             }, function exchangerStatus() {
                 const {
@@ -1231,8 +1235,9 @@ function mapDispatchToProps(dispatch, ownProps) {
         /**
          * 改变个人信息资源详情资源交换列表状态
          * @param key
+         * @param value
          */
-        changeExchangeStatus(key) {
+        changeExchangeStatus(key, value) {
             const {
                 //判断个人信息资源详情是否是匹配资源
                 isMatched
@@ -1244,7 +1249,8 @@ function mapDispatchToProps(dispatch, ownProps) {
                 viewDetailMatchedItemExchange
             } = this.props;
             this.setState({
-                exchangeStatus: key
+                exchangeStatus: key,
+                exchangeStatusText: value
             }, function exchangerStatus() {
                 const {
                     //个人信息资源详情资源交换列表状态切换标识

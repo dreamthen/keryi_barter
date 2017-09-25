@@ -40,9 +40,7 @@ class ItemCarousel extends React.Component {
         //ItemCarousel组件元素轮播器状态Mode配置
         exchangeStatusConfig: PropTypes.array,
         //判断ItemCarousel组件元素轮播器中的元素组是否可关闭(必须为布尔类型)
-        close: PropTypes.bool.isRequired,
-        //判断ItemCarousel组件元素轮播器中的元素组是否可关闭标识位
-        closeJudgement: PropTypes.array
+        close: PropTypes.bool.isRequired
     };
 
     constructor(props) {
@@ -156,10 +154,6 @@ class ItemCarousel extends React.Component {
             split,
             //元素组
             itemList,
-            //判断元素轮播器中的元素组是否可关闭
-            close,
-            //判断元素轮播器中的元素组是否可关闭标识位
-            closeJudgement,
             //当itemList元素不存在或者itemList元素个数为零时,为空提示语
             noneAlert,
             //当itemList元素不存在或者itemList元素个数为零时,为空图标className,外部传入样式表
