@@ -140,10 +140,13 @@ export function havePersonalResourcesExchange({initiativeResourceId, passiveReso
 /**
  * 个人信息页面删除资源交换列表
  * @param exchangeId
- * @param src
+ * @param userId
+ * @param id
+ * @param itemCurrent
+ * @param exchangeStatus
  * @returns {function(this:deletePersonalResourcesExchange)}
  */
-export function deletePersonalResourcesExchange(exchangeId, src) {
+export function deletePersonalResourcesExchange(exchangeId, userId, id, itemCurrent, exchangeStatus) {
     return function dispatcher(dispatch) {
         keryiAxiosConfig.axiosRequest(
             api.DELETE_EXCHANGE_LIST + "/" + exchangeId,
@@ -152,18 +155,7 @@ export function deletePersonalResourcesExchange(exchangeId, src) {
             function done(response) {
                 //服务器响应body主体对象
                 let body = response;
-                const {
-                    //判断个人信息资源详情是否是匹配资源
-                    isMatched,
-                    //个人信息资源详情资源交换列表状态切换标识
-                    exchangeStatus
-                } = this.state;
-                const {
-                    //个人页资源详情资源交换列表
-                    viewDetailItemExchange,
-                    //个人页资源详情匹配资源交换列表
-                    viewDetailMatchedItemExchange
-                } = this.props;
+                dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id, true, false, exchangeStatus));
             }.bind(this),
             function error(response) {
 

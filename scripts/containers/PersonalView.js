@@ -1256,10 +1256,21 @@ function mapDispatchToProps(dispatch, ownProps) {
         /**
          * 改变个人信息资源详情资源交换列表元素个数
          * @param exchangeId
-         * @param src
          */
-        onChangeExchangeItemListHandler(exchangeId, src) {
-            dispatch(deletePersonalResourcesExchange.bind(this, exchangeId, src));
+        onChangeExchangeItemListHandler(exchangeId) {
+            const {
+                //用户登录的id
+                userId,
+                //个人信息资源详情资源交换列表状态切换标识
+                exchangeStatus
+            } = this.state;
+            const {
+                //个人页资源详情对象
+                viewDetailKeryiCard,
+                //个人页资源详情资源交换列表页码
+                itemCurrent
+            } = this.props;
+            dispatch(deletePersonalResourcesExchange.bind(this)(exchangeId, userId, viewDetailKeryiCard["id"], itemCurrent, exchangeStatus));
         }
     }
 }
