@@ -17,7 +17,7 @@ const ITEM_PAGE_SIZE = 4;
  * 获取个人页资源列表
  * @param pageNum
  * @param userId
- * @returns {function(this:getResourcesList)}
+ * @returns {function(this:getPersonalResourcesList)}
  */
 export function getPersonalResourcesList(pageNum, userId) {
     return function dispatcher(dispatch) {
@@ -140,16 +140,30 @@ export function havePersonalResourcesExchange({initiativeResourceId, passiveReso
 /**
  * 个人信息页面删除资源交换列表
  * @param exchangeId
+ * @param src
  * @returns {function(this:deletePersonalResourcesExchange)}
  */
-export function deletePersonalResourcesExchange(exchangeId) {
+export function deletePersonalResourcesExchange(exchangeId, src) {
     return function dispatcher(dispatch) {
         keryiAxiosConfig.axiosRequest(
             api.DELETE_EXCHANGE_LIST + "/" + exchangeId,
             "delete",
             {},
             function done(response) {
-
+                //服务器响应body主体对象
+                let body = response;
+                const {
+                    //判断个人信息资源详情是否是匹配资源
+                    isMatched,
+                    //个人信息资源详情资源交换列表状态切换标识
+                    exchangeStatus
+                } = this.state;
+                const {
+                    //个人页资源详情资源交换列表
+                    viewDetailItemExchange,
+                    //个人页资源详情匹配资源交换列表
+                    viewDetailMatchedItemExchange
+                } = this.props;
             }.bind(this),
             function error(response) {
 
@@ -476,5 +490,17 @@ export function openPersonalViewDetailsItemHover() {
 export function closePersonalViewDetailsItemHover() {
     return {
         type: appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_ITEM_HOVER"]
+    }
+}
+
+/**
+ * 改变个人信息资源详情资源交换列表元素个数Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function closePersonalViewDetailsItemList(payload) {
+    return {
+        type: appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_ITEM_LIST"],
+        payload
     }
 }

@@ -15,6 +15,7 @@ const keryiAxiosConfig = {
      * @param method
      * @param data
      * @param done
+     * @param error
      */
     axiosRequest: function (url, method, data, done, error) {
         axios({
@@ -34,7 +35,7 @@ const keryiAxiosConfig = {
             //服务器设置set_cookie JSESSIONID
             withCredentials: true
         }).then(
-            done
+            done, error
         ).catch(
             //响应抛出错误或者异常回调函数
             this.errorHandler
@@ -45,7 +46,6 @@ const keryiAxiosConfig = {
      */
     interceptorsHandler: function () {
         axios.interceptors.response.use(function (response) {
-            console.log(response);
             //服务器响应数据
             let data = response.data,
                 //服务器响应头状态码
@@ -59,7 +59,6 @@ const keryiAxiosConfig = {
             if (code === Success.SUCCESS_CODE) {
                 return body;
             }
-            console.log(status);
             requestError.error(status);
             return Promise.reject(response);
         }, function () {

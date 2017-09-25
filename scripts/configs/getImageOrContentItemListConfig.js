@@ -16,7 +16,8 @@ export function getImageOrContentItemListConfig(exchangePropertyList, matched, e
         if (listItem["status"] && exchangeStatus && listItem["status"] !== exchangeStatus) {
             return false;
         }
-        let passiveResource = listItem["passiveResource"],
+        let id = listItem["id"],
+            passiveResource = listItem["passiveResource"],
             titleProperty = passiveResource["title"],
             introProperty = passiveResource["intro"],
             closeJudgement = "I",
@@ -27,6 +28,7 @@ export function getImageOrContentItemListConfig(exchangePropertyList, matched, e
             statusProperty = listItem["status"],
             statusCloseJudgement = matched ? false : statusProperty !== closeJudgement;
         let itemProperty = {
+            id,
             src: (imgUrlsProperty && imgUrlsProperty.length > 0) ? imgUrlsProperty[0]["src"] : "images/keryiBarter_headPortrait.png",
             title: titleProperty,
             intro: introProperty,

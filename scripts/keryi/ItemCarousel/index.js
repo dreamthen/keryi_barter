@@ -122,7 +122,7 @@ class ItemCarousel extends React.Component {
     /**
      * ItemCarousel组件元素轮播器控制Item组件元素关闭,外部传入的关闭方法
      */
-    onItemCarouselControlClose(src) {
+    onItemCarouselControlClose(exchangeId, src) {
         const {
             //元素组
             itemList,
@@ -139,11 +139,11 @@ class ItemCarousel extends React.Component {
             }, function itemCarouseler() {
                 //FIXME 这里设置一个时间控制器,在itemCarousel组件元素容器关闭时,先控制其所在的容器隐藏,在500ms之后设置其所在的容器改变其中的元素组或者关闭元素轮播器
                 setTimeout(function timer() {
-                    onChange(src);
+                    onChange(exchangeId, src);
                 }.bind(this), 500);
             }.bind(this));
         } else {
-            onChange(src);
+            onChange(exchangeId, src);
         }
     }
 
@@ -198,7 +198,7 @@ class ItemCarousel extends React.Component {
                                 src={itemItem["src"]}
                                 style={{width: (100 / split) + "%", left: (move + itemIndex) * (100 / split) + "%"}}
                                 close={itemItem["statusClose"]}
-                                onClose={onItemCarouselControlClose.bind(this, itemItem["src"])}
+                                onClose={onItemCarouselControlClose.bind(this, itemItem["exchangeId"])}
                             />
                         )
                     }.bind(this)) : (

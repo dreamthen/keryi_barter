@@ -75,7 +75,7 @@ export function appReducers(state = defaultState, actions) {
                 case "add":
                     return insteadState.insteadArrayAddState(state, newState, "imageList", {src: newState["src"]});
                 case "delete":
-                    return insteadState.insteadArrayRemoveState(state, newState, "imageList", function filter(item, index) {
+                    return insteadState.insteadArrayObjectRemoveState(state, newState, "imageList", function filter(item, index) {
                         return item["src"] !== newState["src"];
                     });
                 default:
@@ -94,7 +94,7 @@ export function appReducers(state = defaultState, actions) {
                         tag: newState["tag"]
                     });
                 case "delete":
-                    return insteadState.insteadArrayRemoveState(state, newState, "tagList", function filter(item, index) {
+                    return insteadState.insteadArrayObjectRemoveState(state, newState, "tagList", function filter(item, index) {
                         return item["id"] !== newState["id"];
                     });
                 default:
@@ -110,7 +110,7 @@ export function appReducers(state = defaultState, actions) {
                         tag: newState["tag"]
                     });
                 case "delete":
-                    return insteadState.insteadArrayRemoveState(state, newState, "tagTargetList", function filter(item, index) {
+                    return insteadState.insteadArrayObjectRemoveState(state, newState, "tagTargetList", function filter(item, index) {
                         return item["id"] !== newState["id"];
                     });
                 default:
@@ -125,7 +125,7 @@ export function appReducers(state = defaultState, actions) {
                         id: newState["id"]
                     });
                 case "delete":
-                    return insteadState.insteadArrayRemoveState(state, newState, "tagIdList", function filter(item, index) {
+                    return insteadState.insteadArrayObjectRemoveState(state, newState, "tagIdList", function filter(item, index) {
                         return item["id"] !== newState["id"];
                     });
                 default:
@@ -140,7 +140,7 @@ export function appReducers(state = defaultState, actions) {
                         id: newState["id"]
                     });
                 case "delete":
-                    return insteadState.insteadArrayRemoveState(state, newState, "tagTargetIdList", function filter(item, index) {
+                    return insteadState.insteadArrayObjectRemoveState(state, newState, "tagTargetIdList", function filter(item, index) {
                         return item["id"] !== newState["id"];
                     });
                 default:

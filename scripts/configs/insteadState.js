@@ -13,7 +13,7 @@ const insteadState = {
         return this.insteadObjState(state, newState);
     },
     //redux reducer删除数组元素并更换对象state状态属性
-    insteadArrayRemoveState(state, newState, type, filter) {
+    insteadArrayObjectRemoveState(state, newState, type, filter) {
         newState[type] = state[type].filter(filter);
         return this.insteadObjState(state, newState);
     }

@@ -1250,15 +1250,16 @@ function mapDispatchToProps(dispatch, ownProps) {
                     //个人信息资源详情资源交换列表状态切换标识
                     exchangeStatus
                 } = this.state;
-                !isMatched ? dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(viewDetailItemExchange, false, exchangeStatus)) : dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(viewDetailMatchedItemExchange, true, exchangeStatus));
+                !isMatched ? dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(viewDetailItemExchange, isMatched, exchangeStatus)) : dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(viewDetailMatchedItemExchange, isMatched, exchangeStatus));
             }.bind(this));
         },
         /**
          * 改变个人信息资源详情资源交换列表元素个数
+         * @param exchangeId
          * @param src
          */
-        onChangeExchangeItemListHandler(src) {
-
+        onChangeExchangeItemListHandler(exchangeId, src) {
+            dispatch(deletePersonalResourcesExchange.bind(this, exchangeId, src));
         }
     }
 }

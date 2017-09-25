@@ -235,6 +235,9 @@ export function personalReducers(state = defaultState, actions) {
                 viewDetailItemImageOrContentList: [],
                 viewDetailItemExchange: {}
             });
+        case appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_ITEM_LIST"]:
+
+            return insteadState;
     }
     return state;
 }
