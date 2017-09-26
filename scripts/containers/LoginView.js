@@ -508,7 +508,11 @@ class LoginView extends React.Component {
                 {renderLogin.bind(this)()}
                 {/*login页面注册模块*/}
                 {renderRegister.bind(this)()}
-                <Loading/>
+                <Loading
+                    loadingIconClassName="iconfontKeryiBarter keryiBarter-keryiLogo"
+                    loadingTitle="壳艺"
+                    loadingText="玩儿命加载中......"
+                />
             </div>
         )
     }

@@ -19,9 +19,9 @@
     width: 100%;
     height: 100%;
     z-index: 9991;
-    opacity: .8;
+    opacity: .7;
     background-color: #fff;
-    filter: blur(10px);
+    filter: blur(5px);
 }
 
 .keryi_barter_loading_container > .keryi_barter_loading_main_holder {
@@ -36,7 +36,29 @@
     z-index: 9992;
 }
 
-.keryi_barter_loading_main_holder > .keryiBarter-keryiLogo {
+.keryi_barter_loading_main_holder > .keryi_barter_loading_loadingAnimation {
+
+}
+
+.keryi_barter_loading_loadingAnimation > .keryi_barter_loading_loadingAnimation_title {
+    position: relative;
+    top: 1px;
+    right: 6px;
     color: #63A8F0;
-    font-size: 50px;
+    font-weight: bolder;
+    font-family: "Microsoft YaHei UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+.keryi_barter_loading_loadingAnimation > .keryiBarter-keryiLogo {
+    color: #63A8F0;
+    font-size: 52px;
+}
+
+.keryi_barter_loading_main_holder > .keryi_barter_loading_description {
+    margin-top: 10px;
+    font-style: normal;
+    font-size: 16px;
+    font-family: "Microsoft YaHei UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #63A8F0;
 }

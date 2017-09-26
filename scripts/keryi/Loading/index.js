@@ -11,7 +11,14 @@ import "./keryi_barter_loading.css";
  * keryi_barter Loading请求加载组件
  */
 class Loading extends React.Component {
-    static propTypes = {};
+    static propTypes = {
+        //Loading请求加载组件描述文本
+        loadingText: PropTypes.string,
+        //Loading请求加载组件描述标题
+        loadingTitle: PropTypes.string,
+        //Loading请求加载组件Icon className样式表
+        loadingIconClassName: PropTypes.string
+    };
 
     constructor(props) {
         super(props);
@@ -35,15 +42,31 @@ class Loading extends React.Component {
 
     //keryi_barter Loading请求加载组件渲染
     _render() {
+        const {
+            //Loading请求加载组件描述文本
+            loadingText,
+            //Loading请求加载组件描述标题
+            loadingTitle,
+            //Loading请求加载组件Icon className样式表
+            loadingIconClassName
+        } = this.props;
         ReactDOM.render(
             <section className="keryi_barter_loading_container">
                 <div className="keryi_barter_loading_shadow">
 
                 </div>
                 <main className="keryi_barter_loading_main_holder">
-                    <i className="iconfontKeryiBarter keryiBarter-keryiLogo">
+                    <div className="keryi_barter_loading_loadingAnimation">
+                        <i className={loadingIconClassName}>
 
-                    </i>
+                        </i>
+                        <sub className="keryi_barter_loading_loadingAnimation_title">
+                            {loadingTitle}
+                        </sub>
+                    </div>
+                    <dfn className="keryi_barter_loading_description">
+                        {loadingText}
+                    </dfn>
                 </main>
             </section>, this.loadingContainer)
     }
