@@ -3,7 +3,12 @@
  */
 import React from "react";
 import {connect} from "react-redux";
-import {Button, Prompt, Input} from "../keryi";
+import {
+    Button,
+    Input,
+    Loading,
+    Prompt
+} from "../keryi";
 import Error from "../prompt/errorPrompt";
 import loginComponentConfig from "../configs/loginComponentConfig";
 import registerComponentConfig from "../configs/registerComponentConfig";
@@ -503,6 +508,7 @@ class LoginView extends React.Component {
                 {renderLogin.bind(this)()}
                 {/*login页面注册模块*/}
                 {renderRegister.bind(this)()}
+                <Loading/>
             </div>
         )
     }

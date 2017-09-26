@@ -15,6 +15,8 @@ import Input from "./Input";
 import ItemCarousel from "./ItemCarousel";
 //导入keryi_barter KeryiCard卡片组件
 import KeryiCard from "./KeryiCard";
+//导入keryi_barter Loading请求加载组件
+import Loading from "./Loading";
 //导入keryi_barter Modal对话框组件
 import Modal from "./Modal";
 //导入keryi_barter Prompt提示语组件
@@ -35,6 +37,7 @@ const keryi = {
     Input,
     ItemCarousel,
     KeryiCard,
+    Loading,
     Modal,
     Prompt,
     PullListDown,
