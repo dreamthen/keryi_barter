@@ -45,11 +45,17 @@ const keryiAxiosConfig = {
      * axios服务器请求响应集成对象拦截器配置
      */
     interceptorsHandler: function () {
+        //axios request请求拦截器
+        axios.interceptors.request.use(function (request) {
+            return request;
+        }.bind(this), function (error) {
+
+        });
+        //axios response响应拦截器
         axios.interceptors.response.use(function (response) {
+            console.log(response);
             //服务器响应数据
             let data = response.data,
-                //服务器响应头状态码
-                status = response.status,
                 //服务器响应head头部对象
                 head = data.head,
                 //服务器响应body主体对象
@@ -59,10 +65,13 @@ const keryiAxiosConfig = {
             if (code === Success.SUCCESS_CODE) {
                 return body;
             }
-            requestError.error(status);
             return Promise.reject(response);
-        }, function () {
-
+        }.bind(this), function (error) {
+            //服务器响应对象
+            let response = error.response,
+                //服务器响应头状态码
+                status = response.status;
+            requestError.error(status);
         });
     },
     /**

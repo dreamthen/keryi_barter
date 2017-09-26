@@ -11,7 +11,9 @@ const requestError = {
         switch (status) {
             //401(会话过期,重新登录)跳转到login页面
             case 401:
-                window.location.href = "./login.html";
+                setTimeout(function timer() {
+                    window.location.href = "./login.html";
+                }, 1500);
                 break;
             //404(not found)跳转到notFound页面
             case 404:

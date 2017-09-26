@@ -591,7 +591,9 @@ class PersonalView extends React.Component {
     renderModalItemCarousel() {
         const {
             //个人信息资源详情资源交换列表状态切换标识
-            exchangeStatus
+            exchangeStatus,
+            //个人信息资源详情资源交换列表状态描述
+            exchangeStatusText
         } = this.state;
         const {
             //个人页资源详情上传图片(第一张)以及标题内容列表
@@ -637,7 +639,7 @@ class PersonalView extends React.Component {
                         exchangeStatusConfig={exchangeStatusConfig}
                         split={4}
                         close={itemClose}
-                        noneAlert="您还没有过资源交换~"
+                        noneAlert={"您还没有\"" + exchangeStatusText + "\"的资源交换记录~"}
                         className="keryi_barter_personal_view_details_itemCarousel"
                         onChange={onChangeExchangeItemListHandler.bind(this)}
                     />
