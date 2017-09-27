@@ -28,7 +28,7 @@ import SpinAnimation from "./SpinAnimation";
 //导入keryi_barter Tag标签组件
 import Tag from "./Tag";
 //导入keryi_barter wait控制请求加载控件
-import wait from "./wait";
+import message from "./message";
 
 //集成keryi组件库
 const keryi = {
@@ -40,12 +40,12 @@ const keryi = {
     ItemCarousel,
     KeryiCard,
     Loading,
+    message,
     Modal,
     Prompt,
     PullListDown,
     SpinAnimation,
-    Tag,
-    wait
+    Tag
 };
 
 //导出keryi组件库

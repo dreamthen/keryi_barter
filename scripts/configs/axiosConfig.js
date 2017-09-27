@@ -4,6 +4,9 @@
 import axios from "axios";
 import Success from "../prompt/successPrompt";
 import requestError from "./requestError";
+import storeLogin from "../configs/storeLoginConfig";
+import storeApp from "../configs/storeAppConfig";
+import {closeLoadingAction} from "../actions/loginActions";
 
 const GET_METHOD = "GET";
 
@@ -53,6 +56,8 @@ const keryiAxiosConfig = {
         });
         //axios response响应拦截器
         axios.interceptors.response.use(function (response) {
+            //控制login页面请求加载Loading模块消失
+            storeLogin.dispatch(closeLoadingAction());
             //服务器响应数据
             let data = response.data,
                 //服务器响应head头部对象
@@ -66,6 +71,8 @@ const keryiAxiosConfig = {
             }
             return Promise.reject(response);
         }.bind(this), function (error) {
+            //控制login页面请求加载Loading模块消失
+            storeLogin.dispatch(closeLoadingAction());
             //服务器响应对象
             let response = error.response,
                 //服务器响应头状态码

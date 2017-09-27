@@ -1,22 +1,28 @@
 /**
  * Created by yinwk on 2017/6/1.
  */
-import React from "react";
+import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {
     Button,
     Input,
-    Prompt,
-    wait
+    Loading,
+    Prompt
 } from "../keryi";
 import Error from "../prompt/errorPrompt";
 import loginComponentConfig from "../configs/loginComponentConfig";
 import registerComponentConfig from "../configs/registerComponentConfig";
 import {
+    //登录
     login,
+    //注册
     register,
+    //将login页面副级容器距离页面最上方的长度设置为100% Action
     descriptionToLoginAction,
-    loginChangeRegisterAction
+    //将login登录模块的内容距离屏幕最左边设置为-100%;login注册模块的内容距离屏幕最左边设置为0 Action
+    loginChangeRegisterAction,
+    //控制login页面请求加载Loading模块显示Action
+    openLoadingAction
 } from "../actions/loginActions";
 import "../../stylesheets/animation.css";
 import "../../stylesheets/login.css";
@@ -25,6 +31,11 @@ import "../../stylesheets/login.css";
 const componentType = ["input"];
 
 class LoginView extends React.Component {
+    static propTypes = {
+        //判断login页面请求加载Loading模块是否显示标识位
+        loadingVisible: PropTypes.bool
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -51,14 +62,12 @@ class LoginView extends React.Component {
      * 组件开始装载
      */
     componentWillMount() {
-
     }
 
     /**
      * 组件结束装载
      */
     componentDidMount() {
-
     }
 
     /**
@@ -141,10 +150,12 @@ class LoginView extends React.Component {
      * 从description介绍模块动画过渡到login登录模块
      */
     descriptionToLogin() {
-        const {dispatch} = this.props;
         const {initLogin} = this;
-        //将login页面副级容器距离页面最上方的长度设置为100%
-        dispatch(descriptionToLoginAction({top: "-100%"}));
+        const {
+            //控制从description介绍模块动画过渡到login登录模块
+            descriptionToLoginHandler
+        } = this.props;
+        descriptionToLoginHandler.bind(this)();
         //初始化login页面登录模块和注册模块输入框数据
         initLogin.bind(this)();
     }
@@ -274,9 +285,14 @@ class LoginView extends React.Component {
     onLoginHandler(e) {
         const {account, password} = this.state;
         const {onCheck} = this;
+        const {
+            //控制login页面请求加载Loading模块显示
+            onLoadingHandler
+        } = this.props;
         //登录校验空值和长度超限
         const check = onCheck.bind(this, "login", loginComponentConfig);
         if (check()) {
+            onLoadingHandler.bind(this)();
             //点击登录,发起keryi_barter login fetch请求
             const login_action = login.bind(this);
             login_action(account, password);
@@ -385,10 +401,12 @@ class LoginView extends React.Component {
      * @param registerLeft
      */
     loginChangeRegister(loginLeft, registerLeft) {
-        const {dispatch} = this.props;
         const {initLogin} = this;
-        //将login登录模块的内容距离屏幕最左边设置为-100%;login注册模块的内容距离屏幕最左边设置为0
-        dispatch(loginChangeRegisterAction({loginLeft, registerLeft}));
+        const {
+            //控制从login登录模块动画过渡到register注册模块或者从register注册模块动画过渡到login登录模块
+            loginChangeRegisterHandler
+        } = this.props;
+        loginChangeRegisterHandler.bind(this)(loginLeft, registerLeft);
         //初始化login页面登录模块和注册模块输入框数据
         initLogin.bind(this)();
     }
@@ -400,9 +418,14 @@ class LoginView extends React.Component {
     onRegisterHandler(e) {
         const {account, password} = this.state;
         const {onCheck} = this;
+        const {
+            //控制login页面请求加载Loading模块显示
+            onLoadingHandler
+        } = this.props;
         //注册校验空值和长度超限
         const check = onCheck.bind(this, "register", registerComponentConfig);
         if (check()) {
+            onLoadingHandler.bind(this)();
             const register_action = register.bind(this);
             //点击注册,发起keryi_barter register fetch请求
             register_action(account, password);
@@ -493,9 +516,33 @@ class LoginView extends React.Component {
         )
     }
 
+    /**
+     * render渲染请求加载Loading模块
+     * @returns {XML}
+     */
+    renderLoading() {
+        const {
+            //判断login页面请求加载Loading模块是否显示标识位
+            loadingVisible
+        } = this.props;
+        return (
+            <Loading
+                loadingVisible={loadingVisible}
+                loadingText="玩儿命加载中......"
+                loadingIconClassName="iconfontKeryiBarter keryiBarter-keryiLogo"
+                loadingTitle="壳艺"
+            />
+        )
+    }
+
     render() {
         const {top, left} = this.props;
-        const {renderDescription, renderLogin, renderRegister} = this;
+        const {
+            renderDescription,
+            renderLogin,
+            renderRegister,
+            renderLoading
+        } = this;
         return (
             //login页面副级容器
             <div
@@ -508,16 +555,39 @@ class LoginView extends React.Component {
                 {renderLogin.bind(this)()}
                 {/*login页面注册模块*/}
                 {renderRegister.bind(this)()}
+                {/*login页面请求加载Loading模块*/}
+                {renderLoading.bind(this)()}
             </div>
         )
     }
 }
 
-function select(state, ownProps) {
+function mapStateToProps(state, ownProps) {
     return {
-        ...state.loginReducers
+        ...state.loginReducers,
+        ...state.loadingReducers
     }
 }
 
-export default connect(select)(LoginView);
+function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        //控制从description介绍模块动画过渡到login登录模块
+        descriptionToLoginHandler() {
+            //将login页面副级容器距离页面最上方的长度设置为100%
+            dispatch(descriptionToLoginAction({top: "-100%"}));
+        },
+        //控制从login登录模块动画过渡到register注册模块或者从register注册模块动画过渡到login登录模块
+        loginChangeRegisterHandler(loginLeft, registerLeft) {
+            //将login登录模块的内容距离屏幕最左边设置为-100%;login注册模块的内容距离屏幕最左边设置为0
+            dispatch(loginChangeRegisterAction({loginLeft, registerLeft}));
+        },
+        //控制login页面请求加载Loading模块显示
+        onLoadingHandler() {
+            //控制login页面请求加载Loading模块显示
+            dispatch(openLoadingAction());
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginView);
 

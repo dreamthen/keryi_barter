@@ -131,3 +131,23 @@ export function loginChangeRegisterAction(payload) {
     }
 }
 
+/**
+ * 控制login页面请求加载Loading模块显示Action
+ * @returns {{type: *}}
+ */
+export function openLoadingAction() {
+    return {
+        type: loginActionsType["OPEN_LOADING"]
+    }
+}
+
+/**
+ * 控制login页面请求加载Loading模块消失Action
+ * @returns {{type: *}}
+ */
+export function closeLoadingAction() {
+    return {
+        type: loginActionsType["CLOSE_LOADING"]
+    }
+}
+

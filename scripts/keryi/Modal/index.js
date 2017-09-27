@@ -172,6 +172,13 @@ class Modal extends React.Component {
     }
 
     /**
+     * 组件开始卸载
+     */
+    componentWillUnmount(){
+        document.body.removeChild(this.modalDiv);
+    }
+
+    /**
      * 根据state modalVisible来设置Modal组件对话框className样式表
      * @returns {string}
      */
