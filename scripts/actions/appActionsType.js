@@ -79,6 +79,10 @@ const appActionsType = {
     OPEN_PERSONAL_VIEW_DETAIL_ITEM_HOVER: "OPEN_PERSONAL_VIEW_DETAIL_ITEM_HOVER",
     //个人页资源详情资源交换列表隐藏使描述浮层消失Action名称
     CLOSE_PERSONAL_VIEW_DETAIL_ITEM_HOVER: "CLOSE_PERSONAL_VIEW_DETAIL_ITEM_HOVER",
+    //keryi_barter主页面请求加载Loading模块显示Action名称
+    OPEN_APP_LOADING: "OPEN_APP_LOADING",
+    //keryi_barter主页面请求加载Loading模块消失Action名称
+    CLOSE_APP_LOADING: "CLOSE_APP_LOADING",
     ADD_BARTER_RESOURCE: "ADD_BARTER_RESOURCE"
 };
 

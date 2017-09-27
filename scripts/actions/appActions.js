@@ -153,6 +153,26 @@ export function setTargetTagIdConfig(payload) {
 }
 
 /**
+ * keryi_barter主页面请求加载Loading模块显示Action
+ * @returns {{type: *}}
+ */
+export function openAppLoadingAction() {
+    return {
+        type: appActionsType["OPEN_APP_LOADING"]
+    }
+}
+
+/**
+ * keryi_barter主页面请求加载Loading模块消失Action
+ * @returns {{type: *}}
+ */
+export function closeAppLoadingAction() {
+    return {
+        type: appActionsType["CLOSE_APP_LOADING"]
+    }
+}
+
+/**
  * 搜寻资源tag
  * @param key
  * @param initLeft

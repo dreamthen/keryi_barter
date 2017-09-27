@@ -44,31 +44,7 @@ class Loading extends React.Component {
 
     //组件开始装载
     componentWillMount() {
-        const {
-            //Loading组件请求加载是否显示
-            loadingVisible
-        } = this.props;
-        //当外部传入Loading组件请求加载是否显示属性为true时,Loading组件请求加载先从消失变为隐藏,然后时间控制器控制在Loading组件请求加载取消消失100ms之后从隐藏变为显示
-        loadingVisible ? this.setState({
-            loadingAnimationVisible: loadingVisible
-        }, function visibler() {
-            //FIXME 在这里设置一个时间控制器,Loading组件请求加载取消消失100ms之后,从隐藏到显示的过程
-            setTimeout(function timer() {
-                this.setState({
-                    loadingAnimationShowVisible: loadingVisible
-                });
-            }.bind(this), 100);
-            //当外部传入Loading组件请求加载是否显示属性为false时,Loading组件请求加载先从显示变为隐藏,然后时间控制器控制在Loading组件请求加载从显示到隐藏这个过程动画1s之后,将Loading组件请求加载消失
-        }.bind(this)) : this.setState({
-            loadingAnimationShowVisible: loadingVisible
-        }, function disVisibler() {
-            //FIXME 在这里设置一个时间控制器,Loading组件请求加载从显示到隐藏这个过程动画1s之后,将Loading组件请求加载消失
-            setTimeout(function timer() {
-                this.setState({
-                    loadingAnimationVisible: loadingVisible
-                });
-            }.bind(this), 1000);
-        }.bind(this));
+
     }
 
     componentWillReceiveProps(nextProps) {

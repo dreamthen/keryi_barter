@@ -42,6 +42,7 @@ import {
     Button,
     FigureCarousel,
     Input,
+    Loading,
     Modal,
     PullListDown,
     Tag
@@ -89,7 +90,9 @@ class AppView extends React.Component {
         //选择资源类型id标签组
         tagIdList: PropTypes.array,
         //选择目标资源类型id标签组
-        tagTargetIdList: PropTypes.array
+        tagTargetIdList: PropTypes.array,
+        //请求加载Loading模块是否显示标识位
+        loadingAppVisible: PropTypes.bool
     };
 
     constructor(props) {
@@ -587,6 +590,25 @@ class AppView extends React.Component {
         )
     }
 
+    /**
+     * keryi_barter主页面请求加载Loading模块
+     * @returns {XML}
+     */
+    renderLoading() {
+        const {
+            //判断keryi_barter主页面请求加载Loading模块是否显示标识位
+            loadingAppVisible
+        } = this.props;
+        return (
+            <Loading
+                loadingVisible={loadingAppVisible}
+                loadingText="玩儿命加载中......"
+                loadingIconClassName="iconfontKeryiBarter keryiBarter-keryiLogo"
+                loadingTitle="壳艺"
+            />
+        )
+    }
+
 
     /**
      * render渲染keryi_barter主页面主要内容barterList列表
@@ -601,7 +623,9 @@ class AppView extends React.Component {
             //keryi_barter主页面主要内容barterList列表
             renderMain,
             //keryi_barter主页面添加"以物换物"资源对话框
-            renderModal
+            renderModal,
+            //keryi_barter主页面请求加载Loading模块
+            renderLoading
         } = this;
         return (
             <div className="keryi_barter_index_page_container">
@@ -616,6 +640,8 @@ class AppView extends React.Component {
                 </footer>
                 {/*keryi_barter主页面添加"以物换物"资源对话框*/}
                 {renderModal.bind(this)()}
+                {/*keryi_barter主页面请求加载Loading模块*/}
+                {renderLoading.bind(this)()}
             </div>
         )
     }
@@ -624,6 +650,7 @@ class AppView extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         ...state.appReducers,
+        ...state.loadingAppReducers,
         current: state.barterReducers.current
     }
 }

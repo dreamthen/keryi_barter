@@ -6,7 +6,18 @@ import Success from "../prompt/successPrompt";
 import requestError from "./requestError";
 import storeLogin from "../configs/storeLoginConfig";
 import storeApp from "../configs/storeAppConfig";
-import {closeLoadingAction} from "../actions/loginActions";
+import {
+    //控制login页面请求加载Loading模块显示Action
+    openLoadingAction,
+    //控制login页面请求加载Loading模块消失Action
+    closeLoadingAction
+} from "../actions/loginActions";
+import {
+    //keryi_barter主页面请求加载Loading模块显示Action
+    openAppLoadingAction,
+    //keryi_barter主页面请求加载Loading模块消失Action
+    closeAppLoadingAction
+} from "../actions/appActions";
 
 const GET_METHOD = "GET";
 
@@ -50,6 +61,10 @@ const keryiAxiosConfig = {
     interceptorsHandler: function () {
         //axios request请求拦截器
         axios.interceptors.request.use(function (request) {
+            //控制login页面请求加载Loading模块显示
+            storeLogin.dispatch(openLoadingAction());
+            //keryi_barter主页面请求加载Loading模块显示
+            storeApp.dispatch(openAppLoadingAction());
             return request;
         }.bind(this), function (error) {
 
@@ -58,6 +73,10 @@ const keryiAxiosConfig = {
         axios.interceptors.response.use(function (response) {
             //控制login页面请求加载Loading模块消失
             storeLogin.dispatch(closeLoadingAction());
+            //keryi_barter主页面请求加载Loading模块消失
+            setTimeout(function timer() {
+                storeApp.dispatch(closeAppLoadingAction());
+            }, 1000);
             //服务器响应数据
             let data = response.data,
                 //服务器响应head头部对象
@@ -73,6 +92,8 @@ const keryiAxiosConfig = {
         }.bind(this), function (error) {
             //控制login页面请求加载Loading模块消失
             storeLogin.dispatch(closeLoadingAction());
+            //keryi_barter主页面请求加载Loading模块消失
+            storeApp.dispatch(closeAppLoadingAction());
             //服务器响应对象
             let response = error.response,
                 //服务器响应头状态码

@@ -20,9 +20,7 @@ import {
     //将login页面副级容器距离页面最上方的长度设置为100% Action
     descriptionToLoginAction,
     //将login登录模块的内容距离屏幕最左边设置为-100%;login注册模块的内容距离屏幕最左边设置为0 Action
-    loginChangeRegisterAction,
-    //控制login页面请求加载Loading模块显示Action
-    openLoadingAction
+    loginChangeRegisterAction
 } from "../actions/loginActions";
 import "../../stylesheets/animation.css";
 import "../../stylesheets/login.css";
@@ -285,14 +283,9 @@ class LoginView extends React.Component {
     onLoginHandler(e) {
         const {account, password} = this.state;
         const {onCheck} = this;
-        const {
-            //控制login页面请求加载Loading模块显示
-            onLoadingHandler
-        } = this.props;
         //登录校验空值和长度超限
         const check = onCheck.bind(this, "login", loginComponentConfig);
         if (check()) {
-            onLoadingHandler.bind(this)();
             //点击登录,发起keryi_barter login fetch请求
             const login_action = login.bind(this);
             login_action(account, password);
@@ -418,14 +411,9 @@ class LoginView extends React.Component {
     onRegisterHandler(e) {
         const {account, password} = this.state;
         const {onCheck} = this;
-        const {
-            //控制login页面请求加载Loading模块显示
-            onLoadingHandler
-        } = this.props;
         //注册校验空值和长度超限
         const check = onCheck.bind(this, "register", registerComponentConfig);
         if (check()) {
-            onLoadingHandler.bind(this)();
             const register_action = register.bind(this);
             //点击注册,发起keryi_barter register fetch请求
             register_action(account, password);
@@ -580,11 +568,6 @@ function mapDispatchToProps(dispatch, ownProps) {
         loginChangeRegisterHandler(loginLeft, registerLeft) {
             //将login登录模块的内容距离屏幕最左边设置为-100%;login注册模块的内容距离屏幕最左边设置为0
             dispatch(loginChangeRegisterAction({loginLeft, registerLeft}));
-        },
-        //控制login页面请求加载Loading模块显示
-        onLoadingHandler() {
-            //控制login页面请求加载Loading模块显示
-            dispatch(openLoadingAction());
         }
     }
 }
