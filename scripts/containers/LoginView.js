@@ -6,8 +6,8 @@ import {connect} from "react-redux";
 import {
     Button,
     Input,
-    Loading,
-    Prompt
+    Prompt,
+    wait
 } from "../keryi";
 import Error from "../prompt/errorPrompt";
 import loginComponentConfig from "../configs/loginComponentConfig";
@@ -508,11 +508,6 @@ class LoginView extends React.Component {
                 {renderLogin.bind(this)()}
                 {/*login页面注册模块*/}
                 {renderRegister.bind(this)()}
-                <Loading
-                    loadingIconClassName="iconfontKeryiBarter keryiBarter-keryiLogo"
-                    loadingTitle="壳艺"
-                    loadingText="玩儿命加载中......"
-                />
             </div>
         )
     }

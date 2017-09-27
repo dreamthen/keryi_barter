@@ -27,6 +27,8 @@ import PullListDown from "./PullListDown";
 import SpinAnimation from "./SpinAnimation";
 //导入keryi_barter Tag标签组件
 import Tag from "./Tag";
+//导入keryi_barter wait控制请求加载控件
+import wait from "./wait";
 
 //集成keryi组件库
 const keryi = {
@@ -42,7 +44,8 @@ const keryi = {
     Prompt,
     PullListDown,
     SpinAnimation,
-    Tag
+    Tag,
+    wait
 };
 
 //导出keryi组件库

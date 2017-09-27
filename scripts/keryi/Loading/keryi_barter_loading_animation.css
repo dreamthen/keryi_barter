@@ -1,0 +1,23 @@
+/**
+ * author yinwk
+ * createTime 2017/9/26 16:50
+ * description clown laugh at you~
+ */
+@keyframes keryi_barter_rotateKeryi {
+    0% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    }
+    25% {
+        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    }
+    50% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    }
+    75% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(0.1deg);
+    }
+    100% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    }
+}
+

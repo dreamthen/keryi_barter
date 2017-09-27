@@ -53,7 +53,6 @@ const keryiAxiosConfig = {
         });
         //axios response响应拦截器
         axios.interceptors.response.use(function (response) {
-            console.log(response);
             //服务器响应数据
             let data = response.data,
                 //服务器响应head头部对象

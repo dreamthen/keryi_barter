@@ -10,6 +10,16 @@
     top: 0;
     left: 0;
     z-index: 9990;
+    opacity: 1;
+    transition: all 1s ease-in-out 0s;
+}
+
+.keryi_barter_loading_container.keryi_barter_loading_container_disappear {
+    opacity: 0;
+}
+
+.keryi_barter_loading_container.keryi_barter_loading_container_none {
+    display: none;
 }
 
 .keryi_barter_loading_container > .keryi_barter_loading_shadow {
@@ -37,16 +47,16 @@
 }
 
 .keryi_barter_loading_main_holder > .keryi_barter_loading_loadingAnimation {
-
+    animation: keryi_barter_rotateKeryi 2.4s ease-in-out infinite;
 }
 
 .keryi_barter_loading_loadingAnimation > .keryi_barter_loading_loadingAnimation_title {
     position: relative;
     top: 1px;
-    right: 6px;
+    right: 8px;
     color: #63A8F0;
     font-weight: bolder;
-    font-family: "Microsoft YaHei UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Microsoft JhengHei UI", "Microsoft YaHei UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
 }
 
@@ -56,7 +66,7 @@
 }
 
 .keryi_barter_loading_main_holder > .keryi_barter_loading_description {
-    margin-top: 10px;
+    margin-top: 15px;
     font-style: normal;
     font-size: 16px;
     font-family: "Microsoft YaHei UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
