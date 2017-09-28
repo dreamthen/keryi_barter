@@ -11,7 +11,7 @@
     left: 0;
     z-index: 9990;
     opacity: 1;
-    transition: all 1s ease-in-out 0s;
+    transition: all .6s ease-in-out 0s;
 }
 
 .keryi_barter_loading_container.keryi_barter_loading_container_disappear {
@@ -47,6 +47,11 @@
 }
 
 .keryi_barter_loading_main_holder > .keryi_barter_loading_loadingAnimation {
+    display: none;
+}
+
+.keryi_barter_loading_main_holder > .keryi_barter_loading_loadingAnimation_move {
+    display: block;
     animation: keryi_barter_rotateKeryi 2.4s ease-in-out infinite;
 }
 

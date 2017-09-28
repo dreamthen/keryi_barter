@@ -71,12 +71,14 @@ const keryiAxiosConfig = {
         });
         //axios response响应拦截器
         axios.interceptors.response.use(function (response) {
-            //控制login页面请求加载Loading模块消失
-            storeLogin.dispatch(closeLoadingAction());
-            //keryi_barter主页面请求加载Loading模块消失
+            //FIXME 控制login页面请求加载Loading模块延时800ms消失
+            setTimeout(function timer() {
+                storeLogin.dispatch(closeLoadingAction());
+            }.bind(this), 800);
+            //FIXME keryi_barter主页面请求加载Loading模块延时800ms消失
             setTimeout(function timer() {
                 storeApp.dispatch(closeAppLoadingAction());
-            }, 1000);
+            }.bind(this), 800);
             //服务器响应数据
             let data = response.data,
                 //服务器响应head头部对象
@@ -90,10 +92,14 @@ const keryiAxiosConfig = {
             }
             return Promise.reject(response);
         }.bind(this), function (error) {
-            //控制login页面请求加载Loading模块消失
-            storeLogin.dispatch(closeLoadingAction());
-            //keryi_barter主页面请求加载Loading模块消失
-            storeApp.dispatch(closeAppLoadingAction());
+            //FIXME 控制login页面请求加载Loading模块延时600ms消失
+            setTimeout(function timer() {
+                storeLogin.dispatch(closeLoadingAction());
+            }.bind(this), 800);
+            //FIXME keryi_barter主页面请求加载Loading模块延时800ms消失
+            setTimeout(function timer() {
+                storeApp.dispatch(closeAppLoadingAction());
+            }.bind(this), 800);
             //服务器响应对象
             let response = error.response,
                 //服务器响应头状态码

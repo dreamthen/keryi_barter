@@ -14,6 +14,10 @@ const loadingVisibleShow = "loadingVisibleShow";
 const loadingVisibleDisappear = "loadingVisibleDisappear";
 //Loading组件请求加载消失样式表配置
 const loadingVisibleNone = "loadingVisibleNone";
+//Loading组件请求加载动画结束执行样式表配置
+const loadingAnimation = "loadingAnimation";
+//Loading组件请求加载动画执行样式表配置
+const loadingAnimationMove = "loadingAnimationMove";
 
 /**
  * keryi_barter Loading请求加载组件
@@ -70,7 +74,7 @@ class Loading extends React.Component {
                 this.setState({
                     loadingAnimationVisible: nextProps.loadingVisible
                 });
-            }.bind(this), 1000);
+            }.bind(this), 600);
         }.bind(this));
     }
 
@@ -131,6 +135,19 @@ class Loading extends React.Component {
         return wrapperClassName ? " " + wrapperClassName : "";
     }
 
+    /**
+     * 根据state loadingAnimationShowVisible来设置Loading组件请求加载动画className样式表
+     * @returns {string}
+     */
+    loadingAnimationMoveToClass() {
+        const {
+            //Loading组件请求加载显示或者隐藏判断标志位
+            loadingAnimationShowVisible
+        } = this.state;
+        //在Loading组件请求加载显示或者隐藏判断标志位为true时,Loading组件请求加载用loadingConfig中的指定className样式表动画展示;在Loading组件请求加载隐藏或者消失判断标志位为false时,Loading组件请求加载className样式表动画消失
+        return loadingAnimationShowVisible ? loadingConfig[loadingAnimationMove] : loadingConfig[loadingAnimation];
+    }
+
     //keryi_barter Loading组件请求加载渲染
     _render() {
         const {
@@ -146,6 +163,8 @@ class Loading extends React.Component {
             loadingAnimationVisibleToClass,
             //根据state loadingAnimationShowVisible来设置Loading组件请求加载容器className样式表
             loadingAnimationAppearToClass,
+            //根据state loadingAnimationShowVisible来设置Loading组件请求加载动画className样式表
+            loadingAnimationMoveToClass,
             //根据props wrapperClassName来设置Loading组件请求加载容器的className样式表
             outClassToClass
         } = this;
@@ -157,7 +176,7 @@ class Loading extends React.Component {
 
                 </div>
                 <main className="keryi_barter_loading_main_holder">
-                    <div className="keryi_barter_loading_loadingAnimation">
+                    <div className={loadingAnimationMoveToClass.bind(this)()}>
                         <i className={loadingIconClassName}>
 
                         </i>
