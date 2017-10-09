@@ -15,6 +15,10 @@ import {
     Modal,
     Tag
 } from "../keryi";
+import api from "../configs/api";
+import Upload from "rc-upload";
+//Upload组件上传文件配置
+import uploadConfig from "../configs/uploadConfig";
 //个人信息页面,根据不同的组件类型配置来设置组件
 import personalComponentConfig from "../configs/personalComponentConfig";
 //资源统计静态Mode配置
@@ -73,7 +77,13 @@ import {
     //个人页资源详情资源交换列表显示描述浮层
     openPersonalViewDetailsItemHover,
     //个人页资源详情资源交换列表隐藏使描述浮层消失
-    closePersonalViewDetailsItemHover
+    closePersonalViewDetailsItemHover,
+    //使客户的头像和背景可编辑Action
+    changePersonalEditAppearanceAction,
+    //使客户的头像和背景不可编辑Action
+    closePersonalEditAppearanceAction,
+    //修改个人页头像成功Action
+    uploadPersonalAvatarAction
 } from "../actions/personalActions";
 import "../../stylesheets/personal.css";
 
@@ -81,6 +91,14 @@ import "../../stylesheets/personal.css";
 const componentType = ["input"];
 //个人信息资源详情资源交换列表状态切换标识className样式表
 const exchangeStatusClassName = ["keryi_barter_personal_view_details_item_carousel_checked", "keryi_barter_personal_view_details_item_carousel_unchecked"];
+//用户编辑自己的头像和背景className样式表
+const editAppearanceClassName = "keryi_barter_personal_edit_appearance";
+//用户编辑自己的头像和背景时保存和取消部分className样式表
+const editAppearanceSaveSomeClassName = "keryi_barter_personal_save_some";
+//用户编辑自己的头像和背景动画渲染className样式表
+const editAppearanceAnimationClassName = "keryi_barter_personal_edit_appearance keryi_barter_personal_edit_appearance_animation";
+//用户编辑自己的头像和背景时保存和取消部分动画渲染className样式表
+const editAppearanceAnimationSaveSomeClassName = "keryi_barter_personal_save_some keryi_barter_personal_save_some_animation";
 
 class PersonalView extends React.Component {
     static propTypes = {
@@ -98,6 +116,8 @@ class PersonalView extends React.Component {
         email: PropTypes.string,
         //用户登录的头像
         avatar: PropTypes.string,
+        //用户是否可以对自己的头像和背景进行编辑的标识位
+        editAppearance: PropTypes.bool,
         //用户登录的个性签名
         motto: PropTypes.string,
         //获取个人页资源数据列表
@@ -161,6 +181,8 @@ class PersonalView extends React.Component {
             exchangeStatus: exchangeStatusConfig[0]["key"],
             //个人信息资源详情资源交换列表状态描述
             exchangeStatusText: exchangeStatusConfig[0]["value"],
+            //用户是否可以对自己的头像和背景进行编辑的动画渲染标识位
+            editAppearanceAnimation: false,
             //判断个人信息编辑动画是否可渲染
             personalInformationAnimationDisabled: false,
             //控制Modal组件对话框显示、隐藏或者消失
@@ -299,17 +321,38 @@ class PersonalView extends React.Component {
      * @returns {XML}
      */
     renderPersonalUpdateSurface() {
+        const {
+            //点击编辑外观按钮,使客户的头像和背景可编辑
+            changePersonalEditAppearance,
+            //用户是否可以对自己的头像和背景进行编辑的标识位
+            editAppearance
+        } = this.props;
         return (
             <section className="keryi_barter_personal_head_update_surface">
-                <Button
-                    size="default"
-                    type="info"
-                    className="keryi_barter_personal_head_update_surface_button"
-                >
-                    编辑外观
-                </Button>
+                {
+                    !editAppearance && <Button
+                        size="default"
+                        type="info"
+                        className="keryi_barter_personal_head_update_surface_button"
+                        onClick={changePersonalEditAppearance.bind(this)}
+                    >
+                        编辑外观
+                    </Button>
+                }
             </section>
         )
+    }
+
+    /**
+     * 根据state editAppearanceAnimation来设置头像和背景的className样式表
+     * @returns string
+     */
+    editAppearanceAnimationToClass() {
+        const {
+            //用户是否可以对自己的头像和背景进行编辑的动画渲染标识位
+            editAppearanceAnimation
+        } = this.state;
+        return editAppearanceAnimation ? editAppearanceAnimationClassName : editAppearanceClassName;
     }
 
     /**
@@ -318,13 +361,35 @@ class PersonalView extends React.Component {
      */
     renderPersonalHeaderBackgroundAndPortrait() {
         const {
+            //用户登录的id
+            userId,
             //用户登录的头像
             avatar
         } = this.state;
+        const {
+            //根据state editAppearanceAnimation来设置头像和背景的className样式表
+            editAppearanceAnimationToClass
+        } = this;
+        const {
+            //用户是否可以对自己的头像和背景进行编辑的标识位
+            editAppearance,
+            //修改头像成功回调函数
+            uploadPersonalAvatar
+        } = this.props;
         return (
             <figure
                 className="keryi_barter_personal_head_portrait"
             >
+                {
+                    editAppearance && <section className={editAppearanceAnimationToClass.bind(this)()}>
+                        <Upload {...uploadConfig.bind(this)("file", api.UPDATE_PERSONAL_AVATAR + "/" + userId + "/avatar", {}, uploadPersonalAvatar.bind(this))}
+                                className="keryi_barter_personal_upload">
+                            <i className="iconfontKeryiBarter keryiBarter-updateAvatar">
+
+                            </i>
+                        </Upload>
+                    </section>
+                }
                 <HeadPortrait
                     headPortrait={avatar ? avatar : "/images/keryiBarter_v.png"}
                     borderJudgement={true}
@@ -965,6 +1030,47 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * 根据state editAppearanceAnimation来设置头像和背景时保存和取消部分的className样式表
+     * @returns string
+     */
+    editAppearanceAnimationSaveSomeToClass() {
+        const {
+            //用户是否可以对自己的头像和背景进行编辑的动画渲染标识位
+            editAppearanceAnimation
+        } = this.state;
+        return editAppearanceAnimation ? editAppearanceAnimationSaveSomeClassName : editAppearanceSaveSomeClassName;
+    }
+
+    /**
+     * render渲染个人信息页面保存头像和背景部分
+     * @returns {XML}
+     */
+    renderPersonalSaveSome() {
+        const {
+            //根据state editAppearanceAnimation来设置头像和背景时保存和取消部分的className样式表
+            editAppearanceAnimationSaveSomeToClass
+        } = this;
+        return (
+            <section className={editAppearanceAnimationSaveSomeToClass.bind(this)()}>
+                <Button
+                    type="default"
+                    size="large"
+                    className="keryi_barter_personal_save_some_button keryi_barter_personal_save_some_button_cancel"
+                >
+                    取消
+                </Button>
+                <Button
+                    type="primary"
+                    size="large"
+                    className="keryi_barter_personal_save_some_button keryi_barter_personal_save_some_button_save"
+                >
+                    保存
+                </Button>
+            </section>
+        )
+    }
+
+    /**
      * render渲染keryi_barter个人信息页面主体部分
      * @returns {XML}
      */
@@ -995,14 +1101,24 @@ class PersonalView extends React.Component {
             renderPersonalModal,
             //render渲染个人信息页面头部
             renderPersonalHeader,
+            //render渲染个人信息页面保存头像和背景部分
+            renderPersonalSaveSome,
             //render渲染个人信息页面主体部分
             renderPersonalMain
         } = this;
+        const {
+            //用户是否可以对自己的头像和背景进行编辑的标识位
+            editAppearance
+        } = this.props;
         return (
             <div className="keryi_barter_personal_main_container">
                 <section className="keryi_barter_personal_main_module">
                     {/*render渲染个人信息页面头部*/}
                     {renderPersonalHeader.bind(this)()}
+                    {/*render渲染个人信息页面保存头像和背景部分*/}
+                    {
+                        editAppearance && renderPersonalSaveSome.bind(this)()
+                    }
                     {/*render渲染个人信息页面主体部分*/}
                     {renderPersonalMain.bind(this)()}
                 </section>
@@ -1210,6 +1326,19 @@ function mapDispatchToProps(dispatch, ownProps) {
             dispatch(closeChangePersonalInformation());
         },
         /**
+         *点击编辑外观按钮,使客户的头像和背景可编辑
+         */
+        changePersonalEditAppearance() {
+            //改变头像和背景编辑状态,使客户的头像和背景可编辑
+            dispatch(changePersonalEditAppearanceAction());
+            //FIXME 这里设置一个时间控制器,在使客户的头像和背景可编辑100ms之后,再实现编辑的动画渲染
+            setTimeout(function timer() {
+                this.setState({
+                    editAppearanceAnimation: true
+                });
+            }.bind(this), 100);
+        },
+        /**
          * 监听窗口滚动事件,使个人信息页面主体信息随着窗口滚动而滚动
          */
         personalInformationScrollHandler() {
@@ -1279,6 +1408,13 @@ function mapDispatchToProps(dispatch, ownProps) {
                 itemCurrent
             } = this.props;
             dispatch(deletePersonalResourcesExchange.bind(this)(exchangeId, userId, viewDetailKeryiCard["id"], itemCurrent, exchangeStatus));
+        },
+        /**
+         * 修改个人页头像成功
+         * @param data
+         */
+        uploadPersonalAvatar(data) {
+            dispatch(uploadPersonalAvatarAction(data));
         }
     }
 }

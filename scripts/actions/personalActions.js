@@ -416,6 +416,26 @@ export function openPersonalViewDetailsFooter() {
 }
 
 /**
+ * 使客户的头像和背景可编辑Action
+ * @returns {{type: *}}
+ */
+export function changePersonalEditAppearanceAction() {
+    return {
+        type: appActionsType["CHANGE_PERSONAL_EDIT_APPEARANCE"]
+    }
+}
+
+/**
+ * 使客户的头像和背景不可编辑Action
+ * @returns {{type: *}}
+ */
+export function closePersonalEditAppearanceAction() {
+    return {
+        type: appActionsType["CLOSE_PERSONAL_EDIT_APPEARANCE"]
+}
+}
+
+/**
  * 隐藏个人页资源详情对话框footer底部区域Action
  * @returns {{type: *}}
  */
@@ -482,5 +502,17 @@ export function openPersonalViewDetailsItemHover() {
 export function closePersonalViewDetailsItemHover() {
     return {
         type: appActionsType["CLOSE_PERSONAL_VIEW_DETAIL_ITEM_HOVER"]
+    }
+}
+
+/**
+ * 修改个人页头像成功Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function uploadPersonalAvatarAction(payload) {
+    return {
+        type: appActionsType["UPLOAD_PERSONAL_AVATAR_ACTION"],
+        payload
     }
 }

@@ -24,7 +24,7 @@ function uploadConfig(name, action, data, success) {
                 code = head.code,
                 msg = head.message,
                 body = response.body;
-            if(code === Success.UPLOAD_RESOURCE_IMAGE_SUCCESS_CODE) {
+            if(code === Success.SUCCESS_CODE) {
                 success(body);
             }
         }.bind(this),

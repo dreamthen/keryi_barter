@@ -29,6 +29,27 @@
     align-items: center;
 }
 
+.keryi_barter_personal_main_module > .keryi_barter_personal_save_some {
+    position: relative;
+    background-color: #fff;
+    text-align: center;
+    opacity: 0;
+    transition: all .3s ease-in-out 0s;
+}
+
+.keryi_barter_personal_save_some.keryi_barter_personal_save_some_animation {
+    opacity: 1;
+}
+
+.keryi_barter_personal_save_some .keryi_barter_personal_save_some_button {
+    position: relative;
+    top: 12px;
+}
+
+.keryi_barter_personal_save_some_button.keryi_barter_personal_save_some_button_save {
+    margin-left: 6px;
+}
+
 .keryi_barter_personal_head > .keryi_barter_personal_head_shadow {
     position: absolute;
     width: 100%;
@@ -47,6 +68,42 @@
     height: 106px;
     top: 20px;
     z-index: 2400;
+}
+
+.keryi_barter_personal_head_portrait > .keryi_barter_personal_edit_appearance {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2401;
+    opacity: 0;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, .54);
+    transition: all .3s ease-in-out 0s;
+}
+
+.keryi_barter_personal_head_portrait > .keryi_barter_personal_edit_appearance_animation {
+    opacity: 1;
+}
+
+.keryi_barter_personal_edit_appearance .keryi_barter_personal_upload {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 2402;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    cursor: pointer;
+}
+
+.keryi_barter_personal_upload .keryiBarter-updateAvatar {
+    color: #fff;
+    font-size: 26px;
 }
 
 .keryi_barter_personal_head > .keryi_barter_personal_head_username {

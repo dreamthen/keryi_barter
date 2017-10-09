@@ -31,6 +31,8 @@ const defaultState = {
     email: checkField(userLoginInformation["email"]),
     //用户登录的头像
     avatar: checkField(userLoginInformation["avatar"]),
+    //用户是否可以对自己的头像和背景进行编辑的标识位
+    editAppearance: false,
     //用户登录的个性签名
     motto: checkField(userLoginInformation["motto"]),
     //判断个人信息是否可编辑
@@ -214,6 +216,11 @@ export function personalReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 viewDetailItemHover: false
             });
+        //使客户的头像和背景可编辑
+        case appActionsType["CHANGE_PERSONAL_EDIT_APPEARANCE"]:
+            return insteadState.insteadObjState(state, {
+                editAppearance: true
+            });
         //重置个人页资源页面
         case appActionsType["RESET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]:
             return defaultState;
@@ -234,6 +241,11 @@ export function personalReducers(state = defaultState, actions) {
                 viewDetailMatchedResources: [],
                 viewDetailItemImageOrContentList: [],
                 viewDetailItemExchange: {}
+            });
+        //修改个人页头像成功
+        case appActionsType["UPLOAD_PERSONAL_AVATAR_ACTION"]:
+            return insteadState.insteadObjState(state, {
+                avatar: newState
             });
     }
     return state;

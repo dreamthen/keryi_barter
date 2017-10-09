@@ -31,6 +31,8 @@ if (!isMock) {
         GET_PERSONAL_INFORMATION: keryi_cover + "users",
         //修改用户信息
         UPDATE_PERSONAL_INFORMATION: keryi_cover + "users",
+        //修改用户头像
+        UPDATE_PERSONAL_AVATAR: keryi_cover + "users",
         //更新喜欢数
         UPDATE_LIKE_COUNT: keryi_cover + "resources",
         //发起交换

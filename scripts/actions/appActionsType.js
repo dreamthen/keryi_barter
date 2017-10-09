@@ -83,6 +83,12 @@ const appActionsType = {
     OPEN_APP_LOADING: "OPEN_APP_LOADING",
     //keryi_barter主页面请求加载Loading模块消失Action名称
     CLOSE_APP_LOADING: "CLOSE_APP_LOADING",
+    //keryi barter主页面使客户的头像和背景可编辑Action名称
+    CHANGE_PERSONAL_EDIT_APPEARANCE: "CHANGE_PERSONAL_EDIT_APPEARANCE",
+    //keryi barter主页面使客户的头像和背景不可编辑Action名称
+    CLOSE_PERSONAL_EDIT_APPEARANCE: "CLOSE_PERSONAL_EDIT_APPEARANCE",
+    //修改个人页头像成功Action名称
+    UPLOAD_PERSONAL_AVATAR_ACTION: "UPLOAD_PERSONAL_AVATAR_ACTION",
     ADD_BARTER_RESOURCE: "ADD_BARTER_RESOURCE"
 };
 
