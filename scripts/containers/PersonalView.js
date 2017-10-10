@@ -1050,12 +1050,17 @@ class PersonalView extends React.Component {
             //根据state editAppearanceAnimation来设置头像和背景时保存和取消部分的className样式表
             editAppearanceAnimationSaveSomeToClass
         } = this;
+        const {
+            //点击修改个人页背景或者头像部分的保存或者取消,改变编辑标识位
+            uploadPersonalBgImageOrAvatarSaveOrCancel
+        } = this.props;
         return (
             <section className={editAppearanceAnimationSaveSomeToClass.bind(this)()}>
                 <Button
                     type="default"
                     size="large"
                     className="keryi_barter_personal_save_some_button keryi_barter_personal_save_some_button_cancel"
+                    onClick={uploadPersonalBgImageOrAvatarSaveOrCancel.bind(this)}
                 >
                     取消
                 </Button>
@@ -1063,6 +1068,7 @@ class PersonalView extends React.Component {
                     type="primary"
                     size="large"
                     className="keryi_barter_personal_save_some_button keryi_barter_personal_save_some_button_save"
+                    onClick={uploadPersonalBgImageOrAvatarSaveOrCancel.bind(this)}
                 >
                     保存
                 </Button>
@@ -1415,6 +1421,19 @@ function mapDispatchToProps(dispatch, ownProps) {
          */
         uploadPersonalAvatar(data) {
             dispatch(uploadPersonalAvatarAction(data));
+        },
+        /**
+         * 点击修改个人页背景或者头像部分的保存或者取消,改变编辑标识位
+         */
+        uploadPersonalBgImageOrAvatarSaveOrCancel() {
+            this.setState({
+                editAppearanceAnimation: false
+            });
+            //FIXME 这里设置一个时间控制器,在使客户的头像和背景动画渲染隐藏300ms之后,再实现不可编辑
+            setTimeout(function timer() {
+                //改变头像和背景编辑状态,使客户的头像和背景不可编辑
+                dispatch(closePersonalEditAppearanceAction());
+            }.bind(this), 300);
         }
     }
 }

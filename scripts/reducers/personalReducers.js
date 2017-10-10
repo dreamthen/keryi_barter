@@ -216,10 +216,15 @@ export function personalReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 viewDetailItemHover: false
             });
-        //使客户的头像和背景可编辑
+        //使客户的头像和背景不可编辑
         case appActionsType["CHANGE_PERSONAL_EDIT_APPEARANCE"]:
             return insteadState.insteadObjState(state, {
                 editAppearance: true
+            });
+        //使客户的头像和背景可编辑
+        case appActionsType["CLOSE_PERSONAL_EDIT_APPEARANCE"]:
+            return insteadState.insteadObjState(state, {
+                editAppearance: false
             });
         //重置个人页资源页面
         case appActionsType["RESET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]:
