@@ -432,7 +432,7 @@ export function changePersonalEditAppearanceAction() {
 export function closePersonalEditAppearanceAction() {
     return {
         type: appActionsType["CLOSE_PERSONAL_EDIT_APPEARANCE"]
-}
+    }
 }
 
 /**

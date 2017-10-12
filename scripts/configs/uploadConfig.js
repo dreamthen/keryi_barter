@@ -2,6 +2,7 @@
  * Created by yinwk on 2017/7/12.
  */
 import Success from "../prompt/successPrompt";
+
 /**
  * Upload组件上传文件配置
  * @param name
@@ -19,12 +20,13 @@ function uploadConfig(name, action, data, success) {
         //Upload组件上传文件的action上传参数
         data,
         multiple: true,
+        withCredentials: true,
         onSuccess: function (response, file) {
             let head = response.head,
                 code = head.code,
                 msg = head.message,
                 body = response.body;
-            if(code === Success.SUCCESS_CODE) {
+            if (code === Success.SUCCESS_CODE) {
                 success(body);
             }
         }.bind(this),

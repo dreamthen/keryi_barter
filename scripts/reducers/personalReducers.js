@@ -3,6 +3,7 @@
  * createTime 2017/8/16 17:56
  * description clown laugh at you~
  */
+import api from "../configs/api";
 //app页面action类型
 import appActionsType from "../actions/appActionsType";
 //redux reducer更换state状态对象
@@ -105,7 +106,7 @@ export function personalReducers(state = defaultState, actions) {
         //获取个人页资源详情用户头像
         case appActionsType["GET_PERSONAL_USER_HEAD_PORTRAIT_VIEW_DETAIL"]:
             return insteadState.insteadObjState(state, {
-                viewDetailHeadPortrait: newState["user"]["avatar"]
+                viewDetailHeadPortrait: api.GET_PERSONAL_AVATAR + "/" + newState["user"]["id"] + "/avatar"
             });
         //获取个人页资源详情
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]:

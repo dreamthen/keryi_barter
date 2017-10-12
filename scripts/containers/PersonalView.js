@@ -391,7 +391,7 @@ class PersonalView extends React.Component {
                     </section>
                 }
                 <HeadPortrait
-                    headPortrait={avatar ? avatar : "/images/keryiBarter_v.png"}
+                    headPortrait={avatar ? api.GET_PERSONAL_AVATAR + "/" + userId + "/avatar" : "/images/keryiBarter_v.png"}
                     borderJudgement={true}
                 />
             </figure>
@@ -1057,14 +1057,6 @@ class PersonalView extends React.Component {
         return (
             <section className={editAppearanceAnimationSaveSomeToClass.bind(this)()}>
                 <Button
-                    type="default"
-                    size="large"
-                    className="keryi_barter_personal_save_some_button keryi_barter_personal_save_some_button_cancel"
-                    onClick={uploadPersonalBgImageOrAvatarSaveOrCancel.bind(this)}
-                >
-                    取消
-                </Button>
-                <Button
                     type="primary"
                     size="large"
                     className="keryi_barter_personal_save_some_button keryi_barter_personal_save_some_button_save"
@@ -1420,6 +1412,8 @@ function mapDispatchToProps(dispatch, ownProps) {
          * @param data
          */
         uploadPersonalAvatar(data) {
+            //先将个人页头像置空,引起HeadPortrait组件状态变化,再替换成最新上传的个人头像
+            dispatch(uploadPersonalAvatarAction(""));
             dispatch(uploadPersonalAvatarAction(data));
         },
         /**
