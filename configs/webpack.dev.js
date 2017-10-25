@@ -5,8 +5,6 @@
 const webpack = require("webpack");
 //导入path-路径处理工具
 const path = require("path");
-//导入autoprefixer--添加css扩展头以兼容浏览器的工具
-const autoprefixer = require("autoprefixer");
 //导入HtmlWebpackPlugin--对html文件以及其相对应的按需加载文件进行打包
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 //导入ExtractTextWebpackPlugin--对css等文件进行提取
@@ -38,7 +36,7 @@ const PORT = "9077";
 const keryi_dev_config = {
     //webpack七种打包管理方式之一:eval
     //每一个module下的模块都会被eval包裹,并在eval包裹后添加注释
-    devtool: "source-map",
+    devtool: "eval",
     //webpack web开发环境打包管理配置入口
     //这里有两个入口,分别对应两个html文件--login.html和index.html
     entry: {
