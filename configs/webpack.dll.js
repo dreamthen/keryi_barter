@@ -29,7 +29,7 @@ const AUTO_PREFIXER_BROWSERS = [
 const keryi_dll_config = {
     //webpack打包管理外部依赖包配置入口文件
     entry: {
-        vendor: ["react", "react-dom", "react-router", "redux", "react-redux", "whatwg-fetch", "babel-polyfill"]
+        vendor: ["react", "react-dom", "react-router", "redux", "react-redux", "axios", "babel-polyfill", "antd"]
     },
     //webpack打包管理外部依赖包配置出口文件(包括根路径,文件输出路径,文件名和集成的外部依赖包对象--与DllPlugin里面的name属性相对应)
     output: {

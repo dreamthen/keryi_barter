@@ -193,6 +193,7 @@ body {
     font-weight: normal;
     margin-bottom: 6px;
     letter-spacing: 1px;
+    color: #fff;
 }
 
 /*login页面登录模块和注册模块主要介绍内容标题(英文)字体大小、字体粗细、字体类型和字母之间的距离尺寸*/
@@ -201,6 +202,7 @@ body {
     font-size: 20px;
     font-weight: normal;
     letter-spacing: 1px;
+    color: #fff;
 }
 
 .keryi_barter_loginOrRegister_main {
