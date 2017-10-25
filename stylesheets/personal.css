@@ -127,7 +127,7 @@
 
 .keryi_barter_personal_head_update_surface .keryi_barter_personal_head_update_surface_button {
     margin-top: 0;
-    padding: 6px 10px;
+    padding: 8px 12px;
 }
 
 .keryi_barter_personal_main > .keryi_barter_personal_main_username {
@@ -279,6 +279,13 @@
     padding: 0 15px;
 }
 
+.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_statistics,
+.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_tag,
+.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_targetTag,
+.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_item_carousel {
+    margin-top: 15px;
+}
+
 .keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_head {
     display: flex;
     flex-direction: column;
@@ -324,10 +331,6 @@
     margin: 16px 10px 10px 10px;
     border-radius: 4px;
     background-color: #fff;
-}
-
-.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_introduce {
-    margin: 0 0 10px 0;
 }
 
 .keryi_barter_personal_view_details_introduce > .keryi_barter_personal_view_details_introduce_content {
@@ -405,7 +408,6 @@
 
 .keryi_barter_personal_view_details_item_carousel > .keryi_barter_personal_view_details_item_carousel_menu {
     padding-top: 4px;
-    margin-bottom: 12px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -435,7 +437,7 @@
     border: none;
     border-top: 2px solid transparent;
     left: 0;
-    bottom: -8px;
+    bottom: -2px;
     transition: all .5s linear 0s;
 }
 
@@ -486,13 +488,10 @@
 }
 
 .keryi_barter_personal_view_details_introduce > .keryi_barter_personal_view_details_wire,
-.keryi_barter_personal_view_details_tag > .keryi_barter_personal_view_details_wire {
+.keryi_barter_personal_view_details_tag > .keryi_barter_personal_view_details_wire,
+.keryi_barter_personal_view_details_targetTag > .keryi_barter_personal_view_details_wire {
     width: 36%;
     margin-top: 18px;
     border: none;
     border-top: 1px solid #e7e7e7;
-}
-
-.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_targetTag {
-    margin: 0 0 16px 0;
 }

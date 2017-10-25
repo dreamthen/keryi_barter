@@ -81,21 +81,22 @@
     bottom: 3px;
 }
 
-.keryi_barter_item_user > i {
-    position: absolute;
+.keryi_barter_item_user i.iconfontKeryiBarter {
     font-size: 18px;
-    right: 5px;
-    bottom: 2px;
     color: #63A8F0;
     cursor: pointer;
 }
 
-.keryi_barter_item_user > i.keryiBarter-complete {
+.keryi_barter_item_user i.keryiBarter-complete {
     color: rgb(123, 187, 94);
 }
 
-.keryi_barter_item_user > i.keryiBarter-refuse {
+.keryi_barter_item_user i.keryiBarter-refuse {
     color: #CC0E00;
+}
+
+.keryi_barter_item_user .keryi_barter_item_user_select {
+    width: 100px;
 }
 
 .keryi_barter_item > .keryi_barter_item_hover:hover {

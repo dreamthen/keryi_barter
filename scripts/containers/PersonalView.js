@@ -645,6 +645,7 @@ class PersonalView extends React.Component {
                         )
                     }.bind(this))
                 }
+                <hr className="keryi_barter_personal_view_details_wire"/>
             </section>
         )
     }

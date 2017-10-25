@@ -35,6 +35,10 @@ a {
     text-decoration: none;
 }
 
+a:focus {
+    text-decoration: none;
+}
+
 /*login页面主要容器*/
 #keryi_barter_login_page {
     position: absolute;

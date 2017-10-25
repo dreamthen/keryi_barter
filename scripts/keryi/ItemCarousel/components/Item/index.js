@@ -218,23 +218,27 @@ class Item extends React.Component {
                         exchangeStatusConfig.map(function exchangerStatus(exchangeStatusItem, exchangeStatusIndex) {
                             return exchangeStatusItem["key"] === hoverContent["status"] &&
                                 <Select
-                                    defaultValue={exchangeStatusItem["key"]}
+                                    key={exchangeStatusIndex}
+                                    // defaultValue={exchangeStatusItem["key"]}
+                                    defaultValue="lucy"
+                                    className="keryi_barter_item_user_select"
                                 >
-                                    {
-                                        exchangeStatusConfig.map(function exchangerOptionStatus(exchangeOptionStatusItem, exchangeOptionStatusIndex) {
-                                            return (
-                                                <Option value={exchangeOptionStatusItem["key"]}>
-                                                    <i
-                                                        key={exchangeOptionStatusIndex}
-                                                        className={exchangeOptionStatusItem["className"]}
-                                                        title={exchangeOptionStatusItem["value"]}
-                                                    >
+                                    {/*{*/}
+                                        {/*exchangeStatusConfig.map(function exchangerOptionStatus(exchangeOptionStatusItem, exchangeOptionStatusIndex) {*/}
+                                            {/*return (*/}
+                                                {/*<Option*/}
+                                                    {/*key={exchangeOptionStatusIndex}*/}
+                                                    {/*value={exchangeOptionStatusItem["key"]}>*/}
+                                                    {/*<i*/}
+                                                        {/*className={exchangeOptionStatusItem["className"]}*/}
+                                                        {/*title={exchangeOptionStatusItem["value"]}*/}
+                                                    {/*>*/}
 
-                                                    </i>
-                                                </Option>
-                                            )
-                                        })
-                                    }
+                                                    {/*</i>*/}
+                                                {/*</Option>*/}
+                                            {/*)*/}
+                                        {/*})*/}
+                                    {/*}*/}
                                 </Select>
                         })
                     }

@@ -87,7 +87,7 @@ body {
 
 /*login页面登录模块和注册模块头部设置按钮宽度、字体尺寸和字体粗细*/
 .keryi_barter_button_transform .keryi_barter_button_toLogin {
-    width: 64px;
+    width: 66px;
     font-size: 13px;
     font-weight: bolder;
 }
