@@ -19,23 +19,23 @@ let userLoginInformation = localStorage && JSON.parse(localStorage.getItem("user
 
 const defaultState = {
     //用户登录的id
-    userId: checkField(userLoginInformation["id"]),
+    userId: checkField(userLoginInformation, "id"),
     //确认进行资源交换的匹配资源的用户id
     matchedUserId: 0,
     //确认进行资源交换的匹配资源id
     matchedId: 0,
     //用户登录的用户名
-    username: checkField(userLoginInformation["username"]),
+    username: checkField(userLoginInformation, "username"),
     //用户登录的手机号
-    phone: checkField(userLoginInformation["phone"]),
+    phone: checkField(userLoginInformation, "phone"),
     //用户登录的邮箱
-    email: checkField(userLoginInformation["email"]),
+    email: checkField(userLoginInformation, "email"),
     //用户登录的头像
-    avatar: checkField(userLoginInformation["avatar"]),
+    avatar: checkField(userLoginInformation, "avatar"),
     //用户是否可以对自己的头像和背景进行编辑的标识位
     editAppearance: false,
     //用户登录的个性签名
-    motto: checkField(userLoginInformation["motto"]),
+    motto: checkField(userLoginInformation, "motto"),
     //判断个人信息是否可编辑
     personalInformationDisabled: false,
     //获取个人页资源数据列表

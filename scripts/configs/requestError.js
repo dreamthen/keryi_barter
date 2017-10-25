@@ -17,6 +17,9 @@ const requestError = {
                 break;
             //404(not found)跳转到notFound页面
             case 404:
+                setTimeout(function timer() {
+                    window.location.href = "./login.html";
+                }, 1500);
                 break;
             default:
                 break;

@@ -141,14 +141,18 @@ const keryi_prod_config = {
             },
             {
                 //利用正则表达式匹配所有后缀名为.jpg,.jpeg,.png,.gif和.bmp的文件
-
+                test: /\.(jpg|jpeg|png|bmp|gif)$/,
                 //利用url-loader模块加载工具对图片进行打包管理,限制大小为10000byte
                 //如果图片大小小于10000byte,就不会独立打包形成.后缀名文件,而是以data:base64的形式存在
                 //如果图片大小超过10000byte,就会独立打包形成.后缀名文件
                 //利用image-webpack-loader模块图片压缩工具对大图片进行压缩,转化为base64文件
                 //如果图片大小小于10000byte,就不会独立打包形成.后缀名文件,而是以data:base64的形式存在
                 //如果图片大小超过10000byte,就会独立打包形成.后缀名文件
-
+                use: [{
+                    loader: "url-loader", options: {limit: 10000, name: "css/[name].[hash:8].[ext]"}
+                }, {
+                    loader: "image-webpack-loader"
+                }]
             }
         ]
     },
