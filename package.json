@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dll": "webpack --config=./configs/webpack.dll.js --color",
-    "start": "webpack-dev-server --config=./configs/webpack.dev.js --color --hot --inline --watch-poll"
+    "start": "webpack-dev-server --config=./configs/webpack.dev.js --color --hot --inline --watch-poll",
+    "build": "webpack --config=./configs/webpack.prod.js --color --progress --display-modules"
   },
   "repository": {
     "type": "git",
