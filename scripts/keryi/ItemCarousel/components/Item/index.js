@@ -3,10 +3,13 @@
  */
 import React, {PropTypes} from "react";
 import HeadPortrait from "../../../HeadPortrait";
+import Select from "../../../Select";
 import itemConfig from "./configs/itemConfig";
 import {styleConfig} from "./configs/styleConfig";
 import "./keryi_barter_item.css";
 
+//keryi_barter表单下拉框组件Option选项组件
+const Option = Select.Option;
 //Item组件元素className样式表显示设置
 const itemShow = "itemShow";
 //Item组件元素className样式表隐藏设置
@@ -214,13 +217,30 @@ class Item extends React.Component {
                     {
                         exchangeStatusConfig.map(function exchangerStatus(exchangeStatusItem, exchangeStatusIndex) {
                             return exchangeStatusItem["key"] === hoverContent["status"] &&
-                                <i
+                                <Select
                                     key={exchangeStatusIndex}
-                                    className={exchangeStatusItem["className"]}
-                                    title={exchangeStatusItem["value"]}
+                                    value={exchangeStatusItem["key"]}
+                                    className="keryi_barter_item_user_select"
+                                    dropdownClassName="keryi_barter_item_user_select_dropDown"
                                 >
+                                    {
+                                        exchangeStatusConfig.map(function exchangerOptionStatus(exchangeOptionStatusItem, exchangeOptionStatusIndex) {
+                                            return (
+                                                <Option
+                                                    key={exchangeOptionStatusIndex}
+                                                    value={exchangeOptionStatusItem["key"]}
+                                                >
+                                                    <i
+                                                        className={exchangeOptionStatusItem["className"]}
+                                                        title={exchangeOptionStatusItem["value"]}
+                                                    >
 
-                                </i>
+                                                    </i>
+                                                </Option>
+                                            )
+                                        })
+                                    }
+                                </Select>
                         })
                     }
                 </cite>

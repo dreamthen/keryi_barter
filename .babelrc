@@ -6,6 +6,13 @@
   ],
   "plugins": [
     "transform-decorators-legacy",
-    "transform-object-assign"
+    "transform-object-assign",
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "style": "css"
+      }
+    ]
   ]
 }

@@ -19,6 +19,10 @@
     opacity: 1;
 }
 
+.keryi_barter_itemCarousel > .keryi_barter_itemCarousel_item {
+    box-sizing: border-box;
+}
+
 .keryi_barter_itemCarousel > .keryi_barter_itemCarousel_item,
 .keryi_barter_itemCarousel_item > .keryi_barter_itemCarousel_itemListNoneAlert {
     position: relative;

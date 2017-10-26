@@ -645,6 +645,7 @@ class PersonalView extends React.Component {
                         )
                     }.bind(this))
                 }
+                <hr className="keryi_barter_personal_view_details_wire"/>
             </section>
         )
     }
@@ -670,7 +671,9 @@ class PersonalView extends React.Component {
             //改变个人信息资源详情资源交换列表状态
             changeExchangeStatus,
             //改变个人信息资源详情资源交换列表元素个数
-            onChangeExchangeItemListHandler
+            onChangeExchangeItemListHandler,
+            //改变个人信息资源详情资源交换列表更换交换关系状态
+            onSelectExchangeItemListHandler
         } = this.props;
         return (
             <section className="keryi_barter_personal_view_details_item_carousel">
@@ -706,6 +709,7 @@ class PersonalView extends React.Component {
                         close={itemClose}
                         noneAlert={"您还没有\"" + exchangeStatusText + "\"的资源交换记录~"}
                         className="keryi_barter_personal_view_details_itemCarousel"
+                        onSelect={onSelectExchangeItemListHandler.bind(this)}
                         onChange={onChangeExchangeItemListHandler.bind(this)}
                     />
                 </main>
@@ -1406,6 +1410,13 @@ function mapDispatchToProps(dispatch, ownProps) {
                 itemCurrent
             } = this.props;
             dispatch(deletePersonalResourcesExchange.bind(this)(exchangeId, userId, viewDetailKeryiCard["id"], itemCurrent, exchangeStatus));
+        },
+        /**
+         * 改变个人信息资源详情资源交换列表更换交换关系状态
+         * @param exchangeId
+         */
+        onSelectExchangeItemListHandler(exchangeId) {
+
         },
         /**
          * 修改个人页头像成功
