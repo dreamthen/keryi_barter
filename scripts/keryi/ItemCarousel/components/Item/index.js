@@ -28,6 +28,8 @@ class Item extends React.Component {
         className: PropTypes.string,
         //Item组件元素关闭方法,外部传入函数
         onClose: PropTypes.func,
+        //Item组件元素改变表单下拉框选项状态方法,外部传入函数
+        onSelect: PropTypes.func,
         //Item组件内联样式,外部传入内联样式
         style: PropTypes.object,
         //判断Item组件元素组是否可关闭
@@ -48,7 +50,9 @@ class Item extends React.Component {
             //Item组件元素className样式表控制所在的容器消失或者隐藏
             itemVisible: false,
             //Item组件元素className样式表控制所在的容器显示或者隐藏
-            itemAnimation: false
+            itemAnimation: false,
+            //Item组件元素表单下拉框选项状态,初始化为"交换中"状态
+            exchangingStatus: this.props.exchangeStatusConfig[1]["key"]
         }
     }
 
@@ -125,7 +129,7 @@ class Item extends React.Component {
     /**
      * Item组件元素容器关闭方法
      */
-    onItemClose(src) {
+    onItemClose() {
         const {
             //元素关闭方法,外部传入函数
             onClose
@@ -138,7 +142,29 @@ class Item extends React.Component {
                 this.setState({
                     itemVisible: false
                 });
-                onClose(src);
+                onClose();
+            }.bind(this), 500);
+        }.bind(this));
+    }
+
+    /**
+     * Item组件元素改变表单下拉框选项状态方法
+     */
+    onItemSelect(value) {
+        const {
+            //元素改变表单下拉框选项状态方法,外部传入函数
+            onSelect
+        } = this.props;
+        this.setState({
+            itemAnimation: false,
+            exchangingStatus: value
+        }, function itemer() {
+            //FIXME 这里设置一个时间控制器,在Item组件元素容器关闭时,先控制其所在的容器隐藏,在500ms之后设置其所在的容器消失
+            setTimeout(function timer() {
+                this.setState({
+                    itemVisible: false
+                });
+                onSelect(value);
             }.bind(this), 500);
         }.bind(this));
     }
@@ -161,12 +187,18 @@ class Item extends React.Component {
             exchangeStatusConfig
         } = this.props;
         const {
+            //元素表单下拉框选项状态
+            exchangingStatus
+        } = this.state;
+        const {
             //根据外部传入的props className来设置Item组件元素的className样式表
             outsideClassToClass,
             //根据外部传入的state itemVisible和state itemAnimation来设置Item组件元素的className样式表
             itemVisibleOrAnimationToClass,
             //Item元素组件关闭方法
-            onItemClose
+            onItemClose,
+            //Item组件元素改变表单下拉框选项状态方法
+            onItemSelect
         } = this;
         return (
             <figure
@@ -216,10 +248,11 @@ class Item extends React.Component {
                     </figcaption>
                     {
                         exchangeStatusConfig.map(function exchangerStatus(exchangeStatusItem, exchangeStatusIndex) {
-                            return exchangeStatusItem["key"] === hoverContent["status"] &&
+                            return (exchangeStatusItem["key"] === hoverContent["status"] && exchangeStatusItem["key"] === exchangeStatusConfig[1]["key"]) ?
                                 <Select
                                     key={exchangeStatusIndex}
-                                    value={exchangeStatusItem["key"]}
+                                    value={exchangingStatus}
+                                    onChange={onItemSelect.bind(this)}
                                     className="keryi_barter_item_user_select"
                                     dropdownClassName="keryi_barter_item_user_select_dropDown"
                                 >
@@ -240,14 +273,21 @@ class Item extends React.Component {
                                             )
                                         })
                                     }
-                                </Select>
-                        })
+                                </Select> : (exchangeStatusItem["key"] === hoverContent["status"] && exchangeStatusItem["key"] !== exchangeStatusConfig[1]["key"]) ?
+                                    <i
+                                        key={exchangeStatusIndex}
+                                        className={exchangeStatusItem["className"]}
+                                        title={exchangeStatusItem["value"]}
+                                    >
+
+                                    </i> : null
+                        }.bind(this))
                     }
                 </cite>
                 {
                     close && <i
                         className="iconfontKeryiBarter keryiBarter-close"
-                        onClick={onItemClose.bind(this, src)}
+                        onClick={onItemClose.bind(this)}
                     >
                     </i>
                 }

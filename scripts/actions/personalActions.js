@@ -108,9 +108,10 @@ export function getPersonalResourcesListViewDetailsItemList(itemCurrent, userId,
  * @param passiveUserId
  * @param viewDetailKeryiCard
  * @param itemCurrent
+ * @param exchangeStatus
  * @returns {function(this:havePersonalResourcesExchange)}
  */
-export function havePersonalResourcesExchange({initiativeResourceId, passiveResourceId, initiativeUserId, passiveUserId, itemCurrent}) {
+export function havePersonalResourcesExchange({initiativeResourceId, passiveResourceId, initiativeUserId, passiveUserId, itemCurrent, exchangeStatus}) {
     return function dispatcher(dispatch) {
         keryiAxiosConfig.axiosRequest(
             api.HAVE_EXCHANGE,
@@ -125,8 +126,8 @@ export function havePersonalResourcesExchange({initiativeResourceId, passiveReso
                 //服务器响应body主体对象
                 let body = response;
                 dispatch(closePersonalViewDetailsFooter());
-                dispatch(getPersonalResourcesListViewDetails.bind(this)(initiativeUserId));
-                dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, initiativeUserId, initiativeResourceId, true));
+                dispatch(getPersonalResourcesListViewDetails.bind(this)(initiativeResourceId));
+                dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, initiativeUserId, initiativeResourceId, true, false, exchangeStatus));
                 dispatch(openPersonalViewDetailsItemClose());
                 dispatch(openPersonalViewDetailsAside());
             }.bind(this),
@@ -162,6 +163,36 @@ export function deletePersonalResourcesExchange(exchangeId, userId, id, itemCurr
             }.bind(this)
         );
     }.bind(this)
+}
+
+/**
+ * 个人信息页面资源交换列表更换交换关系状态
+ * @param exchangeId
+ * @param exchangeToStatus
+ * @param userId
+ * @param id
+ * @param itemCurrent
+ * @returns {function(this:selectPersonalResourceExchange)}
+ */
+export function selectPersonalResourceExchange(exchangeId, exchangeToStatus, userId, id, itemCurrent) {
+    return function dispatcher(dispatch) {
+        keryiAxiosConfig.axiosRequest(
+            api.CHANGE_EXCHANGE_LIST_STATUS + "/" + exchangeId + "/status",
+            "put",
+            {
+                id: exchangeId,
+                status: exchangeToStatus
+            },
+            function done(response) {
+                //服务器响应body主体对象
+                let body = response;
+                dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id, true, false, exchangeToStatus));
+            }.bind(this),
+            function error(response) {
+
+            }.bind(this)
+        );
+    }.bind(this);
 }
 
 /**

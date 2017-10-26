@@ -27,6 +27,8 @@ import viewDetailsStatisticsConfig from "../configs/viewDetailsStatisticsConfig"
 import statisticsConfig from "../configs/statisticsConfig";
 //对话框资源交换列表交换状态静态Mode配置
 import exchangeStatusConfig from "../configs/exchangeStatusConfig";
+//对话框资源交换列表交换状态选择Mode配置
+import exchangeStatusSelectConfig from "../configs/exchangeStatusSelectConfig";
 //获取匹配到的资源数据列表出现异常时,前端呈现默认约定数据
 import keryiModalDefaultConfig from "../configs/keryiModalDefaultConfig";
 import {
@@ -62,6 +64,8 @@ import {
     resetPersonalResourcesListViewDetailsContentAction,
     //个人信息页面删除资源交换列表
     deletePersonalResourcesExchange,
+    //个人信息页面资源交换列表更换交换关系状态
+    selectPersonalResourceExchange,
     //显示个人页资源详情对话框footer底部区域Action
     openPersonalViewDetailsFooter,
     //隐藏个人页资源详情对话框footer底部区域Action
@@ -1243,13 +1247,24 @@ function mapDispatchToProps(dispatch, ownProps) {
                 userId
             } = this.state;
             let id = viewDetailKeryiCard["id"];
-            dispatch(havePersonalResourcesExchange.bind(this)({
-                initiativeResourceId: id,
-                passiveResourceId: matchedId,
-                initiativeUserId: userId,
-                passiveUserId: matchedUserId,
-                itemCurrent
-            }));
+            this.setState({
+                exchangeStatus: exchangeStatusConfig[0]["key"],
+                exchangeStatusText: exchangeStatusConfig[0]["value"],
+                isMatched: false
+            }, function exchangerStatus() {
+                const {
+                    //个人信息资源详情资源交换列表状态切换标识
+                    exchangeStatus
+                } = this.state;
+                dispatch(havePersonalResourcesExchange.bind(this)({
+                    initiativeResourceId: id,
+                    passiveResourceId: matchedId,
+                    initiativeUserId: userId,
+                    passiveUserId: matchedUserId,
+                    itemCurrent,
+                    exchangeStatus
+                }));
+            }.bind(this));
         },
         /**
          * 控制Modal组件对话框隐藏并消失
@@ -1414,9 +1429,26 @@ function mapDispatchToProps(dispatch, ownProps) {
         /**
          * 改变个人信息资源详情资源交换列表更换交换关系状态
          * @param exchangeId
+         * @param exchangeToStatus
          */
-        onSelectExchangeItemListHandler(exchangeId) {
-
+        onSelectExchangeItemListHandler(exchangeId, exchangeToStatus) {
+            const {
+                //用户登录的id
+                userId
+            } = this.state;
+            const {
+                //个人页资源详情对象
+                viewDetailKeryiCard,
+                //个人页资源详情资源交换列表页码
+                itemCurrent
+            } = this.props;
+            this.setState({
+                exchangeStatus: exchangeToStatus,
+                exchangeStatusText: exchangeStatusSelectConfig[exchangeToStatus],
+                isMatched: false
+            }, function exchangerStatus() {
+                dispatch(selectPersonalResourceExchange.bind(this)(exchangeId, exchangeToStatus, userId, viewDetailKeryiCard["id"], itemCurrent));
+            });
         },
         /**
          * 修改个人页头像成功

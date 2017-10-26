@@ -33,6 +33,8 @@ class ItemCarousel extends React.Component {
         noneIconClassName: PropTypes.string,
         //改变ItemCarousel组件元素轮播器中的元素组或者关闭ItemCarousel组件元素轮播器方法,外部传入函数
         onChange: PropTypes.func,
+        //改变ItemCarousel组件元素轮播器中的元素组表单下拉框选项状态方法,外部传入函数
+        onSelect: PropTypes.func,
         //判断ItemCarousel组件元素轮播器是否显示描述浮层
         hover: PropTypes.bool,
         //ItemCarousel组件元素轮播器浮层统计Mode配置
@@ -146,6 +148,34 @@ class ItemCarousel extends React.Component {
     }
 
     /**
+     * ItemCarousel组件元素轮播器控制Item组件元素表单下拉框选项状态,外部传入的改变方法
+     */
+    onItemCarouselControlSelect(exchangeId, exchangeToStatus) {
+        const {
+            //元素组
+            itemList,
+            //改变ItemCarousel组件元素轮播器中的元素组表单下拉框选项状态方法,外部传入函数
+            onSelect
+        } = this.props;
+        let index = 0;
+        this.setState({
+            itemVisible: false
+        });
+        if (itemList.length <= 0) {
+            this.setState({
+                itemCarouselVisible: false
+            }, function itemCarouseler() {
+                //FIXME 这里设置一个时间控制器,在itemCarousel组件元素容器关闭时,先控制其所在的容器隐藏,在500ms之后设置其所在的容器改变其中的元素组或者关闭元素轮播器
+                setTimeout(function timer() {
+                    onSelect(exchangeId, exchangeToStatus);
+                }.bind(this), 500);
+            }.bind(this));
+        } else {
+            onSelect(exchangeId, exchangeToStatus);
+        }
+    }
+
+    /**
      * render渲染ItemCarousel组件元素轮播器元素组
      */
     renderItemCarousel() {
@@ -174,6 +204,8 @@ class ItemCarousel extends React.Component {
         const {
             //元素轮播器控制Item组件元素关闭,外部传入的关闭方法
             onItemCarouselControlClose,
+            //元素轮播器控制Item组件元素表单下拉框选项状态,外部传入的改变方法
+            onItemCarouselControlSelect,
             //左右移动标志Icon
             renderMovePoint
         } = this;
@@ -192,6 +224,7 @@ class ItemCarousel extends React.Component {
                                 src={itemItem["src"]}
                                 style={{width: (100 / split) + "%", left: (move + itemIndex) * (100 / split) + "%"}}
                                 close={itemItem["statusClose"]}
+                                onSelect={onItemCarouselControlSelect.bind(this, itemItem["id"])}
                                 onClose={onItemCarouselControlClose.bind(this, itemItem["id"])}
                             />
                         )
