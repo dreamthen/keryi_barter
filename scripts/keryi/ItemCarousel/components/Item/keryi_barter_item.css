@@ -34,7 +34,7 @@
     font-size: 16px;
     color: #fff;
     margin: 3px;
-    padding: 2px;
+    padding-left: 0.6px;
     background-color: #8f8f8f;
     z-index: 9920;
 }
@@ -79,6 +79,12 @@
     margin: 0 0 0 4px;
     color: #63A8F0;
     bottom: 3px;
+}
+
+.keryi_barter_item_user > i {
+    position: relative;
+    left: 5px;
+    bottom: 2px;
 }
 
 .keryi_barter_item_user i.iconfontKeryiBarter {

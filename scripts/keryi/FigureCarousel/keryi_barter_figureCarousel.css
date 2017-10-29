@@ -28,8 +28,8 @@
 
 .keryi_barter_figureCarousel_figure > .keryi_barter_figureCarousel_movePoint > i {
     position: absolute;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     font-size: 16px;
     top: 50%;
     margin-top: -12px;
@@ -37,17 +37,18 @@
     z-index: 9914;
     background-color: #8f8f8f;
     color: #fff;
-    padding: 4px;
     border-radius: 50%;
 }
 
 .keryi_barter_figureCarousel_figure > .keryi_barter_figureCarousel_movePoint > i.keryiBarter-left {
     left: 5px;
     font-size: 17px;
+    padding: 2px 2px;
 }
 
 .keryi_barter_figureCarousel_figure > .keryi_barter_figureCarousel_movePoint > i.keryiBarter-right {
     right: 5px;
+    padding: 1px 2px;
 }
 
 .keryi_barter_figureCarousel_figure > .keryi_barter_figureCarousel_movePoint > i::before {
