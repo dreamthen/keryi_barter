@@ -202,7 +202,7 @@ export function changeTagFunction(key, initLeft, tag, tagList) {
                     rectLeft: rect.left,
                     initLeft
                 }));
-                body.forEach(function tagger(tagItem, tagIndex) {
+                body && body.length && body.forEach(function tagger(tagItem, tagIndex) {
                     let flag = false;
                     tagList.forEach(function tagBody(item, index) {
                         if (tagItem["id"] === item["id"]) {
