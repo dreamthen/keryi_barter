@@ -6,7 +6,6 @@ import loggerMiddleware from "redux-logger";
 import thunkMiddleware from "redux-thunk";
 import {persistState} from "redux-devtools";
 import reducers from "../reducers/login";
-import {persistState} from "redux-devtools";
 
 const develop = "develop";
 
