@@ -4,6 +4,7 @@
 import {createStore, applyMiddleware, compose} from "redux";
 import loggerMiddleware from "redux-logger";
 import thunkMiddleware from "redux-thunk";
+import {persistState} from "redux-devtools";
 import reducers from "../reducers/login";
 
 const develop = "develop";
@@ -22,8 +23,11 @@ if (process.env.NODE_ENV === develop) {
 }
 
 //创建react-redux store,将reducers放进createStore中,生成react-redux store
-const store = createStore(reducers, compose(
+const configureStore = compose(
     applyMiddleware(...middleware),
-    window.devToolsExtension ? window.devToolsExtension : f => f
-));
+    // window.devToolsExtension ? window.devToolsExtension() : f => f
+    persistState(window.location.href.match(/[?&]debug_sessions=([^&]+)\b/))
+);
+const store = configureStore(reducers, {});
+
 export default store;
