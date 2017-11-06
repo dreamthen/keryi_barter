@@ -6,6 +6,7 @@ import thunkMiddleware from "redux-thunk";
 import loggerMiddleware from "redux-logger";
 import {persistState} from "redux-devtools";
 import reducers from "../reducers/app";
+import {persistState} from "redux-devtools";
 
 const develop = "develop";
 
@@ -21,6 +22,7 @@ if (process.env.NODE_ENV === develop) {
         thunkMiddleware
     ]
 }
+
 //创建react-redux store,将reducers放进createStore中,生成react-redux store
 const configureStore = compose(
     applyMiddleware(...middleware),

@@ -287,6 +287,10 @@ body {
     right: 11px;
 }
 
+.keryi_barter_modal_targetTagArea > .keryi_barter_modal_targetTagAreaLi i {
+    color: #63A8F0;
+}
+
 .keryi_barter_modal_mainContainer .keryi_barter_modal_area_priceWorth::placeholder {
     color: #a2a2a2;
 }
