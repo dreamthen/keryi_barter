@@ -2,8 +2,8 @@
  * Created by yinwk on 2017/6/10.
  */
 
-//请求后台接口,统一root路径manager
-const keryi_cover = "/manager/";
+//请求后台接口,统一root路径
+const keryi_cover = "/keryiBarter/";
 //是否使用mock方式,true为使用mock数据模式,false为使用调用服务器接口模式
 const isMock = false;
 //接口API对象

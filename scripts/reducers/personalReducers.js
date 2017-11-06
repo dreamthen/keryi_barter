@@ -15,7 +15,7 @@ import {
     checkField
 } from "../configs/checkField";
 
-let userLoginInformation = localStorage && JSON.parse(localStorage.getItem("userLoginInformation"));
+let userLoginInformation = localStorage && localStorage.getItem("userLoginInformation") !== "undefined" && JSON.parse(localStorage.getItem("userLoginInformation"));
 
 const defaultState = {
     //用户登录的id

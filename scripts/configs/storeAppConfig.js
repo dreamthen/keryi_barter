@@ -4,6 +4,7 @@
 import {createStore, applyMiddleware, compose} from "redux";
 import thunkMiddleware from "redux-thunk";
 import loggerMiddleware from "redux-logger";
+import {persistState} from "redux-devtools";
 import reducers from "../reducers/app";
 import {persistState} from "redux-devtools";
 
