@@ -757,7 +757,7 @@ function mapDispatchToProps(dispatch, ownProps) {
                     } else {
                         this.setState({[pullListDownKey]: true});
                     }
-                }.bind(this), 600);
+                }.bind(this), 200);
             }
         },
         /**
