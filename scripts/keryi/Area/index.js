@@ -33,6 +33,8 @@ class Area extends React.Component {
         pullListDown: PropTypes.bool,
         //初始化选择资源类型下拉框距离添加对话框的位置
         initPullListDownPosition: PropTypes.func,
+        //在最初组件装载的时候初始化选择资源类型下拉框距离添加对话框的位置
+        willInitPullListDownPosition: PropTypes.func,
         //Area组件编辑框默认提示语
         placeholder: PropTypes.string,
         //Area组件编辑框onChange内容改变事件,外部传入Area编辑框内容改变函数
@@ -48,24 +50,38 @@ class Area extends React.Component {
         this.state = {}
     }
 
+    /**
+     * 组件开始装载
+     */
+    componentWillMount() {
+
+    }
+
+    /**
+     * 选择资源类型下拉框初始距离添加对话框的位置的方法
+     */
+    initPosition(initPullListDown) {
+        //获取元素
+        let contentEdit = this.refs[defaultRefs];
+        //获取到元素初始距离窗口顶部、右边、底部和左边的位置
+        let position = getElementPosition(contentEdit);
+        //初始化选择资源类型下拉框距离添加对话框的位置
+        this.props[initPullListDown](position.left);
+    }
+
     componentWillReceiveProps(nextProps) {
         const {
             //编辑框是否执行下拉选择框
-            pullListDown,
-            //初始化选择资源类型下拉框距离添加对话框的位置
-            initPullListDownPosition
+            pullListDown
         } = this.props;
-        if ((this.props.value === "" && nextProps.value !== null) || (this.props.value === "" && nextProps.value !== "")) {
-            if (pullListDown) {
-                //获取元素
-                let contentEdit = this.refs[defaultRefs];
-                //获取到元素初始距离窗口顶部、右边、底部和左边的位置
-                let position = getElementPosition(contentEdit);
-                //初始化选择资源类型下拉框距离添加对话框的位置
-                initPullListDownPosition(position.left);
-            }
-        }
+        const {
+            //选择资源类型下拉框初始距离添加对话框的位置的方法
+            initPosition
+        } = this;
+        ((this.props.value === "" && nextProps.value !== null) || (this.props.value === "" && nextProps.value !== "")) && pullListDown && initPosition.bind(this)("initPullListDownPosition");
+        (this.props.value === "" && nextProps.value !== "") && pullListDown && initPosition.bind(this)("willInitPullListDownPosition");
     }
+
 
     /**
      * 组件重新渲染判断函数

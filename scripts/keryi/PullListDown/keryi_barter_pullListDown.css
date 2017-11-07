@@ -1,6 +1,6 @@
 @charset "utf-8";
 .keryi_barter_pullListDown {
-    position: absolute;
+    position: fixed;
     opacity: 0;
     width: 180px;
     border: 1px solid rgb(219, 219, 219);

@@ -16,6 +16,18 @@ import {
 } from "./barterActions";
 
 /**
+ * 设置选择资源类型下拉框距离添加选择资源类型输入框左边的最初始位置
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function changeWillMountInitDistance(payload) {
+    return {
+        type: appActionsType["CHANGE_WILL_MOUNT_INIT_DISTANCE"],
+        payload
+    }
+}
+
+/**
  * 设置选择资源类型下拉框距离添加选择资源类型输入框左边的位置
  * @param payload
  * @returns {{type: *, payload: *}}

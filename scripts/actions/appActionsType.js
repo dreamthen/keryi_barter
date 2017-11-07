@@ -13,6 +13,8 @@ const appActionsType = {
     GET_USER_HEAD_PORTRAIT_VIEW_DETAIL: "GET_USER_HEAD_PORTRAIT_VIEW_DETAIL",
     //重置对话框状态Action名称
     RESET_MODAL_STATUS: "RESET_MODAL_STATUS",
+    //设置选择资源类型下拉框距离添加选择资源类型输入框左边的最初始位置Action名称
+    CHANGE_WILL_MOUNT_INIT_DISTANCE: "CHANGE_WILL_MOUNT_INIT_DISTANCE",
     //选择资源类型初始距离添加选择资源类型输入框左边的位置
     CHANGE_INIT_DISTANCE: "CHANGE_INIT_DISTANCE",
     //选择资源类型下拉框距离添加选择资源类型输入框左边的位置Action名称

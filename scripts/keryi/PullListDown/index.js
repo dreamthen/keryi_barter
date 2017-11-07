@@ -2,7 +2,6 @@
  * Created by yinwk on 2017/6/27.
  */
 import React, {PropTypes} from "react";
-import ReactDOM from "react-dom";
 import pullListDownConfig from "./configs/pullListDownConfig";
 import "./keryi_barter_pullListDown.css";
 
@@ -64,16 +63,6 @@ class PullListDown extends React.Component {
                 nextProps.visible ? document.addEventListener("click", clickDocument.bind(this)) : document.removeEventListener("click", clickDocument.bind(this));
             }.bind(this), 100);
         }
-    }
-
-    componentDidMount() {
-        this._containerDiv = document.createElement("div");
-        document.body.appendChild(this._containerDiv);
-        this._render.bind(this)();
-    }
-
-    componentDidUpdate(prevState) {
-        this._render.bind(this)();
     }
 
     /**
@@ -244,7 +233,7 @@ class PullListDown extends React.Component {
      * render渲染下拉框组件
      * @returns {XML}
      */
-    _render() {
+    render() {
         const {
             //下拉框组件头部
             renderPullListHeader,
@@ -257,7 +246,7 @@ class PullListDown extends React.Component {
             //根据props style来设置PullListDown组件下拉框容器的style内联样式
             outsideStyleToStyle
         } = this;
-        ReactDOM.render(
+        return (
             <section
                 ref={pullListDownRefs}
                 className={visibleOrPullListDownToClass.bind(this)() + outSideClassToClass.bind(this)()}
@@ -273,11 +262,8 @@ class PullListDown extends React.Component {
                         renderDataSourceToPullList.bind(this)()
                     }
                 </ul>
-            </section>, this._containerDiv);
-    }
-
-    render() {
-        return null;
+            </section>
+        )
     }
 }
 

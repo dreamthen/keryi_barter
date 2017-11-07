@@ -15,6 +15,8 @@ const defaultState = {
     targetSourceTag: "",
     //对话框资源估值
     priceWorth: "",
+    //选择资源类型下拉框距离添加选择资源类型输入框左边的最初始位置
+    initWillLeft: 0,
     //选择资源类型初始距离添加选择资源类型输入框左边的位置
     initLeft: 0,
     //选择资源类型下拉框距离添加选择资源类型输入框左边的位置
@@ -50,23 +52,28 @@ export function appReducers(state = defaultState, actions) {
         //重置对话框状态
         case appActionsType["RESET_MODAL_STATUS"]:
             return defaultState;
+        //设置选择资源类型下拉框距离添加选择资源类型输入框左边的最初始位置
+        case appActionsType["CHANGE_WILL_MOUNT_INIT_DISTANCE"]:
+            newState["left"] = newState["willInitLeft"];
+            newState["targetLeft"] = newState["willInitLeft"];
+            return insteadState.insteadObjState(state, newState);
         //设置选择资源类型下拉框距离添加选择资源类型输入框左边的位置
         case appActionsType["CHANGE_INIT_DISTANCE"]:
             return insteadState.insteadObjState(state, newState);
         case appActionsType["CHANGE_DISTANCE"]:
-            newState["left"] = newState["rectLeft"] - newState["initLeft"] + 20;
+            newState["left"] = newState["rectLeft"];
             return insteadState.insteadObjState(state, newState);
         //设置选择目标资源类型下拉框距离添加选择目标资源类型输入框左边的位置
         case appActionsType["CHANGE_TARGET_DISTANCE"]:
-            newState["targetLeft"] = newState["rectLeft"] - newState["initLeft"] + 20;
+            newState["targetLeft"] = newState["rectLeft"];
             return insteadState.insteadObjState(state, newState);
         //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
         case appActionsType["RESET_DISTANCE"]:
-            let resetNewState = {left: 0};
+            let resetNewState = {left: state["willInitLeft"]};
             return insteadState.insteadObjState(state, resetNewState);
         //设置选择目标资源类型下拉框重置距离添加选择目标资源类型输入框左边的位置
         case appActionsType["RESET_TARGET_DISTANCE"]:
-            let resetNewTargetState = {targetLeft: 0};
+            let resetNewTargetState = {targetLeft: state["willInitLeft"]};
             return insteadState.insteadObjState(state, resetNewTargetState);
         //改变资源描述输入框上传图片组
         case appActionsType["CHANGE_IMAGE_LIST"]:

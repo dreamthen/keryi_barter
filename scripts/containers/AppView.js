@@ -8,6 +8,8 @@ import api from "../configs/api";
 import {
     //设置选择资源类型下拉框距离添加选择资源类型输入框左边的位置
     changeInitDistance,
+    //设置选择资源类型下拉框距离添加选择资源类型输入框左边的最初始位置
+    changeWillMountInitDistance,
     //改变资源描述输入框上传图片组
     changeImageList,
     //搜寻资源tag
@@ -73,6 +75,8 @@ class AppView extends React.Component {
         targetSourceTag: PropTypes.string,
         //选择资源类型初始距离添加选择资源输入框左边的位置
         initLeft: PropTypes.number,
+        //选择资源类型下拉框距离添加选择资源类型输入框左边的最初始位置
+        initWillLeft: PropTypes.number,
         //选择资源类型下拉框距离添加选择资源输入框左边的位置
         left: PropTypes.number,
         //选择目标资源类型下拉框距离添加选择资源类型输入框左边的位置
@@ -392,7 +396,9 @@ class AppView extends React.Component {
             //改变FigureCarousel组件图片轮播器中的图片组或者关闭FigureCarousel组件图片轮播器
             onFigureCarouselControlChangeImageList,
             //初始化选择资源类型下拉框距离添加对话框的位置
-            initPullListDownPosition
+            initPullListDownPosition,
+            //在最初组件装载的时候初始化选择资源类型下拉框距离添加对话框的位置
+            willInitPullListDownPosition
         } = this.props;
         switch (include) {
             case componentType[0]:
@@ -407,6 +413,7 @@ class AppView extends React.Component {
                             size={size}
                             pullListDown={pullListDown}
                             initPullListDownPosition={initPullListDownPosition.bind(this)}
+                            willInitPullListDownPosition={willInitPullListDownPosition.bind(this)}
                             placeholder={placeholder}
                             className={className ? className : ""}
                             onChange={onChangeAreaHandler.bind(this, key, pullListDownKey)}
@@ -767,6 +774,12 @@ function mapDispatchToProps(dispatch, ownProps) {
         initPullListDownPosition(initLeft) {
             //初始化选择资源类型下拉框距离添加对话框的位置
             dispatch(changeInitDistance({initLeft}));
+        },
+        /**
+         * 在最初组件装载的时候初始化选择资源类型下拉框距离添加对话框的位置
+         */
+        willInitPullListDownPosition(initWillLeft) {
+            dispatch(changeWillMountInitDistance({initWillLeft}))
         },
         /**
          * 上传图片成功后的回调函数,获取资源图片,添加FigureCarousel组件图片轮播器中的图片组图片或者关闭FigureCarousel组件图片轮播器
