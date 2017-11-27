@@ -1,6 +1,8 @@
 /**
  * Created by yinwk on 2017/6/30.
  */
+//导入keryi_barter Alert提示框组件
+import Alert from "./Alert";
 //导入keryi_barter Area编辑框组件
 import Area from "./Area";
 //导入keryi_barter Button按钮组件
@@ -34,6 +36,7 @@ import message from "./message";
 
 //集成keryi组件库
 const keryi = {
+    Alert,
     Area,
     Button,
     FigureCarousel,

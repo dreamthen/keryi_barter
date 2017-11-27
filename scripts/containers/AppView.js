@@ -52,6 +52,7 @@ import {
 import Upload from "rc-upload";
 import uploadConfig from "../configs/uploadConfig";
 import routesMode from "../configs/routesConfigMode";
+import {checkField} from "../configs/checkField";
 import "../../stylesheets/app.css";
 
 //Modal组件弹出框类型
@@ -144,18 +145,18 @@ class AppView extends React.Component {
     mapPropsToState() {
         const {props} = this;
         let userLoginInformation;
-        if (localStorage) {
+        if (localStorage && localStorage.getItem("userLoginInformation") !== "undefined") {
             userLoginInformation = JSON.parse(localStorage.getItem("userLoginInformation"));
         } else {
             return false;
         }
         this.setState({
             ...props,
-            userId: userLoginInformation["id"],
-            username: userLoginInformation["username"],
-            phone: userLoginInformation["phone"],
-            email: userLoginInformation["email"],
-            avatar: userLoginInformation["avatar"]
+            userId: checkField(userLoginInformation, "id"),
+            username: checkField(userLoginInformation, "username"),
+            phone: checkField(userLoginInformation, "phone"),
+            email: checkField(userLoginInformation, "email"),
+            avatar: checkField(userLoginInformation, "avatar")
         });
     }
 
@@ -779,7 +780,7 @@ function mapDispatchToProps(dispatch, ownProps) {
          * 在最初组件装载的时候初始化选择资源类型下拉框距离添加对话框的位置
          */
         willInitPullListDownPosition(initWillLeft) {
-            dispatch(changeWillMountInitDistance({initWillLeft}))
+            dispatch(changeWillMountInitDistance({initWillLeft}));
         },
         /**
          * 上传图片成功后的回调函数,获取资源图片,添加FigureCarousel组件图片轮播器中的图片组图片或者关闭FigureCarousel组件图片轮播器

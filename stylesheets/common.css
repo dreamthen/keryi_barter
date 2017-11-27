@@ -47,3 +47,20 @@ a:focus {
     top: 0;
     left: 0;
 }
+
+.ant-message {
+    z-index: 9925;
+    top: 76px;
+}
+
+.ant-message .ant-message-notice > .ant-message-notice-content {
+    background-color: rgba(0, 0, 0, 0.33);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 9px 18px;
+    color: #fff;
+}
+
+.ant-message-notice-content .ant-message-warning .anticon,
+.ant-message-notice-content .ant-message-loading .anticon {
+    color: #fff;
+}
