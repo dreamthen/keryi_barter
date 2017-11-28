@@ -1,0 +1,84 @@
+@media screen and (min-width: 1501px) {
+    .keryi_barter_personal_main_information_container > .keryi_barter_personal_main_barterList {
+        width: 660px;
+    }
+
+    .keryi_barter_personal_main_information_container > .keryi_barter_personal_main_personalInformation {
+        width: calc(100% - 640px);
+    }
+
+    .keryi_barter_personal_main_information_fixedContent > .keryi_barter_personal_main_information_title {
+        font-size: 16px;
+    }
+
+    .keryi_barter_personal_main_information_personalMain > .keryi_barter_personal_main_information_personalMain_title {
+        font-size: 14px;
+    }
+
+    .keryi_barter_personal_main_information_personalMain .keryi_barter_personal_main_information_personalMain_atom {
+        width: 200px;
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 1500px) {
+    .keryi_barter_personal_main_information_container > .keryi_barter_personal_main_barterList {
+        width: 540px;
+    }
+
+    .keryi_barter_personal_main_information_container > .keryi_barter_personal_main_personalInformation {
+        width: calc(100% - 520px);
+    }
+
+    .keryi_barter_personal_main_information_fixedContent > .keryi_barter_personal_main_information_title {
+        font-size: 14px;
+    }
+
+    .keryi_barter_personal_main_information_fixedContent > .keryi_barter_personal_main_information_update_container > i {
+        font-size: 18px;
+    }
+
+    .keryi_barter_personal_main_information_personalMain > .keryi_barter_personal_main_information_personalMain_title {
+        font-size: 12px;
+    }
+
+    .keryi_barter_personal_main_information_personalMain .keryi_barter_personal_main_information_personalMain_atom {
+        width: 160px;
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    .keryi_barter_personal_main_information_container > .keryi_barter_personal_main_barterList {
+        width: 420px;
+    }
+
+    .keryi_barter_personal_main_information_container > .keryi_barter_personal_main_personalInformation {
+        width: calc(100% - 400px);
+    }
+
+    .keryi_barter_personal_main_information_fixedContent > .keryi_barter_personal_main_information_title {
+        font-size: 12px;
+    }
+
+    .keryi_barter_personal_main_information_fixedContent > .keryi_barter_personal_main_information_update_container > i {
+        font-size: 16px;
+    }
+
+    .keryi_barter_personal_main_information_personalMain > .keryi_barter_personal_main_information_personalMain_title {
+        font-size: 10px;
+    }
+
+    .keryi_barter_personal_main_information_personalMain .keryi_barter_personal_main_information_personalMain_atom {
+        width: 100px;
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+}
+
+@media screen and (max-width: 480px) {
+
+}

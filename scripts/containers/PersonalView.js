@@ -90,6 +90,7 @@ import {
     uploadPersonalAvatarAction
 } from "../actions/personalActions";
 import "../../stylesheets/personal.css";
+import "../../stylesheets/adapateConfig.css";
 
 //个人信息可编辑组件类型
 const componentType = ["input"];
