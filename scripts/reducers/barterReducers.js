@@ -65,6 +65,22 @@ export function barterReducers(state = defaultState, actions) {
             });
         //重置资源详情
         case appActionsType["RESET_RESOURCE_LIST_VIEW_DETAIL"]:
+            return insteadState.insteadObjState(
+                state, {
+                    viewDetailHeadPortrait: "",
+                    viewDetailUserName: "",
+                    viewDetailImageList: "[]",
+                    viewDetailTitle: "",
+                    viewDetailIntroduce: "",
+                    viewDetailNeedParty: 0,
+                    viewDetailPriceWorth: 0,
+                    viewDetailLike: 0,
+                    viewDetailTagList: [],
+                    viewDetailTargetTagList: []
+                }
+            );
+        //重置资源数据列表和资源详情
+        case appActionsType["RESET_RESOURCE_LIST_VIEW_LIST_DETAIL"]:
             return defaultState;
     }
     return state;

@@ -16,7 +16,9 @@ import {
     //获取资源详情
     getResourcesListViewDetails,
     //重置资源详情Action
-    resetResourcesListViewDetailsAction
+    resetResourcesListViewDetailsAction,
+    //重置资源数据列表和资源详情Action
+    resetResourcesListViewListDetailsAction
 } from "../actions/barterActions";
 //获取资源数据列表出现异常时,前端呈现默认约定数据
 import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
@@ -464,14 +466,19 @@ function mapDispatchToProps(dispatch, ownProps) {
         closeBarterVisibleHandler() {
             this.setState({
                 viewBarterVisible: false
+            }, () => {
+                //FIXME 这里设置一个时间控制器,控制在Modal组件对话框隐藏动画并且消失之后再执行清除获取资源详情的数据
+                setTimeout(() => {
+                    dispatch(resetResourcesListViewDetailsAction());
+                }, 1000);
             });
         },
         /**
          * 重置资源详情
          */
         resetResourcesListViewDetailsHandler() {
-            //重置资源详情Action
-            dispatch(resetResourcesListViewDetailsAction());
+            //重置资源数据列表和资源详情Action
+            dispatch(resetResourcesListViewListDetailsAction());
         },
         /**
          * 点击喜欢图标,更新喜欢数

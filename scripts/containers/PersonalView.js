@@ -1273,12 +1273,16 @@ function mapDispatchToProps(dispatch, ownProps) {
         closePersonalBarterVisibleHandler() {
             this.setState({
                 viewPersonalBarterVisible: false
+            }, () => {
+                //FIXME 这里设置一个时间控制器,控制在Modal组件对话框隐藏动画并且消失之后再执行清除个人页面资源详情的数据
+                setTimeout(() => {
+                    dispatch(closePersonalViewDetailsAside());
+                    dispatch(closePersonalViewDetailsFooter());
+                    dispatch(closePersonalViewDetailsItemClose());
+                    dispatch(closePersonalViewDetailsItemHover());
+                    dispatch(resetPersonalResourcesListViewDetailsContentAction());
+                }, 1000);
             });
-            dispatch(resetPersonalResourcesListViewDetailsContentAction());
-            dispatch(closePersonalViewDetailsAside());
-            dispatch(closePersonalViewDetailsFooter());
-            dispatch(closePersonalViewDetailsItemClose());
-            dispatch(closePersonalViewDetailsItemHover());
         },
         /**
          * dispatch获取个人页资源数据列表

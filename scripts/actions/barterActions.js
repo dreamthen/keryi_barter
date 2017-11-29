@@ -141,9 +141,19 @@ export function getResourcesListViewDetailsAction(payload) {
  * 重置资源详情Action
  * @returns {{type: *}}
  */
-export function resetResourcesListViewDetailsAction() {
+export function resetResourcesListViewDetailsAction(){
     return {
         type: appActionsType["RESET_RESOURCE_LIST_VIEW_DETAIL"]
+    }
+}
+
+/**
+ * 重置资源数据列表和资源详情Action
+ * @returns {{type: *}}
+ */
+export function resetResourcesListViewListDetailsAction() {
+    return {
+        type: appActionsType["RESET_RESOURCE_LIST_VIEW_LIST_DETAIL"]
     }
 }
 
