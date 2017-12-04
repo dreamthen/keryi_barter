@@ -104,30 +104,31 @@ class Modal extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log();
         //当外部传入Modal组件对话框是否弹出属性为true时,Modal组件对话框先从消失变为隐藏,然后时间控制器控制在Modal组件对话框取消消失100ms之后从隐藏变为显示
         (this.props.visible !== nextProps.visible && nextProps.visible) &&
         this.setState({
             modalVisible: nextProps.visible
-        }, function visibler() {
+        }, () => {
             //FIXME 在这里设置一个时间控制器,Modal组件对话框取消消失100ms之后,从隐藏到显示的过程
             setTimeout(function timer() {
                 this.setState({
                     modalAppear: nextProps.visible
                 });
             }.bind(this), 100);
-        }.bind(this));
+        });
         //当外部传入Modal组件对话框是否弹出属性为false时,Modal组件对话框先从显示变为隐藏,然后时间控制器控制在Modal组件对话框从显示到隐藏这个过程动画1s之后,将Modal组件对话框消失
         (this.props.visible !== nextProps.visible && !nextProps.visible) &&
         this.setState({
             modalAppear: nextProps.visible
-        }, function disVisibler() {
+        }, () => {
             //FIXME 在这里设置一个时间控制器,Modal组件对话框从显示到隐藏这个过程动画1s之后,将Modal组件对话框消失
             setTimeout(function timer() {
                 this.setState({
                     modalVisible: nextProps.visible
                 });
             }.bind(this), 1000);
-        }.bind(this));
+        });
     }
 
     componentDidUpdate(prevState) {
@@ -150,7 +151,7 @@ class Modal extends React.Component {
     /**
      * 组件开始卸载
      */
-    componentWillUnmount(){
+    componentWillUnmount() {
         document.body.removeChild(this.modalDiv);
     }
 

@@ -192,7 +192,9 @@ class PersonalView extends React.Component {
             //判断个人信息编辑动画是否可渲染
             personalInformationAnimationDisabled: false,
             //控制Modal组件对话框显示、隐藏或者消失
-            viewPersonalBarterVisible: false
+            viewPersonalBarterVisible: false,
+            //控制ShadowModal组件全局对话框显示、隐藏或者消失
+            viewShadowPersonalBarterVisible: false
         };
     }
 
@@ -350,10 +352,25 @@ class PersonalView extends React.Component {
     }
 
     /**
-     * render渲染keryi_barter个人信息页面头部编辑外观按钮
+     * 点击用户退出按钮,渲染"用户退出"全局对话框
+     * @param event
+     */
+    onPersonalLogOut(event) {
+        this.setState({
+            viewShadowPersonalBarterVisible: true
+        });
+        //消除冒泡事件
+        event.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面头部用户退出按钮
      * @returns {XML}
      */
     renderPersonalOutLogin() {
+        const {
+            onPersonalLogOut
+        } = this;
         return (
             <section className="keryi_barter_personal_head_out_login">
                 {
@@ -361,6 +378,7 @@ class PersonalView extends React.Component {
                         size="default"
                         type="primary"
                         className="keryi_barter_personal_head_out_login_button"
+                        onClick={onPersonalLogOut.bind(this)}
                     >
                         用户退出
                     </Button>
@@ -831,8 +849,20 @@ class PersonalView extends React.Component {
      * render渲染keryi_barter个人信息页面"用户退出"全局对话框
      * @returns {XML}
      */
-    renderPersonalShadowModal(){
-
+    renderPersonalShadowModal() {
+        const {
+            //控制ShadowModal组件全局对话框显示、隐藏或者消失
+            viewShadowPersonalBarterVisible
+        } = this.state;
+        return (
+            <ShadowModal
+                visible={viewShadowPersonalBarterVisible}
+            >
+                <div>
+                    确定退出此用户?
+                </div>
+            </ShadowModal>
+        )
     }
 
     /**

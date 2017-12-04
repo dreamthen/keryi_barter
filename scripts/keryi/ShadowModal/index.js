@@ -1,7 +1,7 @@
 import React, {PropTypes} from "react";
-import {render} from "react-dom";
+import ReactDOM from "react-dom";
 import shadowModalConfig from "./configs/shadowModalConfig";
-import {Button} from "../index";
+import Button from "../Button";
 import "./keryi_barter_shadowModal.css";
 //ShadowModal组件全局对话框显示样式表配置
 const shadowModalVisible = "visible";
@@ -49,29 +49,30 @@ class ShadowModal extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         //当外部传入ShadowModal组件全局对话框是否弹出属性为true时,ShadowModal组件全局对话框先从消失变为隐藏,然后时间控制器控制在ShadowModal组件全局对话框取消消失100ms之后从隐藏变为显示
-        if (this.props.visible !== nextProps.visible && nextProps.visible) {
-            this.setState({
-                shadowModalVisibleAppear: nextProps.visible
-            });
+        this.props.visible !== nextProps.visible && nextProps.visible &&
+        this.setState({
+            shadowModalVisibleAppear: nextProps.visible
+        }, () => {
             //FIXME 在这里设置一个时间控制器,ShadowModal组件全局对话框取消消失100ms之后,从隐藏到显示的过程
             setTimeout(function timer() {
                 this.setState({
                     shadowModalVisibleAnimation: nextProps.visible
                 });
             }.bind(this), 100);
-        }
+        });
+
         //当外部传入ShadowModal组件全局对话框是否弹出属性为false时,ShadowModal组件全局对话框先从显示变为隐藏,然后时间控制器控制在ShadowModal组件全局对话框从显示到隐藏这个过程动画1s之后,将ShadowModal组件全局对话框消失
-        if (this.props.visible !== nextProps.visible && !nextProps.visible) {
-            this.setState({
-                shadowModalVisibleAnimation: nextProps.visible
-            });
+        this.props.visible !== nextProps.visible && !nextProps.visible &&
+        this.setState({
+            shadowModalVisibleAnimation: nextProps.visible
+        }, () => {
             //FIXME 在这里设置一个时间控制器,ShadowModal组件全局对话框从显示到隐藏这个过程动画1s之后,将ShadowModal组件全局对话框消失
             setTimeout(function timer() {
                 this.setState({
                     shadowModalVisibleAppear: nextProps.visible
                 });
             }.bind(this), 1000);
-        }
+        });
     }
 
     componentDidMount() {
@@ -181,7 +182,7 @@ class ShadowModal extends React.Component {
         const {
             children
         } = this.props;
-        render(
+        ReactDOM.render(
             <section
                 className={animationClassToClass.bind(this)() + appearClassToClass.bind(this)() + wrapClassToClass.bind(this)()}>
                 <div className="keryi_barter_shadowModal_shadow">
