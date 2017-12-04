@@ -224,6 +224,7 @@ class AppView extends React.Component {
                         }
                         <li className="keryi_barter_navItem">
                             <Button
+                                title="发布资源"
                                 size="large"
                                 type="primary"
                                 className="keryi_barter_button_addBarter"

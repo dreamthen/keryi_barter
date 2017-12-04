@@ -27,6 +27,8 @@ import Prompt from "./Prompt";
 import PullListDown from "./PullListDown";
 //导入keryi_barter Select表单下拉框组件
 import Select from "./Select";
+//导入keryi_barter ShadowModal全局对话框组件
+import ShadowModal from "./ShadowModal";
 //导入keryi_barter SpinAnimation动画组件
 import SpinAnimation from "./SpinAnimation";
 //导入keryi_barter Tag标签组件
@@ -50,6 +52,7 @@ const keryi = {
     Prompt,
     PullListDown,
     Select,
+    ShadowModal,
     SpinAnimation,
     Tag
 };

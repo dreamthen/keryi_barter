@@ -13,6 +13,7 @@ import {
     ItemCarousel,
     KeryiCard,
     Modal,
+    ShadowModal,
     Tag
 } from "../keryi";
 import api from "../configs/api";
@@ -349,6 +350,26 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * render渲染keryi_barter个人信息页面头部编辑外观按钮
+     * @returns {XML}
+     */
+    renderPersonalOutLogin() {
+        return (
+            <section className="keryi_barter_personal_head_out_login">
+                {
+                    <Button
+                        size="default"
+                        type="primary"
+                        className="keryi_barter_personal_head_out_login_button"
+                    >
+                        用户退出
+                    </Button>
+                }
+            </section>
+        )
+    }
+
+    /**
      * 根据state editAppearanceAnimation来设置头像和背景的className样式表
      * @returns string
      */
@@ -415,6 +436,8 @@ class PersonalView extends React.Component {
             renderPersonalHeaderUsername,
             //render渲染个人信息页面头部编辑外观按钮
             renderPersonalUpdateSurface,
+            //render渲染个人信息页面头部用户退出按钮
+            renderPersonalOutLogin,
             //render渲染个人信息页面头部背景和头像
             renderPersonalHeaderBackgroundAndPortrait
         } = this;
@@ -429,6 +452,8 @@ class PersonalView extends React.Component {
                 {renderPersonalHeaderUsername.bind(this)()}
                 {/*render渲染个人信息页面头部编辑外观按钮*/}
                 {renderPersonalUpdateSurface.bind(this)()}
+                {/*render渲染个人信息页面头部用户退出按钮*/}
+                {renderPersonalOutLogin.bind(this)()}
                 {/*render渲染个人信息页面头部背景和头像*/}
                 {renderPersonalHeaderBackgroundAndPortrait.bind(this)()}
             </header>
@@ -803,6 +828,14 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * render渲染keryi_barter个人信息页面"用户退出"全局对话框
+     * @returns {XML}
+     */
+    renderPersonalShadowModal(){
+
+    }
+
+    /**
      * render渲染keryi_barter个人信息页面主体用户名
      * @returns {XML}
      */
@@ -1111,7 +1144,9 @@ class PersonalView extends React.Component {
             //render渲染个人信息页面保存头像和背景部分
             renderPersonalSaveSome,
             //render渲染个人信息页面主体部分
-            renderPersonalMain
+            renderPersonalMain,
+            //render渲染个人信息页面"用户退出"全局对话框
+            renderPersonalShadowModal
         } = this;
         const {
             //用户是否可以对自己的头像和背景进行编辑的标识位
@@ -1131,6 +1166,8 @@ class PersonalView extends React.Component {
                 </section>
                 {/*render渲染个人信息页面查看"以物换物"资源详情对话框*/}
                 {renderPersonalModal.bind(this)()}
+                {/*render渲染个人信息页面"用户退出"全局对话框*/}
+                {renderPersonalShadowModal.bind(this)()}
             </div>
         )
     }

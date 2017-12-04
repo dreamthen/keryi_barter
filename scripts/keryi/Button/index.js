@@ -16,6 +16,8 @@ const defaultSizeConfig = "default";
  */
 class Button extends React.Component {
     static propTypes = {
+        //Button组件标题提示语
+        title: PropTypes.string,
         //Button组件按钮类型:default,primary,info,warning和error,默认为default
         type: PropTypes.string,
         //Button组件按钮尺寸:small,default和large,默认为default
@@ -54,12 +56,16 @@ class Button extends React.Component {
     render() {
         const {sizeToClass, typeToClass} = this;
         const {
+            title,
             className,
             children,
             onClick
         } = this.props;
         return (
-            <div className={typeToClass.bind(this)() + " " + sizeToClass.bind(this)()}>
+            <div
+                title={title}
+                className={typeToClass.bind(this)() + " " + sizeToClass.bind(this)()}
+            >
                 <button
                     className={className}
                     onClick={onClick}

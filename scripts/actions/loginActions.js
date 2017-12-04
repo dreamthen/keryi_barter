@@ -103,7 +103,7 @@ export function register(account, password) {
             this.setState({
                 warnPrompt: msg
             });
-        }
+        }.bind(this)
     );
 }
 

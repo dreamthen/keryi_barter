@@ -12,26 +12,26 @@ const requestError = {
         switch (status) {
             //401(会话过期,重新登录)跳转到login页面
             case 401:
-                Alert.warning("会话过期，请重新登录", 1.5, function close() {
+                Alert.warning("会话过期，请重新登录", 2, function close() {
                     Alert.destroy();
                 });
                 setTimeout(function timer() {
                     window.location.href = "./login.html";
-                }, 1500);
+                }, 2000);
                 break;
             //404(not found)跳转到notFound页面
             case 404:
-                Alert.loading("服务器开小差了，请稍后重试刷新页面", 1.5, function close() {
+                Alert.loading("服务器开小差了，请稍后重试刷新页面", 2, function close() {
                     Alert.destroy();
                 });
                 break;
             case 500:
-                Alert.warning("服务器异常，请重新登录", 1.5, function close() {
+                Alert.warning("服务器异常，请重新登录", 2, function close() {
                     Alert.destroy();
                 });
                 setTimeout(function timer() {
                     window.location.href = "./login.html";
-                }, 1500);
+                }, 2000);
                 break;
             default:
                 break;

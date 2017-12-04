@@ -1,0 +1,32 @@
+@charset "utf-8";
+.keryi_barter_shadowModal,
+.keryi_barter_shadowModal > .keryi_barter_shadowModal_shadow {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 2600;
+}
+
+.keryi_barter_shadowModal {
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    transition: all 1s ease-in-out 0s;
+    background-color: rgba(41, 70, 101, .90);
+}
+
+.keryi_barter_shadowModal > .keryi_barter_shadowModal_shadow {
+    z-index: 9926;
+}
+
+.keryi_barter_shadowModal.keryi_barter_shadowModalDisAppear {
+    opacity: 0;
+}
+
+.keryi_barter_shadowModal.keryi_barter_shadowModalNone {
+    display: none;
+}
