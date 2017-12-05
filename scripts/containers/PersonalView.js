@@ -90,6 +90,10 @@ import {
     //修改个人页头像成功Action
     uploadPersonalAvatarAction
 } from "../actions/personalActions";
+import {
+    //用户退出
+    logOut
+} from "../actions/loginActions";
 import "../../stylesheets/personal.css";
 import "../../stylesheets/adapateConfig.css";
 
@@ -846,6 +850,28 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * 个人信息页面"用户退出"全局对话框点击取消按钮,关闭"用户退出"全局对话框
+     * @param event
+     */
+    cancelPersonalBarterShadowModalVisibleHandler(event) {
+        this.setState({
+            viewShadowPersonalBarterVisible: false
+        });
+        //取消冒泡事件
+        event.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
+     * 个人信息页面"用户退出"全局对话框点击确定按钮,关闭"用户退出"全局对话框,清除本地存储LocalStorage,登出至登录页面
+     * @param event
+     */
+    surePersonalBarterShadowModalVisibleHandler(event) {
+        logOut.bind(this)();
+        //取消冒泡事件
+        event.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
      * render渲染keryi_barter个人信息页面"用户退出"全局对话框
      * @returns {XML}
      */
@@ -854,13 +880,22 @@ class PersonalView extends React.Component {
             //控制ShadowModal组件全局对话框显示、隐藏或者消失
             viewShadowPersonalBarterVisible
         } = this.state;
+        const {
+            //个人信息页面"用户退出"全局对话框点击确定按钮,关闭"用户退出"全局对话框,清除本地存储LocalStorage,登出至登录页面
+            surePersonalBarterShadowModalVisibleHandler,
+            //个人信息页面"用户退出"全局对话框点击取消按钮,关闭"用户退出"全局对话框
+            cancelPersonalBarterShadowModalVisibleHandler
+        } = this;
         return (
             <ShadowModal
                 visible={viewShadowPersonalBarterVisible}
+                className="keryi_barter_personal_shadowModal_mainContainer"
+                onOk={surePersonalBarterShadowModalVisibleHandler.bind(this)}
+                onCancel={cancelPersonalBarterShadowModalVisibleHandler.bind(this)}
             >
-                <div>
-                    确定退出此用户?
-                </div>
+                <h1 className="keryi_barter_personal_shadowModal_title">
+                    你确定要退出吗?
+                </h1>
             </ShadowModal>
         )
     }

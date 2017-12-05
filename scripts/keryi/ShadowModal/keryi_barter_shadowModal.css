@@ -32,3 +32,32 @@
 .keryi_barter_shadowModal.keryi_barter_shadowModalNone {
     display: none;
 }
+
+.keryi_barter_shadowModal > .keryi_barter_shadowModal_innerContainer {
+    position: relative;
+    z-index: 9927;
+}
+
+.keryi_barter_shadowModal_innerContainer > .keryi_barter_shadowModal_innerContainer_footer {
+    text-align: center;
+}
+
+.keryi_barter_shadowModal_innerContainer_footer .keryi_barter_shadowModal_innerContainer_footer_close,
+.keryi_barter_shadowModal_innerContainer_footer .keryi_barter_shadowModal_innerContainer_footer_sure {
+    width: 86px;
+    padding: 8px 20px;
+    margin-top: 28px;
+    font-size: 16px;
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+}
+
+.keryi_barter_shadowModal_innerContainer_footer .keryi_barter_shadowModal_innerContainer_footer_close,
+.keryi_barter_shadowModal_innerContainer_footer .keryi_barter_shadowModal_innerContainer_footer_close:hover {
+    background-color: #9da6af;
+    color: #fff;
+    border-color: #9da6af;
+}
+
+.keryi_barter_shadowModal_innerContainer_footer .keryi_barter_shadowModal_innerContainer_footer_sure {
+    margin-left: 25px;
+}

@@ -33,7 +33,7 @@ export function login(account, password) {
             localStorage.setItem("userLoginInformation", JSON.stringify(body));
             //FIXME 这里设置一个时间控制器,登录成功后,看到成功提示语1.5s之后,跳转到keryi主页面
             setTimeout(function timer() {
-               window.location.href = "./index.html";
+                window.location.href = "./index.html";
             }.bind(this), 1500);
         }.bind(this),
         function error(response) {
@@ -103,6 +103,43 @@ export function register(account, password) {
             this.setState({
                 warnPrompt: msg
             });
+        }.bind(this)
+    );
+}
+
+/**
+ * keryi_barter用户退出控制器
+ */
+function* logOutGenerator() {
+    yield this.setState({
+        viewShadowPersonalBarterVisible: false
+    });
+    yield localStorage.removeItem("userLoginInformation");
+    yield setTimeout(() => {
+        window.location.href = "./login.html";
+    }, 1500);
+}
+
+/**
+ * keryi_barter用户退出
+ */
+export function logOut() {
+    keryiAxiosConfig.axiosRequest(
+        api.KERYI_LOGOUT,
+        "delete",
+        {},
+        function done(response) {
+            let body = response;
+            let logOutGeneratorConstructor = logOutGenerator.bind(this)();
+            let next = logOutGeneratorConstructor.next();
+            while (!next.done) {
+                next = logOutGeneratorConstructor.next();
+            }
+        }.bind(this),
+        function error(response) {
+            let data = response.data,
+                head = data.head,
+                msg = head.message;
         }.bind(this)
     );
 }

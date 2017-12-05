@@ -27,6 +27,9 @@ const AUTO_PREFIXER_BROWSERS = [
 
 //webpack配置
 const keryi_dll_config = {
+    //webpack七种打包管理方式之一:eval
+    //每一个module下的模块都会被eval包裹,并在eval包裹后添加注释
+    devtool: "eval",
     //webpack打包管理外部依赖包配置入口文件
     entry: {
         vendor: ["react", "react-dom", "react-router", "redux", "react-redux", "axios", "babel-polyfill", "antd"]

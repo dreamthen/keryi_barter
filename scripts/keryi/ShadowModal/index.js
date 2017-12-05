@@ -85,6 +85,10 @@ class ShadowModal extends React.Component {
         this._render.bind(this)();
     }
 
+    componentWillUnmount() {
+        document.body.removeChild(this.shadowModalDiv);
+    }
+
     /**
      * 根据state shadowModalVisibleAppear来设置ShadowModal组件全局对话框主容器的className样式表隐藏或者消失
      */
@@ -153,12 +157,16 @@ class ShadowModal extends React.Component {
                 <Button
                     size="default"
                     type="info"
+                    onClick={onCancel}
+                    className="keryi_barter_shadowModal_innerContainer_footer_close"
                 >
                     {cancelText ? cancelText : defaultCloseText}
                 </Button>
                 <Button
                     size="default"
                     type="primary"
+                    onClick={onOk}
+                    className="keryi_barter_shadowModal_innerContainer_footer_sure"
                 >
                     {okText ? okText : defaultOkText}
                 </Button>

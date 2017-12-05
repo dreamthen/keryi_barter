@@ -15,6 +15,8 @@ if (!isMock) {
         KERYI_LOGIN: keryi_cover + "sessions",
         //注册
         KERYI_REGISTER: keryi_cover + "sessions",
+        //用户退出
+        KERYI_LOGOUT: keryi_cover + "sessions",
         //获取资源列表
         GET_RESOURCE_LIST: keryi_cover + "resources",
         //获取资源详情

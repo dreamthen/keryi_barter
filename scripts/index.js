@@ -1,6 +1,7 @@
 /**
  * Created by yinwk on 2017/5/28.
  */
+import "babel-polyfill";
 import React from "react";
 import {Provider} from "react-redux";
 import {Router, hashHistory} from "react-router";

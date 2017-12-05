@@ -146,6 +146,13 @@
     border: 1px solid rgba(255, 255, 255, .8);
 }
 
+.keryi_barter_personal_shadowModal_mainContainer .keryi_barter_personal_shadowModal_title {
+    font-size: 25px;
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    color: #fff;
+    text-align: center;
+}
+
 .keryi_barter_personal_main > .keryi_barter_personal_main_username {
     height: 75px;
     background-color: #fff;

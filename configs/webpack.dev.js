@@ -34,8 +34,8 @@ const PORT = "9077";
 
 //webpack web开发环境打包管理配置
 const keryi_dev_config = {
-    //webpack七种打包管理方式之一:eval
-    //每一个module下的模块都会被eval包裹,并在eval包裹后添加注释
+    //webpack七种打包管理方式之一:source-map
+    //每一个module入口文件会以map.js的形式进行打包
     devtool: "eval",
     //webpack web开发环境打包管理配置入口
     //这里有两个入口,分别对应两个html文件--login.html和index.html
@@ -71,7 +71,7 @@ const keryi_dev_config = {
                     STYLE_DIR
                 ],
                 //热加载模块加载工具,以及babel解析react,stage-0和es2015的模块加载工具
-                use: ["react-hot-loader", "babel-loader"]
+                use: ["react-hot-loader", {loader: "babel-loader", options: {cacheDirectory: true}}]
             },
             {
                 //利用正则表达式匹配所有后缀名为.css的文件
