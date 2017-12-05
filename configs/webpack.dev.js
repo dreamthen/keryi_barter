@@ -71,7 +71,7 @@ const keryi_dev_config = {
                     STYLE_DIR
                 ],
                 //热加载模块加载工具,以及babel解析react,stage-0和es2015的模块加载工具
-                use: ["react-hot-loader", {loader: "babel-loader", options: {cacheDirectory: true}}]
+                use: [{loader: "babel-loader", options: {cacheDirectory: true}}]
             },
             {
                 //利用正则表达式匹配所有后缀名为.css的文件

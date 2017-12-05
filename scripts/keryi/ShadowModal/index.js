@@ -1,5 +1,6 @@
-import React, {PropTypes} from "react";
+import React from "react";
 import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 import shadowModalConfig from "./configs/shadowModalConfig";
 import Button from "../Button";
 import "./keryi_barter_shadowModal.css";

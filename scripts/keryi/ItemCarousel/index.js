@@ -1,7 +1,8 @@
 /**
  * Created by yinwk on 2017/7/15.
  */
-import React, {PropTypes} from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import Item from "./components/Item";
 import ItemCarouselConfig from "./configs/ItemCarouselConfig";
 import "./keryi_barter_ItemCarousel.css";

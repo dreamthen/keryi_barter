@@ -1,7 +1,8 @@
 /**
  * Created by yinwk on 2017/6/1.
  */
-import React, {PropTypes} from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {
     Button,

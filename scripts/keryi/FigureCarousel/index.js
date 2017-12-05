@@ -1,7 +1,8 @@
 /**
  * Created by yinwk on 2017/7/15.
  */
-import React, {PropTypes} from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import Figure from "./components/Figure";
 import figureCarouselConfig from "./configs/figureCarouselConfig";
 import "./keryi_barter_figureCarousel.css";

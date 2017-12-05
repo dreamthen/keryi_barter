@@ -1,8 +1,9 @@
 /**
  * Created by yinwk on 2017/6/21.
  */
-import React, {PropTypes} from "react";
+import React from "react";
 import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 import HeadPortrait from "../HeadPortrait";
 import Button from "../Button";
 //Modal组件对话框样式表配置

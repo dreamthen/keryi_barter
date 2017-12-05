@@ -1,7 +1,8 @@
 /**
  * Created by yinwk on 2017/7/16.
  */
-import React, {PropTypes} from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import figureConfig from "./configs/figureConfig";
 import {styleConfig} from "./configs/styleConfig";
 import "./keryi_barter_figure.css";

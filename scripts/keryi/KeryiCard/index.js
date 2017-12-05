@@ -1,7 +1,8 @@
 /**
  * Created by yinwk on 2017/6/14.
  */
-import React, {PropTypes} from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import SpinAnimation from "../SpinAnimation";
 import Tag from "../Tag";
 import keryiCardConfig from "./configs/keryiCardConfig";

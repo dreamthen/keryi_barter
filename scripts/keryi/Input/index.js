@@ -1,7 +1,8 @@
 /**
  * Created by yinwk on 2017/6/3.
  */
-import React, {PropTypes} from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import sizeConfig from "./configs/sizeConfig";
 import typeConfig from "./configs/typeConfig";
 import "./keryi_barter_input.css";

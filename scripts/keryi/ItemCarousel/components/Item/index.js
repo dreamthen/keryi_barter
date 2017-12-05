@@ -1,7 +1,8 @@
 /**
  * Created by yinwk on 2017/7/16.
  */
-import React, {PropTypes} from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import HeadPortrait from "../../../HeadPortrait";
 import Select from "../../../Select";
 import itemConfig from "./configs/itemConfig";

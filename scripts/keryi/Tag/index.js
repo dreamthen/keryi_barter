@@ -1,7 +1,8 @@
 /**
  * Created by yinwk on 2017/6/20.
  */
-import React, {PropTypes} from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import typeConfig from "./configs/typeConfig";
 import animationConfig from "./configs/animationConfig";
 import "./keryi_barter_tag.css";

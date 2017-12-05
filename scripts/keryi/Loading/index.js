@@ -3,8 +3,9 @@
  * createTime 2017/9/26 16:50
  * description clown laugh at you~
  */
-import React, {PropTypes} from "react";
+import React from "react";
 import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 import loadingConfig from "./configs/loadingConfig";
 import "./keryi_barter_loading_animation.css";
 import "./keryi_barter_loading.css";

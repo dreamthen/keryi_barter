@@ -1,7 +1,8 @@
 /**
  * Created by yinwk on 2017/6/27.
  */
-import React, {PropTypes} from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import pullListDownConfig from "./configs/pullListDownConfig";
 import "./keryi_barter_pullListDown.css";
 
