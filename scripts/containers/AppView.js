@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Link} from "react-router";
 import api from "../configs/api";
+import {logOut} from "../actions/loginActions";
 import {
     //设置选择资源类型下拉框距离添加选择资源类型输入框左边的位置
     changeInitDistance,
@@ -48,6 +49,7 @@ import {
     Loading,
     Modal,
     PullListDown,
+    ShadowModal,
     Tag
 } from "../keryi";
 import Upload from "rc-upload";
@@ -123,7 +125,9 @@ class AppView extends React.Component {
             //控制功能图标位置显示或者消失
             focusFunctionIconsVisibility: false,
             //控制功能图标显示或者隐藏
-            focusShowFunctionIcons: false
+            focusShowFunctionIcons: false,
+            //控制ShadowModal组件全局对话框显示、隐藏或者消失
+            viewShadowPersonalBarterVisible: false
         };
     }
 
@@ -186,11 +190,28 @@ class AppView extends React.Component {
     }
 
     /**
+     * 点击用户退出按钮,渲染"用户退出"全局对话框
+     * @param event
+     */
+    logoutKeryiBarterHandler(event) {
+        this.setState({
+            viewShadowPersonalBarterVisible: true
+        });
+        //消除冒泡事件
+        event.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
      * render渲染keryi_barter主页面头部
      * @returns {XML}
      */
     renderHeader() {
-        const {addKeryiBarterHandler} = this;
+        const {
+            //控制Modal组件对话框显示
+            addKeryiBarterHandler,
+            //点击用户退出按钮,渲染"用户退出"全局对话框
+            logoutKeryiBarterHandler
+        } = this;
         return (
             <header className="keryi_barter_head">
                 <nav className="keryi_barter_nav">
@@ -223,7 +244,7 @@ class AppView extends React.Component {
                                 )
                             })
                         }
-                        <li className="keryi_barter_navItem">
+                        <li className="keryi_barter_navItem keryi_barter_addBarter_navItem">
                             <Button
                                 title="发布资源"
                                 size="large"
@@ -232,6 +253,19 @@ class AppView extends React.Component {
                                 onClick={addKeryiBarterHandler.bind(this)}
                             >
                                 <i className="iconfontKeryiBarter keryiBarter-addBarter">
+
+                                </i>
+                            </Button>
+                        </li>
+                        <li className="keryi_barter_navItem keryi_barter_logout_navItem">
+                            <Button
+                                title="用户退出"
+                                size="large"
+                                type="info"
+                                className="keryi_barter_button_logoutBarter"
+                                onClick={logoutKeryiBarterHandler.bind(this)}
+                            >
+                                <i className="iconfontKeryiBarter keryiBarter-logout">
 
                                 </i>
                             </Button>
@@ -619,6 +653,57 @@ class AppView extends React.Component {
         )
     }
 
+    /**
+     * 主页面"用户退出"全局对话框点击取消按钮,关闭"用户退出"全局对话框
+     * @param event
+     */
+    cancelPersonalBarterShadowModalVisibleHandler(event) {
+        this.setState({
+            viewShadowPersonalBarterVisible: false
+        });
+        //取消冒泡事件
+        event.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
+     * 主页面"用户退出"全局对话框点击确定按钮,关闭"用户退出"全局对话框,清除本地存储LocalStorage,登出至登录页面
+     * @param event
+     */
+    surePersonalBarterShadowModalVisibleHandler(event) {
+        logOut.bind(this)();
+        //取消冒泡事件
+        event.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
+     * render渲染keryi_barter主页面"用户退出"全局对话框
+     * @returns {XML}
+     */
+    renderPersonalShadowModal() {
+        const {
+            //控制ShadowModal组件全局对话框显示、隐藏或者消失
+            viewShadowPersonalBarterVisible
+        } = this.state;
+        const {
+            //主页面"用户退出"全局对话框点击确定按钮,关闭"用户退出"全局对话框,清除本地存储LocalStorage,登出至登录页面
+            surePersonalBarterShadowModalVisibleHandler,
+            //主页面"用户退出"全局对话框点击取消按钮,关闭"用户退出"全局对话框
+            cancelPersonalBarterShadowModalVisibleHandler
+        } = this;
+        return (
+            <ShadowModal
+                visible={viewShadowPersonalBarterVisible}
+                className="keryi_barter_personal_shadowModal_mainContainer"
+                onOk={surePersonalBarterShadowModalVisibleHandler.bind(this)}
+                onCancel={cancelPersonalBarterShadowModalVisibleHandler.bind(this)}
+            >
+                <h1 className="keryi_barter_personal_shadowModal_title">
+                    你确定要退出吗?
+                </h1>
+            </ShadowModal>
+        )
+    }
+
 
     /**
      * render渲染keryi_barter主页面主要内容barterList列表
@@ -635,7 +720,9 @@ class AppView extends React.Component {
             //keryi_barter主页面添加"以物换物"资源对话框
             renderModal,
             //keryi_barter主页面请求加载Loading模块
-            renderLoading
+            renderLoading,
+            //keryi_barter主页面"用户退出"全局对话框
+            renderPersonalShadowModal
         } = this;
         return (
             <div className="keryi_barter_index_page_container">
@@ -652,6 +739,8 @@ class AppView extends React.Component {
                 {renderModal.bind(this)()}
                 {/*keryi_barter主页面请求加载Loading模块*/}
                 {renderLoading.bind(this)()}
+                {/*keryi_barter主页面"用户退出"全局对话框*/}
+                {renderPersonalShadowModal.bind(this)()}
             </div>
         )
     }

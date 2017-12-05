@@ -100,6 +100,10 @@ body {
     outline: none;
 }
 
+.keryi_barter_nav_container > .keryi_barter_addBarter_navItem {
+    margin-right: 8px;
+}
+
 /*
     keryi_barter页面子导航icon样式
 */
@@ -109,27 +113,54 @@ body {
     opacity: .5;
 }
 
+.keryi_barter_personal_shadowModal_mainContainer .keryi_barter_personal_shadowModal_title {
+    font-size: 26px;
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    color: #fff;
+    text-align: center;
+    word-spacing: 2px;
+}
+
 /*
     keryi_barter页面个人信息子导航icon样式
  */
-.keryi_barter_navItem .keryiBarter-barterPersonal {
+.keryi_barter_navItem .keryiBarter-barterPersonal,
+.keryi_barter_navItem .keryiBarter-logout {
     font-size: 22px;
 }
 
 /*
     keryi_barter页面添加barter列表按钮样式
 */
-.keryi_barter_navItem .keryiBarter-addBarter {
+.keryi_barter_navItem .keryiBarter-addBarter,
+.keryi_barter_navItem .keryiBarter-logout {
     position: relative;
     top: 1px;
     right: 1px;
     opacity: 1;
 }
 
-.keryi_barter_navItem .keryi_barter_button_addBarter {
+.keryi_barter_navItem .keryiBarter-logout {
+    top: 0;
+    right: 0;
+}
+
+.keryi_barter_navItem .keryi_barter_button_addBarter,
+.keryi_barter_navItem .keryi_barter_button_logoutBarter {
     position: relative;
     bottom: 1px;
     padding: 4px 12px;
+}
+
+.keryi_barter_navItem .keryi_barter_button_logoutBarter {
+    padding: 5px 8px;
+}
+
+.keryi_barter_navItem .keryi_barter_button_logoutBarter,
+.keryi_barter_navItem .keryi_barter_button_logoutBarter:hover {
+    background-color: #9da6af;
+    color: #fff;
+    border-color: #9da6af;
 }
 
 /*

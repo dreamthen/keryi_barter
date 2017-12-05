@@ -118,39 +118,16 @@
     z-index: 2200;
 }
 
-.keryi_barter_personal_head > .keryi_barter_personal_head_update_surface,
-.keryi_barter_personal_head > .keryi_barter_personal_head_out_login {
+.keryi_barter_personal_head > .keryi_barter_personal_head_update_surface {
     position: absolute;
     top: 4px;
     right: 6px;
     z-index: 2200;
 }
 
-.keryi_barter_personal_head > .keryi_barter_personal_head_update_surface {
-    right: 90px;
-}
-
-.keryi_barter_personal_head_update_surface .keryi_barter_personal_head_update_surface_button,
-.keryi_barter_personal_head_out_login .keryi_barter_personal_head_out_login_button {
+.keryi_barter_personal_head_update_surface .keryi_barter_personal_head_update_surface_button {
     margin-top: 0;
     padding: 6px 10px;
-}
-
-.keryi_barter_personal_head_out_login .keryi_barter_personal_head_out_login_button {
-    border: 1px solid rgba(255, 255, 255, .8);
-    background-color: rgba(0, 0, 0, .5);
-    color: #fff;
-}
-
-.keryi_barter_personal_head_out_login .keryi_barter_personal_head_out_login_button:hover {
-    border: 1px solid rgba(255, 255, 255, .8);
-}
-
-.keryi_barter_personal_shadowModal_mainContainer .keryi_barter_personal_shadowModal_title {
-    font-size: 25px;
-    font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
-    color: #fff;
-    text-align: center;
 }
 
 .keryi_barter_personal_main > .keryi_barter_personal_main_username {

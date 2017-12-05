@@ -14,7 +14,6 @@ import {
     ItemCarousel,
     KeryiCard,
     Modal,
-    ShadowModal,
     Tag
 } from "../keryi";
 import api from "../configs/api";
@@ -91,10 +90,6 @@ import {
     //修改个人页头像成功Action
     uploadPersonalAvatarAction
 } from "../actions/personalActions";
-import {
-    //用户退出
-    logOut
-} from "../actions/loginActions";
 import "../../stylesheets/personal.css";
 import "../../stylesheets/adapateConfig.css";
 
@@ -197,9 +192,7 @@ class PersonalView extends React.Component {
             //判断个人信息编辑动画是否可渲染
             personalInformationAnimationDisabled: false,
             //控制Modal组件对话框显示、隐藏或者消失
-            viewPersonalBarterVisible: false,
-            //控制ShadowModal组件全局对话框显示、隐藏或者消失
-            viewShadowPersonalBarterVisible: false
+            viewPersonalBarterVisible: false
         };
     }
 
@@ -357,42 +350,6 @@ class PersonalView extends React.Component {
     }
 
     /**
-     * 点击用户退出按钮,渲染"用户退出"全局对话框
-     * @param event
-     */
-    onPersonalLogOut(event) {
-        this.setState({
-            viewShadowPersonalBarterVisible: true
-        });
-        //消除冒泡事件
-        event.nativeEvent.stopImmediatePropagation();
-    }
-
-    /**
-     * render渲染keryi_barter个人信息页面头部用户退出按钮
-     * @returns {XML}
-     */
-    renderPersonalOutLogin() {
-        const {
-            onPersonalLogOut
-        } = this;
-        return (
-            <section className="keryi_barter_personal_head_out_login">
-                {
-                    <Button
-                        size="default"
-                        type="primary"
-                        className="keryi_barter_personal_head_out_login_button"
-                        onClick={onPersonalLogOut.bind(this)}
-                    >
-                        用户退出
-                    </Button>
-                }
-            </section>
-        )
-    }
-
-    /**
      * 根据state editAppearanceAnimation来设置头像和背景的className样式表
      * @returns string
      */
@@ -459,8 +416,6 @@ class PersonalView extends React.Component {
             renderPersonalHeaderUsername,
             //render渲染个人信息页面头部编辑外观按钮
             renderPersonalUpdateSurface,
-            //render渲染个人信息页面头部用户退出按钮
-            renderPersonalOutLogin,
             //render渲染个人信息页面头部背景和头像
             renderPersonalHeaderBackgroundAndPortrait
         } = this;
@@ -475,8 +430,6 @@ class PersonalView extends React.Component {
                 {renderPersonalHeaderUsername.bind(this)()}
                 {/*render渲染个人信息页面头部编辑外观按钮*/}
                 {renderPersonalUpdateSurface.bind(this)()}
-                {/*render渲染个人信息页面头部用户退出按钮*/}
-                {renderPersonalOutLogin.bind(this)()}
                 {/*render渲染个人信息页面头部背景和头像*/}
                 {renderPersonalHeaderBackgroundAndPortrait.bind(this)()}
             </header>
@@ -851,57 +804,6 @@ class PersonalView extends React.Component {
     }
 
     /**
-     * 个人信息页面"用户退出"全局对话框点击取消按钮,关闭"用户退出"全局对话框
-     * @param event
-     */
-    cancelPersonalBarterShadowModalVisibleHandler(event) {
-        this.setState({
-            viewShadowPersonalBarterVisible: false
-        });
-        //取消冒泡事件
-        event.nativeEvent.stopImmediatePropagation();
-    }
-
-    /**
-     * 个人信息页面"用户退出"全局对话框点击确定按钮,关闭"用户退出"全局对话框,清除本地存储LocalStorage,登出至登录页面
-     * @param event
-     */
-    surePersonalBarterShadowModalVisibleHandler(event) {
-        logOut.bind(this)();
-        //取消冒泡事件
-        event.nativeEvent.stopImmediatePropagation();
-    }
-
-    /**
-     * render渲染keryi_barter个人信息页面"用户退出"全局对话框
-     * @returns {XML}
-     */
-    renderPersonalShadowModal() {
-        const {
-            //控制ShadowModal组件全局对话框显示、隐藏或者消失
-            viewShadowPersonalBarterVisible
-        } = this.state;
-        const {
-            //个人信息页面"用户退出"全局对话框点击确定按钮,关闭"用户退出"全局对话框,清除本地存储LocalStorage,登出至登录页面
-            surePersonalBarterShadowModalVisibleHandler,
-            //个人信息页面"用户退出"全局对话框点击取消按钮,关闭"用户退出"全局对话框
-            cancelPersonalBarterShadowModalVisibleHandler
-        } = this;
-        return (
-            <ShadowModal
-                visible={viewShadowPersonalBarterVisible}
-                className="keryi_barter_personal_shadowModal_mainContainer"
-                onOk={surePersonalBarterShadowModalVisibleHandler.bind(this)}
-                onCancel={cancelPersonalBarterShadowModalVisibleHandler.bind(this)}
-            >
-                <h1 className="keryi_barter_personal_shadowModal_title">
-                    你确定要退出吗?
-                </h1>
-            </ShadowModal>
-        )
-    }
-
-    /**
      * render渲染keryi_barter个人信息页面主体用户名
      * @returns {XML}
      */
@@ -1210,9 +1112,7 @@ class PersonalView extends React.Component {
             //render渲染个人信息页面保存头像和背景部分
             renderPersonalSaveSome,
             //render渲染个人信息页面主体部分
-            renderPersonalMain,
-            //render渲染个人信息页面"用户退出"全局对话框
-            renderPersonalShadowModal
+            renderPersonalMain
         } = this;
         const {
             //用户是否可以对自己的头像和背景进行编辑的标识位
@@ -1232,8 +1132,6 @@ class PersonalView extends React.Component {
                 </section>
                 {/*render渲染个人信息页面查看"以物换物"资源详情对话框*/}
                 {renderPersonalModal.bind(this)()}
-                {/*render渲染个人信息页面"用户退出"全局对话框*/}
-                {renderPersonalShadowModal.bind(this)()}
             </div>
         )
     }
