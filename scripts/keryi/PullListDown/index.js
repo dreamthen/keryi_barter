@@ -45,6 +45,8 @@ class PullListDown extends React.Component {
             pullListDownVisible: false,
             //PullListDown组件下拉框的区域范围
             pullListDownRect: {},
+            //PullListDown组件下拉框的高度
+            pullListDownHeight: 0,
             //窗口高度
             windowHeight: window.innerHeight
         }
@@ -63,8 +65,13 @@ class PullListDown extends React.Component {
             //FIXME 在这里设置一个时间控制器,PullList组件编辑框取消消失100ms之后,从隐藏到显示的过程
             setTimeout(function timer() {
                 this.setState({
-                    pullListDownVisible: nextProps.visible,
-                    pullListDownRect: this.refs[pullListDownRefs].getBoundingClientRect()
+                    pullListDownRect: this.refs[pullListDownRefs].getBoundingClientRect(),
+                    pullListDownHeight: this.refs[pullListDownRefs].clientHeight,
+                    windowHeight: window.innerHeight
+                }, () => {
+                    this.setState({
+                        pullListDownVisible: nextProps.visible
+                    });
                 });
                 nextProps.visible ? document.addEventListener("click", clickDocument.bind(this)) : document.removeEventListener("click", clickDocument.bind(this));
             }.bind(this), 100);
@@ -76,7 +83,9 @@ class PullListDown extends React.Component {
      */
     componentDidMount() {
         this.setState({
-            pullListDownRect: this.refs[pullListDownRefs].getBoundingClientRect()
+            pullListDownRect: this.refs[pullListDownRefs].getBoundingClientRect(),
+            pullListDownHeight: this.refs[pullListDownRefs].clientHeight,
+            windowHeight: window.innerHeight
         });
     }
 
@@ -267,32 +276,25 @@ class PullListDown extends React.Component {
             //获取PullListDown组件下拉框的区域范围
             pullListDownRect,
             //窗口高度
-            windowHeight
+            windowHeight,
+            //获取PullListDown组件下拉框的高度
+            pullListDownHeight
         } = this.state;
-        console.log(((windowHeight - pullListDownRect.bottom) / 1000).toPrecision(2), ((windowHeight - pullListDownRect.bottom) / 1000).toPrecision(2) > 0.05);
+        const {
+            //获取PullListDown组件下拉框列表
+            dataSource
+        } = this.props;
         return (
             <section
                 ref={pullListDownRefs}
                 className={visibleOrPullListDownToClass.bind(this)() + outSideClassToClass.bind(this)()}
-                style={outsideStyleToStyle.bind(this)()}
+                style={Object.assign({}, outsideStyleToStyle.bind(this)(), ((windowHeight - pullListDownRect.bottom) / 1000).toPrecision(2) <= 0.05 ? {marginTop: -pullListDownHeight} : {marginTop: 0})}
             >
-                {
-                    //当下拉框的底端距离浏览器底部的距离小于或者等于5%时,将下拉框改为向上上拉
-                    ((windowHeight - pullListDownRect.bottom) / 1000).toPrecision(2) <= 0.05 &&
-                    <ul>
-                        {/*根据外部传入的列表数据,render渲染下拉框组件列表*/}
-                        {
-                            renderDataSourceToPullList.bind(this)()
-                        }
-                    </ul>
-                }
                 {/*下拉框组件头部*/}
                 {
                     renderPullListHeader.bind(this)()
                 }
                 {
-                    //当下拉框的底端距离浏览器底部的距离大于5%时,将下拉框改为向下下拉
-                    ((windowHeight - pullListDownRect.bottom) / 1000).toPrecision(2) > 0.05 &&
                     <ul>
                         {/*根据外部传入的列表数据,render渲染下拉框组件列表*/}
                         {
