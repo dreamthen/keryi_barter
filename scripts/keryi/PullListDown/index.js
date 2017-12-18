@@ -42,7 +42,11 @@ class PullListDown extends React.Component {
         super(props);
         this.state = {
             //PullListDown组件编辑框显示或者隐藏判断标志位
-            pullListDownVisible: false
+            pullListDownVisible: false,
+            //PullListDown组件下拉框的区域范围
+            pullListDownRect: {},
+            //窗口高度
+            windowHeight: window.innerHeight
         }
     }
 
@@ -59,11 +63,21 @@ class PullListDown extends React.Component {
             //FIXME 在这里设置一个时间控制器,PullList组件编辑框取消消失100ms之后,从隐藏到显示的过程
             setTimeout(function timer() {
                 this.setState({
-                    pullListDownVisible: nextProps.visible
+                    pullListDownVisible: nextProps.visible,
+                    pullListDownRect: this.refs[pullListDownRefs].getBoundingClientRect()
                 });
                 nextProps.visible ? document.addEventListener("click", clickDocument.bind(this)) : document.removeEventListener("click", clickDocument.bind(this));
             }.bind(this), 100);
         }
+    }
+
+    /**
+     * 组件结束装载
+     */
+    componentDidMount() {
+        this.setState({
+            pullListDownRect: this.refs[pullListDownRefs].getBoundingClientRect()
+        });
     }
 
     /**
@@ -73,8 +87,10 @@ class PullListDown extends React.Component {
      * @returns {boolean}
      */
     initRect({clientX, clientY}) {
-        //获取到PullListDown组件下拉框的区域范围
-        const pullListDownRect = this.refs[pullListDownRefs].getBoundingClientRect();
+        const {
+            //PullListDown组件下拉框的区域范围
+            pullListDownRect
+        } = this.state;
         //如果点击事件处在PullListDown组件之内,返回true;如果点击事件处在PullListDown组件之外,返回false
         return pullListDownRect.top <= clientY && pullListDownRect.bottom >= clientY && pullListDownRect.left <= clientX && pullListDownRect.right >= clientX;
     }
@@ -247,22 +263,43 @@ class PullListDown extends React.Component {
             //根据props style来设置PullListDown组件下拉框容器的style内联样式
             outsideStyleToStyle
         } = this;
+        const {
+            //获取PullListDown组件下拉框的区域范围
+            pullListDownRect,
+            //窗口高度
+            windowHeight
+        } = this.state;
+        console.log(((windowHeight - pullListDownRect.bottom) / 1000).toPrecision(2), ((windowHeight - pullListDownRect.bottom) / 1000).toPrecision(2) > 0.05);
         return (
             <section
                 ref={pullListDownRefs}
                 className={visibleOrPullListDownToClass.bind(this)() + outSideClassToClass.bind(this)()}
                 style={outsideStyleToStyle.bind(this)()}
             >
+                {
+                    //当下拉框的底端距离浏览器底部的距离小于或者等于5%时,将下拉框改为向上上拉
+                    ((windowHeight - pullListDownRect.bottom) / 1000).toPrecision(2) <= 0.05 &&
+                    <ul>
+                        {/*根据外部传入的列表数据,render渲染下拉框组件列表*/}
+                        {
+                            renderDataSourceToPullList.bind(this)()
+                        }
+                    </ul>
+                }
                 {/*下拉框组件头部*/}
                 {
                     renderPullListHeader.bind(this)()
                 }
-                <ul>
-                    {/*根据外部传入的列表数据,render渲染下拉框组件列表*/}
-                    {
-                        renderDataSourceToPullList.bind(this)()
-                    }
-                </ul>
+                {
+                    //当下拉框的底端距离浏览器底部的距离大于5%时,将下拉框改为向下下拉
+                    ((windowHeight - pullListDownRect.bottom) / 1000).toPrecision(2) > 0.05 &&
+                    <ul>
+                        {/*根据外部传入的列表数据,render渲染下拉框组件列表*/}
+                        {
+                            renderDataSourceToPullList.bind(this)()
+                        }
+                    </ul>
+                }
             </section>
         )
     }

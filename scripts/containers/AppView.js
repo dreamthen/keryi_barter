@@ -56,6 +56,7 @@ import Upload from "rc-upload";
 import uploadConfig from "../configs/uploadConfig";
 import routesMode from "../configs/routesConfigMode";
 import {checkField} from "../configs/checkField";
+import "../../stylesheets/adapateConfig.css";
 import "../../stylesheets/app.css";
 
 //Modal组件弹出框类型
@@ -806,13 +807,13 @@ function mapDispatchToProps(dispatch, ownProps) {
             //重置对话框状态
             dispatch(resetModalStatus());
         },
+
         /**
-         * 改变Area编辑框内容函数
+         * 搜寻资源Tag控制器
          * @param key
-         * @param pullListDownKey
-         * @param e
+         * @param value
          */
-        onChangeAreaHandler(key, pullListDownKey, e) {
+        changeTag(key, value) {
             const {
                 //选择资源类型初始距离添加对话框左边的位置
                 initLeft,
@@ -821,33 +822,73 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //选择目标资源输入框上方标签组
                 tagTargetList
             } = this.props;
+            if (value.slice(1) !== "" && (value.indexOf("#") === 0)) {
+                (key === barterModalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagList));
+                (key === barterModalComponentConfig[8]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagTargetList));
+            } else if (value !== "" && (value.indexOf("#") !== 0)) {
+                (key === barterModalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagList));
+                (key === barterModalComponentConfig[8]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagTargetList));
+            }
+        },
+
+        /**
+         * 控制PullListDown组件编辑框显示或者消失
+         * @param key
+         * @param pullListDownKey
+         * @param value
+         */
+        setPullListDownHandler(key, pullListDownKey, value) {
+            if (value === "" || (value.indexOf("#") === 0 && value.slice(1) === "")) {
+                this.setState({[pullListDownKey]: false});
+                //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
+                (key === barterModalComponentConfig[6]["key"]) && dispatch(resetDistance());
+                //设置选择目标资源类型下拉框重置距离添加选择目标资源类型输入框左边的位置
+                (key === barterModalComponentConfig[8]["key"]) && dispatch(resetTargetDistance());
+            } else {
+                this.setState({[pullListDownKey]: true});
+            }
+        },
+
+        /**
+         * 改变Area编辑框内容控制器Generator
+         * @param key
+         * @param pullListDownKey
+         * @param value
+         */* controlTimer(key, pullListDownKey, value) {
+            const {
+                //搜寻资源Tag控制器
+                changeTag,
+                //控制PullListDown组件编辑框显示或者消失
+                setPullListDownHandler
+            } = this.props;
+            yield changeTag.bind(this)(key, value);
+            yield setPullListDownHandler.bind(this)(key, pullListDownKey, value);
+        },
+        /**
+         * 改变Area编辑框内容函数
+         * @param key
+         * @param pullListDownKey
+         * @param e
+         */
+        onChangeAreaHandler(key, pullListDownKey, e) {
+            const {
+                //改变Area编辑框内容控制器Generator
+                controlTimer
+            } = this.props;
             if (timer) {
                 clearTimeout(timer);
             }
             let value = e.target.value;
+            const control = controlTimer.bind(this)(key, pullListDownKey, value);
             this.setState({
                 [key]: value
             });
             if (key === barterModalComponentConfig[6]["key"] || key === barterModalComponentConfig[8]["key"]) {
                 //FIXME 在这里设置一个时间控制器,控制在1s的时间内如果不继续输入,就显示PullListDown下拉框,这个控制器是处理重复查询资源类型的问题光标位置
-                timer = setTimeout(function controlTimer() {
-                    //搜寻资源tag
-                    if (value.slice(1) !== "" && (value.indexOf("#") === 0)) {
-                        (key === barterModalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagList));
-                        (key === barterModalComponentConfig[8]["key"]) && dispatch(changeTagFunction(key, initLeft, value.slice(1), tagTargetList));
-                    } else if (value !== "" && (value.indexOf("#") !== 0)) {
-                        (key === barterModalComponentConfig[6]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagList));
-                        (key === barterModalComponentConfig[8]["key"]) && dispatch(changeTagFunction(key, initLeft, value, tagTargetList));
-                    }
-                    //控制PullListDown组件编辑框取消消失
-                    if (value === "" || (value.indexOf("#") === 0 && value.slice(1) === "")) {
-                        this.setState({[pullListDownKey]: false});
-                        //设置选择资源类型下拉框重置距离添加选择资源类型输入框左边的位置
-                        (key === barterModalComponentConfig[6]["key"]) && dispatch(resetDistance());
-                        //设置选择目标资源类型下拉框重置距离添加选择目标资源类型输入框左边的位置
-                        (key === barterModalComponentConfig[8]["key"]) && dispatch(resetTargetDistance());
-                    } else {
-                        this.setState({[pullListDownKey]: true});
+                timer = setTimeout(function timerFunction() {
+                    let controlDone = control.next().done;
+                    while (!controlDone) {
+                        controlDone = control.next().done;
                     }
                 }.bind(this), 200);
             }
