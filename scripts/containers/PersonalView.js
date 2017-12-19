@@ -570,19 +570,35 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * 设置个人信息页面资源详情资源介绍HTML文本
+     * @returns {{__html: PersonalView.props.viewDetailIntroduce}}
+     */
+    setInnerPersonalModalIntroduceHTML() {
+        const {
+            //个人页资源详情资源介绍
+            viewDetailIntroduce
+        } = this.props;
+        return {
+            __html: viewDetailIntroduce
+        }
+    }
+
+    /**
      * render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框主体介绍
      * @returns {XML}
      */
     renderModalIntroduce() {
         const {
-            //个人页资源详情资源介绍
-            viewDetailIntroduce
-        } = this.props;
+            //设置个人信息页面资源详情资源介绍HTML文本
+            setInnerPersonalModalIntroduceHTML
+        } = this;
         return (
             <section className="keryi_barter_personal_view_details_introduce">
-                <p className="keryi_barter_personal_view_details_introduce_content">
-                    {viewDetailIntroduce}
-                </p>
+                <article
+                    className="keryi_barter_personal_view_details_introduce_content"
+                    dangerouslySetInnerHTML={setInnerPersonalModalIntroduceHTML.bind(this)()}
+                >
+                </article>
                 <hr className="keryi_barter_personal_view_details_wire"/>
             </section>
         )

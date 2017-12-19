@@ -288,16 +288,32 @@ class KeryiCard extends React.Component {
     }
 
     /**
+     * 设置介绍HTML文本
+     * @returns {{__html}}
+     */
+    setInnerIntroduceHTML() {
+        const {
+            //KeryiCard组件卡片资源介绍
+            introduce
+        } = this.props;
+        return {
+            __html: introduce
+        }
+    }
+
+    /**
      * render渲染card主要内容标题和介绍
      * @returns {XML}
      */
     renderDescription() {
         const {
             //KeryiCard组件卡片标题
-            title,
-            //KeryiCard组件卡片资源介绍
-            introduce
+            title
         } = this.props;
+        const {
+            //设置介绍HTML文本
+            setInnerIntroduceHTML
+        } = this;
         return (
             <section className="keryi_barter_card_description">
                 <header className="keryi_barter_card_title">
@@ -305,9 +321,11 @@ class KeryiCard extends React.Component {
                         {title}
                     </h1>
                 </header>
-                <p className="keryi_barter_card_paragraph">
-                    {introduce}
-                </p>
+                <article
+                    dangerouslySetInnerHTML={setInnerIntroduceHTML.bind(this)()}
+                    className="keryi_barter_card_article"
+                >
+                </article>
                 <hr className="keryi_barter_card_wire"/>
             </section>
         )

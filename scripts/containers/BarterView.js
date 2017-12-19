@@ -239,19 +239,35 @@ class BarterView extends React.Component {
     }
 
     /**
+     * 设置资源详情资源介绍HTML文本
+     * @returns {{__html: BarterView.props.viewDetailIntroduce}}
+     */
+    setInnerModalIntroduceHTML() {
+        const {
+            //资源详情资源介绍
+            viewDetailIntroduce
+        } = this.props;
+        return {
+            __html: viewDetailIntroduce
+        }
+    }
+
+    /**
      * keryi_barter主页面查看"以物换物"资源详情对话框主体介绍
      * @returns {XML}
      */
     renderModalIntroduce() {
         const {
-            //资源详情资源介绍
-            viewDetailIntroduce
-        } = this.props;
+            //设置资源详情资源介绍HTML文本
+            setInnerModalIntroduceHTML
+        } = this;
         return (
             <section className="keryi_barter_view_details_introduce">
-                <p className="keryi_barter_view_details_introduce_content">
-                    {viewDetailIntroduce}
-                </p>
+                <article
+                    className="keryi_barter_view_details_introduce_content"
+                    dangerouslySetInnerHTML={setInnerModalIntroduceHTML.bind(this)()}
+                >
+                </article>
                 <hr className="keryi_barter_view_details_wire"/>
             </section>
         )
