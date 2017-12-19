@@ -45,11 +45,43 @@ class PullListDown extends React.Component {
             pullListDownVisible: false,
             //PullListDown组件下拉框的区域范围
             pullListDownRect: {},
-            //PullListDown组件下拉框的高度
-            pullListDownHeight: 0,
             //窗口高度
             windowHeight: window.innerHeight
         }
+    }
+
+    /**
+     * PullListDown组件下拉框显示移位同步控制器
+     */
+    * controlTimer(nextProps) {
+        const {
+            //点击除了PullListDown组件下拉框以外的区域,调用PullListDown组件下拉框关闭函数
+            clickDocument
+        } = this;
+        yield this.setState({
+            pullListDownRect: this.refs[pullListDownRefs].getBoundingClientRect(),
+            windowHeight: window.innerHeight
+        });
+        //PullListDown组件下拉框的高度
+        yield this.pullListDownHeight = this.refs[pullListDownRefs].clientHeight + 30;
+        yield this.setState({
+            pullListDownVisible: nextProps.visible
+        });
+        yield nextProps.visible ? document.addEventListener("click", clickDocument.bind(this)) : document.removeEventListener("click", clickDocument.bind(this));
+    }
+
+    /**
+     * PullListDown组件下拉框消失同步控制器
+     */
+    * controlTimerNone(nextProps) {
+        const {
+            //点击除了PullListDown组件下拉框以外的区域,调用PullListDown组件下拉框关闭函数
+            clickDocument
+        } = this;
+        yield this.setState({
+            pullListDownVisible: nextProps.visible
+        });
+        yield nextProps.visible ? document.addEventListener("click", clickDocument.bind(this)) : document.removeEventListener("click", clickDocument.bind(this));
     }
 
     componentWillReceiveProps(nextProps, nextState) {
@@ -58,24 +90,44 @@ class PullListDown extends React.Component {
             visible
         } = this.props;
         const {
-            //点击除了PullListDown组件下拉框以外的区域,调用PullListDown组件下拉框关闭函数
-            clickDocument
+            //PullListDown组件下拉框显示移位同步控制器
+            controlTimer,
+            //PullListDown组件下拉框消失同步控制器
+            controlTimerNone
         } = this;
-        if (visible !== nextProps.visible) {
+        if (visible !== nextProps.visible && nextProps.visible) {
             //FIXME 在这里设置一个时间控制器,PullList组件编辑框取消消失100ms之后,从隐藏到显示的过程
             setTimeout(function timer() {
-                this.setState({
-                    pullListDownRect: this.refs[pullListDownRefs].getBoundingClientRect(),
-                    pullListDownHeight: this.refs[pullListDownRefs].clientHeight,
-                    windowHeight: window.innerHeight
-                }, () => {
-                    this.setState({
-                        pullListDownVisible: nextProps.visible
-                    });
-                });
-                nextProps.visible ? document.addEventListener("click", clickDocument.bind(this)) : document.removeEventListener("click", clickDocument.bind(this));
+                const control = controlTimer.bind(this)(nextProps);
+                let controlDone = control.next().done;
+                while (!controlDone) {
+                    controlDone = control.next().done;
+                }
             }.bind(this), 100);
         }
+
+        if (visible !== nextProps.visible && !nextProps.visible) {
+            //FIXME 在这里设置一个时间控制器,PullList组件编辑框取消消失100ms之后,从隐藏到显示的过程
+            setTimeout(function timer() {
+                const controlNone = controlTimerNone.bind(this)(nextProps);
+                let controlDoneNone = controlNone.next().done;
+                while (!controlDoneNone) {
+                    controlDoneNone = controlNone.next().done;
+                }
+            }.bind(this), 100);
+        }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        //PullListDown组件下拉框的高度
+        this.pullListDownHeight = this.refs[pullListDownRefs].clientHeight + 30;
+        return true;
+    }
+
+    componentDidUpdate() {
+        //PullListDown组件下拉框的高度
+        this.pullListDownHeight = this.refs[pullListDownRefs].clientHeight + 30;
+        this.render();
     }
 
     /**
@@ -84,9 +136,10 @@ class PullListDown extends React.Component {
     componentDidMount() {
         this.setState({
             pullListDownRect: this.refs[pullListDownRefs].getBoundingClientRect(),
-            pullListDownHeight: this.refs[pullListDownRefs].clientHeight,
             windowHeight: window.innerHeight
         });
+        //PullListDown组件下拉框的高度
+        this.pullListDownHeight = this.refs[pullListDownRefs].clientHeight + 30;
     }
 
     /**
@@ -270,15 +323,15 @@ class PullListDown extends React.Component {
             //根据props className来设置PullListDown组件下拉框容器的className样式表
             outSideClassToClass,
             //根据props style来设置PullListDown组件下拉框容器的style内联样式
-            outsideStyleToStyle
+            outsideStyleToStyle,
+            //获取PullListDown组件下拉框的高度
+            pullListDownHeight
         } = this;
         const {
             //获取PullListDown组件下拉框的区域范围
             pullListDownRect,
             //窗口高度
             windowHeight,
-            //获取PullListDown组件下拉框的高度
-            pullListDownHeight
         } = this.state;
         const {
             //获取PullListDown组件下拉框列表
@@ -288,7 +341,7 @@ class PullListDown extends React.Component {
             <section
                 ref={pullListDownRefs}
                 className={visibleOrPullListDownToClass.bind(this)() + outSideClassToClass.bind(this)()}
-                style={Object.assign({}, outsideStyleToStyle.bind(this)(), ((windowHeight - pullListDownRect.bottom) / 1000).toPrecision(2) <= 0.05 ? {marginTop: -pullListDownHeight} : {marginTop: 0})}
+                style={Object.assign({}, outsideStyleToStyle.bind(this)(), (((windowHeight - pullListDownRect.bottom) / 1000).toPrecision(2) <= 0.06 && dataSource.length > 0) ? {marginTop: -pullListDownHeight} : {marginTop: 0})}
             >
                 {/*下拉框组件头部*/}
                 {
