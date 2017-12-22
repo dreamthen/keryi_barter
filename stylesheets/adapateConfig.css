@@ -20,9 +20,12 @@
         font-size: 13px;
     }
 
-    .keryi_barter_modalContainer > .keryi_barter_personal_modal_view_details_container,
-    .keryi_barter_modalContainer > .keryi_barter_modal_view_details_container {
+    .keryi_barter_modalContainer > .keryi_barter_personal_modal_view_details_container {
         max-height: 725px;
+    }
+
+    .keryi_barter_modalContainer .keryi_barter_modal_view_details {
+        max-height: 620px;
     }
 }
 
@@ -56,8 +59,8 @@
         max-height: 660px;
     }
 
-    .keryi_barter_modalContainer > .keryi_barter_modal_view_details_container {
-        max-height: 660px;
+    .keryi_barter_modalContainer .keryi_barter_modal_view_details {
+        max-height: 420px;
         overflow: auto;
     }
 }
@@ -92,8 +95,8 @@
         max-height: 600px;
     }
 
-    .keryi_barter_modalContainer > .keryi_barter_modal_view_details_container {
-        max-height: 600px;
+    .keryi_barter_modalContainer .keryi_barter_modal_view_details {
+        max-height: 360px;
         overflow: auto;
     }
 }

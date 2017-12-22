@@ -21,11 +21,19 @@ import {
     //重置资源数据列表和资源详情Action
     resetResourcesListViewListDetailsAction
 } from "../actions/barterActions";
+//导入接口API对象
+import api from "../configs/api";
 //获取资源数据列表出现异常时,前端呈现默认约定数据
 import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
 //资源统计静态Mode配置
 import viewDetailsStatisticsConfig from "../configs/viewDetailsStatisticsConfig";
 import "../../stylesheets/barter.css";
+//"以物换物"评论区域消失样式表
+const comment = "keryi_barter_view_details_comment";
+//"以物换物"评论区域显示样式表
+const commentAppearClass = "keryi_barter_view_details_comment keryi_barter_view_details_comment_block keryi_barter_view_details_comment_appear";
+//"以物换物"评论区域隐藏样式表
+const commentBlockClass = "keryi_barter_view_details_comment keryi_barter_view_details_comment_block";
 
 class BarterView extends React.Component {
     static propTypes = {
@@ -55,7 +63,13 @@ class BarterView extends React.Component {
         super(props);
         this.state = {
             //控制Modal组件对话框显示、隐藏或者消失
-            viewBarterVisible: false
+            viewBarterVisible: false,
+            //控制"以物换物"资源详情评论区域显示或者隐藏
+            commentAppear: false,
+            //控制"以物换物"资源详情评论区域隐藏或者消失
+            commentBlock: false,
+            //控制"以物换物"资源详情评论区域或者资源详情区域的icon标识的显示和消失
+            iconCommentOrInformation: false
         }
     }
 
@@ -97,7 +111,7 @@ class BarterView extends React.Component {
                 className="keryi_barter_head_portrait"
             >
                 <HeadPortrait
-                    headPortrait={keryiCard["user"]["avatar"] ? keryiCard["user"]["avatar"] : "/images/keryiBarter_v.png"}
+                    headPortrait={api.GET_PERSONAL_AVATAR + "/" + keryiCard["userId"] + "/avatar"}
                 />
             </figure>
         )
@@ -154,6 +168,44 @@ class BarterView extends React.Component {
     }
 
     /**
+     *  控制"以物换物"资源详情到评论区域
+     */
+    changeInformationToComment(event) {
+        this.setState({
+            iconCommentOrInformation: true,
+            commentBlock: true
+        }, () => {
+            //FIXME 这里设置一个时间控制器,在设置"以物换物"评论区域由消失到隐藏之后，延迟100ms设置"以物换物"评论区域由隐藏到显示
+            setTimeout(function timer() {
+                this.setState({
+                    commentAppear: true
+                });
+            }.bind(this), 100);
+        });
+        //取消冒泡事件
+        event.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
+     * 控制"以物换物"评论区域到资源详情
+     */
+    changeCommentToInformation(event) {
+        this.setState({
+            iconCommentOrInformation: false,
+            commentAppear: false
+        }, () => {
+            //FIXME 这里设置一个时间控制器,在设置"以物换物"评论区域执行由显示到隐藏的动画之后，延迟200ms设置"以物换物"评论区域由隐藏到消失
+            setTimeout(function timer() {
+                this.setState({
+                    commentBlock: false
+                });
+            }.bind(this), 200);
+        });
+        //取消冒泡事件
+        event.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
      * keryi_barter主页面查看"以物换物"资源详情对话框头部
      * @returns {XML}
      */
@@ -166,8 +218,33 @@ class BarterView extends React.Component {
             //资源详情标题
             viewDetailTitle
         } = this.props;
+        const {
+            //控制"以物换物"资源详情评论区域或者资源详情区域的icon标识的显示和消失
+            iconCommentOrInformation
+        } = this.state;
+        const {
+            //控制"以物换物"资源详情到评论区域
+            changeInformationToComment,
+            //控制"以物换物"评论区域到资源详情
+            changeCommentToInformation
+        } = this;
         return (
             <header className="keryi_barter_view_details_head">
+                {
+                    iconCommentOrInformation ? <i
+                        className="iconfontKeryiBarter keryiBarter-moreInformation"
+                        title="资源详情"
+                        onClick={changeCommentToInformation.bind(this)}
+                    >
+
+                    </i> : <i
+                        className="iconfontKeryiBarter keryiBarter-comment"
+                        title="评论"
+                        onClick={changeInformationToComment.bind(this)}
+                    >
+
+                    </i>
+                }
                 <figure
                     className="keryi_barter_view_details_head_portrait"
                 >
@@ -341,10 +418,10 @@ class BarterView extends React.Component {
     }
 
     /**
-     * keryi_barter主页面查看"以物换物"资源详情对话框
+     * keryi_barter主页面查看"以物换物"资源详情
      * @returns {XML}
      */
-    renderModal() {
+    renderModalInformation() {
         const {
             //keryi_barter主页面查看"以物换物"资源详情对话框头部
             renderModalHeader,
@@ -357,7 +434,71 @@ class BarterView extends React.Component {
             //keryi_barter主页面查看"以物换物"资源详情对话框资源标签
             renderModalTag,
             //keryi_barter主页面查看"以物换物"资源详情对话框目标资源标签
-            renderModalTargetTag
+            renderModalTargetTag,
+            //keryi_barter主页面查看"以物换物"评论区域
+            renderModalComment
+        } = this;
+        return (
+            <main
+                className="keryi_barter_view_details_information"
+            >
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框头部*/}
+                {renderModalHeader.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框资源统计*/}
+                {renderModalStatistics.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框图片轮播器*/}
+                {renderModalFigureCarousel.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框主体介绍*/}
+                {renderModalIntroduce.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框资源标签*/}
+                {renderModalTag.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"资源详情对话框目标资源标签*/}
+                {renderModalTargetTag.bind(this)()}
+                {/*keryi_barter主页面查看"以物换物"评论区域*/}
+                {renderModalComment.bind(this)()}
+            </main>
+        )
+    }
+
+    /**
+     * 控制keryi_barter主页面查看"以物换物"评论区域显示、隐藏或者消失
+     */
+    modalCommentClassToClass() {
+        const {
+            //控制"以物换物"资源详情评论区域显示或者隐藏
+            commentAppear,
+            //控制"以物换物"资源详情评论区域隐藏或者消失
+            commentBlock
+        } = this.state;
+        return commentAppear ? commentAppearClass : commentBlock ? commentBlockClass : comment;
+    }
+
+    /**
+     * keryi_barter主页面查看"以物换物"评论区域
+     * @returns {XML}
+     */
+    renderModalComment() {
+        const {
+            //控制查看"以物换物"评论区域显示、隐藏或者消失
+            modalCommentClassToClass
+        } = this;
+        return (
+            <main
+                className={modalCommentClassToClass.bind(this)()}
+            >
+
+            </main>
+        )
+    }
+
+    /**
+     * keryi_barter主页面查看"以物换物"资源详情对话框
+     * @returns {XML}
+     */
+    renderModal() {
+        const {
+            //keryi_barter主页面查看"以物换物"资源详情
+            renderModalInformation
         } = this;
         const {
             //控制Modal组件对话框显示、隐藏或者消失
@@ -379,18 +520,10 @@ class BarterView extends React.Component {
                 className="keryi_barter_modal_view_details_container"
                 onClose={closeBarterVisibleHandler.bind(this)}
             >
-                {/*keryi_barter主页面查看"以物换物"资源详情对话框头部*/}
-                {renderModalHeader.bind(this)()}
-                {/*keryi_barter主页面查看"以物换物"资源详情对话框资源统计*/}
-                {renderModalStatistics.bind(this)()}
-                {/*keryi_barter主页面查看"以物换物"资源详情对话框图片轮播器*/}
-                {renderModalFigureCarousel.bind(this)()}
-                {/*keryi_barter主页面查看"以物换物"资源详情对话框主体介绍*/}
-                {renderModalIntroduce.bind(this)()}
-                {/*keryi_barter主页面查看"以物换物"资源详情对话框资源标签*/}
-                {renderModalTag.bind(this)()}
-                {/*keryi_barter主页面查看"以物换物"资源详情对话框目标资源标签*/}
-                {renderModalTargetTag.bind(this)()}
+                <section className="keryi_barter_modal_view_details">
+                    {/*keryi_barter主页面查看"以物换物"资源详情*/}
+                    {renderModalInformation.bind(this)()}
+                </section>
             </Modal>
         )
     }

@@ -63,6 +63,43 @@
     background-color: rgb(244, 244, 244);
 }
 
+.keryi_barter_modal_view_details_container .keryi_barter_modal_view_details {
+    width: 100%;
+    height: 100%;
+}
+
+.keryi_barter_modal_view_details_container .keryi_barter_modal_view_details:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+.keryi_barter_modal_view_details > .keryi_barter_view_details_information {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.keryi_barter_view_details_information > .keryi_barter_view_details_comment {
+    position: absolute;
+    display: none;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 9901;
+    transition: all .2s ease-in-out 0s;
+    background-color: rgb(244, 244, 244);
+}
+
+.keryi_barter_view_details_information > .keryi_barter_view_details_comment_appear {
+    opacity: 1;
+}
+
+.keryi_barter_view_details_information > .keryi_barter_view_details_comment_block {
+    display: block;
+}
+
 .keryi_barter_modal_view_details_container .keryi_barter_view_details_head,
 .keryi_barter_modal_view_details_container .keryi_barter_view_details_figure_carousel,
 .keryi_barter_modal_view_details_container .keryi_barter_view_details_introduce,
@@ -73,6 +110,7 @@
 }
 
 .keryi_barter_modal_view_details_container .keryi_barter_view_details_head {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -87,6 +125,34 @@
 
 .keryi_barter_view_details_head > .keryi_barter_view_details_description {
     margin-top: 8px;
+}
+
+.keryi_barter_view_details_head > i.keryiBarter-comment,
+.keryi_barter_view_details_head > i.keryiBarter-moreInformation {
+    position: absolute;
+    top: -28px;
+    left: 15px;
+    font-size: 16px;
+    color: #63A8F0;
+    cursor: pointer;
+}
+
+.keryi_barter_view_details_head > i.keryiBarter-moreInformation {
+    font-size: 18px;
+}
+
+.keryi_barter_view_details_head > i.keryiBarter-comment:after,
+.keryi_barter_view_details_head > i.keryiBarter-moreInformation:after {
+    content: '评论';
+    font-size: 14px;
+    position: relative;
+    bottom: 1px;
+    left: 4px;
+}
+
+.keryi_barter_view_details_head > i.keryiBarter-moreInformation:after {
+    content: '资源详情';
+    bottom: 2px;
 }
 
 .keryi_barter_view_details_description > .keryi_barter_view_details_title {
