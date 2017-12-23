@@ -617,9 +617,14 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 viewBarterVisible: false
             }, () => {
-                //FIXME 这里设置一个时间控制器,控制在Modal组件对话框隐藏动画并且消失之后再执行清除获取资源详情的数据
+                //FIXME 这里设置一个时间控制器,控制在Modal组件对话框隐藏动画并且消失之后再执行清除获取资源详情的数据,并将评论区域设置为消失状态,资源详情icon设置为评论icon
                 setTimeout(() => {
                     dispatch(resetResourcesListViewDetailsAction());
+                    this.setState({
+                        commentAppear: false,
+                        commentBlock: false,
+                        iconCommentOrInformation: false
+                    });
                 }, 1000);
             });
         },
