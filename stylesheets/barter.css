@@ -92,6 +92,10 @@
     background-color: rgb(244, 244, 244);
 }
 
+.keryi_barter_view_details_comment .keryi_barter_view_details_comment_area {
+    border: 1px solid #63A8F0;
+}
+
 .keryi_barter_view_details_information > .keryi_barter_view_details_comment_appear {
     opacity: 1;
 }

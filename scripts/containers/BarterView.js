@@ -5,6 +5,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {
+    Area,
     FigureCarousel,
     HeadPortrait,
     KeryiCard,
@@ -41,6 +42,8 @@ class BarterView extends React.Component {
         list: PropTypes.array,
         //资源数据列表页码
         current: PropTypes.number,
+        //评论详情
+        comment: PropTypes.string,
         //资源详情用户头像
         viewDetailHeadPortrait: PropTypes.string,
         //资源详情用户名
@@ -479,6 +482,10 @@ class BarterView extends React.Component {
      */
     renderModalComment() {
         const {
+            //评论详情
+            comment
+        } = this.props;
+        const {
             //控制查看"以物换物"评论区域显示、隐藏或者消失
             modalCommentClassToClass
         } = this;
@@ -486,9 +493,14 @@ class BarterView extends React.Component {
             <main
                 className={modalCommentClassToClass.bind(this)()}
             >
-
+                <Area
+                    value={comment}
+                    size="large"
+                    placeholder="请输入您对此资源的评论~"
+                    className="keryi_barter_view_details_comment_area"
+                />
             </main>
-        )
+        );
     }
 
     /**
