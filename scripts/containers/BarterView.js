@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {
     Area,
+    Button,
     FigureCarousel,
     HeadPortrait,
     KeryiCard,
@@ -17,11 +18,19 @@ import {
     getResourcesList,
     //获取资源详情
     getResourcesListViewDetails,
+    //获取资源详情评论列表
+    getResourcesListViewDetailsCommentList,
     //重置资源详情Action
     resetResourcesListViewDetailsAction,
     //重置资源数据列表和资源详情Action
-    resetResourcesListViewListDetailsAction
+    resetResourcesListViewListDetailsAction,
+    //改变"评论"富文本编辑器编辑框内容Action
+    changeResourcesListViewDetailsCommentAction
 } from "../actions/barterActions";
+import {
+    //校验字段undefined和null,进行处理
+    checkField
+} from "../configs/checkField";
 //导入接口API对象
 import api from "../configs/api";
 //获取资源数据列表出现异常时,前端呈现默认约定数据
@@ -44,6 +53,16 @@ class BarterView extends React.Component {
         current: PropTypes.number,
         //评论详情
         comment: PropTypes.string,
+        //评论列表
+        commentList: PropTypes.array,
+        //评论列表页码
+        commentCurrent: PropTypes.number,
+        //评论列表评论条数
+        commentTotal: PropTypes.number,
+        //资源ID
+        viewDetailId: PropTypes.number,
+        //资源发起人ID
+        viewDetailUserId: PropTypes.number,
         //资源详情用户头像
         viewDetailHeadPortrait: PropTypes.string,
         //资源详情用户名
@@ -65,6 +84,8 @@ class BarterView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            //用户登录的id
+            userId: 0,
             //控制Modal组件对话框显示、隐藏或者消失
             viewBarterVisible: false,
             //控制"以物换物"资源详情评论区域显示或者隐藏
@@ -80,6 +101,26 @@ class BarterView extends React.Component {
      * 组件开始装载
      */
     componentWillMount() {
+        const {
+            //获取存入localStorage里面的用户信息
+            getLoginUserInformation
+        } = this;
+        getLoginUserInformation.bind(this)();
+    }
+
+    /**
+     *  获取存入localStorage里面的用户信息
+     */
+    getLoginUserInformation() {
+        let userLoginInformation;
+        if (localStorage) {
+            userLoginInformation = JSON.parse(localStorage.getItem("userLoginInformation"));
+        } else {
+            return false;
+        }
+        this.setState({
+            userId: checkField(userLoginInformation, "id")
+        });
     }
 
     /**
@@ -171,20 +212,49 @@ class BarterView extends React.Component {
     }
 
     /**
+     * "以物换物"资源详情到评论区域控制器
+     */
+    * changeInformationToCommentHandler() {
+        const {
+            //评论列表页码
+            commentCurrent,
+            //资源ID
+            viewDetailId,
+            //资源发起人ID
+            viewDetailUserId,
+            //获取资源详情评论列表脚手架
+            getResourcesListViewDetailsCommentListHandler
+        } = this.props;
+        const {
+            //用户登录的id
+            userId
+        } = this.state;
+        yield this.setState({
+            iconCommentOrInformation: true,
+            commentBlock: true
+        });
+        yield getResourcesListViewDetailsCommentListHandler.bind(this)(viewDetailId, userId, viewDetailUserId, commentCurrent);
+        //FIXME 这里设置一个时间控制器,在设置"以物换物"评论区域由消失到隐藏之后，延迟100ms设置"以物换物"评论区域由隐藏到显示
+        yield setTimeout(function timer() {
+            this.setState({
+                commentAppear: true
+            });
+        }.bind(this), 100);
+    }
+
+    /**
      *  控制"以物换物"资源详情到评论区域
      */
     changeInformationToComment(event) {
-        this.setState({
-            iconCommentOrInformation: true,
-            commentBlock: true
-        }, () => {
-            //FIXME 这里设置一个时间控制器,在设置"以物换物"评论区域由消失到隐藏之后，延迟100ms设置"以物换物"评论区域由隐藏到显示
-            setTimeout(function timer() {
-                this.setState({
-                    commentAppear: true
-                });
-            }.bind(this), 100);
-        });
+        const {
+            //"以物换物"资源详情到评论区域控制器
+            changeInformationToCommentHandler
+        } = this;
+        let informationToCommentHandler = changeInformationToCommentHandler.bind(this)(),
+            informationToCommentHandlerDone = informationToCommentHandler.next().done;
+        while (!informationToCommentHandlerDone) {
+            informationToCommentHandlerDone = informationToCommentHandler.next().done;
+        }
         //取消冒泡事件
         event.nativeEvent.stopImmediatePropagation();
     }
@@ -483,7 +553,11 @@ class BarterView extends React.Component {
     renderModalComment() {
         const {
             //评论详情
-            comment
+            comment,
+            //评论列表评论条数
+            commentTotal,
+            //改变"评论"富文本编辑器编辑框内容
+            changeCommentHandler
         } = this.props;
         const {
             //控制查看"以物换物"评论区域显示、隐藏或者消失
@@ -498,7 +572,29 @@ class BarterView extends React.Component {
                     size="large"
                     placeholder="请输入您对此资源的评论~"
                     className="keryi_barter_view_details_comment_area"
+                    onChange={changeCommentHandler.bind(this)}
                 />
+                <section className="keryi_barter_view_details_comment_submit">
+                    <Button
+                        title="评论"
+                        size="default"
+                        type="info"
+                        className="keryi_barter_view_details_comment_submit_button"
+                    >
+                        评论
+                    </Button>
+                </section>
+                <article className="keryi_barter_view_details_comment_content">
+                    <header className="keryi_barter_view_details_comment_content_header"
+                            data-comment-total={commentTotal}>
+                    </header>
+                    <section className="keryi_barter_view_details_comment_clear">
+
+                    </section>
+                    <main className="keryi_barter_view_details_comment_list">
+                        
+                    </main>
+                </article>
             </main>
         );
     }
@@ -646,6 +742,24 @@ function mapDispatchToProps(dispatch, ownProps) {
         resetResourcesListViewDetailsHandler() {
             //重置资源数据列表和资源详情Action
             dispatch(resetResourcesListViewListDetailsAction());
+        },
+        /**
+         * 改变"评论"富文本编辑器编辑框内容
+         * @param e
+         */
+        changeCommentHandler(e) {
+            let value = e.target.value;
+            dispatch(changeResourcesListViewDetailsCommentAction(value));
+        },
+        /**
+         * 获取资源详情评论列表脚手架
+         * @param resourceId
+         * @param commentFrom
+         * @param commentTo
+         * @param pageNum
+         */
+        getResourcesListViewDetailsCommentListHandler(resourceId, commentFrom, commentTo, pageNum) {
+            dispatch(getResourcesListViewDetailsCommentList(resourceId, commentFrom, commentTo, pageNum));
         },
         /**
          * 点击喜欢图标,更新喜欢数

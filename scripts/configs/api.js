@@ -46,7 +46,9 @@ if (!isMock) {
         //删除用户的资源交换列表
         DELETE_EXCHANGE_LIST: keryi_cover + "exchanges",
         //更换用户的资源交换列表交换关系状态
-        CHANGE_EXCHANGE_LIST_STATUS: keryi_cover + "exchanges"
+        CHANGE_EXCHANGE_LIST_STATUS: keryi_cover + "exchanges",
+        //获取资源详情评论列表
+        GET_RESOURCE_LIST_VIEW_DETAIL_COMMENT_LIST: keryi_cover + "comments"
     }
 } else {
 

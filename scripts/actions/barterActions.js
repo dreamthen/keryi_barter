@@ -8,6 +8,8 @@ import Success from "../prompt/successPrompt";
 
 //获取资源列表的每页页码数量
 const PAGE_SIZE = 10;
+//获取评论列表的每页页码数量
+const COMMENT_PAGE_SIZE = 10;
 
 /**
  * 获取资源列表
@@ -114,6 +116,39 @@ export function haveResourcesExchange({initiativeResourceId, passiveResourceId, 
 }
 
 /**
+ * 获取资源详情评论列表
+ * @param resourceId
+ * @param commentFrom
+ * @param commentTo
+ * @param pageNum
+ */
+export function getResourcesListViewDetailsCommentList(resourceId, commentFrom, commentTo, pageNum) {
+    return function dispatcher(dispatch) {
+        keryiAxiosConfig.axiosRequest(
+            api.GET_RESOURCE_LIST_VIEW_DETAIL_COMMENT_LIST,
+            "get",
+            {
+                resourceId,
+                commentFrom,
+                commentTo,
+                pageNum,
+                pageSize: COMMENT_PAGE_SIZE
+            },
+            function done(response) {
+                //服务器响应body主体对象
+                let body = response,
+                    list = body.list,
+                    commentTotal = body.total;
+                dispatch(getResourcesListViewDetailsCommentListAction({commentList: list, commentTotal}));
+            }.bind(this),
+            function error() {
+
+            }.bind(this)
+        );
+    }.bind(this)
+}
+
+/**
  * 获取资源列表Action
  * @param payload
  * @returns {{type: *, payload: *}}
@@ -141,7 +176,7 @@ export function getResourcesListViewDetailsAction(payload) {
  * 重置资源详情Action
  * @returns {{type: *}}
  */
-export function resetResourcesListViewDetailsAction(){
+export function resetResourcesListViewDetailsAction() {
     return {
         type: appActionsType["RESET_RESOURCE_LIST_VIEW_DETAIL"]
     }
@@ -165,6 +200,30 @@ export function resetResourcesListViewListDetailsAction() {
 export function getUserHeadPortraitViewDetail(payload) {
     return {
         type: appActionsType["GET_USER_HEAD_PORTRAIT_VIEW_DETAIL"],
+        payload
+    }
+}
+
+/**
+ * 改变"评论"富文本编辑器编辑框内容Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function changeResourcesListViewDetailsCommentAction(payload) {
+    return {
+        type: appActionsType["CHANGE_RESOURCES_LIST_VIEW_DETAILS_COMMENT"],
+        payload
+    }
+}
+
+/**
+ * 获取资源详情评论列表Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function getResourcesListViewDetailsCommentListAction(payload) {
+    return {
+        type: appActionsType["GET_RESOURCES_LIST_VIEW_DETAILS_COMMENT_LIST"],
         payload
     }
 }

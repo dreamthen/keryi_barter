@@ -93,7 +93,57 @@
 }
 
 .keryi_barter_view_details_comment .keryi_barter_view_details_comment_area {
-    border: 1px solid #63A8F0;
+    height: 100px;
+    line-height: 1.3;
+    font-size: 14px;
+    padding: 4px 6px;
+    border: 1px solid #9da6af;
+    border-radius: 4px;
+}
+
+.keryi_barter_view_details_comment > .keryi_barter_view_details_comment_submit {
+    text-align: right;
+}
+
+.keryi_barter_view_details_comment_submit .keryi_barter_view_details_comment_submit_button {
+    margin: 8px 15px 0 0;
+    padding: 8px 22px;
+}
+
+.keryi_barter_view_details_comment > .keryi_barter_view_details_comment_content {
+    padding: 0 15px 0 20px;
+    height: calc(100% - 140px);
+}
+
+.keryi_barter_view_details_comment_content > .keryi_barter_view_details_comment_content_header {
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid rgba(68, 68, 68, .1);
+}
+
+.keryi_barter_view_details_comment_content > .keryi_barter_view_details_comment_content_header:before {
+    content: attr(data-comment-total);
+    float: left;
+    font-size: 20px;
+    color: #63A8F0;
+    margin-right: 5px;
+}
+
+.keryi_barter_view_details_comment_content > .keryi_barter_view_details_comment_content_header:after {
+    content: "评论";
+    display: table-cell;
+    width: 2000px;
+}
+
+.keryi_barter_view_details_comment_content > .keryi_barter_view_details_comment_clear {
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+.keryi_barter_view_details_comment_content > .keryi_barter_view_details_comment_list {
+    height: calc(100% - 32px);
 }
 
 .keryi_barter_view_details_information > .keryi_barter_view_details_comment_appear {

@@ -4,12 +4,25 @@
 //导入app页面action类型
 import appActionsType from "../actions/appActionsType";
 import insteadState from "../configs/insteadState";
+import PropTypes from "prop-types";
 
 const defaultState = {
     //获取资源数据列表
     list: [],
     //资源数据列表页码
     current: 1,
+    //评论详情
+    comment: "",
+    //评论列表
+    commentList: [],
+    //评论列表页码
+    commentCurrent: 1,
+    //评论列表评论条数
+    commentTotal: 0,
+    //资源ID
+    viewDetailId: 0,
+    //资源发起人ID
+    viewDetailUserId: 0,
     //资源详情用户头像
     viewDetailHeadPortrait: "",
     //资源详情用户名
@@ -49,6 +62,8 @@ export function barterReducers(state = defaultState, actions) {
             });
         //获取资源详情
         case appActionsType["GET_RESOURCE_LIST_VIEW_DETAIL"]:
+            newState["viewDetailId"] = newState["id"];
+            newState["viewDetailUserId"] = newState["userId"];
             newState["viewDetailUserName"] = newState["user"]["username"];
             newState["viewDetailImageList"] = newState["imgUrls"];
             newState["viewDetailTitle"] = newState["title"];
@@ -82,6 +97,13 @@ export function barterReducers(state = defaultState, actions) {
         //重置资源数据列表和资源详情
         case appActionsType["RESET_RESOURCE_LIST_VIEW_LIST_DETAIL"]:
             return defaultState;
+        //改变"评论"富文本编辑器编辑框内容
+        case appActionsType["CHANGE_RESOURCES_LIST_VIEW_DETAILS_COMMENT"]:
+            return insteadState.insteadObjState(state, {
+                comment: newState
+            });
+        case appActionsType["GET_RESOURCES_LIST_VIEW_DETAILS_COMMENT_LIST"]:
+            return insteadState.insteadObjState(state, newState);
     }
     return state;
 }
