@@ -547,6 +547,30 @@ class BarterView extends React.Component {
     }
 
     /**
+     * keryi_barter主页面查看"以物换物"评论区域评论列表
+     * @returns {*}
+     */
+    renderModalCommentList() {
+        return (
+            <main className="keryi_barter_view_details_comment_list">
+
+            </main>
+        );
+    }
+
+    /**
+     * keryi_barter主页面查看"以物换物"评论区域评论为空时的界面
+     * @returns {*}
+     */
+    renderModalCommentNone() {
+        return (
+            <main className="keryi_barter_view_details_comment_none">
+
+            </main>
+        );
+    }
+
+    /**
      * keryi_barter主页面查看"以物换物"评论区域
      * @returns {XML}
      */
@@ -556,12 +580,18 @@ class BarterView extends React.Component {
             comment,
             //评论列表评论条数
             commentTotal,
+            //评论列表
+            commentList,
             //改变"评论"富文本编辑器编辑框内容
             changeCommentHandler
         } = this.props;
         const {
             //控制查看"以物换物"评论区域显示、隐藏或者消失
-            modalCommentClassToClass
+            modalCommentClassToClass,
+            //
+            renderModalCommentList,
+            //
+            renderModalCommentNone
         } = this;
         return (
             <main
@@ -572,6 +602,7 @@ class BarterView extends React.Component {
                     size="large"
                     placeholder="请输入您对此资源的评论~"
                     className="keryi_barter_view_details_comment_area"
+                    comment={true}
                     onChange={changeCommentHandler.bind(this)}
                 />
                 <section className="keryi_barter_view_details_comment_submit">
@@ -591,9 +622,9 @@ class BarterView extends React.Component {
                     <section className="keryi_barter_view_details_comment_clear">
 
                     </section>
-                    <main className="keryi_barter_view_details_comment_list">
-                        
-                    </main>
+                    {
+                        (commentList && commentList.length > 0) ? renderModalCommentList.bind(this)() : renderModalCommentNone.bind(this)()
+                    }
                 </article>
             </main>
         );

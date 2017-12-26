@@ -32,6 +32,8 @@ class Area extends React.Component {
         className: PropTypes.string,
         //Area组件编辑框是否执行下拉选择框
         pullListDown: PropTypes.bool,
+        //Area组件编辑框是否为评论框
+        comment: PropTypes.bool,
         //初始化选择资源类型下拉框距离添加对话框的位置
         initPullListDownPosition: PropTypes.func,
         //在最初组件装载的时候初始化选择资源类型下拉框距离添加对话框的位置
@@ -235,8 +237,22 @@ class Area extends React.Component {
      * 编辑框onKeyPressHandler控制输入键事件(不可输入回车符)
      */
     onKeyPressHandler(e) {
-        let {pullListDown} = this.props;
+        let {
+            //编辑框是否执行下拉选择框
+            pullListDown,
+            //编辑框是否为评论框
+            comment
+        } = this.props;
         if (pullListDown) {
+            if (e.keyCode && (e.keyCode === 13 || e.keyCode === 32)) {
+                e.preventDefault();
+            }
+            if (e.charCode && (e.charCode === 13 || e.charCode === 32)) {
+                e.preventDefault();
+            }
+        }
+
+        if (comment) {
             if (e.keyCode && e.keyCode === 13) {
                 e.preventDefault();
             }
