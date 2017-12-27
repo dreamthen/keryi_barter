@@ -18,6 +18,8 @@ import {
     getResourcesList,
     //获取资源详情
     getResourcesListViewDetails,
+    //插入资源详情评论
+    doResourcesListViewDetailsComment,
     //获取资源详情评论列表
     getResourcesListViewDetailsCommentList,
     //重置资源详情Action
@@ -796,6 +798,8 @@ function mapDispatchToProps(dispatch, ownProps) {
             const {
                 //评论详情
                 comment,
+                //评论列表页码
+                commentCurrent,
                 //资源ID
                 viewDetailId,
                 //资源发起人ID
@@ -805,6 +809,10 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //用户登录的id
                 userId
             } = this.state;
+            dispatch(doResourcesListViewDetailsComment(viewDetailId, userId, viewDetailUserId, comment))
+                .then(function resolve() {
+                    dispatch(getResourcesListViewDetailsCommentList(viewDetailId, userId, viewDetailUserId, commentCurrent));
+                });
         },
         /**
          * 获取资源详情评论列表脚手架

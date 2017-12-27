@@ -157,25 +157,26 @@ export function getResourcesListViewDetailsCommentList(resourceId, commentFrom, 
  */
 export function doResourcesListViewDetailsComment(resourceId, commentFrom, commentTo, comment) {
     return function dispatcher(dispatch) {
-        return new Promise(function promise(){
+        return new Promise(function promise(resolve, reject) {
+            keryiAxiosConfig.axiosRequest(
+                api.DO_RESOURCE_LIST_VIEW_DETAIL_COMMENT,
+                "post",
+                {
+                    resourceId,
+                    commentFrom,
+                    commentTo,
+                    comment
+                },
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response;
+                    resolve();
+                }.bind(this),
+                function error(response) {
 
+                }.bind(this)
+            );
         });
-        keryiAxiosConfig.axiosRequest(
-            api.DO_RESOURCE_LIST_VIEW_DETAIL_COMMENT,
-            "post",
-            {
-                resourceId,
-                commentFrom,
-                commentTo,
-                comment
-            },
-            function done(body) {
-
-            }.bind(this),
-            function error(response) {
-
-            }.bind(this)
-        );
     }.bind(this);
 }
 
