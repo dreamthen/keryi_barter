@@ -47,6 +47,8 @@ if (!isMock) {
         DELETE_EXCHANGE_LIST: keryi_cover + "exchanges",
         //更换用户的资源交换列表交换关系状态
         CHANGE_EXCHANGE_LIST_STATUS: keryi_cover + "exchanges",
+        //插入资源详情评论
+        DO_RESOURCE_LIST_VIEW_DETAIL_COMMENT: keryi_cover + "comments",
         //获取资源详情评论列表
         GET_RESOURCE_LIST_VIEW_DETAIL_COMMENT_LIST: keryi_cover + "comments"
     }

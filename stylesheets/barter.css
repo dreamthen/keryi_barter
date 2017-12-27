@@ -142,8 +142,39 @@
     clear: both;
 }
 
+.keryi_barter_view_details_comment_content > .keryi_barter_view_details_comment_none,
 .keryi_barter_view_details_comment_content > .keryi_barter_view_details_comment_list {
     height: calc(100% - 32px);
+}
+
+.keryi_barter_view_details_comment_content > .keryi_barter_view_details_comment_none {
+    position: relative;
+}
+
+.keryi_barter_view_details_comment_none > .keryi_barter_view_details_comment_none_container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    background-color: rgb(244, 244, 244);
+}
+
+.keryi_barter_view_details_comment_none_container > i {
+    font-size: 32px;
+    color: #8f8f8f;
+}
+
+.keryi_barter_view_details_comment_none_container > .keryi_barter_view_details_comment_none_content {
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-size: 14px;
+    color: #8f8f8f;
+    margin-top: 4px;
 }
 
 .keryi_barter_view_details_information > .keryi_barter_view_details_comment_appear {

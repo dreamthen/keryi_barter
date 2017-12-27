@@ -565,7 +565,10 @@ class BarterView extends React.Component {
     renderModalCommentNone() {
         return (
             <main className="keryi_barter_view_details_comment_none">
-
+                <section className="keryi_barter_view_details_comment_none_container">
+                    <i className="iconfontKeryiBarter keryiBarter-cry"> </i>
+                    <dfn className="keryi_barter_view_details_comment_none_content">此资源暂无评论</dfn>
+                </section>
             </main>
         );
     }
@@ -583,14 +586,16 @@ class BarterView extends React.Component {
             //评论列表
             commentList,
             //改变"评论"富文本编辑器编辑框内容
-            changeCommentHandler
+            changeCommentHandler,
+            //"评论"富文本编辑器编辑框添加评论
+            doCommentHandler
         } = this.props;
         const {
             //控制查看"以物换物"评论区域显示、隐藏或者消失
             modalCommentClassToClass,
-            //
+            //查看"以物换物"评论区域评论列表
             renderModalCommentList,
-            //
+            //查看"以物换物"评论区域评论为空时的界面
             renderModalCommentNone
         } = this;
         return (
@@ -611,6 +616,7 @@ class BarterView extends React.Component {
                         size="default"
                         type="info"
                         className="keryi_barter_view_details_comment_submit_button"
+                        onClick={doCommentHandler.bind(this)}
                     >
                         评论
                     </Button>
@@ -781,6 +787,24 @@ function mapDispatchToProps(dispatch, ownProps) {
         changeCommentHandler(e) {
             let value = e.target.value;
             dispatch(changeResourcesListViewDetailsCommentAction(value));
+        },
+        /**
+         * "评论"富文本编辑器编辑框添加评论
+         * @param e
+         */
+        doCommentHandler(e) {
+            const {
+                //评论详情
+                comment,
+                //资源ID
+                viewDetailId,
+                //资源发起人ID
+                viewDetailUserId
+            } = this.props;
+            const {
+                //用户登录的id
+                userId
+            } = this.state;
         },
         /**
          * 获取资源详情评论列表脚手架

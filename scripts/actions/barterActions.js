@@ -149,6 +149,37 @@ export function getResourcesListViewDetailsCommentList(resourceId, commentFrom, 
 }
 
 /**
+ * 插入资源详情评论
+ * @param resourceId
+ * @param commentFrom
+ * @param commentTo
+ * @param comment
+ */
+export function doResourcesListViewDetailsComment(resourceId, commentFrom, commentTo, comment) {
+    return function dispatcher(dispatch) {
+        return new Promise(function promise(){
+
+        });
+        keryiAxiosConfig.axiosRequest(
+            api.DO_RESOURCE_LIST_VIEW_DETAIL_COMMENT,
+            "post",
+            {
+                resourceId,
+                commentFrom,
+                commentTo,
+                comment
+            },
+            function done(body) {
+
+            }.bind(this),
+            function error(response) {
+
+            }.bind(this)
+        );
+    }.bind(this);
+}
+
+/**
  * 获取资源列表Action
  * @param payload
  * @returns {{type: *, payload: *}}
