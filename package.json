@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/dreamthen/keryi_barter#readme",
   "dependencies": {
+    "moment": "^2.20.1",
     "prop-types": "^15.6.0",
     "rc-upload": "^2.3.8",
     "react": "^16.2.0",

@@ -124,27 +124,29 @@ export function haveResourcesExchange({initiativeResourceId, passiveResourceId, 
  */
 export function getResourcesListViewDetailsCommentList(resourceId, commentFrom, commentTo, pageNum) {
     return function dispatcher(dispatch) {
-        keryiAxiosConfig.axiosRequest(
-            api.GET_RESOURCE_LIST_VIEW_DETAIL_COMMENT_LIST,
-            "get",
-            {
-                resourceId,
-                commentFrom,
-                commentTo,
-                pageNum,
-                pageSize: COMMENT_PAGE_SIZE
-            },
-            function done(response) {
-                //服务器响应body主体对象
-                let body = response,
-                    list = body.list,
-                    commentTotal = body.total;
-                dispatch(getResourcesListViewDetailsCommentListAction({commentList: list, commentTotal}));
-            }.bind(this),
-            function error() {
+        return new Promise(function promise(resolve, reject) {
+            keryiAxiosConfig.axiosRequest(
+                api.GET_RESOURCE_LIST_VIEW_DETAIL_COMMENT_LIST,
+                "get",
+                {
+                    resourceId,
+                    commentFrom,
+                    commentTo,
+                    pageNum,
+                    pageSize: COMMENT_PAGE_SIZE
+                },
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response,
+                        list = body.list,
+                        commentTotal = body.total;
+                    resolve({list, commentTotal});
+                }.bind(this),
+                function error() {
 
-            }.bind(this)
-        );
+                }.bind(this)
+            );
+        });
     }.bind(this)
 }
 

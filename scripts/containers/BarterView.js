@@ -13,6 +13,7 @@ import {
     Modal,
     Tag
 } from "../keryi";
+import moment from "moment";
 import {
     //获取资源列表Action
     getResourcesList,
@@ -27,7 +28,9 @@ import {
     //重置资源数据列表和资源详情Action
     resetResourcesListViewListDetailsAction,
     //改变"评论"富文本编辑器编辑框内容Action
-    changeResourcesListViewDetailsCommentAction
+    changeResourcesListViewDetailsCommentAction,
+    //获取资源详情评论列表Action
+    getResourcesListViewDetailsCommentListAction
 } from "../actions/barterActions";
 import {
     //校验字段undefined和null,进行处理
@@ -40,12 +43,15 @@ import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
 //资源统计静态Mode配置
 import viewDetailsStatisticsConfig from "../configs/viewDetailsStatisticsConfig";
 import "../../stylesheets/barter.css";
+import Figure from "../keryi/FigureCarousel/components/Figure";
 //"以物换物"评论区域消失样式表
 const comment = "keryi_barter_view_details_comment";
 //"以物换物"评论区域显示样式表
 const commentAppearClass = "keryi_barter_view_details_comment keryi_barter_view_details_comment_block keryi_barter_view_details_comment_appear";
 //"以物换物"评论区域隐藏样式表
 const commentBlockClass = "keryi_barter_view_details_comment keryi_barter_view_details_comment_block";
+//设置moment时间地区语言
+moment.locale('zh-cn');
 
 class BarterView extends React.Component {
     static propTypes = {
@@ -549,13 +555,54 @@ class BarterView extends React.Component {
     }
 
     /**
+     * keryi_barter主页面查看"以物换物"评论区域评论列表项
+     * @returns [{*}]
+     */
+    renderModalCommentListItem() {
+        const {
+            //评论列表
+            commentList
+        } = this.props;
+        return commentList.map(function commentListItem(commentItem, commentIndex) {
+            return (
+                <section
+                    key={commentIndex}
+                    className="keryi_barter_view_details_comment_list_itemSection">
+                    <aside className="keryi_barter_view_details_comment_list_itemAvatar">
+                        <HeadPortrait
+                            headPortrait={api.GET_PERSONAL_AVATAR + "/" + commentItem["fromUser"]["id"] + "/avatar"}
+                            borderJudgement={false}
+                        />
+                    </aside>
+                    <article className="keryi_barter_view_details_comment_list_itemContent">
+                        <h5 className="keryi_barter_view_details_comment_list_itemContent_title">
+                            {commentItem["fromUser"]["username"]}
+                        </h5>
+                        <p className="keryi_barter_view_details_comment_list_itemContent_pragraph">
+                            {commentItem["comment"]}
+                        </p>
+                        <time className="keryi_barter_view_details_comment_list_itemContent_time">
+                            {moment(commentItem["createDate"]).fromNow()}
+                        </time>
+                    </article>
+                    <hr className="keryi_barter_view_details_comment_list_itemSection_wire"/>
+                </section>
+            )
+        });
+    }
+
+    /**
      * keryi_barter主页面查看"以物换物"评论区域评论列表
      * @returns {*}
      */
     renderModalCommentList() {
+        const {
+            //查看"以物换物"评论区域评论列表项
+            renderModalCommentListItem
+        } = this;
         return (
             <main className="keryi_barter_view_details_comment_list">
-
+                {renderModalCommentListItem.bind(this)()}
             </main>
         );
     }
@@ -811,7 +858,14 @@ function mapDispatchToProps(dispatch, ownProps) {
             } = this.state;
             dispatch(doResourcesListViewDetailsComment(viewDetailId, userId, viewDetailUserId, comment))
                 .then(function resolve() {
-                    dispatch(getResourcesListViewDetailsCommentList(viewDetailId, userId, viewDetailUserId, commentCurrent));
+                    return dispatch(getResourcesListViewDetailsCommentList(viewDetailId, userId, viewDetailUserId, commentCurrent));
+                })
+                .then(function resolve(getComment) {
+                    dispatch(getResourcesListViewDetailsCommentListAction({
+                        commentList: getComment["list"],
+                        commentTotal: getComment["commentTotal"],
+                        comment: ""
+                    }));
                 });
         },
         /**
@@ -822,7 +876,14 @@ function mapDispatchToProps(dispatch, ownProps) {
          * @param pageNum
          */
         getResourcesListViewDetailsCommentListHandler(resourceId, commentFrom, commentTo, pageNum) {
-            dispatch(getResourcesListViewDetailsCommentList(resourceId, commentFrom, commentTo, pageNum));
+            dispatch(getResourcesListViewDetailsCommentList(resourceId, commentFrom, commentTo, pageNum))
+                .then(function resolve(getComment) {
+                    dispatch(getResourcesListViewDetailsCommentListAction({
+                        commentList: getComment["list"],
+                        commentTotal: getComment["commentTotal"],
+                        comment: ""
+                    }));
+                });
         },
         /**
          * 点击喜欢图标,更新喜欢数
