@@ -555,6 +555,17 @@ class BarterView extends React.Component {
     }
 
     /**
+     * 设置资源详情评论详情HTML文本
+     * @param commentListItemContent
+     * @returns {{__html: *}}
+     */
+    setCommentListItemContentInnerHTML(commentListItemContent) {
+        return {
+            __html: commentListItemContent
+        }
+    }
+
+    /**
      * keryi_barter主页面查看"以物换物"评论区域评论列表项
      * @returns [{*}]
      */
@@ -563,6 +574,10 @@ class BarterView extends React.Component {
             //评论列表
             commentList
         } = this.props;
+        const {
+            //设置资源详情评论详情HTML文本
+            setCommentListItemContentInnerHTML
+        } = this;
         return commentList.map(function commentListItem(commentItem, commentIndex) {
             return (
                 <section
@@ -578,8 +593,10 @@ class BarterView extends React.Component {
                         <h5 className="keryi_barter_view_details_comment_list_itemContent_title">
                             {commentItem["fromUser"]["username"]}
                         </h5>
-                        <p className="keryi_barter_view_details_comment_list_itemContent_pragraph">
-                            {commentItem["comment"]}
+                        <p
+                            dangerouslySetInnerHTML={setCommentListItemContentInnerHTML.bind(this)(commentItem["comment"])}
+                            className="keryi_barter_view_details_comment_list_itemContent_pragraph"
+                        >
                         </p>
                         <time className="keryi_barter_view_details_comment_list_itemContent_time">
                             {moment(commentItem["createDate"]).fromNow()}
