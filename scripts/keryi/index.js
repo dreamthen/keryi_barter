@@ -21,6 +21,8 @@ import KeryiCard from "./KeryiCard";
 import Loading from "./Loading";
 //导入keryi_barter Modal对话框组件
 import Modal from "./Modal";
+//导入keryi_barter Pagination分页组件
+import Pagination from "./Pagination";
 //导入keryi_barter Prompt提示语组件
 import Prompt from "./Prompt";
 //导入keryi_barter PullListDown下拉框组件
@@ -49,6 +51,7 @@ const keryi = {
     Loading,
     message,
     Modal,
+    Pagination,
     Prompt,
     PullListDown,
     Select,

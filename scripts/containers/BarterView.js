@@ -11,6 +11,7 @@ import {
     HeadPortrait,
     KeryiCard,
     Modal,
+    Pagination,
     Tag
 } from "../keryi";
 import moment from "moment";
