@@ -44,13 +44,13 @@ import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
 //资源统计静态Mode配置
 import viewDetailsStatisticsConfig from "../configs/viewDetailsStatisticsConfig";
 import "../../stylesheets/barter.css";
-import Figure from "../keryi/FigureCarousel/components/Figure";
 //"以物换物"评论区域消失样式表
 const comment = "keryi_barter_view_details_comment";
 //"以物换物"评论区域显示样式表
 const commentAppearClass = "keryi_barter_view_details_comment keryi_barter_view_details_comment_block keryi_barter_view_details_comment_appear";
 //"以物换物"评论区域隐藏样式表
 const commentBlockClass = "keryi_barter_view_details_comment keryi_barter_view_details_comment_block";
+const PAGE_SIZE = 10;
 //设置moment时间地区语言
 moment.locale('zh-cn');
 
@@ -650,12 +650,16 @@ class BarterView extends React.Component {
             comment,
             //评论列表评论条数
             commentTotal,
+            //评论列表页码
+            commentCurrent,
             //评论列表
             commentList,
             //改变"评论"富文本编辑器编辑框内容
             changeCommentHandler,
             //"评论"富文本编辑器编辑框添加评论
-            doCommentHandler
+            doCommentHandler,
+            //点击"评论"系统分页方法
+            loadPageMore
         } = this.props;
         const {
             //控制查看"以物换物"评论区域显示、隐藏或者消失
@@ -695,6 +699,15 @@ class BarterView extends React.Component {
                     <section className="keryi_barter_view_details_comment_clear">
 
                     </section>
+                    <Pagination
+                        current={commentCurrent}
+                        className="keryi_barter_view_details_comment_pagination"
+                        onChange={loadPageMore.bind(this)}
+                        pageSize={PAGE_SIZE}
+                        showQuickJumper
+                        showTotal={total => `共 ${total} 条评论`}
+                        total={commentTotal}
+                    />
                     {
                         (commentList && commentList.length > 0) ? renderModalCommentList.bind(this)() : renderModalCommentNone.bind(this)()
                     }
@@ -863,8 +876,6 @@ function mapDispatchToProps(dispatch, ownProps) {
             const {
                 //评论详情
                 comment,
-                //评论列表页码
-                commentCurrent,
                 //资源ID
                 viewDetailId,
                 //资源发起人ID
@@ -874,6 +885,8 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //用户登录的id
                 userId
             } = this.state;
+            //评论列表页码设置为1
+            const commentCurrent = 1;
             dispatch(doResourcesListViewDetailsComment(viewDetailId, userId, viewDetailUserId, comment))
                 .then(function resolve() {
                     return dispatch(getResourcesListViewDetailsCommentList(viewDetailId, userId, viewDetailUserId, commentCurrent));
@@ -882,7 +895,8 @@ function mapDispatchToProps(dispatch, ownProps) {
                     dispatch(getResourcesListViewDetailsCommentListAction({
                         commentList: getComment["list"],
                         commentTotal: getComment["commentTotal"],
-                        comment: ""
+                        comment: "",
+                        commentCurrent
                     }));
                 });
         },
@@ -900,6 +914,32 @@ function mapDispatchToProps(dispatch, ownProps) {
                         commentList: getComment["list"],
                         commentTotal: getComment["commentTotal"],
                         comment: ""
+                    }));
+                });
+        },
+        /**
+         * 点击"评论"系统分页方法
+         * @param page
+         * @param pageSize
+         */
+        loadPageMore(page, pageSize) {
+            const {
+                //资源ID
+                viewDetailId,
+                //资源发起人ID
+                viewDetailUserId
+            } = this.props;
+            const {
+                //用户登录的id
+                userId
+            } = this.state;
+            dispatch(getResourcesListViewDetailsCommentList(viewDetailId, userId, viewDetailUserId, page))
+                .then(function resolve(getComment) {
+                    dispatch(getResourcesListViewDetailsCommentListAction({
+                        commentList: getComment["list"],
+                        commentTotal: getComment["commentTotal"],
+                        comment: "",
+                        commentCurrent: page
                     }));
                 });
         },
