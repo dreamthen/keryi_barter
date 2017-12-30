@@ -18,23 +18,25 @@ const COMMENT_PAGE_SIZE = 10;
  */
 export function getResourcesList(pageNum) {
     return function dispatchMe(dispatch) {
-        //axios服务器请求响应集成对象
-        keryiAxiosConfig.axiosRequest(
-            api.GET_RESOURCE_LIST,
-            "GET",
-            {
-                pageSize: PAGE_SIZE,
-                pageNum
-            },
-            function done(response) {
-                //服务器响应body主体对象
-                let body = response;
-                dispatch(getResourcesListAction(body));
-            }.bind(this),
-            function error(response) {
+        return new Promise(function promise(resolve, reject) {
+            //axios服务器请求响应集成对象
+            keryiAxiosConfig.axiosRequest(
+                api.GET_RESOURCE_LIST,
+                "GET",
+                {
+                    pageSize: PAGE_SIZE,
+                    pageNum
+                },
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response;
+                    resolve(body);
+                }.bind(this),
+                function error(response) {
 
-            }.bind(this)
-        );
+                }.bind(this)
+            );
+        });
     }.bind(this)
 }
 

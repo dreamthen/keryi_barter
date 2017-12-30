@@ -18,6 +18,8 @@ import moment from "moment";
 import {
     //获取资源列表Action
     getResourcesList,
+    //获取资源列表Action
+    getResourcesListAction,
     //获取资源详情
     getResourcesListViewDetails,
     //插入资源详情评论
@@ -133,6 +135,16 @@ class BarterView extends React.Component {
     }
 
     /**
+     * 下拉滚动条进行分页获取资源数据列表
+     */
+    scrollGetResourceList() {
+        window.onscroll = function scroll() {
+            let osTop = document.documentElement.scrollTop || document.body.scrollTop;
+            console.log(this.refs["resourceListContainer"].clientHeight);
+        }.bind(this);
+    }
+
+    /**
      * 组件结束装载
      */
     componentDidMount() {
@@ -140,7 +152,12 @@ class BarterView extends React.Component {
             //dispatch获取资源数据列表
             dispatchResourceList
         } = this.props;
+        const {
+            //下拉滚动条进行分页获取资源数据列表
+            scrollGetResourceList
+        } = this;
         dispatchResourceList.bind(this)();
+        scrollGetResourceList.bind(this)();
     }
 
     /**
@@ -771,8 +788,13 @@ class BarterView extends React.Component {
             renderModal
         } = this;
         return (
-            <div className="keryi_barter_main_container">
-                <section className="keryi_barter_main_module keryi_barter_main_barterList">
+            <div
+                className="keryi_barter_main_container"
+            >
+                <section
+                    ref="resourceListContainer"
+                    className="keryi_barter_main_module keryi_barter_main_barterList"
+                >
                     {
                         (list && list.length > 0) && list.map(function lister(listItem, listIndex) {
                             return (
@@ -833,7 +855,12 @@ function mapDispatchToProps(dispatch, ownProps) {
         dispatchResourceList() {
             //资源数据列表页码
             const {current} = this.props;
-            dispatch(getResourcesList(current));
+            dispatch(getResourcesList(current))
+                .then(function resolve(body) {
+                    dispatch(getResourcesListAction(body));
+                }, function reject() {
+
+                });
         },
         /**
          * 控制Modal组件对话框隐藏并消失
