@@ -4,13 +4,19 @@
 //导入app页面action类型
 import appActionsType from "../actions/appActionsType";
 import insteadState from "../configs/insteadState";
-import PropTypes from "prop-types";
+
+//改变资源列表分页页码:分页+1
+export const paginationPlus = "plus";
+//改变资源列表分页页码:分页-1
+export const paginationMinus = "minus";
 
 const defaultState = {
     //获取资源数据列表
     list: [],
     //资源数据列表页码
     current: 1,
+    //资源数据列表下拉分页防并发变量
+    currentAsync: true,
     //评论详情
     comment: "",
     //评论列表
@@ -60,6 +66,21 @@ export function barterReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 list: newState
             });
+        case appActionsType["GET_RESOURCE_LIST_BY_PAGINATION"]:
+            return insteadState.insteadObjState(state, {
+                list: state["list"].concat(newState),
+                currentAsync: true
+            });
+        //改变资源列表分页页码
+        case appActionsType["CHANGE_RESOURCES_LIST_PAGINATION_CURRENT"]:
+            return newState === paginationPlus ?
+                insteadState.insteadObjState(state, {
+                    current: state["current"] + 1,
+                    currentAsync: false
+                }) : insteadState.insteadObjState(state, {
+                    current: state["current"] - 1,
+                    currentAsync: true
+                });
         //获取资源详情
         case appActionsType["GET_RESOURCE_LIST_VIEW_DETAIL"]:
             newState["viewDetailId"] = newState["id"];

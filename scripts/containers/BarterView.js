@@ -20,6 +20,10 @@ import {
     getResourcesList,
     //获取资源列表Action
     getResourcesListAction,
+    //分页获取资源列表Action
+    getResourcesListByPaginationAction,
+    //改变资源列表分页页码Action
+    changeResourcesListPaginationCurrentAction,
     //获取资源详情
     getResourcesListViewDetails,
     //插入资源详情评论
@@ -41,8 +45,12 @@ import {
 } from "../configs/checkField";
 //导入接口API对象
 import api from "../configs/api";
-//获取资源数据列表出现异常时,前端呈现默认约定数据
-import keryiCardDefaultConfig from "../configs/keryiCardDefaultConfig";
+import {
+    //改变资源列表分页页码:分页+1
+    paginationPlus,
+    //改变资源列表分页页码:分页-1
+    paginationMinus
+} from "../reducers/barterReducers";
 //资源统计静态Mode配置
 import viewDetailsStatisticsConfig from "../configs/viewDetailsStatisticsConfig";
 import "../../stylesheets/barter.css";
@@ -62,6 +70,8 @@ class BarterView extends React.Component {
         list: PropTypes.array,
         //资源数据列表页码
         current: PropTypes.number,
+        //资源数据列表下拉分页防并发变量
+        currentAsync: PropTypes.bool,
         //评论详情
         comment: PropTypes.string,
         //评论列表
@@ -136,12 +146,31 @@ class BarterView extends React.Component {
 
     /**
      * 下拉滚动条进行分页获取资源数据列表
+     * @params docTop
      */
-    scrollGetResourceList() {
-        window.onscroll = function scroll() {
-            let osTop = document.documentElement.scrollTop || document.body.scrollTop;
-            console.log(this.refs["resourceListContainer"].clientHeight);
-        }.bind(this);
+    scrollGetResourceList(docTop) {
+        const {
+            //改变资源列表分页页码
+            changeResourcesListPaginationCurrentHandler
+        } = this.props;
+        return new Promise(function promise(resolve, reject) {
+            const {
+                //资源数据列表下拉分页防并发变量
+                currentAsync,
+            } = this.props;
+            //滚动条距离顶部高度
+            let osTop = document.documentElement.scrollTop || document.body.scrollTop,
+                //resourceListContainer元素高度
+                docHeight = this.refs["resourceListContainer"].clientHeight,
+                //屏幕高度
+                screenHeight = window.innerHeight,
+                //整个文档高度
+                docTotalHeight = docHeight + docTop;
+            if (((docTotalHeight - screenHeight - osTop) / docTotalHeight <= 0.05) && currentAsync) {
+                changeResourcesListPaginationCurrentHandler.bind(this)(paginationPlus);
+                resolve();
+            }
+        }.bind(this));
     }
 
     /**
@@ -149,15 +178,25 @@ class BarterView extends React.Component {
      */
     componentDidMount() {
         const {
-            //dispatch获取资源数据列表
-            dispatchResourceList
+            //获取资源数据列表
+            dispatchResourceList,
+            //分页获取资源数据列表
+            dispatchResourceListByPagination
         } = this.props;
         const {
             //下拉滚动条进行分页获取资源数据列表
             scrollGetResourceList
         } = this;
+        //resourceListContainer元素距离顶部高度
+        let docTop = this.refs["resourceListContainer"].getBoundingClientRect().top;
         dispatchResourceList.bind(this)();
-        scrollGetResourceList.bind(this)();
+        window.onscroll = function scroll() {
+            scrollGetResourceList.bind(this)(docTop).then(function resolve() {
+                dispatchResourceListByPagination.bind(this)();
+            }.bind(this), function reject() {
+
+            }.bind(this));
+        }.bind(this);
     }
 
     /**
@@ -242,8 +281,6 @@ class BarterView extends React.Component {
      */
     * changeInformationToCommentHandler() {
         const {
-            //评论列表页码
-            commentCurrent,
             //资源ID
             viewDetailId,
             //资源发起人ID
@@ -255,6 +292,8 @@ class BarterView extends React.Component {
             //用户登录的id
             userId
         } = this.state;
+        //评论列表页码设置为1
+        const commentCurrent = 1;
         yield this.setState({
             iconCommentOrInformation: true,
             commentBlock: true
@@ -789,10 +828,10 @@ class BarterView extends React.Component {
         } = this;
         return (
             <div
+                ref="resourceListContainer"
                 className="keryi_barter_main_container"
             >
                 <section
-                    ref="resourceListContainer"
                     className="keryi_barter_main_module keryi_barter_main_barterList"
                 >
                     {
@@ -858,9 +897,32 @@ function mapDispatchToProps(dispatch, ownProps) {
             dispatch(getResourcesList(current))
                 .then(function resolve(body) {
                     dispatch(getResourcesListAction(body));
-                }, function reject() {
+                }.bind(this), function reject() {
 
-                });
+                }.bind(this));
+        },
+        /**
+         * dispatch分页获取资源数据列表
+         */
+        dispatchResourceListByPagination() {
+            const {
+                //资源数据列表页码
+                current,
+                //改变资源列表分页页码
+                changeResourcesListPaginationCurrentHandler
+            } = this.props;
+            dispatch(getResourcesList(current))
+                .then(function resolve(body) {
+                    dispatch(getResourcesListByPaginationAction(body));
+                }.bind(this), function reject() {
+                    changeResourcesListPaginationCurrentHandler.bind(this)(paginationMinus);
+                }.bind(this));
+        },
+        /**
+         * 改变资源列表分页页码
+         */
+        changeResourcesListPaginationCurrentHandler(command) {
+            dispatch(changeResourcesListPaginationCurrentAction(command));
         },
         /**
          * 控制Modal组件对话框隐藏并消失
@@ -940,7 +1002,8 @@ function mapDispatchToProps(dispatch, ownProps) {
                     dispatch(getResourcesListViewDetailsCommentListAction({
                         commentList: getComment["list"],
                         commentTotal: getComment["commentTotal"],
-                        comment: ""
+                        comment: "",
+                        commentCurrent: pageNum
                     }));
                 });
         },

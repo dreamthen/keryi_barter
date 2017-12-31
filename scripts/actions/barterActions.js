@@ -30,7 +30,7 @@ export function getResourcesList(pageNum) {
                 function done(response) {
                     //服务器响应body主体对象
                     let body = response;
-                    resolve(body);
+                    body && body.length > 0 ? resolve(body) : reject();
                 }.bind(this),
                 function error(response) {
 
@@ -197,6 +197,18 @@ export function getResourcesListAction(payload) {
 }
 
 /**
+ * 分页获取资源列表Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function getResourcesListByPaginationAction(payload) {
+    return {
+        type: appActionsType["GET_RESOURCE_LIST_BY_PAGINATION"],
+        payload
+    }
+}
+
+/**
  * 获取资源详情Action
  * @param payload
  * @returns {{type: *, payload: *}}
@@ -260,6 +272,17 @@ export function changeResourcesListViewDetailsCommentAction(payload) {
 export function getResourcesListViewDetailsCommentListAction(payload) {
     return {
         type: appActionsType["GET_RESOURCES_LIST_VIEW_DETAILS_COMMENT_LIST"],
+        payload
+    }
+}
+
+/**
+ * 改变资源列表分页页码Action
+ * @returns {{type: *, payload: *}}
+ */
+export function changeResourcesListPaginationCurrentAction(payload) {
+    return {
+        type: appActionsType["CHANGE_RESOURCES_LIST_PAGINATION_CURRENT"],
         payload
     }
 }
