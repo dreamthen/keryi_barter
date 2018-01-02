@@ -24,6 +24,8 @@ import {
     getResourcesListByPaginationAction,
     //改变资源列表分页页码Action
     changeResourcesListPaginationCurrentAction,
+    //获取资源列表滚动条初始距离顶部高度
+    getResourcesListPaginationBeforeOsTopAction,
     //获取资源详情
     getResourcesListViewDetails,
     //插入资源详情评论
@@ -80,6 +82,8 @@ class BarterView extends React.Component {
         commentCurrent: PropTypes.number,
         //评论列表评论条数
         commentTotal: PropTypes.number,
+        //滚动条初始距离顶部高度
+        beforeOsTop: PropTypes.number,
         //资源ID
         viewDetailId: PropTypes.number,
         //资源发起人ID
@@ -151,22 +155,27 @@ class BarterView extends React.Component {
     scrollGetResourceList(docTop) {
         const {
             //改变资源列表分页页码
-            changeResourcesListPaginationCurrentHandler
+            changeResourcesListPaginationCurrentHandler,
+            //dispatch获取资源列表滚动条初始距离顶部高度
+            getResourcesListPaginationBeforeOsTopHandler,
+            //滚动条初始距离顶部高度
+            beforeOsTop,
+            //资源数据列表下拉分页防并发变量
+            currentAsync
         } = this.props;
         return new Promise(function promise(resolve, reject) {
-            const {
-                //资源数据列表下拉分页防并发变量
-                currentAsync,
-            } = this.props;
             //滚动条距离顶部高度
-            let osTop = document.documentElement.scrollTop || document.body.scrollTop,
+            let afterOsTop = document.documentElement.scrollTop || document.body.scrollTop,
                 //resourceListContainer元素高度
                 docHeight = this.refs["resourceListContainer"].clientHeight,
                 //屏幕高度
                 screenHeight = window.innerHeight,
                 //整个文档高度
-                docTotalHeight = docHeight + docTop;
-            if (((docTotalHeight - screenHeight - osTop) / docTotalHeight <= 0.05) && currentAsync) {
+                docTotalHeight = docHeight + docTop,
+                //滚动条滚动之后的高度距离上一次滚动条所在位置高度之差
+                betweenOsTop = afterOsTop - beforeOsTop;
+            getResourcesListPaginationBeforeOsTopHandler.bind(this)(afterOsTop);
+            if (((docTotalHeight - screenHeight - afterOsTop) / docTotalHeight <= 0.05) && currentAsync && betweenOsTop > 0) {
                 changeResourcesListPaginationCurrentHandler.bind(this)(paginationPlus);
                 resolve();
             }
@@ -181,15 +190,20 @@ class BarterView extends React.Component {
             //获取资源数据列表
             dispatchResourceList,
             //分页获取资源数据列表
-            dispatchResourceListByPagination
+            dispatchResourceListByPagination,
+            //dispatch获取资源列表滚动条初始距离顶部高度
+            getResourcesListPaginationBeforeOsTopHandler
         } = this.props;
         const {
             //下拉滚动条进行分页获取资源数据列表
             scrollGetResourceList
         } = this;
         //resourceListContainer元素距离顶部高度
-        let docTop = this.refs["resourceListContainer"].getBoundingClientRect().top;
+        let docTop = this.refs["resourceListContainer"].getBoundingClientRect().top,
+            //获取资源列表滚动条初始距离顶部高度
+            beforeOsTop = document.documentElement.scrollTop || document.body.scrollTop;
         dispatchResourceList.bind(this)();
+        getResourcesListPaginationBeforeOsTopHandler.bind(this)(beforeOsTop);
         window.onscroll = function scroll() {
             scrollGetResourceList.bind(this)(docTop).then(function resolve() {
                 dispatchResourceListByPagination.bind(this)();
@@ -923,6 +937,12 @@ function mapDispatchToProps(dispatch, ownProps) {
          */
         changeResourcesListPaginationCurrentHandler(command) {
             dispatch(changeResourcesListPaginationCurrentAction(command));
+        },
+        /**
+         * dispatch获取资源列表滚动条初始距离顶部高度
+         */
+        getResourcesListPaginationBeforeOsTopHandler(beforeOsTop) {
+            dispatch(getResourcesListPaginationBeforeOsTopAction(beforeOsTop));
         },
         /**
          * 控制Modal组件对话框隐藏并消失

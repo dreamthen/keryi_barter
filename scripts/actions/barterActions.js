@@ -286,3 +286,15 @@ export function changeResourcesListPaginationCurrentAction(payload) {
         payload
     }
 }
+
+/**
+ * 获取资源列表滚动条初始距离顶部高度Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function getResourcesListPaginationBeforeOsTopAction(payload) {
+    return {
+        type: appActionsType["GET_RESOURCES_LIST_PAGINATION_BEFORE_OS_TOP"],
+        payload
+    }
+}

@@ -25,6 +25,8 @@ const defaultState = {
     commentCurrent: 1,
     //评论列表评论条数
     commentTotal: 0,
+    //滚动条初始距离顶部高度
+    beforeOsTop: 0,
     //资源ID
     viewDetailId: 0,
     //资源发起人ID
@@ -66,10 +68,16 @@ export function barterReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 list: newState
             });
+        //改变资源列表分页页码
         case appActionsType["GET_RESOURCE_LIST_BY_PAGINATION"]:
             return insteadState.insteadObjState(state, {
                 list: state["list"].concat(newState),
                 currentAsync: true
+            });
+        //获取资源列表滚动条初始距离顶部高度
+        case appActionsType["GET_RESOURCES_LIST_PAGINATION_BEFORE_OS_TOP"]:
+            return insteadState.insteadObjState(state, {
+                beforeOsTop: newState
             });
         //改变资源列表分页页码
         case appActionsType["CHANGE_RESOURCES_LIST_PAGINATION_CURRENT"]:
