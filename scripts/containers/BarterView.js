@@ -899,7 +899,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 viewBarterVisible: true
             });
-            //取消冒泡
+            // 取消冒泡
             e.nativeEvent.stopImmediatePropagation();
         },
         /**
