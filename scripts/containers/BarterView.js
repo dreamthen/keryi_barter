@@ -234,7 +234,8 @@ class BarterView extends React.Component {
                 className="keryi_barter_head_portrait"
             >
                 <HeadPortrait
-                    headPortrait={api.GET_PERSONAL_AVATAR + "/" + keryiCard["userId"] + "/avatar"}
+                    headPortrait={`${api.GET_PERSONAL_AVATAR}/${keryiCard["userId"]}/avatar`}
+                    style={{border: "1px solid transparent"}}
                 />
             </figure>
         )
@@ -364,7 +365,7 @@ class BarterView extends React.Component {
     renderModalHeader() {
         const {
             //资源详情用户头像
-            viewDetailHeadPortrait,
+            viewDetailUserId,
             //资源详情用户名
             viewDetailUserName,
             //资源详情标题
@@ -401,7 +402,8 @@ class BarterView extends React.Component {
                     className="keryi_barter_view_details_head_portrait"
                 >
                     <HeadPortrait
-                        headPortrait={viewDetailHeadPortrait ? viewDetailHeadPortrait : "/images/keryiBarter_v.png"}
+                        headPortrait={`${api.GET_PERSONAL_AVATAR}/${viewDetailUserId}/avatar`}
+                        style={{border: "1px solid transparent"}}
                     />
                 </figure>
                 <dfn className="keryi_barter_view_details_description">

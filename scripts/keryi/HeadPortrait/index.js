@@ -21,7 +21,9 @@ class HeadPortrait extends React.Component {
         //HeadPortrait组件是否有白色边框
         borderJudgement: PropTypes.bool,
         //HeadPortrait组件头像className,外部传入样式表
-        className: PropTypes.string
+        className: PropTypes.string,
+        //HeadPortrait组件头像style,外部传入内联样式
+        style: PropTypes.object
     };
 
     constructor(props) {
@@ -54,7 +56,12 @@ class HeadPortrait extends React.Component {
     }
 
     render() {
-        const {headPortrait} = this.props;
+        const {
+            //HeadPortrait组件头像style,外部传入内联样式
+            style,
+            //HeadPortrait组件头像地址
+            headPortrait
+        } = this.props;
         const {
             //根据外部传入的props className来设置HeadPortrait组件头像className样式表
             outSideClassToClass,
@@ -64,7 +71,7 @@ class HeadPortrait extends React.Component {
         return (
             <i
                 className={outSideClassToClass.bind(this)() + borderJudgementToClass.bind(this)()}
-                style={{background: "url(" + headPortrait + ") no-repeat center center / cover border-box content-box"}}>
+                style={Object.assign({}, {background: "url(" + headPortrait + ") no-repeat center center / cover border-box content-box"}, style)}>
 
             </i>
         )
