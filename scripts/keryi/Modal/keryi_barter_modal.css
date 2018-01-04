@@ -77,6 +77,10 @@
     z-index: 9900;
 }
 
+.keryi_barter_modalContainer > .keryi_barter_modal_main {
+    min-height: 160px;
+}
+
 .keryi_barter_modalContainer > .keryi_barter_modal_aside {
     min-height: 420px;
     max-height: 600px;
