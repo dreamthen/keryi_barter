@@ -46,20 +46,23 @@ export function getResourcesList(pageNum) {
  */
 export function getResourcesListViewDetails(resourceId) {
     return function dispatcher(dispatch) {
-        keryiAxiosConfig.axiosRequest(
-            api.GET_RESOURCE_LIST_VIEW_DETAIL + "/" + resourceId,
-            "get",
-            {},
-            function done(response) {
-                //服务器响应body主体对象
-                let body = response;
-                dispatch(getUserHeadPortraitViewDetail(body));
-                dispatch(getResourcesListViewDetailsAction(body));
-            }.bind(this),
-            function error() {
+        return new Promise(function promise(resolve, reject) {
+            keryiAxiosConfig.axiosRequest(
+                api.GET_RESOURCE_LIST_VIEW_DETAIL + "/" + resourceId,
+                "get",
+                {},
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response;
+                    dispatch(getUserHeadPortraitViewDetail(body));
+                    dispatch(getResourcesListViewDetailsAction(body));
+                    resolve();
+                }.bind(this),
+                function error() {
 
-            }.bind(this)
-        );
+                }.bind(this)
+            );
+        }.bind(this));
     }.bind(this)
 }
 

@@ -298,6 +298,34 @@
     align-items: center;
 }
 
+.keryi_barter_modal_view_details_container i.keryiBarter-comment,
+.keryi_barter_modal_view_details_container i.keryiBarter-moreInformation {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    font-size: 16px;
+    color: #63A8F0;
+    cursor: pointer;
+}
+
+.keryi_barter_modal_view_details_container i.keryiBarter-moreInformation {
+    font-size: 18px;
+}
+
+.keryi_barter_modal_view_details_container i.keryiBarter-comment:after,
+.keryi_barter_modal_view_details_container i.keryiBarter-moreInformation:after {
+    content: '评论';
+    font-size: 14px;
+    position: relative;
+    bottom: 1px;
+    left: 4px;
+}
+
+.keryi_barter_modal_view_details_container i.keryiBarter-moreInformation:after {
+    content: '资源详情';
+    bottom: 2px;
+}
+
 .keryi_barter_view_details_head > .keryi_barter_view_details_head_portrait {
     position: relative;
     width: 64px;
@@ -306,34 +334,6 @@
 
 .keryi_barter_view_details_head > .keryi_barter_view_details_description {
     margin-top: 8px;
-}
-
-.keryi_barter_view_details_head > i.keryiBarter-comment,
-.keryi_barter_view_details_head > i.keryiBarter-moreInformation {
-    position: absolute;
-    top: -28px;
-    left: 15px;
-    font-size: 16px;
-    color: #63A8F0;
-    cursor: pointer;
-}
-
-.keryi_barter_view_details_head > i.keryiBarter-moreInformation {
-    font-size: 18px;
-}
-
-.keryi_barter_view_details_head > i.keryiBarter-comment:after,
-.keryi_barter_view_details_head > i.keryiBarter-moreInformation:after {
-    content: '评论';
-    font-size: 14px;
-    position: relative;
-    bottom: 1px;
-    left: 4px;
-}
-
-.keryi_barter_view_details_head > i.keryiBarter-moreInformation:after {
-    content: '资源详情';
-    bottom: 2px;
 }
 
 .keryi_barter_view_details_description > .keryi_barter_view_details_title {

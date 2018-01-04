@@ -397,7 +397,7 @@ class PersonalView extends React.Component {
                     </section>
                 }
                 <HeadPortrait
-                    headPortrait={avatar ? api.GET_PERSONAL_AVATAR + "/" + userId + "/avatar" : "/images/keryiBarter_v.png"}
+                    headPortrait={userId ? api.GET_PERSONAL_AVATAR + "/" + userId + "/avatar" : "/images/keryiBarter_v.png"}
                     borderJudgement={true}
                 />
             </figure>
