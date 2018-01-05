@@ -63,6 +63,10 @@
     background-color: rgb(244, 244, 244);
 }
 
+.keryi_barter_modalContainer .keryi_barter_modal_view_details {
+    transition: all .5s ease-in-out 0s;
+}
+
 .keryi_barter_modal_view_details_container .keryi_barter_modal_view_details {
     width: 100%;
     height: 100%;
