@@ -12,7 +12,9 @@ import {
 } from "../configs/getElementPosition";
 import {
     //获取资源列表
-    getResourcesList
+    getResourcesList,
+    //获取资源列表Action
+    getResourcesListAction
 } from "./barterActions";
 
 /**
@@ -287,7 +289,12 @@ export function publishResource(userId, title, intro, price_worth, imgUrls, tags
                 //重置对话框状态
                 dispatch(resetModalStatus());
                 //获取资源列表
-                dispatch(getResourcesList(pageNum));
+                dispatch(getResourcesList(pageNum)).then(function resolve(body) {
+                    //获取资源列Action
+                    dispatch(getResourcesListAction(body));
+                }, function reject() {
+
+                });
             }.bind(this),
             function error(response) {
 

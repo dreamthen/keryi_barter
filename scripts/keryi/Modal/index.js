@@ -404,7 +404,7 @@ class Modal extends React.Component {
         return (
             <section className="keryi_barter_modal_asideAvatar">
                 <HeadPortrait
-                    headPortrait={keryiModalDataSource["user"]["avatar"] ? keryiModalDataSource["user"]["avatar"] : "/images/keryiBarter_v.png"}
+                    headPortrait={keryiModalDataSource["personalAvatar"] ? keryiModalDataSource["personalAvatar"] : "/images/keryiBarter_v.png"}
                 />
             </section>
         )

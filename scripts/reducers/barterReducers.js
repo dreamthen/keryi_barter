@@ -131,6 +131,7 @@ export function barterReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 comment: newState
             });
+        //获取资源详情评论列表
         case appActionsType["GET_RESOURCES_LIST_VIEW_DETAILS_COMMENT_LIST"]:
             return insteadState.insteadObjState(state, newState);
     }

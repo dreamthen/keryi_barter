@@ -12,6 +12,8 @@ import Success from "../prompt/successPrompt";
 const PAGE_SIZE = 10;
 //获取个人页资源详情资源交换列表的每页页码数量
 const ITEM_PAGE_SIZE = 4;
+//获取评论列表的每页页码数量
+const COMMENT_PAGE_SIZE = 10;
 
 /**
  * 获取个人页资源列表
@@ -21,23 +23,25 @@ const ITEM_PAGE_SIZE = 4;
  */
 export function getPersonalResourcesList(pageNum, userId) {
     return function dispatcher(dispatch) {
-        keryiAxiosConfig.axiosRequest(
-            api.GET_RESOURCE_LIST,
-            "get",
-            {
-                pageNum,
-                pageSize: PAGE_SIZE,
-                userId
-            },
-            function done(response) {
-                //服务器响应body主体对象
-                let body = response;
-                dispatch(getPersonalResourcesListAction(body));
-            }.bind(this),
-            function error(response) {
+        return new Promise(function promise(resolve, reject) {
+            keryiAxiosConfig.axiosRequest(
+                api.GET_RESOURCE_LIST,
+                "get",
+                {
+                    pageNum,
+                    pageSize: PAGE_SIZE,
+                    userId
+                },
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response;
+                    resolve(body);
+                }.bind(this),
+                function error(response) {
 
-            }.bind(this)
-        );
+                }.bind(this)
+            );
+        });
     }.bind(this)
 }
 
@@ -47,21 +51,21 @@ export function getPersonalResourcesList(pageNum, userId) {
  */
 export function getPersonalResourcesListViewDetails(resourceId) {
     return function dispatcher(dispatch) {
-        keryiAxiosConfig.axiosRequest(
-            api.GET_RESOURCE_LIST_VIEW_DETAIL + "/" + resourceId,
-            "get",
-            {},
-            function done(response) {
-                //服务器响应body主体对象
-                let body = response;
-                dispatch(rememberPersonalResourcesListViewDetails(body));
-                dispatch(getPersonalUserHeadPortraitViewDetail(body));
-                dispatch(getPersonalResourcesListViewDetailsAction(body));
-            }.bind(this),
-            function error(response) {
+        return new Promise(function promise(resolve, reject) {
+            keryiAxiosConfig.axiosRequest(
+                api.GET_RESOURCE_LIST_VIEW_DETAIL + "/" + resourceId,
+                "get",
+                {},
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response;
+                    resolve(body);
+                }.bind(this),
+                function error(response) {
 
-            }.bind(this)
-        );
+                }.bind(this)
+            );
+        });
     }.bind(this)
 }
 
@@ -70,33 +74,30 @@ export function getPersonalResourcesListViewDetails(resourceId) {
  * @param userId
  * @param resourceId
  * @param itemCurrent
- * @param remember
- * @param matched
- * @param exchangeStatus
  * @returns {function(this:getPersonalResourcesListViewDetailsItemList)}
  */
-export function getPersonalResourcesListViewDetailsItemList(itemCurrent, userId, resourceId, remember, matched, exchangeStatus) {
+export function getPersonalResourcesListViewDetailsItemList(itemCurrent, userId, resourceId) {
     return function dispatcher(dispatch) {
-        keryiAxiosConfig.axiosRequest(
-            api.GET_EXCHANGE_LIST,
-            "GET",
-            {
-                pageNum: itemCurrent,
-                pageSize: ITEM_PAGE_SIZE,
-                initiativeUserId: userId,
-                initiativeResourceId: resourceId
-            },
-            function done(response) {
-                //服务器响应body主体对象
-                let body = response;
-                dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(body, matched, exchangeStatus));
-                remember && dispatch(rememberPersonalResourcesListViewDetailsItemListAction(body));
-                matched && dispatch(rememberPersonalResourcesListViewDetailsMatchedItemListAction(body));
-            }.bind(this),
-            function error(response) {
+        return new Promise(function promise(resolve, reject) {
+            keryiAxiosConfig.axiosRequest(
+                api.GET_EXCHANGE_LIST,
+                "GET",
+                {
+                    pageNum: itemCurrent,
+                    pageSize: ITEM_PAGE_SIZE,
+                    initiativeUserId: userId,
+                    initiativeResourceId: resourceId
+                },
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response;
+                    resolve(body);
+                }.bind(this),
+                function error(response) {
 
-            }.bind(this)
-        )
+                }.bind(this)
+            )
+        });
     }.bind(this)
 }
 
@@ -108,33 +109,30 @@ export function getPersonalResourcesListViewDetailsItemList(itemCurrent, userId,
  * @param passiveUserId
  * @param viewDetailKeryiCard
  * @param itemCurrent
- * @param exchangeStatus
  * @returns {function(this:havePersonalResourcesExchange)}
  */
-export function havePersonalResourcesExchange({initiativeResourceId, passiveResourceId, initiativeUserId, passiveUserId, itemCurrent, exchangeStatus}) {
+export function havePersonalResourcesExchange({initiativeResourceId, passiveResourceId, initiativeUserId, passiveUserId, itemCurrent}) {
     return function dispatcher(dispatch) {
-        keryiAxiosConfig.axiosRequest(
-            api.HAVE_EXCHANGE,
-            "post",
-            {
-                initiativeResourceId,
-                passiveResourceId,
-                initiativeUserId,
-                passiveUserId
-            },
-            function done(response) {
-                //服务器响应body主体对象
-                let body = response;
-                dispatch(closePersonalViewDetailsFooter());
-                dispatch(getPersonalResourcesListViewDetails.bind(this)(initiativeResourceId));
-                dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, initiativeUserId, initiativeResourceId, true, false, exchangeStatus));
-                dispatch(openPersonalViewDetailsItemClose());
-                dispatch(openPersonalViewDetailsAside());
-            }.bind(this),
-            function error(response) {
+        return new Promise(function promise(resolve, reject) {
+            keryiAxiosConfig.axiosRequest(
+                api.HAVE_EXCHANGE,
+                "post",
+                {
+                    initiativeResourceId,
+                    passiveResourceId,
+                    initiativeUserId,
+                    passiveUserId
+                },
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response;
+                    resolve();
+                }.bind(this),
+                function error(response) {
 
-            }.bind(this)
-        )
+                }.bind(this)
+            );
+        });
     }.bind(this)
 }
 
@@ -144,24 +142,25 @@ export function havePersonalResourcesExchange({initiativeResourceId, passiveReso
  * @param userId
  * @param id
  * @param itemCurrent
- * @param exchangeStatus
  * @returns {function(this:deletePersonalResourcesExchange)}
  */
-export function deletePersonalResourcesExchange(exchangeId, userId, id, itemCurrent, exchangeStatus) {
+export function deletePersonalResourcesExchange(exchangeId, userId, id, itemCurrent) {
     return function dispatcher(dispatch) {
-        keryiAxiosConfig.axiosRequest(
-            api.DELETE_EXCHANGE_LIST + "/" + exchangeId,
-            "delete",
-            {},
-            function done(response) {
-                //服务器响应body主体对象
-                let body = response;
-                dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id, true, false, exchangeStatus));
-            }.bind(this),
-            function error(response) {
+        return new Promise(function promise(resolve, reject){
+            keryiAxiosConfig.axiosRequest(
+                api.DELETE_EXCHANGE_LIST + "/" + exchangeId,
+                "delete",
+                {},
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response;
+                    resolve();
+                }.bind(this),
+                function error(response) {
 
-            }.bind(this)
-        );
+                }.bind(this)
+            );
+        });
     }.bind(this)
 }
 
@@ -176,22 +175,24 @@ export function deletePersonalResourcesExchange(exchangeId, userId, id, itemCurr
  */
 export function selectPersonalResourceExchange(exchangeId, exchangeToStatus, userId, id, itemCurrent) {
     return function dispatcher(dispatch) {
-        keryiAxiosConfig.axiosRequest(
-            api.CHANGE_EXCHANGE_LIST_STATUS + "/" + exchangeId + "/status",
-            "put",
-            {
-                id: exchangeId,
-                status: exchangeToStatus
-            },
-            function done(response) {
-                //服务器响应body主体对象
-                let body = response;
-                dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id, true, false, exchangeToStatus));
-            }.bind(this),
-            function error(response) {
+        return new Promise(function promise(resolve, reject){
+            keryiAxiosConfig.axiosRequest(
+                api.CHANGE_EXCHANGE_LIST_STATUS + "/" + exchangeId + "/status",
+                "put",
+                {
+                    id: exchangeId,
+                    status: exchangeToStatus
+                },
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response;
+                    resolve();
+                }.bind(this),
+                function error(response) {
 
-            }.bind(this)
-        );
+                }.bind(this)
+            );
+        });
     }.bind(this);
 }
 
@@ -202,25 +203,21 @@ export function selectPersonalResourceExchange(exchangeId, exchangeToStatus, use
  */
 export function getPersonalInformation(userId) {
     return function dispatcher(dispatch) {
-        keryiAxiosConfig.axiosRequest(
-            api.GET_PERSONAL_INFORMATION + "/" + userId,
-            "get",
-            {},
-            function done(response) {
-                //服务器响应body主体对象
-                let body = response;
-                //更新并保存个人信息
-                dispatch(saveChangePersonalInformation({
-                    username: body["username"],
-                    email: body["email"],
-                    phone: body["phone"],
-                    motto: body["motto"]
-                }));
-            }.bind(this),
-            function error(response) {
+        return new Promise(function promise(resolve, reject){
+            keryiAxiosConfig.axiosRequest(
+                api.GET_PERSONAL_INFORMATION + "/" + userId,
+                "get",
+                {},
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response;
+                    resolve(body);
+                }.bind(this),
+                function error(response) {
 
-            }.bind(this)
-        );
+                }.bind(this)
+            );
+        });
     }.bind(this)
 }
 
@@ -231,45 +228,99 @@ export function getPersonalInformation(userId) {
  * @param email
  * @param phone
  * @param motto
- * @param current
  * @returns {function(this:saveUpdatePersonalInformation)}
  */
-export function saveUpdatePersonalInformation(userId, username, email, phone, motto, current) {
+export function saveUpdatePersonalInformation(userId, username, email, phone, motto) {
     return function dispatcher(dispatch) {
-        keryiAxiosConfig.axiosRequest(
-            api.UPDATE_PERSONAL_INFORMATION + "/" + userId,
-            "put",
-            {
-                id: userId,
-                username,
-                email,
-                phone,
-                motto
-            },
-            function done(response) {
-                //服务器响应body主体对象
-                let body = response;
-                //控制Modal组件对话框隐藏并消失
-                this.setState({
-                    viewPersonalBarterVisible: false
-                });
-                //更新并保存个人信息
-                dispatch(saveChangePersonalInformation({
+        return new Promise(function promise(resolve, reject){
+            keryiAxiosConfig.axiosRequest(
+                api.UPDATE_PERSONAL_INFORMATION + "/" + userId,
+                "put",
+                {
+                    id: userId,
                     username,
                     email,
                     phone,
                     motto
-                }));
-                //改变个人信息编辑状态,使得其不可编辑
-                dispatch(closeChangePersonalInformation());
-                //获取个人页资源列表
-                dispatch(getPersonalResourcesList.bind(this)(current, userId));
-            }.bind(this),
-            function error(response) {
+                },
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response;
+                    resolve();
+                }.bind(this),
+                function error(response) {
 
-            }.bind(this)
-        )
+                }.bind(this)
+            )
+        });
     }.bind(this)
+}
+
+/**
+ * 获取个人页资源详情评论列表
+ * @param resourceId
+ * @param commentFrom
+ * @param commentTo
+ * @param pageNum
+ */
+export function getPersonalResourcesListViewDetailsCommentList(resourceId, commentFrom, commentTo, pageNum) {
+    return function dispatcher(dispatch) {
+        return new Promise(function promise(resolve, reject) {
+            keryiAxiosConfig.axiosRequest(
+                api.GET_RESOURCE_LIST_VIEW_DETAIL_COMMENT_LIST,
+                "get",
+                {
+                    resourceId,
+                    commentFrom,
+                    commentTo,
+                    pageNum,
+                    pageSize: COMMENT_PAGE_SIZE
+                },
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response,
+                        list = body.list,
+                        commentTotal = body.total;
+                    resolve({list, commentTotal});
+                }.bind(this),
+                function error() {
+
+                }.bind(this)
+            );
+        });
+    }.bind(this)
+}
+
+/**
+ * 插入个人资源详情评论
+ * @param resourceId
+ * @param commentFrom
+ * @param commentTo
+ * @param comment
+ */
+export function doPersonalResourcesListViewDetailsComment(resourceId, commentFrom, commentTo, comment) {
+    return function dispatcher(dispatch) {
+        return new Promise(function promise(resolve, reject) {
+            keryiAxiosConfig.axiosRequest(
+                api.DO_RESOURCE_LIST_VIEW_DETAIL_COMMENT,
+                "post",
+                {
+                    resourceId,
+                    commentFrom,
+                    commentTo,
+                    comment
+                },
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response;
+                    resolve();
+                }.bind(this),
+                function error(response) {
+
+                }.bind(this)
+            );
+        });
+    }.bind(this);
 }
 
 /**
@@ -544,6 +595,30 @@ export function closePersonalViewDetailsItemHover() {
 export function uploadPersonalAvatarAction(payload) {
     return {
         type: appActionsType["UPLOAD_PERSONAL_AVATAR_ACTION"],
+        payload
+    }
+}
+
+/**
+ * 改变"评论"富文本编辑器编辑框内容Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function changePersonalResourcesListViewDetailsCommentAction(payload) {
+    return {
+        type: appActionsType["CHANGE_PERSONAL_RESOURCES_LIST_VIEW_DETAILS_COMMENT"],
+        payload
+    }
+}
+
+/**
+ * 获取个人资源详情评论列表Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function getPersonalResourcesListViewDetailsCommentListAction(payload) {
+    return {
+        type: appActionsType["GET_PERSONAL_RESOURCES_LIST_VIEW_DETAILS_COMMENT_LIST"],
         payload
     }
 }

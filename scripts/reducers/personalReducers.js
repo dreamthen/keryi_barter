@@ -10,6 +10,8 @@ import appActionsType from "../actions/appActionsType";
 import insteadState from "../configs/insteadState";
 //对个人页资源详情资源交换图片(第一张)以及标题内容列表进行整理,获取到整理后的图片列表
 import {getImageOrContentItemListConfig} from "../configs/getImageOrContentItemListConfig";
+//用于处理多个用户请求头像
+import {optimizeGetPersonalAvatar} from "../configs/optimizeGetPersonalAvatar";
 import {
     //校验字段undefined和null,进行处理
     checkField
@@ -48,12 +50,22 @@ const defaultState = {
     asideAble: false,
     //个人页资源数据列表页码
     current: 1,
+    //评论详情
+    comment: "",
+    //评论列表
+    commentList: [],
+    //评论列表页码
+    commentCurrent: 1,
+    //评论列表评论条数
+    commentTotal: 0,
     //个人信息部分距离父级元素顶部的高度
     top: 0,
     //个人页资源详情对话框是否显示footer底部区域
     viewDetailFooter: false,
     //个人页资源详情对象
     viewDetailKeryiCard: {},
+    //资源ID
+    viewDetailId: 0,
     //个人页资源详情用户头像
     viewDetailHeadPortrait: "",
     //个人页资源详情用户名
@@ -110,7 +122,10 @@ export function personalReducers(state = defaultState, actions) {
             });
         //获取个人页资源详情
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_VIEW_DETAIL"]:
+            //用于处理多个用户请求头像
+            optimizeGetPersonalAvatar(newState["matchedResources"]);
             let viewDetail = {
+                viewDetailId: newState["id"],
                 viewDetailUserName: newState["user"]["username"],
                 viewDetailImageList: newState["imgUrls"],
                 viewDetailTitle: newState["title"],
@@ -253,6 +268,14 @@ export function personalReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 avatar: newState
             });
+        //改变"评论"富文本编辑器编辑框内容
+        case appActionsType["CHANGE_PERSONAL_RESOURCES_LIST_VIEW_DETAILS_COMMENT"]:
+            return insteadState.insteadObjState(state, {
+                comment: newState
+            });
+        //获取个人资源详情评论列表
+        case appActionsType["GET_PERSONAL_RESOURCES_LIST_VIEW_DETAILS_COMMENT_LIST"]:
+            return insteadState.insteadObjState(state, newState);
     }
     return state;
 }

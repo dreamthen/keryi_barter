@@ -7,6 +7,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {
+    Area,
     Button,
     FigureCarousel,
     HeadPortrait,
@@ -14,8 +15,11 @@ import {
     ItemCarousel,
     KeryiCard,
     Modal,
+    Pagination,
     Tag
 } from "../keryi";
+import moment from "moment";
+//接口API对象
 import api from "../configs/api";
 import Upload from "rc-upload";
 //Upload组件上传文件配置
@@ -32,6 +36,8 @@ import exchangeStatusConfig from "../configs/exchangeStatusConfig";
 import exchangeStatusSelectConfig from "../configs/exchangeStatusSelectConfig";
 //获取匹配到的资源数据列表出现异常时,前端呈现默认约定数据
 import keryiModalDefaultConfig from "../configs/keryiModalDefaultConfig";
+//校验字段undefined和null,进行处理
+import {checkField} from "../configs/checkField";
 import {
     //改变个人信息编辑状态,使得其可编辑
     changePersonalInformation,
@@ -43,8 +49,16 @@ import {
     closeChangePersonalInformation,
     //获取个人页资源列表
     getPersonalResourcesList,
+    //获取个人页资源列表Action
+    getPersonalResourcesListAction,
     //获取个人页资源详情
     getPersonalResourcesListViewDetails,
+    //保存个人页资源详情Action
+    rememberPersonalResourcesListViewDetails,
+    //保存个人页资源详情资源交换列表Action
+    rememberPersonalResourcesListViewDetailsItemListAction,
+    //保存个人页资源详情匹配资源交换列表Action
+    rememberPersonalResourcesListViewDetailsMatchedItemListAction,
     //个人信息页面发起资源交换
     havePersonalResourcesExchange,
     //获取个人页匹配列表资源详情Action
@@ -88,7 +102,17 @@ import {
     //使客户的头像和背景不可编辑Action
     closePersonalEditAppearanceAction,
     //修改个人页头像成功Action
-    uploadPersonalAvatarAction
+    uploadPersonalAvatarAction,
+    //更新并保存个人信息Action
+    saveChangePersonalInformation,
+    //获取个人页资源详情评论列表
+    getPersonalResourcesListViewDetailsCommentList,
+    //改变"评论"富文本编辑器编辑框内容Action
+    changePersonalResourcesListViewDetailsCommentAction,
+    //插入个人资源详情评论
+    doPersonalResourcesListViewDetailsComment,
+    //获取个人资源详情评论列表Action
+    getPersonalResourcesListViewDetailsCommentListAction
 } from "../actions/personalActions";
 import "../../stylesheets/personal.css";
 import "../../stylesheets/adapateConfig.css";
@@ -105,6 +129,15 @@ const editAppearanceSaveSomeClassName = "keryi_barter_personal_save_some";
 const editAppearanceAnimationClassName = "keryi_barter_personal_edit_appearance keryi_barter_personal_edit_appearance_animation";
 //用户编辑自己的头像和背景时保存和取消部分动画渲染className样式表
 const editAppearanceAnimationSaveSomeClassName = "keryi_barter_personal_save_some keryi_barter_personal_save_some_animation";
+//"以物换物"评论区域消失样式表
+const comment = "keryi_barter_personal_view_details_comment";
+//"以物换物"评论区域显示样式表
+const commentAppearClass = "keryi_barter_personal_view_details_comment keryi_barter_personal_view_details_comment_block keryi_barter_personal_view_details_comment_appear";
+//"以物换物"评论区域隐藏样式表
+const commentBlockClass = "keryi_barter_personal_view_details_comment keryi_barter_personal_view_details_comment_block";
+const PAGE_SIZE = 10;
+//设置moment时间地区语言
+moment.locale('zh-cn');
 
 class PersonalView extends React.Component {
     static propTypes = {
@@ -130,6 +163,14 @@ class PersonalView extends React.Component {
         list: PropTypes.array,
         //个人页资源数据列表页码
         current: PropTypes.number,
+        //评论详情
+        comment: PropTypes.string,
+        //评论列表
+        commentList: PropTypes.array,
+        //评论列表页码
+        commentCurrent: PropTypes.number,
+        //评论列表评论条数
+        commentTotal: PropTypes.number,
         //个人页资源详情匹配到的资源列表边栏是否显示
         asideAble: PropTypes.bool,
         //个人页资源详情资源交换列表页码
@@ -142,6 +183,8 @@ class PersonalView extends React.Component {
         viewDetailFooter: PropTypes.bool,
         //个人页资源详情对象
         viewDetailKeryiCard: PropTypes.object,
+        //资源ID
+        viewDetailId: PropTypes.number,
         //个人页资源详情用户头像
         viewDetailHeadPortrait: PropTypes.string,
         //个人页资源详情用户名
@@ -179,6 +222,8 @@ class PersonalView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            //用户登录的id
+            userId: 0,
             //判断个人信息资源详情是否是匹配资源
             isMatched: false,
             //获取到个人信息容器距离顶部的绝对位置
@@ -192,7 +237,15 @@ class PersonalView extends React.Component {
             //判断个人信息编辑动画是否可渲染
             personalInformationAnimationDisabled: false,
             //控制Modal组件对话框显示、隐藏或者消失
-            viewPersonalBarterVisible: false
+            viewPersonalBarterVisible: false,
+            //控制"以物换物"资源详情评论区域显示或者隐藏
+            commentAppear: false,
+            //控制"以物换物"资源详情评论区域隐藏或者消失
+            commentBlock: false,
+            //控制"以物换物"资源详情评论区域或者资源详情区域的icon标识是否存在
+            hasCommentIcon: false,
+            //控制"以物换物"资源详情评论区域或者资源详情区域的icon标识的显示和消失
+            iconCommentOrInformation: false
         };
     }
 
@@ -289,8 +342,15 @@ class PersonalView extends React.Component {
      * @param props
      */
     mapPropsToState(props = this.props) {
+        let userLoginInformation;
+        if (localStorage) {
+            userLoginInformation = JSON.parse(localStorage.getItem("userLoginInformation"));
+        } else {
+            return false;
+        }
         this.setState({
-            ...props
+            ...props,
+            userId: checkField(userLoginInformation, "id")
         });
     }
 
@@ -482,6 +542,101 @@ class PersonalView extends React.Component {
                 />
             </section>
         )
+    }
+
+    /**
+     * "以物换物"资源详情到评论区域控制器
+     */
+    * changeInformationToCommentHandler() {
+        const {
+            //资源ID
+            viewDetailId,
+            //获取资源详情评论列表脚手架
+            getPersonalResourcesListViewDetailsCommentListHandler
+        } = this.props;
+        const {
+            //用户登录的id
+            userId
+        } = this.state;
+        //评论列表页码设置为1
+        const commentCurrent = 1;
+        yield this.setState({
+            iconCommentOrInformation: true,
+            commentBlock: true
+        });
+        yield getPersonalResourcesListViewDetailsCommentListHandler.bind(this)(viewDetailId, userId, userId, commentCurrent);
+        //FIXME 这里设置一个时间控制器,在设置"以物换物"评论区域由消失到隐藏之后，延迟100ms设置"以物换物"评论区域由隐藏到显示
+        yield setTimeout(function timer() {
+            this.setState({
+                commentAppear: true
+            });
+        }.bind(this), 100);
+    }
+
+    /**
+     *  控制"以物换物"资源详情到评论区域
+     */
+    changeInformationToComment(event) {
+        const {
+            //"以物换物"资源详情到评论区域控制器
+            changeInformationToCommentHandler
+        } = this;
+        let informationToCommentHandler = changeInformationToCommentHandler.bind(this)(),
+            informationToCommentHandlerDone = informationToCommentHandler.next().done;
+        while (!informationToCommentHandlerDone) {
+            informationToCommentHandlerDone = informationToCommentHandler.next().done;
+        }
+        //取消冒泡事件
+        event.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
+     * 控制"以物换物"评论区域到资源详情
+     */
+    changeCommentToInformation(event) {
+        this.setState({
+            iconCommentOrInformation: false,
+            commentAppear: false
+        }, () => {
+            //FIXME 这里设置一个时间控制器,在设置"以物换物"评论区域执行由显示到隐藏的动画之后，延迟200ms设置"以物换物"评论区域由隐藏到消失
+            setTimeout(function timer() {
+                this.setState({
+                    commentBlock: false
+                });
+            }.bind(this), 200);
+        });
+        //取消冒泡事件
+        event.nativeEvent.stopImmediatePropagation();
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面查看控制"以物换物"资源详情评论区域或者资源详情区域的icon标识的显示和消失
+     * @returns {*}
+     */
+    renderModalIconOrInformationComment() {
+        const {
+            //控制"以物换物"资源详情评论区域或者资源详情区域的icon标识的显示和消失
+            iconCommentOrInformation
+        } = this.state;
+        const {
+            //控制"以物换物"资源详情到评论区域
+            changeInformationToComment,
+            //控制"以物换物"评论区域到资源详情
+            changeCommentToInformation
+        } = this;
+        return iconCommentOrInformation ? <i
+            className="iconfontKeryiBarter keryiBarter-moreInformation"
+            title="资源详情"
+            onClick={changeCommentToInformation.bind(this)}
+        >
+
+        </i> : <i
+            className="iconfontKeryiBarter keryiBarter-comment"
+            title="评论"
+            onClick={changeInformationToComment.bind(this)}
+        >
+
+        </i>
     }
 
     /**
@@ -740,11 +895,199 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * 控制keryi_barter主页面查看"以物换物"评论区域显示、隐藏或者消失
+     */
+    modalCommentClassToClass() {
+        const {
+            //控制"以物换物"资源详情评论区域显示或者隐藏
+            commentAppear,
+            //控制"以物换物"资源详情评论区域隐藏或者消失
+            commentBlock
+        } = this.state;
+        return commentAppear ? commentAppearClass : commentBlock ? commentBlockClass : comment;
+    }
+
+    /**
+     * 设置资源详情评论详情HTML文本
+     * @param commentListItemContent
+     * @returns {{__html: *}}
+     */
+    setCommentListItemContentInnerHTML(commentListItemContent) {
+        return {
+            __html: commentListItemContent
+        }
+    }
+
+    /**
+     * keryi_barter主页面查看"以物换物"评论区域评论列表项
+     * @returns [{*}]
+     */
+    renderModalCommentListItem() {
+        const {
+            //评论列表
+            commentList
+        } = this.props;
+        const {
+            //设置资源详情评论详情HTML文本
+            setCommentListItemContentInnerHTML
+        } = this;
+        return commentList.map(function commentListItem(commentItem, commentIndex) {
+            return (
+                <section
+                    key={commentIndex}
+                    className="keryi_barter_personal_view_details_comment_list_itemSection">
+                    <aside className="keryi_barter_personal_view_details_comment_list_itemAvatar">
+                        <HeadPortrait
+                            headPortrait={api.GET_PERSONAL_AVATAR + "/" + commentItem["fromUser"]["id"] + "/avatar"}
+                            borderJudgement={false}
+                        />
+                    </aside>
+                    <article className="keryi_barter_personal_view_details_comment_list_itemContent">
+                        <h5 className="keryi_barter_personal_view_details_comment_list_itemContent_title">
+                            {commentItem["fromUser"]["username"]}
+                        </h5>
+                        <p
+                            dangerouslySetInnerHTML={setCommentListItemContentInnerHTML.bind(this)(commentItem["comment"])}
+                            className="keryi_barter_personal_view_details_comment_list_itemContent_pragraph"
+                        >
+                        </p>
+                        <time className="keryi_barter_personal_view_details_comment_list_itemContent_time">
+                            {moment(commentItem["createDate"]).fromNow()}
+                        </time>
+                    </article>
+                    <hr className="keryi_barter_personal_view_details_comment_list_itemSection_wire"/>
+                </section>
+            )
+        });
+    }
+
+    /**
+     * keryi_barter主页面查看"以物换物"评论区域评论列表
+     * @returns {*}
+     */
+    renderModalCommentList() {
+        const {
+            //查看"以物换物"评论区域评论列表项
+            renderModalCommentListItem
+        } = this;
+        return (
+            <main className="keryi_barter_personal_view_details_comment_list">
+                {renderModalCommentListItem.bind(this)()}
+            </main>
+        );
+    }
+
+    /**
+     * keryi_barter主页面查看"以物换物"评论区域评论为空时的界面
+     * @returns {*}
+     */
+    renderModalCommentNone() {
+        return (
+            <main className="keryi_barter_personal_view_details_comment_none">
+                <section className="keryi_barter_personal_view_details_comment_none_container">
+                    <i className="iconfontKeryiBarter keryiBarter-cry"> </i>
+                    <dfn className="keryi_barter_personal_view_details_comment_none_content">此资源暂无评论</dfn>
+                </section>
+            </main>
+        );
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面查看"以物换物"评论区域
+     * @returns {XML}
+     */
+    renderModalComment() {
+        const {
+            //评论详情
+            comment,
+            //评论列表评论条数
+            commentTotal,
+            //评论列表页码
+            commentCurrent,
+            //评论列表
+            commentList,
+            //改变"评论"富文本编辑器编辑框内容
+            changeCommentHandler,
+            //"评论"富文本编辑器编辑框添加评论
+            doCommentHandler,
+            //点击"评论"系统分页方法
+            loadPageMore
+        } = this.props;
+        const {
+            //控制查看"以物换物"评论区域显示、隐藏或者消失
+            modalCommentClassToClass,
+            //查看"以物换物"评论区域评论列表
+            renderModalCommentList,
+            //查看"以物换物"评论区域评论为空时的界面
+            renderModalCommentNone
+        } = this;
+        return (
+            <main
+                className={modalCommentClassToClass.bind(this)()}
+            >
+                <Area
+                    value={comment}
+                    size="large"
+                    placeholder="请输入您对此资源的评论~"
+                    className="keryi_barter_personal_view_details_comment_area"
+                    comment={true}
+                    onChange={changeCommentHandler.bind(this)}
+                />
+                <section className="keryi_barter_personal_view_details_comment_submit">
+                    <Button
+                        title="评论"
+                        size="default"
+                        type="info"
+                        className="keryi_barter_personal_view_details_comment_submit_button"
+                        onClick={doCommentHandler.bind(this)}
+                    >
+                        评论
+                    </Button>
+                </section>
+                <article className="keryi_barter_personal_view_details_comment_content">
+                    <header className="keryi_barter_personal_view_details_comment_content_header"
+                            data-comment-total={commentTotal}>
+                    </header>
+                    <section className="keryi_barter_personal_view_details_comment_clear">
+
+                    </section>
+                    <Pagination
+                        current={commentCurrent}
+                        className="keryi_barter_personal_view_details_comment_pagination"
+                        onChange={loadPageMore.bind(this)}
+                        pageSize={PAGE_SIZE}
+                        showQuickJumper
+                        showTotal={total => `共 ${total} 条评论`}
+                        total={commentTotal}
+                    />
+                    {
+                        (commentList && commentList.length > 0) ? renderModalCommentList.bind(this)() : renderModalCommentNone.bind(this)()
+                    }
+                </article>
+            </main>
+        );
+    }
+
+    /**
+     * render渲染keryi_barter个人信息页面匹配到的资源列表"以物换物"评论区域
+     * @returns {XML}
+     */
+    renderMatchedModalComment() {
+        return (
+            <main>
+
+            </main>
+        )
+    }
+
+    /**
      * render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框
      * @returns {XML}
      */
     renderPersonalModal() {
         const {
+            //render渲染个人信息页面查看控制"以物换物"资源详情评论区域或者资源详情区域的icon标识的显示和消失
+            renderModalIconOrInformationComment,
             //render渲染个人信息页面查看"以物换物"资源详情对话框头部
             renderModalHeader,
             //render渲染个人信息页面查看"以物换物"资源详情对话框资源统计
@@ -757,12 +1100,18 @@ class PersonalView extends React.Component {
             renderModalTag,
             //render渲染个人信息页面查看"以物换物"资源详情对话框目标资源标签
             renderModalTargetTag,
-            //render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框已交换的资源
-            renderModalItemCarousel
+            //render渲染个人信息页面查看"以物换物"资源详情对话框已交换的资源
+            renderModalItemCarousel,
+            //render渲染个人信息页面查看"以物换物"评论区域
+            renderModalComment,
+            //render渲染个人信息页面匹配到的资源列表"以物换物"评论区域
+            renderMatchedModalComment
         } = this;
         const {
             //控制Modal组件对话框显示、隐藏或者消失
-            viewPersonalBarterVisible
+            viewPersonalBarterVisible,
+            //控制"以物换物"资源详情评论区域或者资源详情区域的icon标识是否存在
+            hasCommentIcon
         } = this.state;
         const {
             //个人页资源详情匹配到的所有的资源列表
@@ -801,20 +1150,26 @@ class PersonalView extends React.Component {
                 onOk={onOkHandler.bind(this)}
                 onClose={closePersonalBarterVisibleHandler.bind(this)}
             >
-                {/*keryi_barter主页面查看"以物换物"资源详情对话框头部*/}
+                {/*keryi_barter个人信息页面查看控制"以物换物"资源详情评论区域或者资源详情区域的icon标识的显示和消失*/}
+                {hasCommentIcon && renderModalIconOrInformationComment.bind(this)()}
+                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框头部*/}
                 {renderModalHeader.bind(this)()}
-                {/*keryi_barter主页面查看"以物换物"资源详情对话框资源统计*/}
+                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框资源统计*/}
                 {renderModalStatistics.bind(this)()}
-                {/*keryi_barter主页面查看"以物换物"资源详情对话框图片轮播器*/}
+                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框图片轮播器*/}
                 {renderModalFigureCarousel.bind(this)()}
-                {/*keryi_barter主页面查看"以物换物"资源详情对话框主体介绍*/}
+                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框主体介绍*/}
                 {renderModalIntroduce.bind(this)()}
-                {/*keryi_barter主页面查看"以物换物"资源详情对话框资源标签*/}
+                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框资源标签*/}
                 {renderModalTag.bind(this)()}
-                {/*keryi_barter主页面查看"以物换物"资源详情对话框目标资源标签*/}
+                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框目标资源标签*/}
                 {renderModalTargetTag.bind(this)()}
                 {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框已交换的资源*/}
                 {renderModalItemCarousel.bind(this)()}
+                {/*keryi_barter个人信息页面查看"以物换物"评论区域*/}
+                {renderModalComment.bind(this)()}
+                {/*keryi_barter个人信息页面匹配到的资源列表"以物换物"评论区域*/}
+                {renderMatchedModalComment.bind(this)()}
             </Modal>
         )
     }
@@ -1177,14 +1532,30 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //个人页资源详情资源交换列表页码
                 itemCurrent
             } = this.props;
-            dispatch(getPersonalResourcesListViewDetails.bind(this)(id));
-            dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id, true, false, exchangeStatus));
-            dispatch(openPersonalViewDetailsItemClose());
-            dispatch(openPersonalViewDetailsAside());
-            dispatch(openPersonalViewDetailsItemHover());
-            this.setState({
-                viewPersonalBarterVisible: true
-            });
+            dispatch(getPersonalResourcesListViewDetails(id)).then(function resolve(body) {
+                document.body.style["overflow"] = "hidden";
+                this.setState({
+                    hasCommentIcon: true
+                });
+                dispatch(rememberPersonalResourcesListViewDetails(body));
+                dispatch(getPersonalUserHeadPortraitViewDetail(body));
+                dispatch(getPersonalResourcesListViewDetailsAction(body));
+            }.bind(this), function reject() {
+
+            }.bind(this));
+            dispatch(getPersonalResourcesListViewDetailsItemList(itemCurrent, userId, id))
+                .then(function resolve(body) {
+                    dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(body, false, exchangeStatus));
+                    dispatch(rememberPersonalResourcesListViewDetailsItemListAction(body));
+                    dispatch(openPersonalViewDetailsItemClose());
+                    dispatch(openPersonalViewDetailsAside());
+                    dispatch(openPersonalViewDetailsItemHover());
+                    this.setState({
+                        viewPersonalBarterVisible: true
+                    });
+                }.bind(this), function reject() {
+
+                }.bind(this));
             //取消冒泡
             e.nativeEvent.stopImmediatePropagation();
         },
@@ -1201,13 +1572,28 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 exchangeStatus: exchangeStatusConfig[0]["key"],
                 exchangeStatusText: exchangeStatusConfig[0]["value"],
-                isMatched: true
+                isMatched: true,
+                hasCommentIcon: false,
+                iconCommentOrInformation: false,
+                commentAppear: false
             }, function exchangerStatus() {
                 const {
                     //个人信息资源详情资源交换列表状态切换标识
                     exchangeStatus
                 } = this.state;
-                dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, id, false, true, exchangeStatus));
+                dispatch(getPersonalResourcesListViewDetailsItemList(itemCurrent, userId, id))
+                    .then(function resolve(body) {
+                        dispatch(getPersonalResourcesListViewDetailsItemListAction(body, true, exchangeStatus));
+                        dispatch(rememberPersonalResourcesListViewDetailsMatchedItemListAction(body));
+                    }, function reject() {
+
+                    });
+                //FIXME 这里设置一个时间控制器,在设置"以物换物"评论区域执行由显示到隐藏的动画之后，延迟200ms设置"以物换物"评论区域由隐藏到消失
+                setTimeout(function timer() {
+                    this.setState({
+                        commentBlock: false
+                    });
+                }.bind(this), 200);
             }.bind(this));
             dispatch(getPersonalUserHeadPortraitViewDetail(keryiCard));
             dispatch(getPersonalResourcesMatchedListViewDetailsAction(keryiCard));
@@ -1230,7 +1616,8 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 exchangeStatus: exchangeStatusConfig[0]["key"],
                 exchangeStatusText: exchangeStatusConfig[0]["value"],
-                isMatched: false
+                isMatched: false,
+                hasCommentIcon: true
             }, function exchangerStatus() {
                 const {
                     //个人信息资源详情资源交换列表状态切换标识
@@ -1274,14 +1661,31 @@ function mapDispatchToProps(dispatch, ownProps) {
                     //个人信息资源详情资源交换列表状态切换标识
                     exchangeStatus
                 } = this.state;
-                dispatch(havePersonalResourcesExchange.bind(this)({
+                dispatch(havePersonalResourcesExchange({
                     initiativeResourceId: id,
                     passiveResourceId: matchedId,
                     initiativeUserId: userId,
                     passiveUserId: matchedUserId,
-                    itemCurrent,
-                    exchangeStatus
-                }));
+                    itemCurrent
+                })).then(function resolve() {
+                    dispatch(closePersonalViewDetailsFooter());
+                    dispatch(getPersonalResourcesListViewDetails(id)).then(function resolve(body) {
+                        dispatch(getPersonalResourcesListAction(body));
+                    }, function reject() {
+
+                    });
+                    dispatch(getPersonalResourcesListViewDetailsItemList(itemCurrent, userId, id))
+                        .then(function resolve(body) {
+                            dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(body, false, exchangeStatus));
+                            dispatch(rememberPersonalResourcesListViewDetailsItemListAction(body));
+                        }, function reject() {
+
+                        });
+                    dispatch(openPersonalViewDetailsItemClose());
+                    dispatch(openPersonalViewDetailsAside());
+                }, function reject() {
+
+                });
             }.bind(this));
         },
         /**
@@ -1291,6 +1695,7 @@ function mapDispatchToProps(dispatch, ownProps) {
             this.setState({
                 viewPersonalBarterVisible: false
             }, () => {
+                document.body.style["overflow"] = "auto";
                 //FIXME 这里设置一个时间控制器,控制在Modal组件对话框隐藏动画并且消失之后再执行清除个人页面资源详情的数据
                 setTimeout(() => {
                     dispatch(closePersonalViewDetailsAside());
@@ -1314,7 +1719,12 @@ function mapDispatchToProps(dispatch, ownProps) {
                 userId
             } = this.state;
             //获取个人页资源列表
-            dispatch(getPersonalResourcesList.bind(this)(current, userId));
+            dispatch(getPersonalResourcesList(current, userId))
+                .then(function resolve(body) {
+                    dispatch(getPersonalResourcesListAction(body));
+                }, function reject() {
+
+                });
         },
         /**
          * dispatch获取个人信息
@@ -1325,7 +1735,17 @@ function mapDispatchToProps(dispatch, ownProps) {
                 userId
             } = this.state;
             //获取个人信息
-            dispatch(getPersonalInformation(userId));
+            dispatch(getPersonalInformation(userId)).then(function resolve(body) {
+                //更新并保存个人信息
+                dispatch(saveChangePersonalInformation({
+                    username: body["username"],
+                    email: body["email"],
+                    phone: body["phone"],
+                    motto: body["motto"]
+                }));
+            }, function reject() {
+
+            });
         },
         /**
          * 点击编辑图标,使个人信息页面主体信息可编辑
@@ -1355,7 +1775,31 @@ function mapDispatchToProps(dispatch, ownProps) {
                 motto
             } = this.state;
             //更新、保存个人信息,并改变个人信息编辑状态,使得其不可编辑
-            dispatch(saveUpdatePersonalInformation.bind(this)(userId, username, email, phone, motto, current));
+            dispatch(saveUpdatePersonalInformation(userId, username, email, phone, motto))
+                .then(function resolve() {
+                    //控制Modal组件对话框隐藏并消失
+                    this.setState({
+                        viewPersonalBarterVisible: false
+                    });
+                    //更新并保存个人信息
+                    dispatch(saveChangePersonalInformation({
+                        username,
+                        email,
+                        phone,
+                        motto
+                    }));
+                    //改变个人信息编辑状态,使得其不可编辑
+                    dispatch(closeChangePersonalInformation());
+                    //获取个人页资源列表
+                    dispatch(getPersonalResourcesList.bind(this)(current, userId))
+                        .then(function resolve(body) {
+                            dispatch(getPersonalResourcesListAction(body));
+                        }, function reject() {
+
+                        });
+                }.bind(this), function reject() {
+
+                }.bind(this));
         },
         /**
          * 点击取消按钮,使个人信息页面主体信息不可编辑
@@ -1446,7 +1890,18 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //个人页资源详情资源交换列表页码
                 itemCurrent
             } = this.props;
-            dispatch(deletePersonalResourcesExchange.bind(this)(exchangeId, userId, viewDetailKeryiCard["id"], itemCurrent, exchangeStatus));
+            dispatch(deletePersonalResourcesExchange(exchangeId, userId, viewDetailKeryiCard["id"], itemCurrent))
+                .then(function resolve() {
+                    dispatch(getPersonalResourcesListViewDetailsItemList.bind(this)(itemCurrent, userId, viewDetailKeryiCard["id"]))
+                        .then(function resolve(body) {
+                            dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(body, false, exchangeStatus));
+                            dispatch(rememberPersonalResourcesListViewDetailsItemListAction(body));
+                        }, function reject() {
+
+                        });
+                }, function reject() {
+
+                });
         },
         /**
          * 改变个人信息资源详情资源交换列表更换交换关系状态
@@ -1469,7 +1924,18 @@ function mapDispatchToProps(dispatch, ownProps) {
                 exchangeStatusText: exchangeStatusSelectConfig[exchangeToStatus],
                 isMatched: false
             }, function exchangerStatus() {
-                dispatch(selectPersonalResourceExchange.bind(this)(exchangeId, exchangeToStatus, userId, viewDetailKeryiCard["id"], itemCurrent));
+                dispatch(selectPersonalResourceExchange(exchangeId, exchangeToStatus, userId, viewDetailKeryiCard["id"], itemCurrent))
+                    .then(function resolve() {
+                        dispatch(getPersonalResourcesListViewDetailsItemList(itemCurrent, userId, viewDetailKeryiCard["id"]))
+                            .then(function resolve(body) {
+                                dispatch(getPersonalResourcesListViewDetailsItemListAction.bind(this)(body, false, exchangeToStatus));
+                                dispatch(rememberPersonalResourcesListViewDetailsItemListAction(body));
+                            }, function reject() {
+
+                            });
+                    }, function reject() {
+
+                    });
             });
         },
         /**
@@ -1493,6 +1959,86 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //改变头像和背景编辑状态,使客户的头像和背景不可编辑
                 dispatch(closePersonalEditAppearanceAction());
             }.bind(this), 300);
+        },
+        /**
+         * 改变"评论"富文本编辑器编辑框内容
+         * @param e
+         */
+        changeCommentHandler(e) {
+            let value = e.target.value;
+            dispatch(changePersonalResourcesListViewDetailsCommentAction(value));
+        },
+        /**
+         * "评论"富文本编辑器编辑框添加评论
+         * @param e
+         */
+        doCommentHandler(e) {
+            const {
+                //评论详情
+                comment,
+                //资源ID
+                viewDetailId
+            } = this.props;
+            const {
+                //用户登录的id
+                userId
+            } = this.state;
+            //评论列表页码设置为1
+            const commentCurrent = 1;
+            dispatch(doPersonalResourcesListViewDetailsComment(viewDetailId, userId, userId, comment))
+                .then(function resolve() {
+                    return dispatch(getPersonalResourcesListViewDetailsCommentList(viewDetailId, userId, userId, commentCurrent));
+                })
+                .then(function resolve(getComment) {
+                    dispatch(getPersonalResourcesListViewDetailsCommentListAction({
+                        commentList: getComment["list"],
+                        commentTotal: getComment["commentTotal"],
+                        comment: "",
+                        commentCurrent
+                    }));
+                });
+        },
+        /**
+         * 获取个人页资源详情评论列表脚手架
+         * @param resourceId
+         * @param commentFrom
+         * @param commentTo
+         * @param pageNum
+         */
+        getPersonalResourcesListViewDetailsCommentListHandler(resourceId, commentFrom, commentTo, pageNum) {
+            dispatch(getPersonalResourcesListViewDetailsCommentList(resourceId, commentFrom, commentTo, pageNum))
+                .then(function resolve(getComment) {
+                    dispatch(getPersonalResourcesListViewDetailsCommentListAction({
+                        commentList: getComment["list"],
+                        commentTotal: getComment["commentTotal"],
+                        comment: "",
+                        commentCurrent: pageNum
+                    }));
+                });
+        },
+        /**
+         * 点击"评论"系统分页方法
+         * @param page
+         * @param pageSize
+         */
+        loadPageMore(page, pageSize) {
+            const {
+                //资源ID
+                viewDetailId
+            } = this.props;
+            const {
+                //用户登录的id
+                userId
+            } = this.state;
+            dispatch(getPersonalResourcesListViewDetailsCommentList(viewDetailId, userId, userId, page))
+                .then(function resolve(getComment) {
+                    dispatch(getPersonalResourcesListViewDetailsCommentListAction({
+                        commentList: getComment["list"],
+                        commentTotal: getComment["commentTotal"],
+                        comment: "",
+                        commentCurrent: page
+                    }));
+                });
         }
     }
 }

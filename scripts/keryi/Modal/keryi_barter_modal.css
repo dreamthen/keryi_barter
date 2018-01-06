@@ -194,11 +194,9 @@
 }
 
 .keryi_barter_modal_head:after {
-    content: ".";
+    content: " ";
+    display: table;
     clear: both;
-    display: block;
-    visibility: hidden;
-    height: 0;
 }
 
 .keryi_barter_modal_head > .keryi_barter_modal_head_title,
@@ -216,6 +214,7 @@
     font-weight: normal;
     color: #8f8f8f;
     cursor: pointer;
+    margin-top: 3px;
 }
 
 .keryi_barter_modal_head > .keryi_barter_modal_head_backDescriptionDisAppear {

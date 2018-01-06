@@ -270,6 +270,239 @@
     background-color: rgb(244, 244, 244);
 }
 
+.keryi_barter_personal_modal_view_details_container > .keryi_barter_modal_article {
+    position: relative;
+}
+
+.keryi_barter_personal_modal_view_details_container i.keryiBarter-comment,
+.keryi_barter_personal_modal_view_details_container i.keryiBarter-moreInformation {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    font-size: 16px;
+    color: #63A8F0;
+    cursor: pointer;
+}
+
+.keryi_barter_personal_modal_view_details_container i.keryiBarter-moreInformation {
+    font-size: 18px;
+}
+
+.keryi_barter_personal_modal_view_details_container i.keryiBarter-comment:after,
+.keryi_barter_personal_modal_view_details_container i.keryiBarter-moreInformation:after {
+    content: '评论';
+    font-size: 14px;
+    position: relative;
+    bottom: 1px;
+    left: 4px;
+}
+
+.keryi_barter_personal_modal_view_details_container i.keryiBarter-moreInformation:after {
+    content: '资源详情';
+    bottom: 2px;
+}
+
+.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_comment {
+    position: absolute;
+    display: none;
+    opacity: 0;
+    width: 100%;
+    height: calc(100% - 40px);
+    top: 40px;
+    z-index: 9914;
+    transition: all .2s ease-in-out 0s;
+    background-color: rgb(244, 244, 244);
+}
+
+.keryi_barter_personal_view_details_comment .keryi_barter_personal_view_details_comment_area {
+    height: 100px;
+    line-height: 1.3;
+    font-size: 14px;
+    padding: 4px 6px;
+    border: 1px solid #9da6af;
+    border-radius: 4px;
+}
+
+.keryi_barter_personal_view_details_comment > .keryi_barter_personal_view_details_comment_submit {
+    text-align: right;
+}
+
+.keryi_barter_personal_view_details_comment_submit .keryi_barter_personal_view_details_comment_submit_button {
+    margin: 8px 15px 0 0;
+    padding: 8px 22px;
+}
+
+.keryi_barter_personal_view_details_comment > .keryi_barter_personal_view_details_comment_content {
+    padding: 0 15px 0 20px;
+    position: relative;
+    height: calc(100% - 140px);
+}
+
+.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_content_header {
+    font-size: 14px;
+    height: 36px;
+    line-height: 36px;
+    border-bottom: 1px solid rgba(68, 68, 68, .1);
+}
+
+.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_content_header:before {
+    content: attr(data-comment-total);
+    float: left;
+    font-size: 20px;
+    color: #63A8F0;
+    margin-right: 5px;
+}
+
+.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_content_header:after {
+    content: "评论";
+    display: table-cell;
+    width: 2000px;
+}
+
+.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_clear {
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_pagination {
+    position: absolute;
+    top: 4px;
+    right: 15px;
+}
+
+.keryi_barter_personal_view_details_comment_pagination > .ant-pagination-total-text {
+    color: #a2a2a2;
+}
+
+.keryi_barter_personal_view_details_comment_pagination > .ant-pagination-item-active {
+    background-color: #63A8F0;
+    border-color: #63A8F0;
+}
+
+.keryi_barter_personal_view_details_comment_pagination > .ant-pagination-options {
+    color: #a2a2a2;
+}
+
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-options-quick-jumper input {
+    text-align: center;
+}
+
+.keryi_barter_personal_view_details_comment_pagination > .ant-pagination-item:focus, .keryi_barter_personal_view_details_comment_pagination > .ant-pagination-item:hover {
+    border-color: #63A8F0;
+}
+
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-item:focus a, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-item:hover a {
+    color: #63A8F0;
+}
+
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-item-active a, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-item-active:focus a, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-item-active:hover a {
+    color: #fff;
+}
+
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-prev:focus .ant-pagination-item-link, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-next:focus .ant-pagination-item-link, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-prev:hover .ant-pagination-item-link, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-next:hover .ant-pagination-item-link {
+    border-color: #63A8F0;
+    color: #63A8F0;
+}
+
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled a, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled:hover a, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled:focus a, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled .ant-pagination-item-link, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled:hover .ant-pagination-item-link, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled:focus .ant-pagination-item-link {
+    border-color: #d9d9d9;
+    color: rgba(0, 0, 0, .25);
+}
+
+.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_none,
+.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_list {
+    height: calc(100% - 38px);
+    overflow: auto;
+}
+
+.keryi_barter_personal_view_details_comment_list > .keryi_barter_personal_view_details_comment_list_itemSection {
+    padding: 6px 8px 0 8px;
+}
+
+.keryi_barter_personal_view_details_comment_list > .keryi_barter_personal_view_details_comment_list_itemSection:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+.keryi_barter_personal_view_details_comment_list_itemSection > .keryi_barter_personal_view_details_comment_list_itemAvatar {
+    float: left;
+    margin-right: 8px;
+    width: 32px;
+    height: 32px;
+}
+
+.keryi_barter_personal_view_details_comment_list_itemSection > .keryi_barter_personal_view_details_comment_list_itemContent {
+    display: table-cell;
+    width: 2000px;
+}
+
+.keryi_barter_personal_view_details_comment_list_itemContent > .keryi_barter_personal_view_details_comment_list_itemContent_title {
+    font-size: 14px;
+    font-weight: bolder;
+    font-family: Gibson, Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    margin-top: 2px;
+    color: #63A8F0;
+}
+
+.keryi_barter_personal_view_details_comment_list_itemContent > .keryi_barter_personal_view_details_comment_list_itemContent_pragraph {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-top: 2px;
+}
+
+.keryi_barter_personal_view_details_comment_list_itemContent > .keryi_barter_personal_view_details_comment_list_itemContent_time {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #999;
+}
+
+.keryi_barter_personal_view_details_comment_list_itemSection > .keryi_barter_personal_view_details_comment_list_itemSection_wire {
+    border: none;
+    border-top: 1px solid #e7e7e7;
+    margin: 6px auto 0 auto;
+}
+
+.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_none {
+    position: relative;
+}
+
+.keryi_barter_personal_view_details_comment_none > .keryi_barter_personal_view_details_comment_none_container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    background-color: rgb(244, 244, 244);
+}
+
+.keryi_barter_personal_view_details_comment_none_container > i {
+    font-size: 32px;
+    color: #8f8f8f;
+}
+
+.keryi_barter_personal_view_details_comment_none_container > .keryi_barter_personal_view_details_comment_none_content {
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-size: 14px;
+    color: #8f8f8f;
+    margin-top: 4px;
+}
+
+.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_comment_appear {
+    opacity: 1;
+}
+
+.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_comment_block {
+    display: block;
+}
+
 .keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_head,
 .keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_figure_carousel,
 .keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_introduce,
