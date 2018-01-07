@@ -267,6 +267,7 @@
 
 .keryi_barter_modalContainer > .keryi_barter_personal_modal_view_details_container,
 .keryi_barter_modalContainer > .keryi_barter_personal_modal_view_details_asideMain {
+    transition: all .5s ease-in-out 0s;
     background-color: rgb(244, 244, 244);
 }
 

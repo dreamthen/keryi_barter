@@ -17,6 +17,9 @@ import {
     checkField
 } from "../configs/checkField";
 
+export const paginationPlus = "paginationPlus";
+export const paginationMinus = "paginationMinus";
+
 let userLoginInformation = localStorage && localStorage.getItem("userLoginInformation") !== "undefined" && JSON.parse(localStorage.getItem("userLoginInformation"));
 
 const defaultState = {
@@ -50,6 +53,10 @@ const defaultState = {
     asideAble: false,
     //个人页资源数据列表页码
     current: 1,
+    //分页防并发变量
+    currentAsync: true,
+    //滚动条初始距离顶部高度
+    beforeOsTop: 0,
     //评论详情
     comment: "",
     //评论列表
@@ -172,7 +179,8 @@ export function personalReducers(state = defaultState, actions) {
         //获取个人页资源列表
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_ACTION"]:
             return insteadState.insteadObjState(state, {
-                list: newState
+                list: newState,
+                currentAsync: true
             });
         //改变个人信息编辑状态,使得其可编辑
         case appActionsType["CHANGE_PERSONAL_INFORMATION"]:
@@ -276,6 +284,19 @@ export function personalReducers(state = defaultState, actions) {
         //获取个人资源详情评论列表
         case appActionsType["GET_PERSONAL_RESOURCES_LIST_VIEW_DETAILS_COMMENT_LIST"]:
             return insteadState.insteadObjState(state, newState);
+        //获取个人资源列表滚动条初始距离顶部高度
+        case appActionsType["GET_PERSONAL_RESOURCES_LIST_PAGINATION_BEFORE_OS_TOP"]:
+            return insteadState.insteadObjState(state, {
+                beforeOsTop: newState
+            });
+        case appActionsType["CHANGE_PERSONAL_RESOURCES_LIST_PAGINATION_CURRENT"]:
+            return newState === paginationPlus ? insteadState.insteadObjState(state, {
+                current: state.current + 1,
+                currentAsync: false
+            }) : insteadState.insteadObjState(state, {
+                current: state.current - 1,
+                currentAsync: true
+            });
     }
     return state;
 }

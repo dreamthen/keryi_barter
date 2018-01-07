@@ -112,8 +112,16 @@ import {
     //插入个人资源详情评论
     doPersonalResourcesListViewDetailsComment,
     //获取个人资源详情评论列表Action
-    getPersonalResourcesListViewDetailsCommentListAction
+    getPersonalResourcesListViewDetailsCommentListAction,
+    //获取个人资源列表滚动条初始距离顶部高度Action
+    getPersonalResourcesListPaginationBeforeOsTopAction,
+    //改变个人资源分页页码Action
+    changePersonalResourcesListPaginationCurrentAction
 } from "../actions/personalActions";
+import {
+    paginationPlus,
+    paginationMinus
+} from "../reducers/personalReducers";
 import "../../stylesheets/personal.css";
 import "../../stylesheets/adapateConfig.css";
 
@@ -163,6 +171,10 @@ class PersonalView extends React.Component {
         list: PropTypes.array,
         //个人页资源数据列表页码
         current: PropTypes.number,
+        //分页防并发变量
+        currentAsync: PropTypes.bool,
+        //滚动条初始距离顶部高度
+        beforeOsTop: PropTypes.number,
         //评论详情
         comment: PropTypes.string,
         //评论列表
@@ -281,26 +293,64 @@ class PersonalView extends React.Component {
      */
     componentDidMount() {
         const {
-            //dispatch获取资源数据列表
-            dispatchPersonalResourceList,
-            //dispatch获取个人信息
-            dispatchPersonalInformation
-        } = this.props;
+            //获取资源数据列表、个人信息以及添加个人信息和个人资源分页滚动事件控制器
+            getPersonalResourceInformationAndAddScrollEventGenerator
+        } = this;
         //获取到滚动条距离顶部的高度
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         //个人信息容器距离顶部的高度
         let mainInformationTop = this.refs["mainInformation"].getBoundingClientRect().top;
         //获取到个人信息容器距离顶部的绝对位置
         let absoluteTop = scrollTop + mainInformationTop;
-        //滚动事件监听函数
-        const {dispatchScrollEventListener} = this;
         this.setState({
             absoluteTop
         }, function absoluteToper() {
-            dispatchPersonalResourceList.bind(this)();
-            dispatchPersonalInformation.bind(this)();
-            dispatchScrollEventListener.bind(this)();
+            let getPersonalResourceInformationAndAddScrollEvent = getPersonalResourceInformationAndAddScrollEventGenerator.bind(this)();
+            let getPersonalResourceInformationAndAddScrollEventDone = getPersonalResourceInformationAndAddScrollEvent.next().done;
+            while (!getPersonalResourceInformationAndAddScrollEventDone) {
+                getPersonalResourceInformationAndAddScrollEventDone = getPersonalResourceInformationAndAddScrollEvent.next().done;
+            }
         }.bind(this));
+    }
+
+    /**
+     * 获取资源数据列表、个人信息以及添加个人信息和个人资源分页滚动事件控制器
+     */
+    * getPersonalResourceInformationAndAddScrollEventGenerator() {
+        const {
+            //dispatch获取资源数据列表
+            dispatchPersonalResourceList,
+            //dispatch获取个人信息
+            dispatchPersonalInformation
+        } = this.props;
+        const {
+            //添加个人信息监听和个人资源分页滚动事件
+            addScrollEventHandler
+        } = this;
+        yield dispatchPersonalResourceList.bind(this)().then(function resolve() {
+            dispatchPersonalInformation.bind(this)();
+        }.bind(this), function reject() {
+
+        }.bind(this));
+        yield addScrollEventHandler.bind(this)();
+    }
+
+    /**
+     * 添加个人信息监听和个人资源分页滚动事件
+     */
+    addScrollEventHandler() {
+        //滚动事件监听函数
+        const {dispatchScrollEventListener} = this;
+        //保存滚动条初始距离顶部高度脚手架
+        const {saveBeforeOsTopHandler} = this.props;
+        //滚动条初始距离顶部高度
+        let beforeOsTop = document.documentElement.scrollTop || document.body.scrollTop;
+        //获取个人信息页面主容器
+        let mainPersonalBarter = this.refs["mainPersonalBarter"];
+        //获取个人信息页面主容器距离顶部的高度
+        let mainPersonalBarterTop = mainPersonalBarter.getBoundingClientRect().top;
+        saveBeforeOsTopHandler.bind(this)(beforeOsTop);
+        dispatchScrollEventListener.bind(this)(mainPersonalBarterTop);
     }
 
     /**
@@ -320,21 +370,53 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * 分页获取资源数据列表控制集成器
+     * @param docTop
+     */
+    scrollGetPersonalResourceListByPagination(docTop) {
+        const {
+            //分页获取资源数据列表脚手架
+            getPersonalResourceListByPaginationHandler,
+            //dispatch获取个人页资源数据列表
+            dispatchPersonalResourceList
+        } = this.props;
+        getPersonalResourceListByPaginationHandler.bind(this)(docTop).then(function resolve() {
+            dispatchPersonalResourceList.bind(this)();
+        }.bind(this), function reject() {
+
+        }.bind(this));
+    }
+
+    /**
      * 滚动事件监听函数
      */
-    dispatchScrollEventListener() {
-        //监听窗口滚动事件,使个人信息页面主体信息随着窗口滚动而滚动
-        const {personalInformationScrollHandler} = this.props;
+    dispatchScrollEventListener(docTop) {
+        const {
+            //分页获取资源数据列表控制集成器
+            scrollGetPersonalResourceListByPagination
+        } = this;
+        const {
+            //监听窗口滚动事件,使个人信息页面主体信息随着窗口滚动而滚动
+            personalInformationScrollHandler
+        } = this.props;
         window.addEventListener("scroll", personalInformationScrollHandler.bind(this));
+        window.addEventListener("scroll", scrollGetPersonalResourceListByPagination.bind(this, docTop));
     }
 
     /**
      * 消除滚动事件监听函数
      */
     dispatchCloseScrollEventListener() {
-        //监听窗口滚动事件,使个人信息页面主体信息随着窗口滚动而滚动
-        const {personalInformationScrollHandler} = this.props;
+        const {
+            //分页获取资源数据列表控制集成器
+            scrollGetPersonalResourceListByPagination
+        } = this;
+        const {
+            //监听窗口滚动事件,使个人信息页面主体信息随着窗口滚动而滚动
+            personalInformationScrollHandler
+        } = this.props;
         window.removeEventListener("scroll", personalInformationScrollHandler.bind(this));
+        window.removeEventListener("scroll", scrollGetPersonalResourceListByPagination.bind(this));
     }
 
     /**
@@ -1377,7 +1459,9 @@ class PersonalView extends React.Component {
         } = this.props;
         return (
             <section className="keryi_barter_personal_main_information_container">
-                <main className="keryi_barter_personal_main_information keryi_barter_personal_main_barterList">
+                <main
+                    className="keryi_barter_personal_main_information keryi_barter_personal_main_barterList"
+                >
                     {
                         (list && list.length > 0) && list.map(function lister(listItem, listIndex) {
                             //render渲染个人信息页面资源信息
@@ -1490,7 +1574,10 @@ class PersonalView extends React.Component {
             editAppearance
         } = this.props;
         return (
-            <div className="keryi_barter_personal_main_container">
+            <div
+                ref="mainPersonalBarter"
+                className="keryi_barter_personal_main_container"
+            >
                 <section className="keryi_barter_personal_main_module">
                     {/*render渲染个人信息页面头部*/}
                     {renderPersonalHeader.bind(this)()}
@@ -1712,19 +1799,24 @@ function mapDispatchToProps(dispatch, ownProps) {
         dispatchPersonalResourceList() {
             const {
                 //个人页资源数据列表页码
-                current
+                current,
+                //改变个人资源分页页码
+                changePersonalResourcesListPaginationCurrentHandler
             } = this.props;
             const {
                 //用户登录的id
                 userId
             } = this.state;
-            //获取个人页资源列表
-            dispatch(getPersonalResourcesList(current, userId))
-                .then(function resolve(body) {
-                    dispatch(getPersonalResourcesListAction(body));
-                }, function reject() {
-
-                });
+            return new Promise(function promise(resolve, reject) {
+                //获取个人页资源列表
+                dispatch(getPersonalResourcesList(current, userId))
+                    .then(function resolve(body) {
+                        dispatch(getPersonalResourcesListAction(body));
+                    }.bind(this), function reject() {
+                        changePersonalResourcesListPaginationCurrentHandler.bind(this)(paginationMinus);
+                    }.bind(this));
+                resolve();
+            }.bind(this));
         },
         /**
          * dispatch获取个人信息
@@ -2039,6 +2131,52 @@ function mapDispatchToProps(dispatch, ownProps) {
                         commentCurrent: page
                     }));
                 });
+        },
+        /**
+         * 保存滚动条初始距离顶部高度脚手架
+         */
+        saveBeforeOsTopHandler(beforeOsTop) {
+            dispatch(getPersonalResourcesListPaginationBeforeOsTopAction(beforeOsTop));
+        },
+        /**
+         * 改变个人资源分页页码
+         */
+        changePersonalResourcesListPaginationCurrentHandler(pagination) {
+            dispatch(changePersonalResourcesListPaginationCurrentAction(pagination));
+        },
+        /**
+         * 分页获取资源数据列表脚手架
+         */
+        getPersonalResourceListByPaginationHandler(docTop) {
+            return new Promise(function promise(resolve, reject) {
+                const {
+                    //滚动条初始距离顶部高度
+                    beforeOsTop,
+                    //分页防并发变量
+                    currentAsync,
+                    //保存滚动条初始距离顶部高度脚手架
+                    saveBeforeOsTopHandler,
+                    //改变个人资源分页页码
+                    changePersonalResourcesListPaginationCurrentHandler
+                } = this.props;
+                //获取个人信息页面主容器
+                let mainPersonalBarter = this.refs["mainPersonalBarter"],
+                    //获取个人信息页面主容器高度
+                    mainPersonalBarterHeight = mainPersonalBarter.clientHeight,
+                    //个人信息页面高度
+                    docHeight = docTop + mainPersonalBarterHeight,
+                    //获取到滚动条距离顶部的高度
+                    afterOsTop = document.documentElement.scrollTop || document.body.scrollTop,
+                    //获取屏幕的高度
+                    screenHeight = window.innerHeight,
+                    //获取到滚动条距离底部的高度
+                    betweenOsTop = afterOsTop - beforeOsTop;
+                saveBeforeOsTopHandler.bind(this)(afterOsTop);
+                if (((docHeight - afterOsTop - screenHeight) / docHeight <= 0.05) && currentAsync && betweenOsTop > 0) {
+                    changePersonalResourcesListPaginationCurrentHandler.bind(this)(paginationPlus);
+                    resolve();
+                }
+            }.bind(this));
         }
     }
 }
