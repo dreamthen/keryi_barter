@@ -59,12 +59,20 @@ const defaultState = {
     beforeOsTop: 0,
     //评论详情
     comment: "",
+    //匹配资源评论详情
+    commentMatched: "",
     //评论列表
     commentList: [],
+    //匹配资源评论列表
+    commentMatchedList: [],
     //评论列表页码
     commentCurrent: 1,
+    //匹配资源评论列表页码
+    commentMatchedCurrent: 1,
     //评论列表评论条数
     commentTotal: 0,
+    //匹配资源评论列表评论条数
+    commentMatchedTotal: 0,
     //个人信息部分距离父级元素顶部的高度
     top: 0,
     //个人页资源详情对话框是否显示footer底部区域
@@ -179,7 +187,7 @@ export function personalReducers(state = defaultState, actions) {
         //获取个人页资源列表
         case appActionsType["GET_PERSONAL_RESOURCE_LIST_ACTION"]:
             return insteadState.insteadObjState(state, {
-                list: newState,
+                list: [...state["list"], ...newState],
                 currentAsync: true
             });
         //改变个人信息编辑状态,使得其可编辑

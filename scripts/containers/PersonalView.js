@@ -177,12 +177,20 @@ class PersonalView extends React.Component {
         beforeOsTop: PropTypes.number,
         //评论详情
         comment: PropTypes.string,
+        //匹配资源评论详情
+        commentMatched: PropTypes.string,
         //评论列表
         commentList: PropTypes.array,
+        //匹配资源评论列表
+        commentMatchedList: PropTypes.array,
         //评论列表页码
         commentCurrent: PropTypes.number,
+        //匹配资源评论列表页码
+        commentMatchedCurrent: PropTypes.number,
         //评论列表评论条数
         commentTotal: PropTypes.number,
+        //匹配资源评论列表评论条数
+        commentMatchedTotal: PropTypes.number,
         //个人页资源详情匹配到的资源列表边栏是否显示
         asideAble: PropTypes.bool,
         //个人页资源详情资源交换列表页码
@@ -1020,7 +1028,7 @@ class PersonalView extends React.Component {
                     className="keryi_barter_personal_view_details_comment_list_itemSection">
                     <aside className="keryi_barter_personal_view_details_comment_list_itemAvatar">
                         <HeadPortrait
-                            headPortrait={api.GET_PERSONAL_AVATAR + "/" + commentItem["fromUser"]["id"] + "/avatar"}
+                            headPortrait={`${api.GET_PERSONAL_AVATAR}/${commentItem["fromUser"]["id"]}/avatar`}
                             borderJudgement={false}
                         />
                     </aside>
@@ -1155,10 +1163,60 @@ class PersonalView extends React.Component {
      * @returns {XML}
      */
     renderMatchedModalComment() {
+        const {
+            //匹配资源评论详情
+            commentMatched,
+            //匹配资源评论列表
+            commentMatchedList,
+            //匹配资源评论列表页码
+            commentMatchedCurrent,
+            //匹配资源评论列表评论条数
+            commentMatchedTotal,
+            //改变匹配资源"评论"富文本编辑器编辑框内容
+            changeMatchedCommentHandler,
+            loadMatchedPageMore
+        } = this.props;
         return (
-            <main>
+            <section className="keryi_barter_personal_view_details_matched_comment">
+                <h2 className="keryi_barter_personal_view_details_matched_comment_title">
+                    评论
+                </h2>
+                <Area
+                    value={commentMatched}
+                    size="large"
+                    placeholder="请输入您对此资源的评论~"
+                    className="keryi_barter_personal_view_details_matched_comment_area"
+                    comment={true}
+                    onChange={changeMatchedCommentHandler.bind(this)}
+                />
+                <section className="keryi_barter_personal_view_details_matched_comment_submit">
+                    <Button
+                        title="评论"
+                        size="default"
+                        type="info"
+                        className="keryi_barter_personal_view_details_matched_comment_submit_button"
+                    >
+                        评论
+                    </Button>
+                </section>
+                <article className="keryi_barter_personal_view_details_matched_comment_content">
+                    <header className="keryi_barter_personal_view_details_matched_comment_content_header"
+                            data-matched-comment-total={commentMatchedTotal}>
+                    </header>
+                    <section className="keryi_barter_personal_view_details_matched_comment_clear">
 
-            </main>
+                    </section>
+                    <Pagination
+                        current={commentMatchedCurrent}
+                        className="keryi_barter_personal_view_details_matched_comment_pagination"
+                        onChange={loadMatchedPageMore.bind(this)}
+                        pageSize={PAGE_SIZE}
+                        showQuickJumper
+                        showTotal={total => `共 ${total} 条评论`}
+                        total={commentMatchedTotal}
+                    />
+                </article>
+            </section>
         )
     }
 
@@ -1193,7 +1251,9 @@ class PersonalView extends React.Component {
             //控制Modal组件对话框显示、隐藏或者消失
             viewPersonalBarterVisible,
             //控制"以物换物"资源详情评论区域或者资源详情区域的icon标识是否存在
-            hasCommentIcon
+            hasCommentIcon,
+            //判断个人信息资源详情是否是匹配资源
+            isMatched
         } = this.state;
         const {
             //个人页资源详情匹配到的所有的资源列表
@@ -2177,6 +2237,21 @@ function mapDispatchToProps(dispatch, ownProps) {
                     resolve();
                 }
             }.bind(this));
+        },
+        /**
+         * 改变匹配资源"评论"富文本编辑器编辑框内容
+         * @param e
+         */
+        changeMatchedCommentHandler(e) {
+            let value = e.target.value;
+        },
+        /**
+         * 点击匹配资源"评论"系统分页方法
+         * @param page
+         * @param pageSize
+         */
+        loadMatchedPageMore(page, pageSize) {
+
         }
     }
 }

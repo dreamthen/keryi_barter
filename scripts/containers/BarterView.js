@@ -189,14 +189,12 @@ class BarterView extends React.Component {
         const {
             //获取资源数据列表
             dispatchResourceList,
-            //分页获取资源数据列表
-            dispatchResourceListByPagination,
             //dispatch获取资源列表滚动条初始距离顶部高度
             getResourcesListPaginationBeforeOsTopHandler
         } = this.props;
         const {
-            //下拉滚动条进行分页获取资源数据列表
-            scrollGetResourceList
+            //分页获取资源数据列表控制集成器
+            scrollGetResourceListByPagination
         } = this;
         //resourceListContainer元素距离顶部高度
         let docTop = this.refs["resourceListContainer"].getBoundingClientRect().top,
@@ -204,13 +202,7 @@ class BarterView extends React.Component {
             beforeOsTop = document.documentElement.scrollTop || document.body.scrollTop;
         dispatchResourceList.bind(this)();
         getResourcesListPaginationBeforeOsTopHandler.bind(this)(beforeOsTop);
-        window.onscroll = function scroll() {
-            scrollGetResourceList.bind(this)(docTop).then(function resolve() {
-                dispatchResourceListByPagination.bind(this)();
-            }.bind(this), function reject() {
-
-            }.bind(this));
-        }.bind(this);
+        window.addEventListener("scroll", scrollGetResourceListByPagination.bind(this, docTop));
     }
 
     /**
@@ -221,7 +213,32 @@ class BarterView extends React.Component {
             //重置资源详情
             resetResourcesListViewDetailsHandler
         } = this.props;
+        const {
+            //分页获取资源数据列表控制集成器
+            scrollGetResourceListByPagination
+        } = this;
+        window.removeEventListener("scroll", scrollGetResourceListByPagination.bind(this));
         resetResourcesListViewDetailsHandler.bind(this)();
+    }
+
+    /**
+     * 分页获取资源数据列表控制集成器
+     * @param docTop
+     */
+    scrollGetResourceListByPagination(docTop) {
+        const {
+            //分页获取资源数据列表
+            dispatchResourceListByPagination
+        } = this.props;
+        const {
+            //下拉滚动条进行分页获取资源数据列表
+            scrollGetResourceList
+        } = this;
+        scrollGetResourceList.bind(this)(docTop).then(function resolve() {
+            dispatchResourceListByPagination.bind(this)();
+        }.bind(this), function reject() {
+
+        }.bind(this));
     }
 
     /**

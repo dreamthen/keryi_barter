@@ -315,7 +315,8 @@
     background-color: rgb(244, 244, 244);
 }
 
-.keryi_barter_personal_view_details_comment .keryi_barter_personal_view_details_comment_area {
+.keryi_barter_personal_view_details_comment .keryi_barter_personal_view_details_comment_area,
+.keryi_barter_personal_view_details_matched_comment .keryi_barter_personal_view_details_matched_comment_area {
     height: 100px;
     line-height: 1.3;
     font-size: 14px;
@@ -324,29 +325,46 @@
     border-radius: 4px;
 }
 
-.keryi_barter_personal_view_details_comment > .keryi_barter_personal_view_details_comment_submit {
+.keryi_barter_personal_view_details_matched_comment .keryi_barter_area {
+    padding: 0;
+}
+
+.keryi_barter_personal_view_details_comment > .keryi_barter_personal_view_details_comment_submit,
+.keryi_barter_personal_view_details_matched_comment > .keryi_barter_personal_view_details_matched_comment_submit {
     text-align: right;
 }
 
-.keryi_barter_personal_view_details_comment_submit .keryi_barter_personal_view_details_comment_submit_button {
+.keryi_barter_personal_view_details_comment_submit .keryi_barter_personal_view_details_comment_submit_button,
+.keryi_barter_personal_view_details_matched_comment_submit .keryi_barter_personal_view_details_matched_comment_submit_button {
     margin: 8px 15px 0 0;
     padding: 8px 22px;
 }
 
-.keryi_barter_personal_view_details_comment > .keryi_barter_personal_view_details_comment_content {
+.keryi_barter_personal_view_details_matched_comment_submit .keryi_barter_personal_view_details_matched_comment_submit_button {
+    margin: 8px 0 0 0;
+}
+
+.keryi_barter_personal_view_details_comment > .keryi_barter_personal_view_details_comment_content,
+.keryi_barter_personal_view_details_matched_comment > .keryi_barter_personal_view_details_matched_comment_content {
     padding: 0 15px 0 20px;
     position: relative;
     height: calc(100% - 140px);
 }
 
-.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_content_header {
+.keryi_barter_personal_view_details_matched_comment > .keryi_barter_personal_view_details_matched_comment_content {
+    padding: 0;
+}
+
+.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_content_header,
+.keryi_barter_personal_view_details_matched_comment_content > .keryi_barter_personal_view_details_matched_comment_content_header {
     font-size: 14px;
     height: 36px;
     line-height: 36px;
     border-bottom: 1px solid rgba(68, 68, 68, .1);
 }
 
-.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_content_header:before {
+.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_content_header:before,
+.keryi_barter_personal_view_details_matched_comment_content > .keryi_barter_personal_view_details_matched_comment_content_header:before {
     content: attr(data-comment-total);
     float: left;
     font-size: 20px;
@@ -354,59 +372,98 @@
     margin-right: 5px;
 }
 
-.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_content_header:after {
+.keryi_barter_personal_view_details_matched_comment_content > .keryi_barter_personal_view_details_matched_comment_content_header:before {
+    content: attr(data-matched-comment-total);
+}
+
+.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_content_header:after,
+.keryi_barter_personal_view_details_matched_comment_content > .keryi_barter_personal_view_details_matched_comment_content_header:after {
     content: "评论";
     display: table-cell;
     width: 2000px;
 }
 
-.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_clear {
+.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_clear,
+.keryi_barter_personal_view_details_matched_comment_content > .keryi_barter_personal_view_details_matched_comment_clear {
     content: " ";
     display: table;
     clear: both;
 }
 
-.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_pagination {
+.keryi_barter_personal_view_details_comment_content > .keryi_barter_personal_view_details_comment_pagination,
+.keryi_barter_personal_view_details_matched_comment_content > .keryi_barter_personal_view_details_matched_comment_pagination {
     position: absolute;
     top: 4px;
     right: 15px;
 }
 
-.keryi_barter_personal_view_details_comment_pagination > .ant-pagination-total-text {
+.keryi_barter_personal_view_details_comment_pagination > .ant-pagination-total-text,
+.keryi_barter_personal_view_details_matched_comment_pagination > .ant-pagination-total-text {
     color: #a2a2a2;
 }
 
-.keryi_barter_personal_view_details_comment_pagination > .ant-pagination-item-active {
+.keryi_barter_personal_view_details_comment_pagination > .ant-pagination-item-active,
+.keryi_barter_personal_view_details_matched_comment_pagination > .ant-pagination-item-active {
     background-color: #63A8F0;
     border-color: #63A8F0;
 }
 
-.keryi_barter_personal_view_details_comment_pagination > .ant-pagination-options {
+.keryi_barter_personal_view_details_comment_pagination > .ant-pagination-options,
+.keryi_barter_personal_view_details_matched_comment_pagination > .ant-pagination-options {
     color: #a2a2a2;
 }
 
-.keryi_barter_personal_view_details_comment_pagination .ant-pagination-options-quick-jumper input {
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-options-quick-jumper input,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-options-quick-jumper input {
     text-align: center;
 }
 
-.keryi_barter_personal_view_details_comment_pagination > .ant-pagination-item:focus, .keryi_barter_personal_view_details_comment_pagination > .ant-pagination-item:hover {
+.keryi_barter_personal_view_details_comment_pagination > .ant-pagination-item:focus,
+.keryi_barter_personal_view_details_comment_pagination > .ant-pagination-item:hover,
+.keryi_barter_personal_view_details_matched_comment_pagination > .ant-pagination-item:focus, .keryi_barter_personal_view_details_matched_comment_pagination > .ant-pagination-item:hover {
     border-color: #63A8F0;
 }
 
-.keryi_barter_personal_view_details_comment_pagination .ant-pagination-item:focus a, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-item:hover a {
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-item:focus a,
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-item:hover a,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-item:focus a,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-item:hover a {
     color: #63A8F0;
 }
 
-.keryi_barter_personal_view_details_comment_pagination .ant-pagination-item-active a, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-item-active:focus a, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-item-active:hover a {
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-item-active a,
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-item-active:focus a,
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-item-active:hover a,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-item-active a,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-item-active:focus a,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-item-active:hover a {
     color: #fff;
 }
 
-.keryi_barter_personal_view_details_comment_pagination .ant-pagination-prev:focus .ant-pagination-item-link, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-next:focus .ant-pagination-item-link, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-prev:hover .ant-pagination-item-link, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-next:hover .ant-pagination-item-link {
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-prev:focus .ant-pagination-item-link,
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-next:focus .ant-pagination-item-link,
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-prev:hover .ant-pagination-item-link,
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-next:hover .ant-pagination-item-link,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-prev:focus .ant-pagination-item-link,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-next:focus .ant-pagination-item-link,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-prev:hover .ant-pagination-item-link,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-next:hover .ant-pagination-item-link{
     border-color: #63A8F0;
     color: #63A8F0;
 }
 
-.keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled a, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled:hover a, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled:focus a, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled .ant-pagination-item-link, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled:hover .ant-pagination-item-link, .keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled:focus .ant-pagination-item-link {
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled a,
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled:hover a,
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled:focus a,
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled .ant-pagination-item-link,
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled:hover .ant-pagination-item-link,
+.keryi_barter_personal_view_details_comment_pagination .ant-pagination-disabled:focus .ant-pagination-item-link,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-disabled a,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-disabled:hover a,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-disabled:focus a,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-disabled .ant-pagination-item-link,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-disabled:hover .ant-pagination-item-link,
+.keryi_barter_personal_view_details_matched_comment_pagination .ant-pagination-disabled:focus .ant-pagination-item-link{
     border-color: #d9d9d9;
     color: rgba(0, 0, 0, .25);
 }
@@ -509,13 +566,15 @@
 .keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_introduce,
 .keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_statistics,
 .keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_tag,
-.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_targetTag {
+.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_targetTag,
+.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_matched_comment {
     padding: 0 15px;
 }
 
 .keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_tag,
 .keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_targetTag,
-.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_item_carousel {
+.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_item_carousel,
+.keryi_barter_personal_modal_view_details_container .keryi_barter_personal_view_details_matched_comment {
     margin-top: 15px;
 }
 
@@ -621,7 +680,8 @@
 
 .keryi_barter_personal_view_details_tag > .keryi_barter_personal_view_details_tag_title,
 .keryi_barter_personal_view_details_targetTag > .keryi_barter_personal_view_details_targetTag_title,
-.keryi_barter_personal_view_details_item_carousel > .keryi_barter_personal_view_details_item_carousel_title {
+.keryi_barter_personal_view_details_item_carousel > .keryi_barter_personal_view_details_item_carousel_title,
+.keryi_barter_personal_view_details_matched_comment > .keryi_barter_personal_view_details_matched_comment_title {
     margin-bottom: 12px;
     font-size: 16px;
     font-family: Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif;

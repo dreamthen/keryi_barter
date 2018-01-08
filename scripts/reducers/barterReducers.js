@@ -71,7 +71,7 @@ export function barterReducers(state = defaultState, actions) {
         //改变资源列表分页页码
         case appActionsType["GET_RESOURCE_LIST_BY_PAGINATION"]:
             return insteadState.insteadObjState(state, {
-                list: state["list"].concat(newState),
+                list: [...state["list"], ...newState],
                 currentAsync: true
             });
         //获取资源列表滚动条初始距离顶部高度
