@@ -1159,10 +1159,90 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * keryi_barter主页面查看"以物换物"匹配资源评论区域评论列表项
+     * @returns [{*}]
+     */
+    renderModalMatchedCommentListItem(){
+        const {
+            //匹配资源评论列表
+            commentMatchedList
+        } = this.props;
+        const {
+            //设置资源详情评论详情HTML文本
+            setCommentListItemContentInnerHTML
+        } = this;
+        return commentMatchedList.map(function commentMatchedListItem(commentMatchedItem, commentMatchedIndex) {
+            return (
+                <section
+                    key={commentMatchedIndex}
+                    className="keryi_barter_personal_view_details_matched_comment_list_itemSection">
+                    <aside className="keryi_barter_personal_view_details_matched_comment_list_itemAvatar">
+                        <HeadPortrait
+                            headPortrait={`${api.GET_PERSONAL_AVATAR}/${commentMatchedItem["fromUser"]["id"]}/avatar`}
+                            borderJudgement={false}
+                        />
+                    </aside>
+                    <article className="keryi_barter_personal_view_details_matched_comment_list_itemContent">
+                        <h5 className="keryi_barter_personal_view_details_matched_comment_list_itemContent_title">
+                            {commentMatchedItem["fromUser"]["username"]}
+                        </h5>
+                        <p
+                            dangerouslySetInnerHTML={setCommentListItemContentInnerHTML.bind(this)(commentMatchedItem["comment"])}
+                            className="keryi_barter_personal_view_details_matched_comment_list_itemContent_pragraph"
+                        >
+                        </p>
+                        <time className="keryi_barter_personal_view_details_matched_comment_list_itemContent_time">
+                            {moment(commentMatchedItem["createDate"]).fromNow()}
+                        </time>
+                    </article>
+                    <hr className="keryi_barter_personal_view_details_matched_comment_list_itemSection_wire"/>
+                </section>
+            )
+        });
+    }
+
+    /**
+     * keryi_barter主页面查看"以物换物"匹配资源评论区域评论列表
+     * @returns {*}
+     */
+    renderModalMatchedCommentList() {
+        const {
+            //查看"以物换物"匹配资源评论区域评论列表项
+            renderModalMatchedCommentListItem
+        } = this;
+        return (
+            <main className="keryi_barter_personal_view_details_matched_comment_list">
+                {renderModalMatchedCommentListItem.bind(this)()}
+            </main>
+        );
+    }
+
+    /**
+     * keryi_barter主页面查看"以物换物"匹配资源评论区域评论为空时的界面
+     * @returns {*}
+     */
+    renderModalMatchedCommentNone() {
+        return (
+            <main className="keryi_barter_personal_view_details_matched_comment_none">
+                <section className="keryi_barter_personal_view_details_matched_comment_none_container">
+                    <i className="iconfontKeryiBarter keryiBarter-cry"> </i>
+                    <dfn className="keryi_barter_personal_view_details_matched_comment_none_content">此资源暂无评论</dfn>
+                </section>
+            </main>
+        );
+    }
+
+    /**
      * render渲染keryi_barter个人信息页面匹配到的资源列表"以物换物"评论区域
      * @returns {XML}
      */
     renderMatchedModalComment() {
+        const {
+            //查看"以物换物"匹配资源评论区域评论列表
+            renderModalMatchedCommentList,
+            //查看"以物换物"匹配资源评论区域评论为空时的界面
+            renderModalMatchedCommentNone
+        } = this;
         const {
             //匹配资源评论详情
             commentMatched,
@@ -1215,6 +1295,9 @@ class PersonalView extends React.Component {
                         showTotal={total => `共 ${total} 条评论`}
                         total={commentMatchedTotal}
                     />
+                    {
+                        (commentMatchedList && commentMatchedList.length > 0) ? renderModalMatchedCommentList.bind(this)() : renderModalMatchedCommentNone.bind(this)()
+                    }
                 </article>
             </section>
         )
