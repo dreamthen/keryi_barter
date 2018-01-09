@@ -480,9 +480,12 @@
     overflow: auto;
 }
 
-.keryi_barter_personal_view_details_matched_comment_content > .keryi_barter_personal_view_details_matched_comment_none,
-.keryi_barter_personal_view_details_matched_comment_content > .keryi_barter_personal_view_details_matched_comment_list {
+.keryi_barter_personal_view_details_matched_comment_content > .keryi_barter_personal_view_details_matched_comment_none {
     height: 300px;
+}
+
+.keryi_barter_personal_view_details_matched_comment_content > .keryi_barter_personal_view_details_matched_comment_list {
+    height: auto;
 }
 
 .keryi_barter_personal_view_details_comment_list > .keryi_barter_personal_view_details_comment_list_itemSection,
@@ -539,6 +542,11 @@
 .keryi_barter_personal_view_details_matched_comment_list_itemSection > .keryi_barter_personal_view_details_matched_comment_list_itemSection_wire {
     border: none;
     border-top: 1px solid #e7e7e7;
+    margin: 6px auto 0 auto;
+}
+
+.keryi_barter_personal_view_details_matched_comment_list_itemSection > .keryi_barter_personal_view_details_matched_comment_list_itemSection_wireNone {
+    border: none;
     margin: 6px auto 0 auto;
 }
 

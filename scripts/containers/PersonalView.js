@@ -116,7 +116,9 @@ import {
     //获取个人资源列表滚动条初始距离顶部高度Action
     getPersonalResourcesListPaginationBeforeOsTopAction,
     //改变个人资源分页页码Action
-    changePersonalResourcesListPaginationCurrentAction
+    changePersonalResourcesListPaginationCurrentAction,
+    //改变匹配资源"评论"富文本编辑器编辑框内容Action
+    changePersonalMatchedResourcesListViewDetailsCommentAction
 } from "../actions/personalActions";
 import {
     paginationPlus,
@@ -1162,7 +1164,7 @@ class PersonalView extends React.Component {
      * keryi_barter主页面查看"以物换物"匹配资源评论区域评论列表项
      * @returns [{*}]
      */
-    renderModalMatchedCommentListItem(){
+    renderModalMatchedCommentListItem() {
         const {
             //匹配资源评论列表
             commentMatchedList
@@ -1171,6 +1173,7 @@ class PersonalView extends React.Component {
             //设置资源详情评论详情HTML文本
             setCommentListItemContentInnerHTML
         } = this;
+        let commentMatchedList_length = commentMatchedList.length;
         return commentMatchedList.map(function commentMatchedListItem(commentMatchedItem, commentMatchedIndex) {
             return (
                 <section
@@ -1195,7 +1198,11 @@ class PersonalView extends React.Component {
                             {moment(commentMatchedItem["createDate"]).fromNow()}
                         </time>
                     </article>
-                    <hr className="keryi_barter_personal_view_details_matched_comment_list_itemSection_wire"/>
+                    {
+                        commentMatchedIndex !== (commentMatchedList_length - 1) ?
+                            <hr className="keryi_barter_personal_view_details_matched_comment_list_itemSection_wire"/> :
+                            <hr className="keryi_barter_personal_view_details_matched_comment_list_itemSection_wireNone"/>
+                    }
                 </section>
             )
         });
@@ -1254,6 +1261,9 @@ class PersonalView extends React.Component {
             commentMatchedTotal,
             //改变匹配资源"评论"富文本编辑器编辑框内容
             changeMatchedCommentHandler,
+            //匹配资源"评论"富文本编辑器编辑框添加评论
+            doMatchedCommentHandler,
+            //点击匹配资源"评论"系统分页方法
             loadMatchedPageMore
         } = this.props;
         return (
@@ -1275,6 +1285,7 @@ class PersonalView extends React.Component {
                         size="default"
                         type="info"
                         className="keryi_barter_personal_view_details_matched_comment_submit_button"
+                        onClick={doMatchedCommentHandler.bind(this)}
                     >
                         评论
                     </Button>
@@ -1394,7 +1405,7 @@ class PersonalView extends React.Component {
                 {/*keryi_barter个人信息页面查看"以物换物"评论区域*/}
                 {renderModalComment.bind(this)()}
                 {/*keryi_barter个人信息页面匹配到的资源列表"以物换物"评论区域*/}
-                {renderMatchedModalComment.bind(this)()}
+                {isMatched && renderMatchedModalComment.bind(this)()}
             </Modal>
         )
     }
@@ -1799,6 +1810,9 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //个人页资源详情资源交换列表页码
                 itemCurrent
             } = this.props;
+            const {
+                userId: commentFrom
+            } = this.state;
             this.setState({
                 exchangeStatus: exchangeStatusConfig[0]["key"],
                 exchangeStatusText: exchangeStatusConfig[0]["value"],
@@ -1811,10 +1825,23 @@ function mapDispatchToProps(dispatch, ownProps) {
                     //个人信息资源详情资源交换列表状态切换标识
                     exchangeStatus
                 } = this.state;
+                //匹配资源评论列表页码设置为1
+                const commentMatchedCurrent = 1;
                 dispatch(getPersonalResourcesListViewDetailsItemList(itemCurrent, userId, id))
                     .then(function resolve(body) {
                         dispatch(getPersonalResourcesListViewDetailsItemListAction(body, true, exchangeStatus));
                         dispatch(rememberPersonalResourcesListViewDetailsMatchedItemListAction(body));
+                    }, function reject() {
+
+                    });
+                dispatch(getPersonalResourcesListViewDetailsCommentList(id, commentFrom, userId, commentMatchedCurrent))
+                    .then(function resolve(getComment) {
+                        dispatch(getPersonalResourcesListViewDetailsCommentListAction({
+                            commentMatchedList: getComment["list"],
+                            commentMatchedTotal: getComment["commentTotal"],
+                            commentMatched: "",
+                            commentMatchedCurrent
+                        }));
                     }, function reject() {
 
                     });
@@ -2327,6 +2354,43 @@ function mapDispatchToProps(dispatch, ownProps) {
          */
         changeMatchedCommentHandler(e) {
             let value = e.target.value;
+            dispatch(changePersonalMatchedResourcesListViewDetailsCommentAction(value));
+        },
+        /**
+         * 匹配资源"评论"富文本编辑器编辑框添加评论
+         * @param e
+         */
+        doMatchedCommentHandler(e) {
+            const {
+                //确认进行资源交换的匹配资源的用户id
+                matchedUserId: userId,
+                //确认进行资源交换的匹配资源id
+                matchedId: id,
+                //匹配资源评论详情
+                commentMatched
+            } = this.props;
+            const {
+                //用户登录的id
+                userId: commentFrom
+            } = this.state;
+            //匹配资源评论列表页码设置为1
+            const commentMatchedCurrent = 1;
+            dispatch(doPersonalResourcesListViewDetailsComment(id, commentFrom, userId, commentMatched))
+                .then(function resolve() {
+                    dispatch(getPersonalResourcesListViewDetailsCommentList(id, commentFrom, userId, commentMatchedCurrent))
+                        .then(function resolve(getComment) {
+                            dispatch(getPersonalResourcesListViewDetailsCommentListAction({
+                                commentMatchedList: getComment["list"],
+                                commentMatchedTotal: getComment["commentTotal"],
+                                commentMatched: "",
+                                commentMatchedCurrent
+                            }));
+                        }, function reject() {
+
+                        });
+                }, function reject() {
+
+                });
         },
         /**
          * 点击匹配资源"评论"系统分页方法
@@ -2334,7 +2398,27 @@ function mapDispatchToProps(dispatch, ownProps) {
          * @param pageSize
          */
         loadMatchedPageMore(page, pageSize) {
+            const {
+                //确认进行资源交换的匹配资源的用户id
+                matchedUserId: userId,
+                //确认进行资源交换的匹配资源id
+                matchedId: id
+            } = this.props;
+            const {
+                //用户登录的id
+                userId: commentFrom
+            } = this.state;
+            dispatch(getPersonalResourcesListViewDetailsCommentList(id, commentFrom, userId, page))
+                .then(function resolve(getComment) {
+                    dispatch(getPersonalResourcesListViewDetailsCommentListAction({
+                        commentMatchedList: getComment["list"],
+                        commentMatchedTotal: getComment["commentTotal"],
+                        commentMatched: "",
+                        commentMatchedCurrent: page
+                    }));
+                }, function reject() {
 
+                });
         }
     }
 }

@@ -612,6 +612,18 @@ export function changePersonalResourcesListViewDetailsCommentAction(payload) {
 }
 
 /**
+ * 改变匹配资源"评论"富文本编辑器编辑框内容Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function changePersonalMatchedResourcesListViewDetailsCommentAction(payload) {
+    return {
+        type: appActionsType["CHANGE_PERSONAL_MATCHED_RESOURCES_LIST_VIEW_DETAILS_COMMENT"],
+        payload
+    }
+}
+
+/**
  * 获取个人资源详情评论列表Action
  * @param payload
  * @returns {{type: *, payload: *}}

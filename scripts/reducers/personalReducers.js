@@ -289,6 +289,11 @@ export function personalReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 comment: newState
             });
+        //改变匹配资源"评论"富文本编辑器编辑框内容
+        case appActionsType["CHANGE_PERSONAL_MATCHED_RESOURCES_LIST_VIEW_DETAILS_COMMENT"]:
+            return insteadState.insteadObjState(state, {
+                commentMatched: newState
+            });
         //获取个人资源详情评论列表
         case appActionsType["GET_PERSONAL_RESOURCES_LIST_VIEW_DETAILS_COMMENT_LIST"]:
             return insteadState.insteadObjState(state, newState);
