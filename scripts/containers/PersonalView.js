@@ -1388,24 +1388,26 @@ class PersonalView extends React.Component {
             >
                 {/*keryi_barter个人信息页面查看控制"以物换物"资源详情评论区域或者资源详情区域的icon标识的显示和消失*/}
                 {hasCommentIcon && renderModalIconOrInformationComment.bind(this)()}
-                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框头部*/}
-                {renderModalHeader.bind(this)()}
-                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框资源统计*/}
-                {renderModalStatistics.bind(this)()}
-                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框图片轮播器*/}
-                {renderModalFigureCarousel.bind(this)()}
-                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框主体介绍*/}
-                {renderModalIntroduce.bind(this)()}
-                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框资源标签*/}
-                {renderModalTag.bind(this)()}
-                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框目标资源标签*/}
-                {renderModalTargetTag.bind(this)()}
-                {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框已交换的资源*/}
-                {renderModalItemCarousel.bind(this)()}
-                {/*keryi_barter个人信息页面查看"以物换物"评论区域*/}
-                {renderModalComment.bind(this)()}
-                {/*keryi_barter个人信息页面匹配到的资源列表"以物换物"评论区域*/}
-                {isMatched && renderMatchedModalComment.bind(this)()}
+                <section className="keryi_barter_personal_modal_view_details">
+                    {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框头部*/}
+                    {renderModalHeader.bind(this)()}
+                    {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框资源统计*/}
+                    {renderModalStatistics.bind(this)()}
+                    {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框图片轮播器*/}
+                    {renderModalFigureCarousel.bind(this)()}
+                    {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框主体介绍*/}
+                    {renderModalIntroduce.bind(this)()}
+                    {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框资源标签*/}
+                    {renderModalTag.bind(this)()}
+                    {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框目标资源标签*/}
+                    {renderModalTargetTag.bind(this)()}
+                    {/*keryi_barter个人信息页面查看"以物换物"资源详情对话框已交换的资源*/}
+                    {renderModalItemCarousel.bind(this)()}
+                    {/*keryi_barter个人信息页面查看"以物换物"评论区域*/}
+                    {renderModalComment.bind(this)()}
+                    {/*keryi_barter个人信息页面匹配到的资源列表"以物换物"评论区域*/}
+                    {isMatched && renderMatchedModalComment.bind(this)()}
+                </section>
             </Modal>
         )
     }
