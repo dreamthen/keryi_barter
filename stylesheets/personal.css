@@ -261,6 +261,7 @@
 }
 
 .keryi_barter_personal_modal_view_details_container .keryi_barter_personal_modal_view_details {
+    transition: all .5s ease-in-out 0s;
     overflow: auto;
     border-radius: 4px;
 }
