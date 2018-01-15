@@ -85,7 +85,8 @@
     height: 100%;
 }
 
-.keryi_barter_view_details_information > .keryi_barter_view_details_comment {
+.keryi_barter_view_details_information > .keryi_barter_view_details_comment,
+.keryi_barter_view_details_information > .keryi_barter_view_details_matched_resource_list {
     position: absolute;
     display: none;
     opacity: 0;
@@ -95,6 +96,10 @@
     z-index: 9914;
     transition: all .2s ease-in-out 0s;
     background-color: rgb(244, 244, 244);
+}
+
+.keryi_barter_view_details_information > .keryi_barter_view_details_matched_resource_list {
+    z-index: 9915;
 }
 
 .keryi_barter_view_details_comment .keryi_barter_view_details_comment_area {
@@ -278,11 +283,13 @@
     margin-top: 4px;
 }
 
-.keryi_barter_view_details_information > .keryi_barter_view_details_comment_appear {
+.keryi_barter_view_details_information > .keryi_barter_view_details_comment_appear,
+.keryi_barter_view_details_information > .keryi_barter_view_details_matched_resource_list_appear {
     opacity: 1;
 }
 
-.keryi_barter_view_details_information > .keryi_barter_view_details_comment_block {
+.keryi_barter_view_details_information > .keryi_barter_view_details_comment_block,
+.keryi_barter_view_details_information > .keryi_barter_view_details_matched_resource_list_block {
     display: block;
 }
 

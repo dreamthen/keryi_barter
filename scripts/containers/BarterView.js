@@ -62,6 +62,12 @@ const comment = "keryi_barter_view_details_comment";
 const commentAppearClass = "keryi_barter_view_details_comment keryi_barter_view_details_comment_block keryi_barter_view_details_comment_appear";
 //"以物换物"评论区域隐藏样式表
 const commentBlockClass = "keryi_barter_view_details_comment keryi_barter_view_details_comment_block";
+//进行资源交换，显示匹配的资源列表页面消失样式表
+const matchedResourceList = "keryi_barter_view_details_matched_resource_list";
+//进行资源交换，显示匹配的资源列表页面显示样式表
+const matchedResourceListAppearClass = "keryi_barter_view_details_matched_resource_list keryi_barter_view_details_matched_resource_list_block keryi_barter_view_details_matched_resource_list_appear";
+//进行资源交换，显示匹配的资源列表页面隐藏样式表
+const matchedResourceListBlockClass = "keryi_barter_view_details_matched_resource_list keryi_barter_view_details_matched_resource_list_block";
 const PAGE_SIZE = 10;
 //设置moment时间地区语言
 moment.locale('zh-cn');
@@ -117,6 +123,10 @@ class BarterView extends React.Component {
             commentAppear: false,
             //控制"以物换物"资源详情评论区域隐藏或者消失
             commentBlock: false,
+            //控制进行资源交换，显示匹配的资源列表页面显示或者隐藏
+            matchedResourceListAppear: false,
+            //控制进行资源交换，显示匹配的资源列表页面隐藏或者消失
+            matchedResourceListBlock: false,
             //控制"以物换物"资源详情评论区域或者资源详情区域的icon标识的显示和消失
             iconCommentOrInformation: false
         }
@@ -612,7 +622,9 @@ class BarterView extends React.Component {
             //keryi_barter主页面查看"以物换物"资源详情对话框目标资源标签
             renderModalTargetTag,
             //keryi_barter主页面查看"以物换物"评论区域
-            renderModalComment
+            renderModalComment,
+            //keryi_barter主页面进行资源交换，显示匹配的资源列表页面
+            renderModalMatchedResourceList
         } = this;
         return (
             <main
@@ -632,6 +644,8 @@ class BarterView extends React.Component {
                 {renderModalTargetTag.bind(this)()}
                 {/*keryi_barter主页面查看"以物换物"评论区域*/}
                 {renderModalComment.bind(this)()}
+                {/*keryi_barter主页面进行资源交换，显示匹配的资源列表页面*/}
+                {renderModalMatchedResourceList.bind(this)()}
             </main>
         )
     }
@@ -811,6 +825,34 @@ class BarterView extends React.Component {
     }
 
     /**
+     * keryi_barter主页面进行资源交换，显示匹配的资源列表页面显示、隐藏或者消失
+     */
+    modalMatchedResourceListClassToClass() {
+        const {
+            //控制进行资源交换，显示匹配的资源列表页面显示或者隐藏
+            matchedResourceListAppear,
+            //控制进行资源交换，显示匹配的资源列表页面隐藏或者消失
+            matchedResourceListBlock
+        } = this.state;
+        return matchedResourceListAppear ? matchedResourceListAppearClass : matchedResourceListBlock ? matchedResourceListBlockClass : matchedResourceList;
+    }
+
+    /**
+     * keryi_barter主页面进行资源交换，显示匹配的资源列表页面
+     */
+    renderModalMatchedResourceList() {
+        const {
+            //keryi_barter主页面进行资源交换，显示匹配的资源列表页面显示、隐藏或者消失
+            modalMatchedResourceListClassToClass
+        } = this;
+        return (
+            <section className={modalMatchedResourceListClassToClass.bind(this)()}>
+
+            </section>
+        )
+    }
+
+    /**
      * keryi_barter主页面查看"以物换物"资源详情对话框
      * @returns {XML}
      */
@@ -826,6 +868,8 @@ class BarterView extends React.Component {
             viewBarterVisible
         } = this.state;
         const {
+            //点击资源交换按钮，获取用户个人的资源匹配列表
+            okBarterMatchedListHandler,
             //控制Modal组件对话框隐藏并消失
             closeBarterVisibleHandler
         } = this.props;
@@ -839,6 +883,7 @@ class BarterView extends React.Component {
                 okText="资源交换"
                 closeText="关闭"
                 className="keryi_barter_modal_view_details_container"
+                onOk={okBarterMatchedListHandler.bind(this)}
                 onClose={closeBarterVisibleHandler.bind(this)}
             >
                 {/*keryi_barter主页面查看控制"以物换物"资源详情评论区域或者资源详情区域的icon标识的显示和消失*/}
@@ -973,6 +1018,12 @@ function mapDispatchToProps(dispatch, ownProps) {
          */
         getResourcesListPaginationBeforeOsTopHandler(beforeOsTop) {
             dispatch(getResourcesListPaginationBeforeOsTopAction(beforeOsTop));
+        },
+        /**
+         * 点击资源交换按钮，获取用户个人的资源匹配列表
+         */
+        okBarterMatchedListHandler() {
+
         },
         /**
          * 控制Modal组件对话框隐藏并消失
