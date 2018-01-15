@@ -837,6 +837,7 @@ class BarterView extends React.Component {
         return matchedResourceListAppear ? matchedResourceListAppearClass : matchedResourceListBlock ? matchedResourceListBlockClass : matchedResourceList;
     }
 
+
     /**
      * keryi_barter主页面进行资源交换，显示匹配的资源列表页面
      */
@@ -853,6 +854,62 @@ class BarterView extends React.Component {
     }
 
     /**
+     * 点击资源交换按钮，获取用户个人的资源匹配列表控制器
+     */
+    * changeOkBarterMatchedListGenerator() {
+        const {
+            //点击资源交换按钮，获取用户个人的资源匹配列表
+            okBarterMatchedListHandler
+        } = this.props;
+        yield this.setState({
+            matchedResourceListBlock: true
+        });
+        yield okBarterMatchedListHandler.bind(this)();
+        //FIXME 这里设置一个时间控制器,在设置进行资源交换，显示匹配的资源列表页面由消失到隐藏之后，延迟100ms设置进行资源交换，显示匹配的资源列表页面由隐藏到显示
+        yield setTimeout(function timer() {
+            this.setState({
+                matchedResourceListAppear: true
+            });
+        }.bind(this), 100);
+    }
+
+    /**
+     * 控制点击资源交换按钮，获取用户个人的资源匹配列表
+     */
+    changeOkBarterMatchedList() {
+        const {
+            //点击资源交换按钮，获取用户个人的资源匹配列表控制器
+            changeOkBarterMatchedListGenerator
+        } = this;
+        let barterMatchedListGenerator = changeOkBarterMatchedListGenerator.bind(this)();
+        let barterMatchedListGeneratorDone = barterMatchedListGenerator.next().done;
+        while (!barterMatchedListGeneratorDone) {
+            barterMatchedListGeneratorDone = barterMatchedListGenerator.next().done;
+        }
+    }
+
+    backToBarterListDetail() {
+
+    }
+
+    /**
+     * keryi_barter主页面查看控制点击资源交换按钮，获取用户个人的资源匹配列表的icon显示和消失
+     * @returns {XML}
+     */
+    renderModalIconMatchedResourceList() {
+        const {
+            backToBarterListDetail
+        } = this;
+        return <i
+            className="iconfontKeryiBarter keryiBarter-back"
+            title="返回"
+            onClick={backToBarterListDetail.bind(this)}
+        >
+
+        </i>
+    }
+
+    /**
      * keryi_barter主页面查看"以物换物"资源详情对话框
      * @returns {XML}
      */
@@ -861,15 +918,19 @@ class BarterView extends React.Component {
             //keryi_barter主页面查看"以物换物"资源详情
             renderModalInformation,
             //keryi_barter主页面查看控制"以物换物"资源详情评论区域或者资源详情区域的icon标识的显示和消失
-            renderModalIconOrInformationComment
+            renderModalIconOrInformationComment,
+            //keryi_barter主页面查看控制点击资源交换按钮，获取用户个人的资源匹配列表的icon显示和消失
+            renderModalIconMatchedResourceList,
+            //控制点击资源交换按钮，获取用户个人的资源匹配列表
+            changeOkBarterMatchedList
         } = this;
         const {
             //控制Modal组件对话框显示、隐藏或者消失
-            viewBarterVisible
+            viewBarterVisible,
+            //控制进行资源交换，显示匹配的资源列表页面隐藏或者消失
+            matchedResourceListBlock
         } = this.state;
         const {
-            //点击资源交换按钮，获取用户个人的资源匹配列表
-            okBarterMatchedListHandler,
             //控制Modal组件对话框隐藏并消失
             closeBarterVisibleHandler
         } = this.props;
@@ -883,11 +944,11 @@ class BarterView extends React.Component {
                 okText="资源交换"
                 closeText="关闭"
                 className="keryi_barter_modal_view_details_container"
-                onOk={okBarterMatchedListHandler.bind(this)}
+                onOk={changeOkBarterMatchedList.bind(this)}
                 onClose={closeBarterVisibleHandler.bind(this)}
             >
                 {/*keryi_barter主页面查看控制"以物换物"资源详情评论区域或者资源详情区域的icon标识的显示和消失*/}
-                {renderModalIconOrInformationComment.bind(this)()}
+                {!matchedResourceListBlock ? renderModalIconOrInformationComment.bind(this)() : renderModalIconMatchedResourceList.bind(this)()}
                 <section className="keryi_barter_modal_view_details">
                     {/*keryi_barter主页面查看"以物换物"资源详情*/}
                     {renderModalInformation.bind(this)()}

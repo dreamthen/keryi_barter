@@ -311,7 +311,8 @@
 }
 
 .keryi_barter_modal_view_details_container i.keryiBarter-comment,
-.keryi_barter_modal_view_details_container i.keryiBarter-moreInformation {
+.keryi_barter_modal_view_details_container i.keryiBarter-moreInformation,
+.keryi_barter_modal_view_details_container i.keryiBarter-back {
     position: absolute;
     top: 10px;
     left: 15px;
@@ -324,8 +325,13 @@
     font-size: 18px;
 }
 
+.keryi_barter_modal_view_details_container i.keryiBarter-back {
+    font-size: 14px;
+}
+
 .keryi_barter_modal_view_details_container i.keryiBarter-comment:after,
-.keryi_barter_modal_view_details_container i.keryiBarter-moreInformation:after {
+.keryi_barter_modal_view_details_container i.keryiBarter-moreInformation:after,
+.keryi_barter_modal_view_details_container i.keryiBarter-back:after {
     content: '评论';
     font-size: 14px;
     position: relative;
@@ -336,6 +342,12 @@
 .keryi_barter_modal_view_details_container i.keryiBarter-moreInformation:after {
     content: '资源详情';
     bottom: 2px;
+}
+
+.keryi_barter_modal_view_details_container i.keryiBarter-back:after {
+    content: '返回';
+    bottom: 0;
+    left: 0;
 }
 
 .keryi_barter_view_details_head > .keryi_barter_view_details_head_portrait {
