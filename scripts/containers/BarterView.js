@@ -879,10 +879,10 @@ class BarterView extends React.Component {
                     >
                         {item["title"]}
                     </h4>
-                    <p  title={item["intro"]}
-                        className="keryi_barter_modal_view_details_matched_resource_listItem_content_paragraph"
+                    <p title={item["intro"]}
+                       className="keryi_barter_modal_view_details_matched_resource_listItem_content_paragraph"
                     >
-                        最近，国土资源部部长姜大明的一段话引起舆论高度关注：我国将研究制定权属不变、符合规划条件下，非房地产企业依法取得使用权的土地作为住宅用地的办法，深化利用农村集体经营性建设用地建设租赁住房试点，推动建立多主体供应、多渠道保障租购并举的住房制度，让全体人民住有所居。
+                        {item["intro"]}
                     </p>
                 </main>
             </section>

@@ -357,6 +357,11 @@
     color: #999;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-line-clamp: 2;
+    margin-top: 5px;
 }
 
 .keryi_barter_modal_view_details_container .keryi_barter_view_details_head,
