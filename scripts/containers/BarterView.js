@@ -18,6 +18,10 @@ import moment from "moment";
 import {
     //获取资源列表Action
     getResourcesList,
+    //获取个人匹配资源列表
+    getPersonalMatchedResourceList,
+    //获取个人匹配资源列表Action
+    getPersonalMatchedResourceListAction,
     //获取资源列表Action
     getResourcesListAction,
     //分页获取资源列表Action
@@ -76,8 +80,12 @@ class BarterView extends React.Component {
     static propTypes = {
         //获取资源数据列表
         list: PropTypes.array,
+        //获取个人匹配资源列表
+        matchedList: PropTypes.array,
         //资源数据列表页码
         current: PropTypes.number,
+        //个人匹配资源列表页码
+        matchedCurrent: PropTypes.number,
         //资源数据列表下拉分页防并发变量
         currentAsync: PropTypes.bool,
         //评论详情
@@ -837,18 +845,72 @@ class BarterView extends React.Component {
         return matchedResourceListAppear ? matchedResourceListAppearClass : matchedResourceListBlock ? matchedResourceListBlockClass : matchedResourceList;
     }
 
+    /**
+     * keryi_barter主页面显示匹配的资源列表项
+     * @param item
+     * @param index
+     * @returns {XML}
+     */
+    renderModalMatchedResourceListItem(item, index) {
+        const {
+            //用户登录的id
+            userId
+        } = this.state;
+        return (
+            <section
+                key={index}
+                className="keryi_barter_modal_view_details_matched_resource_listItem"
+            >
+                <header className="keryi_barter_modal_view_details_matched_resource_listItem_header">
+                    <figure className="keryi_barter_modal_view_details_matched_resource_listItem_avatarArea">
+                        <i className="keryi_barter_modal_view_details_matched_resource_listItem_avatar"
+                           style={{background: `url(${api.GET_PERSONAL_AVATAR}/${userId}/avatar) no-repeat center center / 100% border-box content-box`}}
+                        >
+
+                        </i>
+                    </figure>
+                    <section className="keryi_barter_modal_view_details_matched_resource_listItem_title">
+                        <h3>{item["user"]["username"]}</h3>
+                    </section>
+                </header>
+                <main className="keryi_barter_modal_view_details_matched_resource_listItem_content">
+                    <h4 title={item["title"]}
+                        className="keryi_barter_modal_view_details_matched_resource_listItem_content_title"
+                    >
+                        {item["title"]}
+                    </h4>
+                    <p  title={item["intro"]}
+                        className="keryi_barter_modal_view_details_matched_resource_listItem_content_paragraph"
+                    >
+                        最近，国土资源部部长姜大明的一段话引起舆论高度关注：我国将研究制定权属不变、符合规划条件下，非房地产企业依法取得使用权的土地作为住宅用地的办法，深化利用农村集体经营性建设用地建设租赁住房试点，推动建立多主体供应、多渠道保障租购并举的住房制度，让全体人民住有所居。
+                    </p>
+                </main>
+            </section>
+        )
+    }
 
     /**
      * keryi_barter主页面进行资源交换，显示匹配的资源列表页面
+     * @returns {XML}
      */
     renderModalMatchedResourceList() {
         const {
             //keryi_barter主页面进行资源交换，显示匹配的资源列表页面显示、隐藏或者消失
-            modalMatchedResourceListClassToClass
+            modalMatchedResourceListClassToClass,
+            //keryi_barter主页面显示匹配的资源列表项
+            renderModalMatchedResourceListItem
         } = this;
+        const {
+            //获取个人匹配资源列表
+            matchedList
+        } = this.props;
         return (
             <section className={modalMatchedResourceListClassToClass.bind(this)()}>
-
+                {
+                    (matchedList && matchedList.length > 0) ? matchedList.map(function matched(matchedItem, matchedIndex) {
+                        return renderModalMatchedResourceListItem.bind(this)(matchedItem, matchedIndex);
+                    }.bind(this)) : ""
+                }
             </section>
         )
     }
@@ -888,8 +950,23 @@ class BarterView extends React.Component {
         }
     }
 
+    /**
+     * 点击返回按钮,返回到资源详情页面
+     */
     backToBarterListDetail() {
-
+        this.setState({
+            iconCommentOrInformation: false,
+            commentAppear: false,
+            matchedResourceListAppear: false
+        }, () => {
+            //FIXME 这里设置一个时间控制器,在设置进行资源交换，显示匹配的资源列表页面执行由显示到隐藏的动画之后，延迟200ms设置进行资源交换，显示匹配的资源列表页面由隐藏到消失，在设置"以物换物"评论区域执行由显示到隐藏的动画之后，延迟200ms设置"以物换物"评论区域由隐藏到消失
+            setTimeout(function timer() {
+                this.setState({
+                    commentBlock: false,
+                    matchedResourceListBlock: false
+                });
+            }.bind(this), 200);
+        });
     }
 
     /**
@@ -1084,7 +1161,20 @@ function mapDispatchToProps(dispatch, ownProps) {
          * 点击资源交换按钮，获取用户个人的资源匹配列表
          */
         okBarterMatchedListHandler() {
+            const {
+                //用户登录的id
+                userId
+            } = this.state;
+            const {
+                //个人匹配资源列表页码
+                matchedCurrent
+            } = this.props;
+            dispatch(getPersonalMatchedResourceList(matchedCurrent, userId))
+                .then(function resolve(body) {
+                    dispatch(getPersonalMatchedResourceListAction(body));
+                }, function reject() {
 
+                });
         },
         /**
          * 控制Modal组件对话框隐藏并消失

@@ -5,6 +5,8 @@
 const appActionsType = {
     //获取资源列表Action名称
     GET_RESOURCE_LIST: "GET_RESOURCE_LIST",
+    //获取个人匹配资源列表Action名称
+    GET_PERSONAL_MATCHED_RESOURCE_LIST: "GET_PERSONAL_MATCHED_RESOURCE_LIST",
     //分页获取资源列表Action名称
     GET_RESOURCE_LIST_BY_PAGINATION: "GET_RESOURCE_LIST_BY_PAGINATION",
     //获取资源详情Action名称

@@ -4,6 +4,7 @@
 //导入app页面action类型
 import appActionsType from "../actions/appActionsType";
 import insteadState from "../configs/insteadState";
+import PropTypes from "prop-types";
 
 //改变资源列表分页页码:分页+1
 export const paginationPlus = "plus";
@@ -13,8 +14,12 @@ export const paginationMinus = "minus";
 const defaultState = {
     //获取资源数据列表
     list: [],
+    //获取个人匹配资源列表
+    matchedList: [],
     //资源数据列表页码
     current: 1,
+    //个人匹配资源列表页码
+    matchedCurrent: 1,
     //资源数据列表下拉分页防并发变量
     currentAsync: true,
     //评论详情
@@ -67,6 +72,11 @@ export function barterReducers(state = defaultState, actions) {
         case appActionsType["GET_RESOURCE_LIST"]:
             return insteadState.insteadObjState(state, {
                 list: newState
+            });
+        //获取个人匹配资源列表
+        case appActionsType["GET_PERSONAL_MATCHED_RESOURCE_LIST"]:
+            return insteadState.insteadObjState(state, {
+                matchedList: newState
             });
         //改变资源列表分页页码
         case appActionsType["GET_RESOURCE_LIST_BY_PAGINATION"]:

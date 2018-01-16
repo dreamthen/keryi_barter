@@ -41,6 +41,36 @@ export function getResourcesList(pageNum) {
 }
 
 /**
+ * 获取个人匹配资源列表
+ * @param pageNum
+ * @param userId
+ * @returns {function(this:getResourcesList)}
+ */
+export function getPersonalMatchedResourceList(pageNum, userId) {
+    return function dispatcher(dispatch) {
+        return new Promise(function promise(resolve, reject) {
+            keryiAxiosConfig.axiosRequest(
+                api.GET_RESOURCE_LIST,
+                "get",
+                {
+                    pageNum,
+                    pageSize: PAGE_SIZE,
+                    userId
+                },
+                function done(response) {
+                    //服务器响应body主体对象
+                    let body = response;
+                    body && body.length > 0 ? resolve(body) : reject();
+                }.bind(this),
+                function error(response) {
+
+                }.bind(this)
+            );
+        });
+    }.bind(this);
+}
+
+/**
  * 获取资源详情
  * @param resourceId
  */
@@ -195,6 +225,18 @@ export function doResourcesListViewDetailsComment(resourceId, commentFrom, comme
 export function getResourcesListAction(payload) {
     return {
         type: appActionsType["GET_RESOURCE_LIST"],
+        payload
+    }
+}
+
+/**
+ * 获取个人匹配资源列表Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function getPersonalMatchedResourceListAction(payload) {
+    return {
+        type: appActionsType["GET_PERSONAL_MATCHED_RESOURCE_LIST"],
         payload
     }
 }

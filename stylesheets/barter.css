@@ -293,6 +293,72 @@
     display: block;
 }
 
+.keryi_barter_view_details_matched_resource_list > .keryi_barter_modal_view_details_matched_resource_listItem {
+    padding: 8px 15px;
+    background-color: #fff;
+    margin-top: 12px;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .1);
+}
+
+.keryi_barter_view_details_matched_resource_list > .keryi_barter_modal_view_details_matched_resource_listItem:first-child {
+    margin: 0;
+}
+
+.keryi_barter_modal_view_details_matched_resource_listItem > .keryi_barter_modal_view_details_matched_resource_listItem_header {
+    *zoom: 1;
+}
+
+.keryi_barter_modal_view_details_matched_resource_listItem > .keryi_barter_modal_view_details_matched_resource_listItem_header:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.keryi_barter_modal_view_details_matched_resource_listItem_header > .keryi_barter_modal_view_details_matched_resource_listItem_avatarArea {
+    float: left;
+    margin-right: 15px;
+}
+
+.keryi_barter_modal_view_details_matched_resource_listItem_avatarArea > i.keryi_barter_modal_view_details_matched_resource_listItem_avatar {
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+
+.keryi_barter_modal_view_details_matched_resource_listItem > .keryi_barter_modal_view_details_matched_resource_listItem_title {
+    display: table-cell;
+    width: 2000px;
+    *display: inline-block;
+    *width: auto;
+}
+
+.keryi_barter_modal_view_details_matched_resource_listItem_title > h3 {
+    font-size: 14px;
+    font-weight: bolder;
+    line-height: 2.8571;
+}
+
+.keryi_barter_modal_view_details_matched_resource_listItem > .keryi_barter_modal_view_details_matched_resource_listItem_content {
+    font-size: 14px;
+    line-height: 1.4286;
+    margin-top: 10px;
+}
+
+.keryi_barter_modal_view_details_matched_resource_listItem_content > h4.keryi_barter_modal_view_details_matched_resource_listItem_content_title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.keryi_barter_modal_view_details_matched_resource_listItem_content > .keryi_barter_modal_view_details_matched_resource_listItem_content_paragraph {
+    font-size: 12px;
+    max-height: 36px;
+    line-height: 1.5;
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .keryi_barter_modal_view_details_container .keryi_barter_view_details_head,
 .keryi_barter_modal_view_details_container .keryi_barter_view_details_figure_carousel,
 .keryi_barter_modal_view_details_container .keryi_barter_view_details_introduce,
@@ -327,6 +393,7 @@
 
 .keryi_barter_modal_view_details_container i.keryiBarter-back {
     font-size: 14px;
+    top: 12px;
 }
 
 .keryi_barter_modal_view_details_container i.keryiBarter-comment:after,

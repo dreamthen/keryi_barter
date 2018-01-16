@@ -120,9 +120,8 @@
     width: calc(100% - 55px);
 }
 
-.keryi_barter_modal_asideSourceMain > .keryi_barter_modal_asideIntroduce,
-.keryi_barter_modal_asideSourceMain > .keryi_barter_modal_asideStatistics {
-    margin-top: 2px;
+.keryi_barter_modal_asideSourceMain > .keryi_barter_modal_asideIntroduce {
+    margin-top: 6px;
 }
 
 .keryi_barter_modal_asideSourceMain > .keryi_barter_modal_asideStatistics {
@@ -143,7 +142,8 @@
 }
 
 .keryi_barter_modal_asideSourceMain > .keryi_barter_modal_asideIntroduce > p {
-    font-size: 14px;
+    font-size: 12px;
+    color: #63A8F0;
 }
 
 .keryi_barter_modal_asideStatistics > .keryi_barter_modal_asideStatistics_ulList {
@@ -175,6 +175,10 @@
 
 .keryi_barter_modal_asideStatistics_ulList > li > i.keryiBarter-priceWorth {
     font-size: 12px;
+}
+
+.keryi_barter_modal_asideStatistics_ulList > li > i.keryiBarter-like {
+    top: 1px;
 }
 
 .keryi_barter_modal_asideStatistics_ulList .keryi_barter_modal_asideStatistics_description {
