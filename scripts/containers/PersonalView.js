@@ -1378,7 +1378,9 @@ class PersonalView extends React.Component {
                 backDfn="我的资源"
                 closable
                 footer={viewDetailFooter}
+                showOk
                 okText="资源交换"
+                showClose
                 closeText="关闭"
                 className="keryi_barter_personal_modal_view_details_container"
                 onAsideSelect={viewPersonalKeryiBarterModalHandler.bind(this)}

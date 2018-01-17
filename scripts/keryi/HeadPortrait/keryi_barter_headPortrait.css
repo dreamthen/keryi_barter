@@ -11,3 +11,11 @@
 .keryi_barter_portrait_add {
     box-shadow: 0 0 0 2px rgb(255, 255, 255);
 }
+
+.keryi_barter_portrait_circular {
+    border-radius: 50%;
+}
+
+.keryi_barter_portrait_square {
+    border-radius: 0;
+}

@@ -77,8 +77,12 @@ class Modal extends React.Component {
         asideStatisticsConfig: PropTypes.array,
         //Modal组件对话框是否显示footer底部区域(包括取消按钮和确定按钮)
         footer: PropTypes.bool,
+        //Modal组件对话框是否显示footer底部区域确定按钮
+        showOk: PropTypes.bool,
         //Modal组件对话框footer底部区域确定按钮文本
         okText: PropTypes.string,
+        //Modal组件对话框是否显示footer底部区域取消按钮
+        showClose: PropTypes.bool,
         //Modal组件对话框footer底部区域取消按钮文本
         closeText: PropTypes.string
     };
@@ -369,28 +373,36 @@ class Modal extends React.Component {
             //对话框footer底部区域确定按钮文本
             okText,
             //对话框footer底部区域取消按钮文本
-            closeText
+            closeText,
+            //对话框是否显示footer底部区域确定按钮
+            showOk,
+            //对话框是否显示footer底部区域取消按钮
+            showClose
         } = this.props;
         return (
             <footer className="keryi_barter_modal_foot">
-                <section className="keryi_barter_modal_close">
-                    <Button
-                        type="default"
-                        className="keryi_barter_button_close"
-                        onClick={onCloseHandler.bind(this)}
-                    >
-                        {closeText ? closeText : defaultCloseText}
-                    </Button>
-                </section>
-                <section className="keryi_barter_modal_publish">
-                    <Button
-                        type="primary"
-                        className="keryi_barter_button_publish"
-                        onClick={onOkHandler.bind(this)}
-                    >
-                        {okText ? okText : defaultOkText}
-                    </Button>
-                </section>
+                {
+                    showClose && <section className="keryi_barter_modal_close">
+                        <Button
+                            type="default"
+                            className="keryi_barter_button_close"
+                            onClick={onCloseHandler.bind(this)}
+                        >
+                            {closeText ? closeText : defaultCloseText}
+                        </Button>
+                    </section>
+                }
+                {
+                    showOk && <section className="keryi_barter_modal_publish">
+                        <Button
+                            type="primary"
+                            className="keryi_barter_button_publish"
+                            onClick={onOkHandler.bind(this)}
+                        >
+                            {okText ? okText : defaultOkText}
+                        </Button>
+                    </section>
+                }
             </footer>
         )
     }

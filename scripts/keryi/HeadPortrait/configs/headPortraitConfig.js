@@ -9,5 +9,5 @@ const headPortraitConfig = {
     headPortraitAdd: "keryi_barter_portrait_add"
 };
 
-//导出HeadPortrait组件头像
+//导出HeadPortrait组件头像样式表配置
 export default headPortraitConfig;

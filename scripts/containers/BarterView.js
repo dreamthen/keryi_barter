@@ -60,6 +60,7 @@ import {
 //资源统计静态Mode配置
 import viewDetailsStatisticsConfig from "../configs/viewDetailsStatisticsConfig";
 import "../../stylesheets/barter.css";
+import statisticsConfig from "../configs/statisticsConfig";
 //"以物换物"评论区域消失样式表
 const comment = "keryi_barter_view_details_comment";
 //"以物换物"评论区域显示样式表
@@ -863,14 +864,39 @@ class BarterView extends React.Component {
             >
                 <header className="keryi_barter_modal_view_details_matched_resource_listItem_header">
                     <figure className="keryi_barter_modal_view_details_matched_resource_listItem_avatarArea">
-                        <i className="keryi_barter_modal_view_details_matched_resource_listItem_avatar"
-                           style={{background: `url(${api.GET_PERSONAL_AVATAR}/${userId}/avatar) no-repeat center center / 100% border-box content-box`}}
-                        >
-
-                        </i>
+                        <HeadPortrait
+                            type="square"
+                            headPortrait={`${api.GET_PERSONAL_AVATAR}/${userId}/avatar`}
+                            borderJudgement={false}
+                        />
                     </figure>
-                    <section className="keryi_barter_modal_view_details_matched_resource_listItem_title">
-                        <h3>{item["user"]["username"]}</h3>
+                    <section className="keryi_barter_modal_view_details_matched_resource_listItem_nav">
+                        <h3 className="keryi_barter_modal_view_details_matched_resource_listItem_userName">
+                            {item["user"]["username"]}
+                        </h3>
+                        <ul className="keryi_barter_modal_view_details_matched_resource_listItem_uiList">
+                            {
+                                viewDetailsStatisticsConfig.map((statisticsItem, statisticsIndex) => {
+                                    return (
+                                        <li key={statisticsItem["key"]}>
+                                            <i data-description={`${item[statisticsItem["source"]]} ${statisticsItem["title"]}`}
+                                               className={statisticsItem["className"]}
+                                            >
+                                            </i>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                        <aside className="keryi_barter_modal_view_details_matched_resource_buttonArea">
+                            <Button
+                                type="info"
+                                size="default"
+                                className="keryi_barter_modal_view_details_matched_resource_button"
+                            >
+                                选择交换
+                            </Button>
+                        </aside>
                     </section>
                 </header>
                 <main className="keryi_barter_modal_view_details_matched_resource_listItem_content">
@@ -884,6 +910,12 @@ class BarterView extends React.Component {
                     >
                         {item["intro"]}
                     </p>
+                    <figure
+                        className="keryi_barter_modal_view_details_matched_resource_listItem_content_imagesArea"
+                        style={{background: `url(${eval(item["imgUrls"])[0]["src"]}) no-repeat center center / 100% border-box content-box`}}
+                    >
+
+                    </figure>
                 </main>
             </section>
         )
@@ -1018,7 +1050,9 @@ class BarterView extends React.Component {
                 aside={false}
                 closable
                 footer
+                showOk={!matchedResourceListBlock}
                 okText="资源交换"
+                showClose
                 closeText="关闭"
                 className="keryi_barter_modal_view_details_container"
                 onOk={changeOkBarterMatchedList.bind(this)}
@@ -1190,6 +1224,8 @@ function mapDispatchToProps(dispatch, ownProps) {
                     this.setState({
                         commentAppear: false,
                         commentBlock: false,
+                        matchedResourceListAppear: false,
+                        matchedResourceListBlock: false,
                         iconCommentOrInformation: false
                     });
                 }, 1000);

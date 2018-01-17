@@ -623,7 +623,9 @@ class AppView extends React.Component {
                 width={540}
                 aside={false}
                 title={username}
+                showOk
                 okText="发布"
+                showClose
                 closeText="关闭"
                 headPortrait={avatar ? avatar : "/images/keryiBarter_v.png"}
                 onOk={addBarterOkHandler.bind(this)}
