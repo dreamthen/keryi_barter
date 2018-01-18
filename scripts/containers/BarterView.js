@@ -4,6 +4,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {browserHistory} from "react-router";
 import {
     Area,
     Button,
@@ -46,6 +47,10 @@ import {
     getResourcesListViewDetailsCommentListAction
 } from "../actions/barterActions";
 import {
+    //个人信息页面发起资源交换
+    havePersonalResourcesExchange
+} from "../actions/personalActions";
+import {
     //校验字段undefined和null,进行处理
     checkField
 } from "../configs/checkField";
@@ -60,7 +65,7 @@ import {
 //资源统计静态Mode配置
 import viewDetailsStatisticsConfig from "../configs/viewDetailsStatisticsConfig";
 import "../../stylesheets/barter.css";
-import statisticsConfig from "../configs/statisticsConfig";
+
 //"以物换物"评论区域消失样式表
 const comment = "keryi_barter_view_details_comment";
 //"以物换物"评论区域显示样式表
@@ -857,6 +862,10 @@ class BarterView extends React.Component {
             //用户登录的id
             userId
         } = this.state;
+        const {
+            //选择用户匹配的资源进行资源交换
+            chooseMatchedResourceChange
+        } = this.props;
         return (
             <section
                 key={index}
@@ -893,6 +902,7 @@ class BarterView extends React.Component {
                                 type="info"
                                 size="default"
                                 className="keryi_barter_modal_view_details_matched_resource_button"
+                                onClick={chooseMatchedResourceChange.bind(this, item)}
                             >
                                 选择交换
                             </Button>
@@ -1327,6 +1337,40 @@ function mapDispatchToProps(dispatch, ownProps) {
          */
         onLikeHandler() {
 
+        },
+        /**
+         * 选择用户匹配的资源进行资源交换
+         * @param keryiCard
+         * @param e
+         */
+        chooseMatchedResourceChange(keryiCard, e) {
+            const {
+                //用户登录的id
+                userId
+            } = this.state;
+            const {
+                //资源ID
+                viewDetailId,
+                //资源发起人ID
+                viewDetailUserId
+            } = this.props;
+            dispatch(havePersonalResourcesExchange({
+                initiativeResourceId: keryiCard["id"],
+                passiveResourceId: viewDetailId,
+                initiativeUserId: userId,
+                passiveUserId: viewDetailUserId
+            })).then(function resolve() {
+                browserHistory.push({
+                    pathname: "personal",
+                    state: {
+                        keryiCard
+                    }
+                });
+            }.bind(this), function reject() {
+
+            }.bind(this));
+            //取消冒泡
+            e && e.nativeEvent.stopImmediatePropagation();
         }
     }
 }

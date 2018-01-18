@@ -13,14 +13,14 @@ import PersonalView from "../containers/PersonalView";
 const routesMode = [
     //barter资源列表路由路径和路由组件BarterView
     {
-        path: "/barter",
+        path: "barter",
         component: BarterView,
         icon: "iconfontKeryiBarter keryiBarter-barterHome",
         title: "首页"
     },
     //personal个人信息路由路径和路由组件PersonalView
     {
-        path: "/personal",
+        path: "personal",
         component: PersonalView,
         icon: "iconfontKeryiBarter keryiBarter-barterPersonal",
         title: "个人信息"

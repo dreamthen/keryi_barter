@@ -39,6 +39,8 @@ const defaultState = {
     avatar: checkField(userLoginInformation, "avatar"),
     //用户是否可以对自己的头像和背景进行编辑的标识位
     editAppearance: false,
+    //是否首页选择交换匹配的匹配资源标识位
+    isBrowserMatched: true,
     //用户登录的个性签名
     motto: checkField(userLoginInformation, "motto"),
     //判断个人信息是否可编辑

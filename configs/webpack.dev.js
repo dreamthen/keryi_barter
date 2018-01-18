@@ -191,7 +191,8 @@ const keryi_dev_config = {
                 //可跨域联调后台接口
                 changeOrigin: true
             }
-        }
+        },
+        historyApiFallback: true
     }
 };
 

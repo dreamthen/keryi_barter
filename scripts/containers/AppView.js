@@ -234,7 +234,7 @@ class AppView extends React.Component {
                                         className="keryi_barter_navItem"
                                     >
                                         <Link
-                                            to={routeItem["path"]}
+                                            to={`/${routeItem["path"]}`}
                                             activeClassName="keryi_barter_navActiveItem"
                                         >
                                             <i className={routeItem["icon"]}>

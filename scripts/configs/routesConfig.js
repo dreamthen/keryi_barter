@@ -14,7 +14,7 @@ const routes = (
         component={AppView}
     >
         {/*自动跳转默认路由路径:集成的keryi_barter路由路径的第一个数组元素的path属性:/barter*/}
-        <IndexRedirect to={`${routesMode[0]["path"]}(/:name)`}/>
+        <IndexRedirect to={`/${routesMode[0]["path"]}(/:name)`}/>
         {
             //集成的keryi_barter路由路径以及路由组件遍历,返回子路由的配置(子路由路径和路由组件BarterView)
             routesMode.map((routeItem, routeIndex) => {

@@ -167,6 +167,8 @@ class PersonalView extends React.Component {
         avatar: PropTypes.string,
         //用户是否可以对自己的头像和背景进行编辑的标识位
         editAppearance: PropTypes.bool,
+        //是否首页选择交换匹配的匹配资源标识位
+        isBrowserMatched: PropTypes.bool,
         //用户登录的个性签名
         motto: PropTypes.string,
         //获取个人页资源数据列表
@@ -306,12 +308,18 @@ class PersonalView extends React.Component {
             //获取资源数据列表、个人信息以及添加个人信息和个人资源分页滚动事件控制器
             getPersonalResourceInformationAndAddScrollEventGenerator
         } = this;
+        const {
+            //控制Modal组件对话框显示,获取个人信息页面资源详情
+            viewPersonalKeryiBarterHandler
+        } = this.props;
+        //获取browserHistory传递过来的参数
+        const keryiCard = this.props.location.state && this.props.location.state["keryiCard"];
         //获取到滚动条距离顶部的高度
-        let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        //个人信息容器距离顶部的高度
-        let mainInformationTop = this.refs["mainInformation"].getBoundingClientRect().top;
-        //获取到个人信息容器距离顶部的绝对位置
-        let absoluteTop = scrollTop + mainInformationTop;
+        let scrollTop = document.documentElement.scrollTop || document.body.scrollTop,
+            //个人信息容器距离顶部的高度
+            mainInformationTop = this.refs["mainInformation"].getBoundingClientRect().top,
+            //获取到个人信息容器距离顶部的绝对位置
+            absoluteTop = scrollTop + mainInformationTop;
         this.setState({
             absoluteTop
         }, function absoluteToper() {
@@ -321,6 +329,9 @@ class PersonalView extends React.Component {
                 getPersonalResourceInformationAndAddScrollEventDone = getPersonalResourceInformationAndAddScrollEvent.next().done;
             }
         }.bind(this));
+        if (keryiCard) {
+            viewPersonalKeryiBarterHandler.bind(this)(keryiCard);
+        }
     }
 
     /**
@@ -1802,7 +1813,7 @@ function mapDispatchToProps(dispatch, ownProps) {
 
                 }.bind(this));
             //取消冒泡
-            e.nativeEvent.stopImmediatePropagation();
+            e && e.nativeEvent.stopImmediatePropagation();
         },
         /**
          * 点击个人信息页面匹配资源列表,更新个人信息页面资源详情
