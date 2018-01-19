@@ -146,7 +146,7 @@ export function havePersonalResourcesExchange({initiativeResourceId, passiveReso
  */
 export function deletePersonalResourcesExchange(exchangeId, userId, id, itemCurrent) {
     return function dispatcher(dispatch) {
-        return new Promise(function promise(resolve, reject){
+        return new Promise(function promise(resolve, reject) {
             keryiAxiosConfig.axiosRequest(
                 api.DELETE_EXCHANGE_LIST + "/" + exchangeId,
                 "delete",
@@ -175,7 +175,7 @@ export function deletePersonalResourcesExchange(exchangeId, userId, id, itemCurr
  */
 export function selectPersonalResourceExchange(exchangeId, exchangeToStatus, userId, id, itemCurrent) {
     return function dispatcher(dispatch) {
-        return new Promise(function promise(resolve, reject){
+        return new Promise(function promise(resolve, reject) {
             keryiAxiosConfig.axiosRequest(
                 api.CHANGE_EXCHANGE_LIST_STATUS + "/" + exchangeId + "/status",
                 "put",
@@ -203,7 +203,7 @@ export function selectPersonalResourceExchange(exchangeId, exchangeToStatus, use
  */
 export function getPersonalInformation(userId) {
     return function dispatcher(dispatch) {
-        return new Promise(function promise(resolve, reject){
+        return new Promise(function promise(resolve, reject) {
             keryiAxiosConfig.axiosRequest(
                 api.GET_PERSONAL_INFORMATION + "/" + userId,
                 "get",
@@ -232,7 +232,7 @@ export function getPersonalInformation(userId) {
  */
 export function saveUpdatePersonalInformation(userId, username, email, phone, motto) {
     return function dispatcher(dispatch) {
-        return new Promise(function promise(resolve, reject){
+        return new Promise(function promise(resolve, reject) {
             keryiAxiosConfig.axiosRequest(
                 api.UPDATE_PERSONAL_INFORMATION + "/" + userId,
                 "put",

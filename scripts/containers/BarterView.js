@@ -1360,11 +1360,9 @@ function mapDispatchToProps(dispatch, ownProps) {
                 initiativeUserId: userId,
                 passiveUserId: viewDetailUserId
             })).then(function resolve() {
+                localStorage && localStorage.setItem("keryiCard", JSON.stringify(keryiCard));
                 browserHistory.push({
-                    pathname: "personal",
-                    state: {
-                        keryiCard
-                    }
+                    pathname: "personal"
                 });
             }.bind(this), function reject() {
 

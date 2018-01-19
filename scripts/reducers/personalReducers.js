@@ -304,6 +304,7 @@ export function personalReducers(state = defaultState, actions) {
             return insteadState.insteadObjState(state, {
                 beforeOsTop: newState
             });
+        //改变个人资源分页页码
         case appActionsType["CHANGE_PERSONAL_RESOURCES_LIST_PAGINATION_CURRENT"]:
             return newState === paginationPlus ? insteadState.insteadObjState(state, {
                 current: state.current + 1,

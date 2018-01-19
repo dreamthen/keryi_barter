@@ -9,6 +9,7 @@
  * @param matched
  * @param exchangeStatus
  */
+import api from "./api";
 export function getImageOrContentItemListConfig(exchangePropertyList, matched, exchangeStatus) {
     let list = exchangePropertyList;
     let FirstImgOrContentUrlsList = [];
@@ -20,6 +21,7 @@ export function getImageOrContentItemListConfig(exchangePropertyList, matched, e
             passiveResource = listItem["passiveResource"],
             titleProperty = passiveResource["title"],
             introProperty = passiveResource["intro"],
+            userId = passiveResource["userId"],
             closeJudgement = "I",
             imgUrlsProperty = eval("(" + passiveResource["imgUrls"] + ")"),
             likeCountProperty = passiveResource["likeCount"],
@@ -35,6 +37,7 @@ export function getImageOrContentItemListConfig(exchangePropertyList, matched, e
             likeCount: likeCountProperty,
             priceWorth: priceWorthProperty,
             user: userProperty,
+            userAvatar: `${api.GET_PERSONAL_AVATAR}/${userId}/avatar`,
             status: statusProperty,
             statusClose: statusCloseJudgement
         };

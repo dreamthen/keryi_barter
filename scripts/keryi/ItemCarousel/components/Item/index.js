@@ -201,6 +201,7 @@ class Item extends React.Component {
             //Item组件元素改变表单下拉框选项状态方法
             onItemSelect
         } = this;
+        console.log(hoverContent);
         return (
             <figure
                 className={itemVisibleOrAnimationToClass.bind(this)() + outsideClassToClass.bind(this)()}
@@ -240,7 +241,7 @@ class Item extends React.Component {
                 <cite className="keryi_barter_item_user">
                     <figure className="keryi_barter_item_user_avatar">
                         <HeadPortrait
-                            headPortrait={hoverContent["user"]["avatar"] ? hoverContent["user"]["avatar"] : "/images/keryiBarter_v.png"}
+                            headPortrait={hoverContent["user"]["id"] ? hoverContent["userAvatar"] : "/images/keryiBarter_v.png"}
                             borderJudgement
                         />
                     </figure>

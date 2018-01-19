@@ -313,7 +313,7 @@ class PersonalView extends React.Component {
             viewPersonalKeryiBarterHandler
         } = this.props;
         //获取browserHistory传递过来的参数
-        const keryiCard = this.props.location.state && this.props.location.state["keryiCard"];
+        const keryiCard = JSON.parse(localStorage ? localStorage.getItem("keryiCard") : "{}");
         //获取到滚动条距离顶部的高度
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop,
             //个人信息容器距离顶部的高度
@@ -331,6 +331,7 @@ class PersonalView extends React.Component {
         }.bind(this));
         if (keryiCard) {
             viewPersonalKeryiBarterHandler.bind(this)(keryiCard);
+            localStorage && localStorage.removeItem("keryiCard");
         }
     }
 
@@ -388,6 +389,7 @@ class PersonalView extends React.Component {
         } = this.props;
         dispatchCloseScrollEventListener.bind(this)();
         resetPersonalResourceListViewDetailsHandler.bind(this)();
+        localStorage && localStorage.removeItem("keryiCard");
     }
 
     /**
