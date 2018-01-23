@@ -20,6 +20,8 @@ const defaultState = {
     current: 1,
     //个人匹配资源列表页码
     matchedCurrent: 1,
+    //个人匹配资源列表资源条数
+    matchedTotal:0,
     //资源数据列表下拉分页防并发变量
     currentAsync: true,
     //评论详情
@@ -75,9 +77,7 @@ export function barterReducers(state = defaultState, actions) {
             });
         //获取个人匹配资源列表
         case appActionsType["GET_PERSONAL_MATCHED_RESOURCE_LIST"]:
-            return insteadState.insteadObjState(state, {
-                matchedList: newState
-            });
+            return insteadState.insteadObjState(state, newState);
         //改变资源列表分页页码
         case appActionsType["GET_RESOURCE_LIST_BY_PAGINATION"]:
             return insteadState.insteadObjState(state, {

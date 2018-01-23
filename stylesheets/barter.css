@@ -83,6 +83,7 @@
     position: relative;
     width: 100%;
     height: 100%;
+    z-index: 5;
 }
 
 .keryi_barter_view_details_information > .keryi_barter_view_details_comment,
@@ -159,41 +160,84 @@
     right: 15px;
 }
 
-.keryi_barter_view_details_comment_pagination > .ant-pagination-total-text {
+.keryi_barter_modal_view_details_container .keryi_barter_view_details_matched_resource_list_paginationContainer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: right;
+    margin: 13px 0 0 78px;
+    padding: 4px 15px 4px 0;
+    z-index: 10;
+}
+
+.keryi_barter_view_details_comment_pagination > .ant-pagination-total-text,
+.keryi_barter_view_details_matched_resource_list_pagination > .ant-pagination-total-text {
     color: #a2a2a2;
 }
 
-.keryi_barter_view_details_comment_pagination > .ant-pagination-item-active {
+.keryi_barter_view_details_comment_pagination > .ant-pagination-item-active,
+.keryi_barter_view_details_matched_resource_list_pagination > .ant-pagination-item-active {
     background-color: #63A8F0;
     border-color: #63A8F0;
 }
 
-.keryi_barter_view_details_comment_pagination > .ant-pagination-options {
+.keryi_barter_view_details_comment_pagination > .ant-pagination-options,
+.keryi_barter_view_details_matched_resource_list_pagination > .ant-pagination-options {
     color: #a2a2a2;
 }
 
-.keryi_barter_view_details_comment_pagination .ant-pagination-options-quick-jumper input {
+.keryi_barter_view_details_comment_pagination .ant-pagination-options-quick-jumper input,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-options-quick-jumper input {
     text-align: center;
 }
 
-.keryi_barter_view_details_comment_pagination > .ant-pagination-item:focus, .keryi_barter_view_details_comment_pagination > .ant-pagination-item:hover {
+.keryi_barter_view_details_comment_pagination .ant-pagination-item:focus,
+.keryi_barter_view_details_comment_pagination .ant-pagination-item:hover,
+.keryi_barter_view_details_matched_resource_list_pagination > .ant-pagination-item:focus,
+.keryi_barter_view_details_matched_resource_list_pagination > .ant-pagination-item:hover {
     border-color: #63A8F0;
 }
 
-.keryi_barter_view_details_comment_pagination .ant-pagination-item:focus a, .keryi_barter_view_details_comment_pagination .ant-pagination-item:hover a {
+.keryi_barter_view_details_comment_pagination .ant-pagination-item:focus a,
+.keryi_barter_view_details_comment_pagination .ant-pagination-item:hover a,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-item:focus a,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-item:hover a {
     color: #63A8F0;
 }
 
-.keryi_barter_view_details_comment_pagination .ant-pagination-item-active a, .keryi_barter_view_details_comment_pagination .ant-pagination-item-active:focus a, .keryi_barter_view_details_comment_pagination .ant-pagination-item-active:hover a {
+.keryi_barter_view_details_comment_pagination .ant-pagination-item-active a,
+.keryi_barter_view_details_comment_pagination .ant-pagination-item-active:focus a,
+.keryi_barter_view_details_comment_pagination .ant-pagination-item-active:hover a,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-item-active a,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-item-active:focus a,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-item-active:hover a {
     color: #fff;
 }
 
-.keryi_barter_view_details_comment_pagination .ant-pagination-prev:focus .ant-pagination-item-link, .keryi_barter_view_details_comment_pagination .ant-pagination-next:focus .ant-pagination-item-link, .keryi_barter_view_details_comment_pagination .ant-pagination-prev:hover .ant-pagination-item-link, .keryi_barter_view_details_comment_pagination .ant-pagination-next:hover .ant-pagination-item-link {
+.keryi_barter_view_details_comment_pagination .ant-pagination-prev:focus .ant-pagination-item-link,
+.keryi_barter_view_details_comment_pagination .ant-pagination-next:focus .ant-pagination-item-link,
+.keryi_barter_view_details_comment_pagination .ant-pagination-prev:hover .ant-pagination-item-link,
+.keryi_barter_view_details_comment_pagination .ant-pagination-next:hover .ant-pagination-item-link,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-prev:focus .ant-pagination-item-link,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-next:focus .ant-pagination-item-link,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-prev:hover .ant-pagination-item-link,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-next:hover .ant-pagination-item-link {
     border-color: #63A8F0;
     color: #63A8F0;
 }
 
-.keryi_barter_view_details_comment_pagination .ant-pagination-disabled a, .keryi_barter_view_details_comment_pagination .ant-pagination-disabled:hover a, .keryi_barter_view_details_comment_pagination .ant-pagination-disabled:focus a, .keryi_barter_view_details_comment_pagination .ant-pagination-disabled .ant-pagination-item-link, .keryi_barter_view_details_comment_pagination .ant-pagination-disabled:hover .ant-pagination-item-link, .keryi_barter_view_details_comment_pagination .ant-pagination-disabled:focus .ant-pagination-item-link {
+.keryi_barter_view_details_comment_pagination .ant-pagination-disabled a,
+.keryi_barter_view_details_comment_pagination .ant-pagination-disabled:hover a,
+.keryi_barter_view_details_comment_pagination .ant-pagination-disabled:focus a,
+.keryi_barter_view_details_comment_pagination .ant-pagination-disabled .ant-pagination-item-link,
+.keryi_barter_view_details_comment_pagination .ant-pagination-disabled:hover .ant-pagination-item-link,
+.keryi_barter_view_details_comment_pagination .ant-pagination-disabled:focus .ant-pagination-item-link,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-disabled a,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-disabled:hover a,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-disabled:focus a,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-disabled .ant-pagination-item-link,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-disabled:hover .ant-pagination-item-link,
+.keryi_barter_view_details_matched_resource_list_pagination .ant-pagination-disabled:focus .ant-pagination-item-link {
     border-color: #d9d9d9;
     color: rgba(0, 0, 0, .25);
 }

@@ -74,7 +74,7 @@ class ItemCarousel extends React.Component {
             //元素轮播器可显示的元素个数
             split
         } = this.props;
-        if ((itemList.length === 0 && nextProps.itemList.length > 0) || itemList.length !== nextProps.itemList.length) {
+        if ((itemList.length === 0 && nextProps.itemList.length > 0) || (itemList.length !== nextProps.itemList.length) || (itemList !== nextProps.itemList)) {
             this.setState({
                 itemCarouselVisible: true,
                 itemVisible: true

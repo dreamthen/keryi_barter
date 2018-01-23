@@ -92,6 +92,8 @@ class BarterView extends React.Component {
         current: PropTypes.number,
         //个人匹配资源列表页码
         matchedCurrent: PropTypes.number,
+        //个人匹配资源列表资源条数
+        matchedTotal: PropTypes.number,
         //资源数据列表下拉分页防并发变量
         currentAsync: PropTypes.bool,
         //评论详情
@@ -1029,6 +1031,34 @@ class BarterView extends React.Component {
     }
 
     /**
+     * keryi_barter主页面用户个人的资源匹配列表分页系统
+     * @returns {*}
+     */
+    renderModalMatchedResourceListPagination() {
+        const {
+            //个人匹配资源列表页码
+            matchedCurrent,
+            //个人匹配资源列表资源条数
+            matchedTotal,
+            //点击用户个人的资源匹配列表分页方法
+            loadMatchedPageMore
+        } = this.props;
+        return (
+            <section className="keryi_barter_view_details_matched_resource_list_paginationContainer">
+                <Pagination
+                    current={matchedCurrent}
+                    className="keryi_barter_view_details_matched_resource_list_pagination"
+                    onChange={loadMatchedPageMore.bind(this)}
+                    pageSize={PAGE_SIZE}
+                    showQuickJumper
+                    showTotal={total => `共 ${total} 条资源`}
+                    total={matchedTotal}
+                />
+            </section>
+        )
+    }
+
+    /**
      * keryi_barter主页面查看"以物换物"资源详情对话框
      * @returns {XML}
      */
@@ -1036,6 +1066,8 @@ class BarterView extends React.Component {
         const {
             //keryi_barter主页面查看"以物换物"资源详情
             renderModalInformation,
+            //keryi_barter主页面用户个人的资源匹配列表分页系统
+            renderModalMatchedResourceListPagination,
             //keryi_barter主页面查看控制"以物换物"资源详情评论区域或者资源详情区域的icon标识的显示和消失
             renderModalIconOrInformationComment,
             //keryi_barter主页面查看控制点击资源交换按钮，获取用户个人的资源匹配列表的icon显示和消失
@@ -1074,6 +1106,8 @@ class BarterView extends React.Component {
                     {/*keryi_barter主页面查看"以物换物"资源详情*/}
                     {renderModalInformation.bind(this)()}
                 </section>
+                {/*keryi_barter主页面用户个人的资源匹配列表分页系统*/}
+                {matchedResourceListBlock && renderModalMatchedResourceListPagination.bind(this)()}
             </Modal>
         )
     }
@@ -1209,13 +1243,17 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //用户登录的id
                 userId
             } = this.state;
-            const {
-                //个人匹配资源列表页码
-                matchedCurrent
-            } = this.props;
+            //设置个人匹配资源列表页码为1
+            const matchedCurrent = 1;
             dispatch(getPersonalMatchedResourceList(matchedCurrent, userId))
                 .then(function resolve(body) {
-                    dispatch(getPersonalMatchedResourceListAction(body));
+                    //获取个人匹配资源列表的条数
+                    const length = body.length;
+                    dispatch(getPersonalMatchedResourceListAction({
+                        matchedList: body,
+                        matchedCurrent,
+                        matchedTotal: length
+                    }));
                 }, function reject() {
 
                 });
@@ -1330,6 +1368,29 @@ function mapDispatchToProps(dispatch, ownProps) {
                         comment: "",
                         commentCurrent: page
                     }));
+                });
+        },
+        /**
+         * 点击用户个人的资源匹配列表分页方法
+         * @param page
+         * @param pageSize
+         */
+        loadMatchedPageMore(page, pageSize) {
+            const {
+                //用户登录的id
+                userId
+            } = this.state;
+            dispatch(getPersonalMatchedResourceList(page, userId))
+                .then(function resolve(body) {
+                    //获取个人匹配资源列表的条数
+                    const length = body.length;
+                    dispatch(getPersonalMatchedResourceListAction({
+                        matchedList: body,
+                        matchedCurrent: page,
+                        matchedTotal: length
+                    }));
+                }, function reject() {
+
                 });
         },
         /**
