@@ -1998,7 +1998,9 @@ function mapDispatchToProps(dispatch, ownProps) {
                 //获取个人页资源列表
                 dispatch(getPersonalResourcesList(current, userId))
                     .then(function resolve(body) {
-                        dispatch(getPersonalResourcesListAction(body));
+                        //个人页资源列表数组
+                        let personalResourcesList = body.list;
+                        personalResourcesList && personalResourcesList.length > 0 && dispatch(getPersonalResourcesListAction(personalResourcesList));
                     }.bind(this), function reject() {
                         changePersonalResourcesListPaginationCurrentHandler.bind(this)(paginationMinus);
                     }.bind(this));

@@ -1201,7 +1201,9 @@ function mapDispatchToProps(dispatch, ownProps) {
             const {current} = this.props;
             dispatch(getResourcesList(current))
                 .then(function resolve(body) {
-                    dispatch(getResourcesListAction(body));
+                    //资源列表数组
+                    let resourcesList = body.list;
+                    resourcesList && resourcesList.length > 0 && dispatch(getResourcesListAction(resourcesList));
                 }.bind(this), function reject() {
 
                 }.bind(this));
@@ -1247,12 +1249,14 @@ function mapDispatchToProps(dispatch, ownProps) {
             const matchedCurrent = 1;
             dispatch(getPersonalMatchedResourceList(matchedCurrent, userId))
                 .then(function resolve(body) {
-                    //获取个人匹配资源列表的条数
-                    const length = body.length;
+                    //获取个人匹配资源列表数组
+                    const personalMatchedResourcesList = body["list"],
+                          //获取个人匹配资源列表条数
+                          personalMatchedTotal = body["total"];
                     dispatch(getPersonalMatchedResourceListAction({
-                        matchedList: body,
+                        matchedList: personalMatchedResourcesList,
                         matchedCurrent,
-                        matchedTotal: length
+                        matchedTotal: personalMatchedTotal
                     }));
                 }, function reject() {
 
@@ -1382,12 +1386,14 @@ function mapDispatchToProps(dispatch, ownProps) {
             } = this.state;
             dispatch(getPersonalMatchedResourceList(page, userId))
                 .then(function resolve(body) {
-                    //获取个人匹配资源列表的条数
-                    const length = body.length;
+                    //获取个人匹配资源列表数组
+                    const personalMatchedResourcesList = body["list"],
+                        //获取个人匹配资源列表条数
+                        personalMatchedTotal = body["total"];
                     dispatch(getPersonalMatchedResourceListAction({
-                        matchedList: body,
+                        matchedList: personalMatchedResourcesList,
                         matchedCurrent: page,
-                        matchedTotal: length
+                        matchedTotal: personalMatchedTotal
                     }));
                 }, function reject() {
 

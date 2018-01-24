@@ -30,7 +30,7 @@ export function getResourcesList(pageNum) {
                 function done(response) {
                     //服务器响应body主体对象
                     let body = response;
-                    body && body.length > 0 ? resolve(body) : reject();
+                    body ? resolve(body) : reject();
                 }.bind(this),
                 function error(response) {
 
@@ -60,7 +60,7 @@ export function getPersonalMatchedResourceList(pageNum, userId) {
                 function done(response) {
                     //服务器响应body主体对象
                     let body = response;
-                    body && body.length > 0 ? resolve(body) : reject();
+                    body ? resolve(body) : reject();
                 }.bind(this),
                 function error(response) {
 
