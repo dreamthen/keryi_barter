@@ -59,6 +59,8 @@ const defaultState = {
     currentAsync: true,
     //滚动条初始距离顶部高度
     beforeOsTop: 0,
+    //匹配资源列表滚动条初始距离顶部高度
+    matchedBeforeOsTop: 0,
     //评论详情
     comment: "",
     //匹配资源评论详情
@@ -71,6 +73,8 @@ const defaultState = {
     commentCurrent: 1,
     //匹配资源评论列表页码
     commentMatchedCurrent: 1,
+    //匹配资源列表页码
+    matchedCurrent: 1,
     //评论列表评论条数
     commentTotal: 0,
     //匹配资源评论列表评论条数
@@ -312,6 +316,18 @@ export function personalReducers(state = defaultState, actions) {
             }) : insteadState.insteadObjState(state, {
                 current: state.current - 1,
                 currentAsync: true
+            });
+        //获取个人匹配资源列表滚动条初始距离顶部高度
+        case appActionsType["GET_PERSONAL_RESOURCES_LIST_VIEW_MATCHED_PAGINATION_BEFORE_OS_TOP"]:
+            return insteadState.insteadObjState(state, {
+                matchedBeforeOsTop: newState
+            });
+        //改变个人匹配资源分页页码
+        case appActionsType["CHANGE_PERSONAL_RESOURCES_LIST_VIEW_MATCHED_PAGINATION_CURRENT"]:
+            return newState === paginationPlus ? insteadState.insteadObjState(state, {
+                matchedCurrent: state.matchedCurrent + 1
+            }) : insteadState.insteadObjState(state, {
+                matchedCurrent: state.matchedCurrent - 1
             });
     }
     return state;

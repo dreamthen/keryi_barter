@@ -30,7 +30,7 @@ export function getResourcesList(pageNum) {
                 function done(response) {
                     //服务器响应body主体对象
                     let body = response;
-                    body ? resolve(body) : reject();
+                    body && body["list"] ? resolve(body) : reject();
                 }.bind(this),
                 function error(response) {
 

@@ -118,7 +118,11 @@ import {
     //改变个人资源分页页码Action
     changePersonalResourcesListPaginationCurrentAction,
     //改变匹配资源"评论"富文本编辑器编辑框内容Action
-    changePersonalMatchedResourcesListViewDetailsCommentAction
+    changePersonalMatchedResourcesListViewDetailsCommentAction,
+    //获取个人匹配资源列表滚动条初始距离顶部高度Action
+    getPersonalResourceListViewMatchedPaginationBeforeOsTopAction,
+    //改变个人匹配资源分页页码Action
+    changePersonalResourcesListViewMatchedPaginationCurrentAction
 } from "../actions/personalActions";
 import {
     paginationPlus,
@@ -179,6 +183,8 @@ class PersonalView extends React.Component {
         currentAsync: PropTypes.bool,
         //滚动条初始距离顶部高度
         beforeOsTop: PropTypes.number,
+        //匹配资源列表滚动条初始距离顶部高度
+        matchedBeforeOsTop: PropTypes.number,
         //评论详情
         comment: PropTypes.string,
         //匹配资源评论详情
@@ -191,6 +197,8 @@ class PersonalView extends React.Component {
         commentCurrent: PropTypes.number,
         //匹配资源评论列表页码
         commentMatchedCurrent: PropTypes.number,
+        //匹配资源列表页码
+        matchedCurrent: PropTypes.number,
         //评论列表评论条数
         commentTotal: PropTypes.number,
         //匹配资源评论列表评论条数
@@ -317,7 +325,7 @@ class PersonalView extends React.Component {
         //获取到滚动条距离顶部的高度
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop,
             //个人信息容器距离顶部的高度
-            mainInformationTop = this.refs["mainInformation"].getBoundingClientRect().top,
+            mainInformationTop = this._mainInformation.getBoundingClientRect().top,
             //获取到个人信息容器距离顶部的绝对位置
             absoluteTop = scrollTop + mainInformationTop;
         this.setState({
@@ -368,7 +376,7 @@ class PersonalView extends React.Component {
         //滚动条初始距离顶部高度
         let beforeOsTop = document.documentElement.scrollTop || document.body.scrollTop;
         //获取个人信息页面主容器
-        let mainPersonalBarter = this.refs["mainPersonalBarter"];
+        let mainPersonalBarter = this._mainPersonalBarter;
         //获取个人信息页面主容器距离顶部的高度
         let mainPersonalBarterTop = mainPersonalBarter.getBoundingClientRect().top;
         saveBeforeOsTopHandler.bind(this)(beforeOsTop);
@@ -1328,6 +1336,33 @@ class PersonalView extends React.Component {
     }
 
     /**
+     * 滚动匹配资源列表,实现匹配资源列表分页系统
+     * @param height
+     * @param screenHeight
+     * @param osTop
+     */
+    onPersonalModalAsideScroll(height, screenHeight, osTop) {
+        const {
+            //匹配资源列表滚动条初始距离顶部高度
+            matchedBeforeOsTop,
+            //保存滚动条初始距离顶部高度脚手架
+            onPersonalModalAsideScrollChangeBeforeOsTopHandler,
+            //改变个人匹配资源分页页码
+            changePersonalResourcesListViewMatchedPaginationCurrentHandler
+        } = this.props;
+        //获取到个人匹配资源列表滚动条距离底部的高度
+        const betweenOsTop = osTop - matchedBeforeOsTop;
+        onPersonalModalAsideScrollChangeBeforeOsTopHandler.bind(this)(osTop);
+        if (((height - screenHeight - osTop) / height <= 0.05) && betweenOsTop > 0) {
+            changePersonalResourcesListViewMatchedPaginationCurrentHandler.bind(this)(paginationPlus).then(function resolve() {
+
+            }.bind(this), function reject() {
+
+            }.bind(this));
+        }
+    }
+
+    /**
      * render渲染keryi_barter个人信息页面查看"以物换物"资源详情对话框
      * @returns {XML}
      */
@@ -1352,7 +1387,9 @@ class PersonalView extends React.Component {
             //render渲染个人信息页面查看"以物换物"评论区域
             renderModalComment,
             //render渲染个人信息页面匹配到的资源列表"以物换物"评论区域
-            renderMatchedModalComment
+            renderMatchedModalComment,
+            //滚动匹配资源列表,实现匹配资源列表分页系统
+            onPersonalModalAsideScroll
         } = this;
         const {
             //控制Modal组件对话框显示、隐藏或者消失
@@ -1396,6 +1433,7 @@ class PersonalView extends React.Component {
                 showClose
                 closeText="关闭"
                 className="keryi_barter_personal_modal_view_details_container"
+                onAsideScroll={onPersonalModalAsideScroll.bind(this)}
                 onAsideSelect={viewPersonalKeryiBarterModalHandler.bind(this)}
                 onBack={onBackHandler.bind(this)}
                 onOk={onOkHandler.bind(this)}
@@ -1504,7 +1542,7 @@ class PersonalView extends React.Component {
         return personalComponentConfig.map(function personaler(personalItem, personalIndex) {
             return (
                 <section
-                    ref="mainInformationContent"
+                    ref={mainInformationContent => this._mainInformationContent = mainInformationContent}
                     key={personalItem["key"]}
                     className="keryi_barter_personal_main_information_content"
                 >
@@ -1642,13 +1680,13 @@ class PersonalView extends React.Component {
                     }
                 </main>
                 <aside
-                    ref="mainInformation"
+                    ref={mainInformation => this._mainInformation = mainInformation}
                     className="keryi_barter_personal_main_information keryi_barter_personal_main_personalInformation"
                     style={{top}}
                 >
                     <section className="keryi_barter_personal_main_information_fixedContent">
                         <h2
-                            ref="mainInformationTitle"
+                            ref={mainInformationTitle => this._mainInformationTitle = mainInformationTitle}
                             className="keryi_barter_personal_main_information_title"
                         >
                             个人信息
@@ -1746,7 +1784,7 @@ class PersonalView extends React.Component {
         } = this.props;
         return (
             <div
-                ref="mainPersonalBarter"
+                ref={mainPersonalBarter => this._mainPersonalBarter = mainPersonalBarter}
                 className="keryi_barter_personal_main_container"
             >
                 <section className="keryi_barter_personal_main_module">
@@ -1878,6 +1916,13 @@ function mapDispatchToProps(dispatch, ownProps) {
             e.nativeEvent.stopImmediatePropagation();
         },
         /**
+         * 保存滚动条初始距离顶部高度脚手架
+         * @param beforeOsTop
+         */
+        onPersonalModalAsideScrollChangeBeforeOsTopHandler(beforeOsTop) {
+            dispatch(getPersonalResourceListViewMatchedPaginationBeforeOsTopAction(beforeOsTop));
+        },
+        /**
          * 点击个人信息页面资源详情返回"我的资源",更新个人信息页面资源详情
          */
         onBackHandler(e) {
@@ -1962,6 +2007,7 @@ function mapDispatchToProps(dispatch, ownProps) {
                 });
             }.bind(this));
         },
+
         /**
          * 控制Modal组件对话框隐藏并消失
          */
@@ -2110,15 +2156,15 @@ function mapDispatchToProps(dispatch, ownProps) {
             //获取到滚动条距离顶部的高度
             let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
             //个人信息部分标题高度
-            let titleHeight = this.refs["mainInformationTitle"] && this.refs["mainInformationTitle"].clientHeight;
+            let titleHeight = this._mainInformationTitle && this._mainInformationTitle.clientHeight;
             //个人信息部分内容用户名部分高度
-            let contentHeight = this.refs["mainInformationContent"] && this.refs["mainInformationContent"].clientHeight;
+            let contentHeight = this._mainInformationContent && this._mainInformationContent.clientHeight;
             //获取到个人信息容器上外边距
-            let marginTop = this.refs["mainInformation"] && (window.getComputedStyle(this.refs["mainInformation"]) ? window.getComputedStyle(this.refs["mainInformation"]).marginTop : this.refs["mainInformation"].currentStyle.marginTop);
+            let marginTop = this._mainInformation && (window.getComputedStyle(this._mainInformation) ? window.getComputedStyle(this._mainInformation).marginTop : this._mainInformation.currentStyle.marginTop);
             //个人信息部分标题和内容用户名部分总高度
-            let totalHeight = this.refs["mainInformation"] && (titleHeight + contentHeight + parseInt(marginTop.slice(0, -2)));
+            let totalHeight = this._mainInformation && (titleHeight + contentHeight + parseInt(marginTop.slice(0, -2)));
             //改变个人信息部分距离父级元素顶部的高度,使个人信息页面主体信息随着窗口滚动而滚动
-            this.refs["mainInformation"] && (scrollTop >= (absoluteTop - totalHeight) ? dispatch(changePersonalInformationScrollTop(scrollTop - absoluteTop + totalHeight)) : dispatch(changePersonalInformationScrollTop(0)));
+            this._mainInformation && (scrollTop >= (absoluteTop - totalHeight) ? dispatch(changePersonalInformationScrollTop(scrollTop - absoluteTop + totalHeight)) : dispatch(changePersonalInformationScrollTop(0)));
         },
         /**
          * 重置个人页资源页面
@@ -2329,9 +2375,20 @@ function mapDispatchToProps(dispatch, ownProps) {
         },
         /**
          * 改变个人资源分页页码
+         * @params pagination
          */
         changePersonalResourcesListPaginationCurrentHandler(pagination) {
             dispatch(changePersonalResourcesListPaginationCurrentAction(pagination));
+        },
+        /**
+         * 改变个人匹配资源分页页码
+         * @params pagination
+         */
+        changePersonalResourcesListViewMatchedPaginationCurrentHandler(pagination) {
+            return new Promise(function promise(resolve, reject) {
+                dispatch(changePersonalResourcesListViewMatchedPaginationCurrentAction(pagination));
+                resolve();
+            }.bind(this));
         },
         /**
          * 分页获取资源数据列表脚手架
@@ -2349,7 +2406,7 @@ function mapDispatchToProps(dispatch, ownProps) {
                     changePersonalResourcesListPaginationCurrentHandler
                 } = this.props;
                 //获取个人信息页面主容器
-                let mainPersonalBarter = this.refs["mainPersonalBarter"],
+                let mainPersonalBarter = this._mainPersonalBarter,
                     //获取个人信息页面主容器高度
                     mainPersonalBarterHeight = mainPersonalBarter.clientHeight,
                     //个人信息页面高度

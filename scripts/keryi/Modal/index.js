@@ -57,6 +57,8 @@ class Modal extends React.Component {
         onOk: PropTypes.func,
         //Modal组件对话框关闭回调函数
         onClose: PropTypes.func,
+        //Modal组件对话框侧面边栏区域列表滚动回调函数
+        onAsideScroll: PropTypes.func,
         //Modal组件对话框侧面边栏区域列表选择回调函数
         onAsideSelect: PropTypes.func,
         //Modal组件对话框返回(在这里也就是返回到我的资源)回调函数
@@ -109,7 +111,6 @@ class Modal extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log();
         //当外部传入Modal组件对话框是否弹出属性为true时,Modal组件对话框先从消失变为隐藏,然后时间控制器控制在Modal组件对话框取消消失100ms之后从隐藏变为显示
         (this.props.visible !== nextProps.visible && nextProps.visible) &&
         this.setState({
@@ -567,7 +568,9 @@ class Modal extends React.Component {
             //Modal组件对话框aside侧面边栏区域宽度
             asideWidth,
             //Modal组件对话框aside侧面边栏区域标题
-            asideTitle
+            asideTitle,
+            //Modal组件对话框侧面边栏区域列表滚动回调函数
+            onAsideScroll
         } = this.props;
         ReactDOM.render(
             <section
@@ -603,13 +606,24 @@ class Modal extends React.Component {
                     </main>
                     {
                         aside && <aside
+                            onScroll={(e) => {
+                                const asideContainer = e.target,
+                                    asideContent = this._asideContent,
+                                    beforeScrollTop = asideContainer.scrollTop,
+                                    asideScreenHeight = asideContainer.clientHeight,
+                                    asideHeight = asideContent.clientHeight;
+                                onAsideScroll(asideHeight, asideScreenHeight, beforeScrollTop);
+                            }}
                             className={outAsideClassToClass.bind(this)()}
                             style={{width: asideWidth ? asideWidth : defaultAsideWidth}}
                         >
                             <header className="keryi_barter_modal_aside_head">
                                 {asideTitle}
                             </header>
-                            <main className="keryi_barter_modal_aside_main">
+                            <main
+                                ref={asideContent => this._asideContent = asideContent}
+                                className="keryi_barter_modal_aside_main"
+                            >
                                 {/*对话框侧面边栏区域列表内容*/}
                                 {renderModalAsideMain.bind(this)()}
                             </main>

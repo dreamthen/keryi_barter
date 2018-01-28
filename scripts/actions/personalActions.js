@@ -35,7 +35,7 @@ export function getPersonalResourcesList(pageNum, userId) {
                 function done(response) {
                     //服务器响应body主体对象
                     let body = response;
-                    body ? resolve(body) : reject();
+                    body && body["list"] ? resolve(body) : reject();
                 }.bind(this),
                 function error(response) {
 
@@ -655,6 +655,30 @@ export function getPersonalResourcesListPaginationBeforeOsTopAction(payload) {
 export function changePersonalResourcesListPaginationCurrentAction(payload) {
     return {
         type: appActionsType["CHANGE_PERSONAL_RESOURCES_LIST_PAGINATION_CURRENT"],
+        payload
+    }
+}
+
+/**
+ * 获取个人匹配资源列表滚动条初始距离顶部高度Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function getPersonalResourceListViewMatchedPaginationBeforeOsTopAction(payload) {
+    return {
+        type: appActionsType["GET_PERSONAL_RESOURCES_LIST_VIEW_MATCHED_PAGINATION_BEFORE_OS_TOP"],
+        payload
+    }
+}
+
+/**
+ * 改变个人匹配资源分页页码Action
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export function changePersonalResourcesListViewMatchedPaginationCurrentAction(payload) {
+    return {
+        type: appActionsType["CHANGE_PERSONAL_RESOURCES_LIST_VIEW_MATCHED_PAGINATION_CURRENT"],
         payload
     }
 }

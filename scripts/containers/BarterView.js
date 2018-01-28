@@ -193,7 +193,7 @@ class BarterView extends React.Component {
             //滚动条距离顶部高度
             let afterOsTop = document.documentElement.scrollTop || document.body.scrollTop,
                 //resourceListContainer元素高度
-                docHeight = this.refs["resourceListContainer"].clientHeight,
+                docHeight = this._resourceListContainer.clientHeight,
                 //屏幕高度
                 screenHeight = window.innerHeight,
                 //整个文档高度
@@ -223,7 +223,7 @@ class BarterView extends React.Component {
             scrollGetResourceListByPagination
         } = this;
         //resourceListContainer元素距离顶部高度
-        let docTop = this.refs["resourceListContainer"].getBoundingClientRect().top,
+        let docTop = this._resourceListContainer.getBoundingClientRect().top,
             //获取资源列表滚动条初始距离顶部高度
             beforeOsTop = document.documentElement.scrollTop || document.body.scrollTop;
         dispatchResourceList.bind(this)();
@@ -1131,7 +1131,7 @@ class BarterView extends React.Component {
         } = this;
         return (
             <div
-                ref="resourceListContainer"
+                ref={resourceListContainer => this._resourceListContainer = resourceListContainer}
                 className="keryi_barter_main_container"
             >
                 <section
@@ -1220,7 +1220,9 @@ function mapDispatchToProps(dispatch, ownProps) {
             } = this.props;
             dispatch(getResourcesList(current))
                 .then(function resolve(body) {
-                    dispatch(getResourcesListByPaginationAction(body));
+                    //资源列表数组
+                    let resourcesList = body.list;
+                    resourcesList && resourcesList.length > 0 && dispatch(getResourcesListByPaginationAction(body));
                 }.bind(this), function reject() {
                     changeResourcesListPaginationCurrentHandler.bind(this)(paginationMinus);
                 }.bind(this));
